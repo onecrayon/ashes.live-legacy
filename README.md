@@ -27,3 +27,12 @@ The site has the following dependencies:
 
         . venv/bin/activate
         pip install -r requirements.txt
+
+## SCRATCH
+
+Potentially useful extensions (need to research some of them to make sure):
+
+* Flask-SQLAlchemy
+* Flask-Migrate
+* Flask-Script
+* Flask-User and/or Flask-Login
