@@ -32,7 +32,4 @@ The site has the following dependencies:
 
 Potentially useful extensions (need to research some of them to make sure):
 
-* Flask-SQLAlchemy
-* Flask-Migrate
-* Flask-Script
-* Flask-User and/or Flask-Login
+* Flask-User or Flask-Security
