@@ -1,1 +1,6 @@
 Flask==0.12.1
+# This pulls in Flask-Script and Alembic with it
+Flask-Migrate==2.0.3
+# Included by Flask-Migrate, but here's explicit versions
+Flask-SQLAlchemy==2.2
+SQLAlchemy==1.1.9
