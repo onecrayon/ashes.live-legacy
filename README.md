@@ -42,6 +42,8 @@ For development servers:
 
 ## SCRATCH
 
-Potentially useful extensions (need to research some of them to make sure):
+Users have three bits of identifying info:
 
-* Flask-User or Flask-Security
+* Email (unique; used to log in)
+* Username (no restrictions; display only)
+* Badge (randomly auto-generated 3-8 character string, but they get to pick from ~8 options at account creation; to get options, randomly generate some extra 3-length and 4-length strings, filter out ones already in use, filter out non-kid-friendly strings, then provide a selection that's weighted toward shorter badges; as I run out of short ones, expand the number of characters available)
