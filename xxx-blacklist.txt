@@ -1,0 +1,137 @@
+Current words used to construct the blacklist for user badges. To construct regex
+perform the following substitutions:
+
+i|l => (?:i|l|!|1)
+a => (?:a|@)
+b => (?:b|l3|i3)
+c|k => (?:c|k)
+e => (?:e|3)
+f => (?:f|ph)
+g => (?:g|6)
+o => (?:o|0)
+q => (?:q|9)
+s|z => (?:s|\$|5|z|2)
+t => (?:t|7)
+u|v => (?:u|v)
+w => (?:w|vv)
+(a|e|i(?!3)|o|u) => $1|\*
+\n => |
+
+Here is the initial list (addendums will be added at the end to avoid needing to reformat the regex string):
+
+2g1c
+anal
+anus
+ass
+bbw
+bdsm
+bimbo
+bitch
+boner
+boob
+butt
+clit
+cock
+coon
+cum
+cunt
+dick
+dildo
+dommes
+dvda
+ecchi
+fag
+fecal
+felch
+feltch
+femdom
+fuck
+g-spot
+gay
+goatcx
+goatse
+gokkun
+grope
+gspot
+guro
+hentai
+homo
+honkey
+hooker
+hump
+incest
+jizz
+juggs
+kike
+kinky
+lolita
+milf
+nambla
+nawashi
+nazi
+negro
+neonazi
+nigga
+nigger
+nipple
+nude
+nudity
+nympho
+orgasm
+orgy
+paki
+panties
+panty
+pedo
+penis
+piss
+poof
+poon
+poop
+porn
+pthc
+pubes
+pussy
+queaf
+queef
+quim
+rape
+raping
+rapist
+rectum
+rimjob
+s&m
+sadism
+scat
+schlong
+semen
+sex
+sexo
+sexy
+shemale
+shit
+shota
+skeet
+slut
+smut
+snatch
+sodomy
+spic
+splooge
+spooge
+spunk
+strip
+suck
+tit
+tranny
+tushy
+twat
+twink
+urethra
+vagina
+voyeur
+vulva
+wank
+whore
+yaoi
+yiffy
