@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -21,4 +22,5 @@ app.config.from_pyfile('../config/config.py')
 app.config.from_pyfile('../config/{}/config.py'.format(ENVIRONMENT))
 
 # Configure our database
+bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
