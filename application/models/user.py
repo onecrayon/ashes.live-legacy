@@ -63,7 +63,7 @@ def kid_friendly(badge):
     return kid_unfriendly_re.search(badge) is None
 
 
-# This is compiled based on data and logic from xxx-blacklist.txt
+# This is compiled based on data and logic from _assets/xxx-blacklist.txt
 kid_unfriendly_re = re.compile(
 	r'2(?:g|6)1(?:c|k)|(?:a|\*|@)n(?:a|\*|@)(?:i|\*|l|!|1)|(?:a|\*|@)n(?:u|\*|v)(?:s|\$|5|z|2)'
 	r'|(?:a|\*|@)(?:s|\$|5|z|2)(?:s|\$|5|z|2)|(?:b|l3|i3)(?:b|l3|i3)(?:w|vv)|(?:b|l3|i3)d(?:s|\$|5|z|2)m'
