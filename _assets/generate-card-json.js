@@ -62,7 +62,8 @@ for (var i = 0, count = cards.length; i < count; i++) {
 		effects = details.slice(1),
 		titleMatch = meta[0].match(/^(.+?)(?:\(([a-z ]+)\))?$/i),
 		card = {
-			'name': titleMatch[1]
+			'name': titleMatch[1],
+			'stub': titleMatch[1].replace(/[ ]/g, '-').replace(/[^a-z0-9-]/ig, '').toLowerCase()
 		},
 		stats = null,
 		conjurations = []
