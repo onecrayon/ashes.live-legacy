@@ -1,0 +1,256 @@
+Abundance
+Ready Spell - Spellboard
+[[main]] - 1 [[illusion:class]]
+
+[[main]] - [[exhaust]]: All players may draw up to 2 cards. For each card they cannot or do not draw, deal 1 damage to their Phoenixborn.
+
+Focus 1: Reduce the damage your Phoenixborn receives from this spell by 1.
+
+Focus 2: Reduce the damage your Phoenixborn receives from this spell by an additional 1.
+
+=====
+
+Amplify
+Alteration Spell - Unit
+[[main]] - 1 [[charm:class]]
+Attack +X - Life +X - Recover +X
+
+* X = the number of charm dice on this unit.
+
+* Respark: 1 [[basic]]
+
+=====
+
+Anchornaut
+Ally - Battlefield
+[[main]] - 1 [[basic]]
+Attack 0 - Life 1 - Recover 1
+
+Throw 1: During your turn, you may place 1 exhaustion token on this unit to deal 1 damage to a target unit
+
+=====
+
+Anguish (Leo Sunshadow)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Choose a target Phoenixborn. Its controlling player may discard 1 card at random from their hand. If they do not or cannot, place 2 wound tokens on that Phoenixborn. Then choose a target Phoenixborn. Its controlling player may move 2 dice of your choice from their active pool to their exhausted pool. If they do not or cannot, place 2 wound tokens on that Phoenixborn.
+
+=====
+
+Aradel Summergaard
+Battlefield 8 - Life 16 - Spellboard 4
+
+Water Blast: [[side]] - [[exhaust]] - 1 [[natural:class]]: Deal 2 damage to a target unit.
+
+=====
+
+Beast Tamer
+Ally - Battlefield
+[[main]] - 1 [[charm:power]] - 1 [[charm:class]] - 1 [[basic]]
+Attack 3 - Life 3 - Recover 2
+
+Diminish 1: After an opponent has declared attackers, you may spend 1 [[basic]] to reduce the attack value of each attacking unit by 1 for the remainder of this turn.
+
+=====
+
+Blackcloud Ninja (Brennen Blackcloud)
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]] - 2 [[basic]]
+Attack 3 - Life 2 - Recover 2
+
+Seal Strike 1: When this unit comes into play, you may spend 1 [[basic]] to place 1 exhaustion token on a target ready spell.
+
+Shadow Strike 2: [[main]] - [[exhaust]]: Deal 2 damage to a target unit.
+
+=====
+
+Blood Archer
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]] - 1 [[charm:class]] - 2 [[basic]]
+Attack 3 - Life 3 - Recover 2
+
+Blood Oath 2: When you are declaring attackers, you may add 2 attack to this unit for the remainder of this turn. If you do, place 2 wounds on this unit.
+
+Battle Advantage: When this unit is in battle, it inflicts its damage before other units without Battle Advantage inflict their damage.
+
+=====
+
+Blood Chains
+Action Spell - Discard
+[[main]] - 1 [[ceremonial:class]]
+
+Choose a unit you control and destroy it. Place X exhaustion tokens on a target unit.
+
+X = the chosen unit's life value minus the number of wound tokens on the chosen unit.
+
+=====
+
+Blood Puppet
+Conjuration - Battlefield
+Attack 0 - Life 2 - Recover 0
+
+Cursed 1: At the end of each round, place 1 wound token on your Phoenixborn.
+
+Self Inflict 1: [[side]] - 1 [[basic]]: Deal 1 damage to this unit.
+
+=====
+
+Blood Transfer
+Ready Spell - Spellboard
+[[main]]
+
+[[side]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[charm:class]]: Deal 2 damage to a target unit you control. If you do, you may remove 2 wound tokens from another unit you control or remove 1 wound token from your Phoenixborn.
+
+=====
+
+Blue Jaguar
+Conjuration - Battlefield
+Attack 2 - Life 2 - Recover 0
+
+Gaze 1: After a unit comes into play on an opponent's battlefield, you may spend 1 [[basic]] to place 1 ehaustion token on that unit.
+
+=====
+
+Body Inversion
+Alteration Spell - Unit
+[[main]] - 2 [[illusion:class]]
+
+This spell cannot be attached to a unit that already has a spell with the word "Inversion" in its title attached to it.
+
+When attaching this spell to a unit that has the Illusion ability, the player that played this spell may select 2 Illusion dice in their exhausted pool and place them into their active pool on the side of their choice.
+
+* Switch this unit's printed attack and life values.
+
+=====
+
+Bound Soul
+Action Spell - Discard
+[[main]] - 1 [[ceremonial:class]]
+
+Search your discard pile for an ally and place it into your hand.
+
+=====
+
+Brennen Blackcloud
+Battlefield 5 - Life 20 - Spellboard 3
+
+Spirit Burn: [[side]] - [[exhaust]] - 1 [[basic]]: Destroy a unit you control. If you do, you may deal 2 damage to a target unit or Phoenixborn.
+
+=====
+
+Bring Forth
+Alteration Spell - Unit
+[[main]] - 2 [[ceremonial:class]]
+Attack +2 - Life +1
+
+* This spell can only be attached to units with the Illusion ability. This unit is no longer considered to have the Illusion ability.
+
+* Respark: 2 [[basic]]
+
+=====
+
+Butterfly Monk
+Conjuration - Battlefield
+Attack 1 - Life X - Recover 1
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+* Last Blessing 1: When this unit is destroyed, remove 1 wound token from a target unit or Phoenixborn.
+
+* X = the number of [[Summon Butterfly Monk]] spells on your spellboard.
+
+=====
+
+Call Upon The Realms
+Action Spell - Discard
+[[main]]
+
+Change 3 dice in your active pool to a side of your choice.
+
+=====
+
+Change Psyche
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+Remove 1 exhaustion token from a target unit or place 1 exhaustion token on a target unit.
+
+=====
+
+Chant Of Protection
+Ready Spell - Spellboard
+[[main]] - 1 [[basic]] - 1 [[discard]]
+
+* When this spell comes into play, place 3 status tokens on it. Discard this spell when it no longer has any status tokens on it.
+
+When your Phoenixborn would receive damage, you may remove any number of status tokens from this spell. For each status token removed, prevent 1 damage to your Phoenixborn.
+
+=====
+
+Change Of Revenge
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:class]]
+
+Whenever a unit you control is destroyed, you may place 1 exhaustion token on this spell to deal 1 damage to a target unit or Phoenixborn.
+
+=====
+
+Chant Of The Dead
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:class]]
+
+* When an ally you control is destroyed, you may place 1 status token on this spell.
+
+During your turn, if this spell has 3 or more status tokens on it, you may discard this spell to select 3 dice in your exhausted pool and place them into your active pool on a side of your choice.
+
+=====
+
+Choke
+Reaction Spell - Discard
+1 [[ceremonial:class]]
+
+You may play this spell when an opponent would use a unit or Phoenixborn ability that is not inexhaustible. Cancel the effects of that ability for the remainder of this turn.
+
+=====
+
+Coal Roarkwin
+Battlefield 6 - Life 15 - Spellboard 5
+
+Slash: [[side]] - 1 [[discard]]: Deal 1 damage to a target unit. If an opponent has no units in play, you may deal 1 damage to their Phoenixborn instead.
+
+=====
+
+Crescendo
+Reaction Spell - Discard
+1 [[sympathy:class]] - 1 [[discard]]
+
+You may play this spell after you have declared attackers. Deal 1 damage to a target unit you control to deal 3 damage to a target unit.
+
+=====
+
+Crimson Bomber
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]]
+Attack 3 - Life 2 - Recover 0
+
+Detonate 3: [[side]]: Destroy this unit to place 1 wound token on up to 3 target units.
+
+=====
+
+Crystal Shield
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 1 [[basic]]
+Life +2
+
+This unit now has the following ability:
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+=====
+
+Cut The Strings
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[basic]]: Deal 2 damage to a unit you control. If you do, you may discard a target alteration spell.
