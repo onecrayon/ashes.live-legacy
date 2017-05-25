@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}Welcome{% endblock %} - Ashes.live</title>
+</head>
+<body>
+	{% block navigation %}
+	<header id="header">
+		<p>(Header here)</p>
+	</header>
+	{% endblock %}
+	<div id="page">
+		{% block content %}{% endblock %}
+	</div>
+	{% block footer %}
+	<footer id="footer">
+		<p class="copyright">All images, graphics, textual and game contents &copy; 2015-2017 Plaid Hat Games. All rights reserved.</p>
+	</footer>
+	{% endblock %}
+</body>
+</html>
