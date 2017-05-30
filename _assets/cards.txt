@@ -254,3 +254,249 @@ Ready Spell - Spellboard
 [[main]]
 
 [[main]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[basic]]: Deal 2 damage to a unit you control. If you do, you may discard a target alteration spell.
+
+=====
+
+Deep Freeze
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]]
+
+* When attaching this spell, place 3 status tokens on this spell. Discard this spell when it no longer has any status tokens on it. As long as this spell is attached to this unit, this unit is considered to be exhausted.
+
+* This unit now has the following ability:
+
+* Thaw: [[side]]: Remove 1 status token from a Deep Freeze alteration spell attached to this unit.
+
+=====
+
+Dimona Odinstar
+Battlefield 5 - Life 17 - Spellboard 5
+
+Order: [[side]] - [[exhaust]] - 2 [[basic]]: Remove 1 exhaustion token from a target unit on your battlefield.
+
+=====
+
+Dispel
+Action Spell - Discard
+[[main]] - 1 [[basic]]
+
+Remove 2 status tokens from a target card or choose a target alteration spell. If that alteration spell is a conjured alteration spell, return it to its owner's conjuration pile. Otherwise, shuffle it into its owner's draw pile.
+
+=====
+
+Dread Wraith
+Conjuration - Battlefield
+Attack 1 - Life 6 - Recover 0
+
+* Rage 1: Add 1 to this unit's attack value for each wound token on this unit.
+
+=====
+
+Emperor Lion
+Conjuration - Battlefield
+Attack 3 - Life 3 - Recover 0
+
+Spite 1: When this unit deals damage to a Phoenixborn by attacking, you may deal 1 additional damage to that Phoenixborn.
+
+* Healing Aura 1: The recover value of all other units you control is increased by 1.
+
+=====
+
+Empower
+Ready Spell - Spellboard
+[[main]] - 2 [[natural:class]]
+
+After a player has declared attackers, you may spend 1 [[basic]] and place 1 exhaustion token on this spell. If you do, add 1 to a target unit's attack value for the remainder of this turn.
+
+In additionn, you may draw 1 card. If you do, discard 1 card.
+
+Focus 1: In addition, you may select 1 die in your exhausted pool, re-roll it, and place it into your active pool.
+
+=====
+
+Enchanted Violinist
+Ally - Battlefield
+[[main]] - 1 [[basic]]
+Attack 1 - Life 2 - Recover 0
+
+Song of Sorrow: After an opponent discards 1 or more cards from their draw pile, you may spend 1 [[basic]] to place 1 wound token on a target unit.
+
+=====
+
+Encore (Namine Hymntide)
+Action Spell - Discard
+[[main]]
+
+Search your discard pile for a card other than Encore and place it on the top or bottom of your draw pile. Draw 1 card.
+
+=====
+
+Expand Energy
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:power]]
+
+[[main]] - [[exhaust]]: Select 1 die in your exhausted pool, re-roll it, and place it into your active pool.
+
+=====
+
+Fade Away
+Alteration Spell - Unit
+[[main]] - 1 [[illusion:class]]
+
+Destroy this unit at the end of the round. If the destroyed unit was an ally, remove it from the game.
+
+=====
+
+False Demon
+Conjuration - Battlefield
+Attack 1 - Life 4 - Recover 0
+
+Unit Guard: This unit may guard a unit being attacked.
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+=====
+
+Fear (Jessa Na Ni)
+Action Spell - Discard
+[[main]]
+
+Choose a target unit under an opponent's control. If it is a conjuration, return it to its owner's conjuration pile. Otherwise, return it to its owner's hand.
+
+=====
+
+Figures In The Fog
+Reaction Spell - Discard
+2 [[illusion:class]] - 1 [[basic]]
+
+You may play this spell when an opponent chooses to counter with a unit they control. Prevent all damage the attacking unit or units would receive from the the countering unit in this battle.
+
+=====
+
+Final Cry
+Reaction Spell - Discard
+1 [[ceremonial:power]]
+
+You may play this spel when a unit you control is destroyed. Deal 2 damage to a target unit or Phoenixborn.
+
+=====
+
+Fire Archer
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]]
+Attack 1 - Life 1 - Recover 0
+
+Ambush 1: When this unit comes into play, you may deal 1 damage to a target unit or Phoenixborn.
+
+=====
+
+Flash Archer
+Ally - Battlefield
+[[main]] - 2 [[illusion:class]] - 2 [[basic]]
+Attack 4 - Life 2 - Recover 2
+
+Doublt Shot 1: [[side]] - [[exhaust]]: Deal 1 damage to a target unit. Then you may deal 1 damage to a target unit.
+
+=====
+
+Flute Mage
+Ally - Battlefield
+[[main]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 1 - Life 2 - Recover 1
+
+Enliven: [[side]] - [[exhaust]]: Remove 1 exhaustion token from a target unit.
+
+=====
+
+Freezing Blast
+Action Spell - Discard
+[[main]] - 2 [[natural:class]]
+
+Deal 2 damage to a target unit. Remove 2 status tokens from that unit.
+
+=====
+
+Frostback Bear
+Conjuration - Battlefield
+Attack 2 - Life 3 - Recover 0
+
+Freeze 1: When this unit deals damage to another unit, you may spend 1 [[basic]] to place 1 exhaustion token on that unit.
+
+Spite 1: When this unit deals damage to a Phoenixborn, you may deal 1 additional damage to that Phoenixborn.
+
+=====
+
+Frost Bite
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]]: Deal 1 damage to a target unit or Phoenixborn.
+
+Focus 1: You may change the activation cost of this ability to [[main]] - [[exhaust]] - 1 [[basic]].
+
+=====
+
+Frost Fang
+Ally - Battlefield
+[[main]] - 1 [[natural:power]]
+Attack 1 - Life 1 - Recover 1
+
+* Rapid Healing 1: When this unit would receive damage, you may spend any number of [[basic]]. For each 1 [[basic]] spent, prevent 1 damage.
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+=====
+
+Frozen Crown
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 2 [[basic]]
+Attack +3
+
+=====
+
+Gilder
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 0
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+* Inheritance 1: When this unit is destroyed you may place 1 status token on a target unit.
+
+=====
+
+Glow Finch (Leo Sunshadow)
+Conjuration - Battlefield
+Attack 0 - Life 2 - Recover 1
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+Decoy: When a unit you control would become the target of a spell, ability or dice power, and this unit could have been chosen as that target, you may place 1 exhaustion token on this unit to change the chosen target to be this unit instead.
+
+* Last Request 1: When this unit is destroyed, discard 1 card off the top of a target player's draw pile.
+
+* Magic Rejuvenation: [[side]]: Remove an alteration spell attached to this unit from the game. If you do, remove all exhaustion tokens from this unit.
+
+=====
+
+Gobi Sunshield (Orrick Gilstream)
+Ally - Battlefield
+[[main]] - 4 [[basic]]
+Attack 2 - Life 5 - Recover 3
+
+Alert: Do not place an exhaustion token on this unit as a result of its countering.
+
+=====
+
+Golden Veil
+Reaction Spell - Discard
+1 [[natural:class]] - 1 [[charm:class]]
+
+You may play this spell when an opponent uses a spell, ability, or dice power that would target a unit you control. Cancel the effects ot that spell, ability, or dice power.
+
+=====
+
+Guilt Link
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]]
+
+When your Phoenixborn receives 1 or more damage, you may place 1 exhaustion token on this spell to place 1 wound token on a target unit or Phoenixborn. The player that controls the targeted unit or Phoenixborn may discard 1 ready spell they control or 1 unit they control to prevent that wound from being placed.
