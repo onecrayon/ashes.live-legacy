@@ -40,5 +40,5 @@ def new_player():
 
 @mod.route('/verify/<uuid:token>/')
 def verify_player(token):
-    """Verifies a player's email address and logs them in"""
+    """Verifies a player's email address, finalizes their account, and logs them in"""
     pass
