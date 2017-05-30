@@ -20,7 +20,10 @@ class User(db.Model, UserMixin):
     def __init__(self, email, password, badge=None, username=None):
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
-        self.badge = badge if badge else User.fetch_badges(True)
+        if badge and re.search(r'^[0-9][a-z0-9*&+=-]+[a-z0-9*%!?]$', badge):
+            self.badge = badge
+        else:
+            self.badge = User.fetch_badges(True)
         self.username = username if username else choice([
             'Aradel Summergaard', 'Brennen Blackcloud', 'Coal Roarkwin',
             'Dimona Odinstar', 'Jessa Na Ni', 'Leo Sunshadow',
