@@ -88,7 +88,7 @@ X = the chosen unit's life value minus the number of wound tokens on the chosen 
 
 Blood Puppet
 Conjuration - Battlefield
-Attack 0 - Life 2 - Recover 0
+Attack 0 - Life 2 - Recover 0 - Copies 5
 
 Cursed 1: At the end of each round, place 1 wound token on your Phoenixborn.
 
@@ -106,7 +106,7 @@ Ready Spell - Spellboard
 
 Blue Jaguar
 Conjuration - Battlefield
-Attack 2 - Life 2 - Recover 0
+Attack 2 - Life 2 - Recover 0 - Copies 5
 
 Gaze 1: After a unit comes into play on an opponent's battlefield, you may spend 1 [[basic]] to place 1 ehaustion token on that unit.
 
@@ -152,7 +152,7 @@ Attack +2 - Life +1
 
 Butterfly Monk
 Conjuration - Battlefield
-Attack 1 - Life X - Recover 1
+Attack 1 - Life X - Recover 1 - Copies 5
 
 Unit Guard: This unit may guard a unit that is being attacked.
 
@@ -286,7 +286,7 @@ Remove 2 status tokens from a target card or choose a target alteration spell. I
 
 Dread Wraith
 Conjuration - Battlefield
-Attack 1 - Life 6 - Recover 0
+Attack 1 - Life 6 - Recover 0 - Copies 2
 
 * Rage 1: Add 1 to this unit's attack value for each wound token on this unit.
 
@@ -294,7 +294,7 @@ Attack 1 - Life 6 - Recover 0
 
 Emperor Lion
 Conjuration - Battlefield
-Attack 3 - Life 3 - Recover 0
+Attack 3 - Life 3 - Recover 0 - Copies 3
 
 Spite 1: When this unit deals damage to a Phoenixborn by attacking, you may deal 1 additional damage to that Phoenixborn.
 
@@ -349,7 +349,7 @@ Destroy this unit at the end of the round. If the destroyed unit was an ally, re
 
 False Demon
 Conjuration - Battlefield
-Attack 1 - Life 4 - Recover 0
+Attack 1 - Life 4 - Recover 0 - Copies 5
 
 Unit Guard: This unit may guard a unit being attacked.
 
@@ -418,7 +418,7 @@ Deal 2 damage to a target unit. Remove 2 status tokens from that unit.
 
 Frostback Bear
 Conjuration - Battlefield
-Attack 2 - Life 3 - Recover 0
+Attack 2 - Life 3 - Recover 0 - Copies 4
 
 Freeze 1: When this unit deals damage to another unit, you may spend 1 [[basic]] to place 1 exhaustion token on that unit.
 
@@ -456,7 +456,7 @@ Attack +3
 
 Gilder
 Conjuration - Battlefield
-Attack 1 - Life 2 - Recover 0
+Attack 1 - Life 2 - Recover 0 - Copies 5
 
 Unit Guard: This unit may guard a unit that is being attacked.
 
@@ -466,7 +466,7 @@ Unit Guard: This unit may guard a unit that is being attacked.
 
 Glow Finch (Leo Sunshadow)
 Conjuration - Battlefield
-Attack 0 - Life 2 - Recover 1
+Attack 0 - Life 2 - Recover 1 - Copies 1
 
 Unit Guard: This unit may guard a unit that is being attacked.
 
