@@ -742,3 +742,224 @@ Action Spell - Discard
 [[main]] - 2 [[natural:power]]
 
 Place 3 wound tokens on a target unit or Phoenixborn.
+
+=====
+
+Namine Hymntide
+Battlefield 6 - Life 17 - Spellboard 4
+
+Calming Melody: [[side]] - [[exhaust]] - 1 [[sympathy:class]]: Draw 1 card. You may place 1 exhaustion token on this card and 1 exhaustion token on a target Phoenixborn.
+
+=====
+
+Nightshade Swallow
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 1 - Copies 5
+
+Deathstrike: When this unit deals 1 or more damage to a unit it is attacking or countering, destroy the unit that received damage.
+
+=====
+
+Noah Redmoon
+Battlefield 6 - Life 20 - Spellboard 3
+
+Shadow Target: [[side]] - [[exhaust]] - 1 [[ceremonial:class]]: Place 1 exhaustion token on a target ready spell on an opponent's spellboard.
+
+=====
+
+Odette Diamondcrest
+Battlefield 5 - Life 17 - Spellboard 4
+
+Retribution: After this Phoenixborn receives damage while guarding, place 2 wound tokens on a target attacking unit.
+
+=====
+
+One Hundred Blades (Coal Roarkwin)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Deal 1 damage to a target Phoenixborn. Deal 1 damage to all opponents' units. Draw 1 card.
+
+=====
+
+Open Memories
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+You may search your draw pile for 1 card and place it into your hand. If you do, shuffle your draw pile.
+
+=====
+
+Orchid Dove
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 5
+
+* Peaceful Melody: Your opponents cannot take an Attack a Phoenixborn main action or Attack a Unit main action. During their turn an opponent may spend 1 [[basic]]. If they do, all units are no longer considered to have the Peaceful Melody ability for the remainder of that turn.
+
+=====
+
+Orrick Gilstream
+Battlefield 5 - Life 19 - Spellboard 4
+
+Bounty: [[side]] - [[exhaust]] - 2 [[basic]]: Select up to 4 dice in your exhausted pool. They must all be different types. Re-roll them, and place them into your active pool.
+
+=====
+
+Out Of The Mist
+Action Spell - Discard
+[[side]] - 1 [[illusion:power]] - 1 [[natural:power]]
+
+Deal X amount of damage to a target unit. You may draw 1 card.
+
+X = the number of units you have in play.
+
+=====
+
+Particle Shield
+Reaction Spell - Discard
+1 [[basic]]
+
+You may play this spell when a unit you control would receive 1 or more damage. This spell may be played even if you have already played reaction spells this turn. Prevent 1 damage to that unit. Shuffle this card into your draw pile.
+
+=====
+
+Phoenix Barrage (Lulu Firststone)
+Action Spell - Discard
+[[main]] - 3 [[basic]]
+
+Deal 4 damage to a target unit. Deal 2 damage to a target Phoenixborn.
+
+=====
+
+Poison
+Alteration Spell - Unit
+[[main]] - 1 [[ceremonial:class]]
+
+* After you take a main action other than pass, deal 1 damage to this unit.
+
+=====
+
+Power Through
+Alteration Spell - Unit
+[[side]] - 1 [[divine:power]] - 1 [[basic]]
+Attack +1
+
+This unit now has the following ability:
+
+Overkill 2: When this unit destroys a unit an opponent controls by attacking, deal 2 damage to that opponent's Phoenixborn.
+
+* Respark: 1 [[discard]]
+
+=====
+
+Protect
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:class]] - 1 [[ceremonial:class]]
+
+* When this spell comes into play, place 3 status tokens on it. Discard this card when it no longer has any status tokens on it.
+
+When a unit you control would receive damage, you may remove any number of status tokens from this spell. For each status token removed, prevent 1 damage to that unit.
+
+=====
+
+Purge
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:class]]: Choose a target player to discard 1 card off the top of their draw pile.
+
+Focus 1: You may pay 1 [[basic]] to have the target player discard 1 additional card.
+
+=====
+
+Rayward Knight (Dimona Odinstar)
+Ally - Battlefield
+[[main]] - 3 [[basic]]
+Attack 3 - Life 3 - Recover 3
+
+* Endurance: Remove all exhaustion tokens from this unit at the end of each round.
+
+=====
+
+Redirect
+Reaction Spell - Discard
+1 [[charm:class]]
+
+You may play this spell when your Phoenixborn would take damage and you have at least 1 unit that you control in play. Do not deal that damage to your Phoenixborn. Instead deal that damage to a target unit you control.
+
+=====
+
+Reflections In The Water
+Alteration Spell - Unit
+[[main]] - 1 [[illusion:class]]
+
+As long as this spell is attached to this unit it is considered to have no abilities other than inexhaustible abilities.
+
+* Respark: 1 [[basic]]
+
+=====
+
+Refresh
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+Remove all exhaustion tokens from a target unit.
+
+=====
+
+Regress
+Alteration Spell - Unit
+[[main]] - 1 [[ceremonial:class]] - 1 [[basic]]
+Attack -5
+
+When attaching this spell, discard all other alteration spells attached to this unit.
+
+=====
+
+Remorse
+Reaction Spell - Discard
+1 [[charm:class]] - 1 [[basic]]
+
+You may play this spell after an opponent takes an Attack a Phoenixborn main action or Attack a Unit main action. Deal 2 damage to a target Phoenixborn. The player that controls that Phoenixborn must discard 2 cards off the top of their draw pile. If they cannot, deal 1 additional damage to their Phoenixborn.
+
+=====
+
+Rin Northfell
+Battlefield 6 - Life 17 - Spellboard 4
+
+Ice Buff: [[side]] - [[exhaust]]: Attach an [[Ice Buff]] conjured alteration spell to a target unit you control.
+
+=====
+
+Rin's Fury (Rin Northfell)
+Action Spell - Discard
+[[main]] - 3 [[basic]]
+
+You may select up to 5 dice in your exhausted pool, re-roll them, and place them into your active pool. You may spend any number of [[natural:power]] just rolled to deal that much damage to a target unit or Phoenixborn.
+
+=====
+
+River Skald
+Ally - Battlefield
+[[main]] - 1 [[sympathy:power]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 3 - Life 2 - Recover 2
+
+Harsh Melody: When you draw 1 or more cards during your turn, you may place 1 exhaustion token on this unit to place a number of wound tokens equal to this unit's attack value on a target unit.
+
+=====
+
+Root Armor
+Alteration Spell - Unit
+[[side]] - 1 [[natural:class]]
+Life +2
+
+* Respark: 1 [[basic]]
+
+=====
+
+Rose Fire Dancer
+Ally - Battlefield
+[[main]] - 1 [[illusion:class]] - 1 [[basic]]
+Attack 3 - Life 1 - Recover 0
+
+Distract: [[side]] - [[exhaust]]: Place 1 exhaustion token on a target unit.
