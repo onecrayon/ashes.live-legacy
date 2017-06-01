@@ -94,7 +94,7 @@ for (var i = 0, count = cards.length; i < count; i++) {
 	// If there is a stat line, parse it
 	if (stats) {
 		for (var j = 0; j < stats.length; j++) {
-			var regexMatch = stats[j].match(/^([a-z]+)[ ]([0-9X+]+)$/i)
+			var regexMatch = stats[j].match(/^([a-z]+)[ ]([0-9X+-]+)$/i)
 			card[regexMatch[1].toLowerCase()] = regexMatch[2]
 		}
 	}
