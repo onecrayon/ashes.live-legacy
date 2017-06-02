@@ -48,7 +48,27 @@ var fs = require('fs'),
 	dir = path.normalize(process.argv[2]),
 	files = fs.readdirSync(dir),
 	// Delimiter string for costs, etc.
-	sep = ' - '
+	sep = ' - ',
+	// Function for parsing costs into a diceTypes array in place
+	parseCostsToDiceTypes = function (costsOrText, diceTypes) {
+		var diceTypeRE = /\[\[[a-z]+:(?:power|class)\]\]/g,
+			diceMatches = []
+		if (Array.isArray(costsOrText)) {
+			costsOrText.forEach(function (cost) {
+				var matches = cost.match(diceTypeRE)
+				if (matches) {
+					diceMatches = diceMatches.concat(matches)
+				}
+			})
+		} else {
+			diceMatches = costsOrText.match(diceTypeRE)
+		}
+		if (diceMatches) {
+			diceMatches.forEach(function (match) {
+				diceTypes.push(match.replace(/^\[\[([a-z]+):[a-z]+\]\]$/, '$1'))
+			})
+		}
+	}
 
 if (files) {
 	files.forEach(function (filePath) {
@@ -70,13 +90,14 @@ if (files) {
 			var details = cardData.split('\n\n'),
 				meta = details[0].split('\n'),
 				effects = details.slice(1),
-				titleMatch = meta[0].match(/^(.+?)(?:\(([a-z ]+)\))?$/i),
+				titleMatch = meta[0].match(/^(.+?)(?:[ ]\(([a-z ]+)\))?$/i),
 				card = {
 					'name': titleMatch[1],
 					'stub': titleMatch[1].replace(/[ ]/g, '-').replace(/[^a-z0-9-]/ig, '').toLowerCase()
 				},
 				stats = null,
-				conjurations = []
+				conjurations = [],
+				diceTypes = []
 			
 			// Check to see if we are working with a phoenixborn
 			if (meta.length == 2) {
@@ -96,6 +117,7 @@ if (files) {
 					stats = meta[2].split(sep)
 				} else {
 					card.cost = meta[2].split(sep)
+					diceType = parseCostsToDiceTypes(card.cost, diceTypes)
 					if (meta.length > 3) {
 						stats = meta[3].split(sep)
 					}
@@ -125,8 +147,10 @@ if (files) {
 				}
 				if (parts[3]) {
 					effect.cost = parts[3].split(sep)
+					parseCostsToDiceTypes(effect.cost, diceTypes)
 				}
 				effect.text = parts[4]
+				parseCostsToDiceTypes(effect.text, diceTypes)
 				card.text.push(effect)
 				// Lastly, check for any conjurations
 				if (conjurationMatches) {
@@ -141,6 +165,9 @@ if (files) {
 			})
 			if (conjurations.length) {
 				card.conjurations = conjurations
+			}
+			if (diceTypes.length) {
+				card.dice = Array.from(new Set(diceTypes))
 			}
 			// And finally append our card and continue
 			data.push(card)
