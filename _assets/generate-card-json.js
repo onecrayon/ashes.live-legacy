@@ -38,104 +38,116 @@
  */
 
 // Output help text
-if (!process.argv[2] || !process.argv[3] || ['-h', '-?', '--help'].indexOf(process.argv[2]) > -1) {
-	console.log('USAGE: ./generate-card-json.js inFile.txt outFile.json')
+if (!process.argv[2] || ['-h', '-?', '--help'].indexOf(process.argv[2]) > -1) {
+	console.log('USAGE: ./generate-card-json.js targetDirectory')
 	process.exit()
 }
 
 var fs = require('fs'),
-	cardText = fs.readFileSync(process.argv[2]).toString(),
-	outFile = fs.createWriteStream(process.argv[3], { encoding: "utf8" }),
-	cards = cardText.split(/^={3,}\n+/m),
-	data = [],
+	path = require('path'),
+	dir = path.normalize(process.argv[2]),
+	files = fs.readdirSync(dir),
 	// Delimiter string for costs, etc.
 	sep = ' - '
 
-for (var i = 0, count = cards.length; i < count; i++) {
-	var cardData = cards[i]
-	if (!cardData) {
-		continue
-	}
-	// Parse our basic card sections
-	var details = cardData.split('\n\n'),
-		meta = details[0].split('\n'),
-		effects = details.slice(1),
-		titleMatch = meta[0].match(/^(.+?)(?:\(([a-z ]+)\))?$/i),
-		card = {
-			'name': titleMatch[1],
-			'stub': titleMatch[1].replace(/[ ]/g, '-').replace(/[^a-z0-9-]/ig, '').toLowerCase()
-		},
-		stats = null,
-		conjurations = []
-	
-	// Check to see if we are working with a phoenixborn
-	if (meta.length == 2) {
-		card.type = 'Phoenixborn'
-		stats = meta[1].split(sep)
-	} else {
-		// Check to see if this is a phoenixborn-specific card
-		if (titleMatch.length > 1 && titleMatch[2]) {
-			card.phoenixborn = titleMatch[2]
+if (files) {
+	files.forEach(function (filePath) {
+		if (!filePath.endsWith('.txt')) {
+			return
 		}
-		var typePlacement = meta[1].split(sep)
-		// Parse out type, placement, and costs
-		card.type = typePlacement[0]
-		card.placement = typePlacement[1]
-		// If the third line starts with a letter, it's stats; otherwise cost
-		if (/^[a-z]/i.test(meta[2])) {
-			stats = meta[2].split(sep)
-		} else {
-			card.cost = meta[2].split(sep)
-			if (meta.length > 3) {
-				stats = meta[3].split(sep)
+		
+		var	cardText = fs.readFileSync(path.join(dir, filePath)).toString(),
+			outPath = path.join(dir, filePath.replace(/\.txt$/, '.json')),
+			outFile = fs.createWriteStream(outPath, { encoding: "utf8" }),
+			cards = cardText.split(/^={3,}\n+/m),
+			data = []
+		
+		cards.forEach(function (cardData) {
+			if (!cardData) {
+				return
 			}
-		}
-	}
-	// If there is a stat line, parse it
-	if (stats) {
-		for (var j = 0; j < stats.length; j++) {
-			var regexMatch = stats[j].match(/^([a-z]+)[ ]([0-9X+-]+)$/i)
-			card[regexMatch[1].toLowerCase()] = regexMatch[2]
-		}
-	}
-	// Parse through our effect text
-	card.text = []
-	for (var j = 0; j < effects.length; j++) {
-		var text = effects[j]
-		if (!text) {
-			continue
-		}
-		var parts = text.match(/^(\*\s+)?(?:([a-z0-9 ]+):\s+)?(?:((?:(?:\d+[ ])?\[\[[a-z:]+\]\](?:[ ]-[ ])?)+):\s+)?(.+)$/i)
-			effect = {},
-			conjurationMatches = parts[4].match(/\[\[[a-z ]+\]\](?=[ ]conjuration)/ig)
-		if (parts[1]) {
-			effect.inexhaustible = true
-		}
-		if (parts[2]) {
-			effect.name = parts[2]
-		}
-		if (parts[3]) {
-			effect.cost = parts[3].split(sep)
-		}
-		effect.text = parts[4]
-		card.text.push(effect)
-		// Lastly, check for any conjurations
-		if (conjurationMatches) {
-			for (var k = 0; k < conjurationMatches.length; k++) {
-				var cardString = conjurationMatches[k]
-				// Grab just the card name, excluding the square braces
-				conjurations.push(cardString.substring(2, cardString.length - 2))
+			// Parse our basic card sections
+			var details = cardData.split('\n\n'),
+				meta = details[0].split('\n'),
+				effects = details.slice(1),
+				titleMatch = meta[0].match(/^(.+?)(?:\(([a-z ]+)\))?$/i),
+				card = {
+					'name': titleMatch[1],
+					'stub': titleMatch[1].replace(/[ ]/g, '-').replace(/[^a-z0-9-]/ig, '').toLowerCase()
+				},
+				stats = null,
+				conjurations = []
+			
+			// Check to see if we are working with a phoenixborn
+			if (meta.length == 2) {
+				card.type = 'Phoenixborn'
+				stats = meta[1].split(sep)
+			} else {
+				// Check to see if this is a phoenixborn-specific card
+				if (titleMatch.length > 1 && titleMatch[2]) {
+					card.phoenixborn = titleMatch[2]
+				}
+				var typePlacement = meta[1].split(sep)
+				// Parse out type, placement, and costs
+				card.type = typePlacement[0]
+				card.placement = typePlacement[1]
+				// If the third line starts with a letter, it's stats; otherwise cost
+				if (/^[a-z]/i.test(meta[2])) {
+					stats = meta[2].split(sep)
+				} else {
+					card.cost = meta[2].split(sep)
+					if (meta.length > 3) {
+						stats = meta[3].split(sep)
+					}
+				}
 			}
-		}
-	}
-	if (conjurations.length) {
-		card.conjurations = conjurations
-	}
-	// And finally append our card and continue
-	data.push(card)
+			// If there is a stat line, parse it
+			if (stats) {
+				stats.forEach(function (stat) {
+					var regexMatch = stat.match(/^([a-z]+)[ ]([0-9X+-]+)$/i)
+					card[regexMatch[1].toLowerCase()] = regexMatch[2]
+				})
+			}
+			// Parse through our effect text
+			card.text = []
+			effects.forEach(function (text) {
+				if (!text) {
+					return
+				}
+				var parts = text.match(/^(\*\s+)?(?:([a-z0-9 ]+):\s+)?(?:((?:(?:\d+[ ])?\[\[[a-z:]+\]\](?:[ ]-[ ])?)+):\s+)?(.+)\n*$/i)
+					effect = {},
+					conjurationMatches = parts[4].match(/\[\[[a-z ]+\]\](?=[ ](?:conjuration|conjured alteration spell))/ig)
+				if (parts[1]) {
+					effect.inexhaustible = true
+				}
+				if (parts[2]) {
+					effect.name = parts[2]
+				}
+				if (parts[3]) {
+					effect.cost = parts[3].split(sep)
+				}
+				effect.text = parts[4]
+				card.text.push(effect)
+				// Lastly, check for any conjurations
+				if (conjurationMatches) {
+					conjurationMatches.forEach(function (cardString) {
+						// Grab just the card name, excluding the square braces
+						conjurations.push(cardString.substring(2, cardString.length - 2))
+					})
+				}
+			})
+			if (conjurations.length) {
+				card.conjurations = conjurations
+			}
+			// And finally append our card and continue
+			data.push(card)
+		})
+		
+		outFile.write(JSON.stringify(data))
+		outFile.end()
+		
+		console.log('Writing to ' + outPath + ' complete!')
+	})
 }
 
-outFile.write(JSON.stringify(data))
-outFile.end()
-
-console.log('Writing to ' + process.argv[3] + ' complete!')
+console.log('All card data files parsed!')
