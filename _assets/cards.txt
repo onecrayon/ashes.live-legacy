@@ -963,3 +963,204 @@ Ally - Battlefield
 Attack 3 - Life 1 - Recover 0
 
 Distract: [[side]] - [[exhaust]]: Place 1 exhaustion token on a target unit.
+
+=====
+
+Salamander Monk
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 2
+
+* Spirit Form: When this unit is destroyed, place a [[Salamander Monk Spirit]] conjuration onto your battlefield.
+
+=====
+
+Salamander Monk Spirit
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 3
+
+* Temporary: This unit cannot block or be chosen at the target of an attack.
+
+=====
+
+Saria Guideman
+Battlefield 5 - Life 20 - Spellboard 4
+
+Heart's Pull: [[side]] - [[exhaust]] - 1 [[charm:class]]: You may draw 1 card. If you do, you may choose a target player to discard 1 card off the top of their draw pile.
+
+=====
+
+Seal
+Action Spell - Discard
+[[main]] - 1 [[illusion:class]] - 1 [[charm:class]]
+
+Choose a ready spell on a target player's spellboard. Place 1 exhaustion token on the chosen spell and on each other copy of the chosen spell on that player's spellboard.
+
+=====
+
+Seaside Raven (Saria Guideman)
+Conjuration - Battlefield
+Attack 3 - Life 2 - Recover 0 - Copies 2
+
+Battle Advantage: When this unit is in battle, it inflicts its damage before other units without Battle Advantage inflict their damage.
+
+* Magic Guard: This unit cannot be affected by an opponent's spell.
+
+=====
+
+Secret Door
+Ready Spell - Spellboard
+[[main]] - 1 [[illusion:class]] - 1 [[basic]]
+
+After a reaction spell is played and its effects have been resolved, you may place 1 exhaustion token on this spell to draw 1 card, or discard this card to take the reaction spell just played from its owner's discard pile and place it in its owner's hand.
+
+=====
+
+Shadow Counter
+Reaction Spell - Discard
+1 [[illusion:class]] - 1 [[basic]]
+
+You may play this spell after your Phoenixborn receives damage from an attack. Deal 6 damage to a target unit your opponent controls.
+
+=====
+
+Shadow Hound
+Conjuration - Battlefield
+Attack 3 - Life 5 - Recover 0 - Copies 3
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+=====
+
+Shadow Spirit
+Conjuration - Battlefield
+Attack 2 - Life X - Recover 0 - Copies 4
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+* X = the number of [[Summon Shadow Spirit]] spells on your spellboard.
+
+=====
+
+Shatter Pulse
+Reaction Spell - Discard
+2 [[sympathy:class]] - 1 [[basic]]
+
+You may play this spell after a unit you control is destroyed. Destroy a target unit. You may change 2 dice in a target player's active pool to a side of your choice.
+
+=====
+
+Shield Mage
+Ally - Battlefield
+[[main]] - 1 [[divine:class]]
+Attack 0 - Life 2 - Recover 2
+
+Exert: [[side]]: Place 1 exhaustion token on this unit.
+
+* Protective Aura 1: While this unit has 1 or more exhaustion tokens on it, the life value of all other units you control is increased by 1.
+
+=====
+
+Shifting Mist
+Ready Spell - Spellboard
+[[main]] - 1 [[illusion:class]]
+
+[[side]] - [[exhaust]]: Change 2 dice in your active pool to a side of your choice.
+
+=====
+
+Silver Snake (Maeoni Viper)
+Conjuration - Battlefield
+Attack X - Life 4 - Recover 3 - Copies 3
+
+* Consume: Whenever an opponent's unit is destroyed as a result of a spell, attack, counter, ability, or dice power you control, place 1 status token on this unit. If the destroyed unit was an ally, remove it from the game.
+
+* X = the number of status tokens on this unit.
+
+=====
+
+Sleeping Widow
+Conjuration - Battlefield
+Attack 2 - Life 1 - Recover 0 - Copies 6
+
+=====
+
+Sleight Of Hand
+Action Spell - Discard
+[[main]] - 1 [[illusion:power]] - 1 [[basic]]
+
+Draw 3 cards.
+
+=====
+
+Small Sacrifice
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]]: Deal 1 damage to a target unit on your battlefield. If you do, you may deal 1 damage to a target unit on an opponent's battlefield.
+
+Focus 1: If both targeted units are unexhausted, you may place 1 exhaustion token on both units instead of damage.
+
+=====
+
+Spiked Armor
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 1 [[basic]]
+Life +2
+
+* This unit now has the following ability:
+
+* Spiked Skin 2: When this unit is damaged by one or more attacking or countering units, simultaneously deal 2 damage to each unit that is attacking or countering this unit.
+
+=====
+
+Squall Stallion
+Conjuration - Battlefield
+Attack 1 - Life 3 - Recover 0 - Copies 5
+
+Opportunist 2: When you draw 1 or more cards during a player's turn, add 2 to this unit's attack value for the remainder of that turn.
+
+=====
+
+Steady Gaze
+Action Spell - Discard
+[[main]] - 2 [[illusion:class]]
+
+Place 2 exhaustion tokens on a target unit.
+
+=====
+
+Stormwind Sniper
+Ally - Battlefield
+[[main]] - 1 [[illusion:class]] - 1 [[ceremonial:class]] - 1 [[basic]]
+Attack 2 - Life 1 - Recover 1
+
+Ambush 2: When this unit comes into play, you may inflict 2 damage on a target unit or Phoenixborn.
+
+=====
+
+Strange Copy
+Action Spell - Discard
+[[main]] - 2 [[illusion:class]]
+
+* When placing this spell onto your battlefield, choose a unit an opponent has in play. Place status tokens on this spell equal to the chosen unit's attack value. This spell is considered to be an ally that has an attack and life value equal to the number of status tokens on it, and a recover value of 0. Alterations cannot be placed on this spell.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Strengthen
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:class]] - 1 [[ceremonial:class]]
+
+[[side]] - [[exhaust]]: Add 2 to a target unit's attack value for the remainder of the turn.
+
+Focus 2: Add 1 more to that unit's attack value for the remainder of the turn.
+
+=====
+
+String Mage
+Ally - Battlefield
+[[main]] - 1 [[sympathy:power]] - 1 [[sympathy:class]]
+Attack 1 - Life 3 - Recover 2
+
+Exchange Link 1: [[side]]: Move 1 wound or status token from a target unit onto this unit, or move 1 wound or status token from this unit onto a target unit.
