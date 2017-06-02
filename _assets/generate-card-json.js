@@ -132,7 +132,10 @@ if (files) {
 				if (conjurationMatches) {
 					conjurationMatches.forEach(function (cardString) {
 						// Grab just the card name, excluding the square braces
-						conjurations.push(cardString.substring(2, cardString.length - 2))
+						var cardName = cardString.substring(2, cardString.length - 2)
+						if (conjurations.indexOf(cardName) < 0) {
+							conjurations.push(cardName)
+						}
 					})
 				}
 			})
