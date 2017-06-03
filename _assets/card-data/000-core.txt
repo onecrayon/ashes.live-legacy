@@ -1,0 +1,685 @@
+Abundance
+Ready Spell - Spellboard
+[[main]] - 1 [[illusion:class]]
+
+[[main]] - [[exhaust]]: All players may draw up to 2 cards. For each card they cannot or do not draw, deal 1 damage to their Phoenixborn.
+
+Focus 1: Reduce the damage your Phoenixborn receives from this spell by 1.
+
+Focus 2: Reduce the damage your Phoenixborn receives from this spell by an additional 1.
+
+=====
+
+Anchornaut
+Ally - Battlefield
+[[main]] - 1 [[basic]]
+Attack 0 - Life 1 - Recover 1
+
+Throw 1: During your turn, you may place 1 exhaustion token on this unit to deal 1 damage to a target unit
+
+=====
+
+Aradel Summergaard
+Battlefield 8 - Life 16 - Spellboard 4
+
+Water Blast: [[side]] - [[exhaust]] - 1 [[natural:class]]: Deal 2 damage to a target unit.
+
+=====
+
+Blood Archer
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]] - 1 [[charm:class]] - 2 [[basic]]
+Attack 3 - Life 3 - Recover 2
+
+Blood Oath 2: When you are declaring attackers, you may add 2 attack to this unit for the remainder of this turn. If you do, place 2 wounds on this unit.
+
+Battle Advantage: When this unit is in battle, it inflicts its damage before other units without Battle Advantage inflict their damage.
+
+=====
+
+Blood Puppet
+Conjuration - Battlefield
+Attack 0 - Life 2 - Recover 0 - Copies 5
+
+Cursed 1: At the end of each round, place 1 wound token on your Phoenixborn.
+
+Self Inflict 1: [[side]] - 1 [[basic]]: Deal 1 damage to this unit.
+
+=====
+
+Blood Transfer
+Ready Spell - Spellboard
+[[main]]
+
+[[side]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[charm:class]]: Deal 2 damage to a target unit you control. If you do, you may remove 2 wound tokens from another unit you control or remove 1 wound token from your Phoenixborn.
+
+=====
+
+Blue Jaguar
+Conjuration - Battlefield
+Attack 2 - Life 2 - Recover 0 - Copies 5
+
+Gaze 1: After a unit comes into play on an opponent's battlefield, you may spend 1 [[basic]] to place 1 ehaustion token on that unit.
+
+=====
+
+Bound Soul
+Action Spell - Discard
+[[main]] - 1 [[ceremonial:class]]
+
+Search your discard pile for an ally and place it into your hand.
+
+=====
+
+Bring Forth
+Alteration Spell - Unit
+[[main]] - 2 [[ceremonial:class]]
+Attack +2 - Life +1
+
+* This spell can only be attached to units with the Illusion ability. This unit is no longer considered to have the Illusion ability.
+
+* Respark: 2 [[basic]]
+
+=====
+
+Butterfly Monk
+Conjuration - Battlefield
+Attack 1 - Life X - Recover 1 - Copies 5
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+* Last Blessing 1: When this unit is destroyed, remove 1 wound token from a target unit or Phoenixborn.
+
+* X = the number of [[Summon Butterfly Monk]] spells on your spellboard.
+
+=====
+
+Call Upon The Realms
+Action Spell - Discard
+[[main]]
+
+Change 3 dice in your active pool to a side of your choice.
+
+=====
+
+Change Of Revenge
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:class]]
+
+Whenever a unit you control is destroyed, you may place 1 exhaustion token on this spell to deal 1 damage to a target unit or Phoenixborn.
+
+=====
+
+Coal Roarkwin
+Battlefield 6 - Life 15 - Spellboard 5
+
+Slash: [[side]] - 1 [[discard]]: Deal 1 damage to a target unit. If an opponent has no units in play, you may deal 1 damage to their Phoenixborn instead.
+
+=====
+
+Cut The Strings
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[basic]]: Deal 2 damage to a unit you control. If you do, you may discard a target alteration spell.
+
+=====
+
+Empower
+Ready Spell - Spellboard
+[[main]] - 2 [[natural:class]]
+
+After a player has declared attackers, you may spend 1 [[basic]] and place 1 exhaustion token on this spell. If you do, add 1 to a target unit's attack value for the remainder of this turn.
+
+In additionn, you may draw 1 card. If you do, discard 1 card.
+
+Focus 1: In addition, you may select 1 die in your exhausted pool, re-roll it, and place it into your active pool.
+
+=====
+
+Enchanted Violinist
+Ally - Battlefield
+[[main]] - 1 [[basic]]
+Attack 1 - Life 2 - Recover 0
+
+Song of Sorrow: After an opponent discards 1 or more cards from their draw pile, you may spend 1 [[basic]] to place 1 wound token on a target unit.
+
+=====
+
+Expand Energy
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:power]]
+
+[[main]] - [[exhaust]]: Select 1 die in your exhausted pool, re-roll it, and place it into your active pool.
+
+=====
+
+Fade Away
+Alteration Spell - Unit
+[[main]] - 1 [[illusion:class]]
+
+Destroy this unit at the end of the round. If the destroyed unit was an ally, remove it from the game.
+
+=====
+
+False Demon
+Conjuration - Battlefield
+Attack 1 - Life 4 - Recover 0 - Copies 5
+
+Unit Guard: This unit may guard a unit being attacked.
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+=====
+
+Fear (Jessa Na Ni)
+Action Spell - Discard
+[[main]]
+
+Choose a target unit under an opponent's control. If it is a conjuration, return it to its owner's conjuration pile. Otherwise, return it to its owner's hand.
+
+=====
+
+Final Cry
+Reaction Spell - Discard
+1 [[ceremonial:power]]
+
+You may play this spel when a unit you control is destroyed. Deal 2 damage to a target unit or Phoenixborn.
+
+=====
+
+Gilder
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 0 - Copies 5
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+* Inheritance 1: When this unit is destroyed you may place 1 status token on a target unit.
+
+=====
+
+Golden Veil
+Reaction Spell - Discard
+1 [[natural:class]] - 1 [[charm:class]]
+
+You may play this spell when an opponent uses a spell, ability, or dice power that would target a unit you control. Cancel the effects ot that spell, ability, or dice power.
+
+=====
+
+Hammer Knight
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:power]] - 1 [[natural:class]] - 1 [[basic]]
+Attack 4 - Life 3 - Recover 1
+
+Aftershock 1: When this unit deals damage by attacking or countering, you may place 1 wound token on a target unit.
+
+=====
+
+Hidden Power
+Action Spell - Discard
+[[main]] - 1 [[illusion:class]]
+
+Select 2 dice in your exhausted pool and place them into your active pool on a side of your choice.
+
+=====
+
+Hypnotize
+Ready Spell - Spellboard
+[[main]]
+
+[[side]] - [[exhaust]] - 2 [[charm:class]]: Choose a target unit you control to gain the following ability for the remainder of the turn.
+
+Bypass: This unit cannot be blocked or guarded.
+
+=====
+
+Iron Rhino
+Conjuration - Battlefield
+Attack 5 - Life 4 - Recover 0 - Copies 5
+
+=====
+
+Iron Worker
+Ally - Battlefield
+[[main]] - 2 [[basic]]
+Attack 2 - Life 2 - Recover 1
+
+* Resourceful 1: When this unit comes into play, place 1 status token on this unit. At the beginning of the player turns phase, place 1 status token on this unit.
+
+* Overtime: Anytime during your turn, you may remove any number of status tokens from this unit. For each status token removed, you may take 1 additional side action ([[side]]) this turn.
+
+=====
+
+Jessa Na Ni
+Battlefield 5 - Life 18 - Spellboard 4
+
+Screams of the Departed: Whenever a unit under an opponent's control leaves play, you may spend 1 [[basic]] to deal 1 damage to their Phoenixborn.
+
+=====
+
+Leech Warrior
+Ally - Battlefield
+[[main]] - 2 [[ceremonial:class]] - 1 [[basic]]
+Attack 2 - Life 3 - Recover 3
+
+Shadow Drain 1: When this unit receives 1 or more damage, you may select 1 die in a target player's active pool and place it in that player's exhausted pool.
+
+=====
+
+Living Doll
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]] - 1 [[charm:class]] - 1 [[basic]]
+Attack 0 - Life 3 - Recover 1
+
+Pain Link: Whenever this unit receives damage, you may spend 1 [[basic]] to inflict X amount of damage to a target unit or Phoenixborn.
+
+X = the damage received or this unit's life value, whichever is less.
+
+=====
+
+Maeoni Viper
+Battlefield 3 - Life 22 - Spellboard 4
+
+Strike: After a player has declared attackers, you may spend 1 [[basic]] and place 1 exhaustion token on this card. If you do, add 2 to a target unit's attack value for the remainder of this turn.
+
+=====
+
+Masked Wolf (Noah Redmoon)
+Conjuration - Battlefield
+Attack 2 - Life 1 - Recover 0
+
+=====
+
+Massive Growth
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 1 [[basic]]
+Attack +4 - Life +4
+
+* This spell can only be attached to a unit with an attack value of 2 or less.
+
+* Spell Guard: This spell cannot be affected by an opponent's spell.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Mist Spirit
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 10
+
+=====
+
+Mist Typhoon
+Action Spell - Discard
+[[main]] - 1 [[illusion:class]] - 1 [[natural:class]]
+
+Deal 1 damage to all opponent's units. You may draw 1 card.
+
+=====
+
+Molten Gold
+Action Spell - Discard
+[[main]] - 2 [[natural:power]]
+
+Place 3 wound tokens on a target unit or Phoenixborn.
+
+=====
+
+Noah Redmoon
+Battlefield 6 - Life 20 - Spellboard 3
+
+Shadow Target: [[side]] - [[exhaust]] - 1 [[ceremonial:class]]: Place 1 exhaustion token on a target ready spell on an opponent's spellboard.
+
+=====
+
+One Hundred Blades (Coal Roarkwin)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Deal 1 damage to a target Phoenixborn. Deal 1 damage to all opponents' units. Draw 1 card.
+
+=====
+
+Open Memories
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+You may search your draw pile for 1 card and place it into your hand. If you do, shuffle your draw pile.
+
+=====
+
+Out Of The Mist
+Action Spell - Discard
+[[side]] - 1 [[illusion:power]] - 1 [[natural:power]]
+
+Deal X amount of damage to a target unit. You may draw 1 card.
+
+X = the number of units you have in play.
+
+=====
+
+Protect
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:class]] - 1 [[ceremonial:class]]
+
+* When this spell comes into play, place 3 status tokens on it. Discard this card when it no longer has any status tokens on it.
+
+When a unit you control would receive damage, you may remove any number of status tokens from this spell. For each status token removed, prevent 1 damage to that unit.
+
+=====
+
+Purge
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:class]]: Choose a target player to discard 1 card off the top of their draw pile.
+
+Focus 1: You may pay 1 [[basic]] to have the target player discard 1 additional card.
+
+=====
+
+Redirect
+Reaction Spell - Discard
+1 [[charm:class]]
+
+You may play this spell when your Phoenixborn would take damage and you have at least 1 unit that you control in play. Do not deal that damage to your Phoenixborn. Instead deal that damage to a target unit you control.
+
+=====
+
+Reflections In The Water
+Alteration Spell - Unit
+[[main]] - 1 [[illusion:class]]
+
+As long as this spell is attached to this unit it is considered to have no abilities other than inexhaustible abilities.
+
+* Respark: 1 [[basic]]
+
+=====
+
+Refresh
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+Remove all exhaustion tokens from a target unit.
+
+=====
+
+Root Armor
+Alteration Spell - Unit
+[[side]] - 1 [[natural:class]]
+Life +2
+
+* Respark: 1 [[basic]]
+
+=====
+
+Rose Fire Dancer
+Ally - Battlefield
+[[main]] - 1 [[illusion:class]] - 1 [[basic]]
+Attack 3 - Life 1 - Recover 0
+
+Distract: [[side]] - [[exhaust]]: Place 1 exhaustion token on a target unit.
+
+=====
+
+Saria Guideman
+Battlefield 5 - Life 20 - Spellboard 4
+
+Heart's Pull: [[side]] - [[exhaust]] - 1 [[charm:class]]: You may draw 1 card. If you do, you may choose a target player to discard 1 card off the top of their draw pile.
+
+=====
+
+Seal
+Action Spell - Discard
+[[main]] - 1 [[illusion:class]] - 1 [[charm:class]]
+
+Choose a ready spell on a target player's spellboard. Place 1 exhaustion token on the chosen spell and on each other copy of the chosen spell on that player's spellboard.
+
+=====
+
+Seaside Raven (Saria Guideman)
+Conjuration - Battlefield
+Attack 3 - Life 2 - Recover 0 - Copies 2
+
+Battle Advantage: When this unit is in battle, it inflicts its damage before other units without Battle Advantage inflict their damage.
+
+* Magic Guard: This unit cannot be affected by an opponent's spell.
+
+=====
+
+Shadow Counter
+Reaction Spell - Discard
+1 [[illusion:class]] - 1 [[basic]]
+
+You may play this spell after your Phoenixborn receives damage from an attack. Deal 6 damage to a target unit your opponent controls.
+
+=====
+
+Shifting Mist
+Ready Spell - Spellboard
+[[main]] - 1 [[illusion:class]]
+
+[[side]] - [[exhaust]]: Change 2 dice in your active pool to a side of your choice.
+
+=====
+
+Silver Snake (Maeoni Viper)
+Conjuration - Battlefield
+Attack X - Life 4 - Recover 3 - Copies 3
+
+* Consume: Whenever an opponent's unit is destroyed as a result of a spell, attack, counter, ability, or dice power you control, place 1 status token on this unit. If the destroyed unit was an ally, remove it from the game.
+
+* X = the number of status tokens on this unit.
+
+=====
+
+Sleeping Widow
+Conjuration - Battlefield
+Attack 2 - Life 1 - Recover 0 - Copies 6
+
+=====
+
+Sleight Of Hand
+Action Spell - Discard
+[[main]] - 1 [[illusion:power]] - 1 [[basic]]
+
+Draw 3 cards.
+
+=====
+
+Small Sacrifice
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]]: Deal 1 damage to a target unit on your battlefield. If you do, you may deal 1 damage to a target unit on an opponent's battlefield.
+
+Focus 1: If both targeted units are unexhausted, you may place 1 exhaustion token on both units instead of damage.
+
+=====
+
+Spiked Armor
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 1 [[basic]]
+Life +2
+
+* This unit now has the following ability:
+
+* Spiked Skin 2: When this unit is damaged by one or more attacking or countering units, simultaneously deal 2 damage to each unit that is attacking or countering this unit.
+
+=====
+
+Steady Gaze
+Action Spell - Discard
+[[main]] - 2 [[illusion:class]]
+
+Place 2 exhaustion tokens on a target unit.
+
+=====
+
+Stormwind Sniper
+Ally - Battlefield
+[[main]] - 1 [[illusion:class]] - 1 [[ceremonial:class]] - 1 [[basic]]
+Attack 2 - Life 1 - Recover 1
+
+Ambush 2: When this unit comes into play, you may inflict 2 damage on a target unit or Phoenixborn.
+
+=====
+
+Strange Copy
+Action Spell - Discard
+[[main]] - 2 [[illusion:class]]
+
+* When placing this spell onto your battlefield, choose a unit an opponent has in play. Place status tokens on this spell equal to the chosen unit's attack value. This spell is considered to be an ally that has an attack and life value equal to the number of status tokens on it, and a recover value of 0. Alterations cannot be placed on this spell.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Strengthen
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:class]] - 1 [[ceremonial:class]]
+
+[[side]] - [[exhaust]]: Add 2 to a target unit's attack value for the remainder of the turn.
+
+Focus 2: Add 1 more to that unit's attack value for the remainder of the turn.
+
+=====
+
+Summon Blood Puppet
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]]: Place a [[Blood Puppet]] conjuration onto a target player's battlefield.
+
+=====
+
+Summon Blue Jaguar (Aradel Summergaard)
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[basic]]: Place a [[Blue Jaguar]] conjuration onto your battlefield.
+
+=====
+
+Summon Butterfly Monk
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[natural:power]]: Place a [[Butterfly Monk]] conjuration onto your battlefield.
+
+=====
+
+Summon False Demon
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[illusion:class]] - 1 [[basic]]: Place a [[False Demon]] conjuration onto your battlefield.
+
+=====
+
+Summon Gilder
+Ready Spell - Spellboard
+[[main]] - 1 [[charm:class]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]]: Place a [[Gilder]] conjuration onto your battlefield. You may deal 1 damage to a target unit.
+
+=====
+
+Summon Iron Rhino
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:class]]
+
+[[main]] - [[exhaust]] - 6 [[basic]]: Place an [[Iron Rhino]] conjuration onto your battlefield.
+
+Focus 1: Reduce the activate cost of this spell by 1 [[basic]].
+
+Focus 2: Reduce the activation cost of this spell by an additional 1 [[basic]].
+
+=====
+
+Summon Masked Wolf (Noah Redmoon)
+Ready Spell - Spellboard
+[[main]]
+
+[[side]] - [[exhaust]] - 1 [[illusion:class]] - 1 [[basic]]: Place a [[Masked Wolf]] conjuration onto your battlefield.
+
+Focus 1: You may change the activation cost of this ability to [[side]] - [[exhaust]] - 1 [[illusion:power]].
+
+=====
+
+Summon Mist Spirit
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[illusion:class]]: Place a [[Mist Spirit]] conjuration onto your battlefield. You may spend an additional 1 [[basic]] when activating this spell to place an additional [[Mist Spirit]] conjuration onto your battlefield.
+
+=====
+
+Summon Seaside Raven (Saria Guideman)
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[basic]]: Place a [[Seaside Raven]] conjuration onto your battlefield.
+
+=====
+
+Summon Silver Snake (Maeoni Viper)
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:power]] - 1 [[natural:power]]: Place a [[Silver Snake]] conjuration onto your battlefield.
+
+Focus 1: Place 1 status token on that Silver Snake.
+
+Focus 2: Place 1 additional status token on that Silver Snake.
+
+* Spell Guard: This spell cannot be affected by an opponent's spell.
+
+=====
+
+Summon Sleeping Widows
+Reaction Spell - Discard
+2 [[ceremonial:class]]
+
+You may play this spell when a unit you control is destroyed. Place up to 2 [[Sleeping Widow]] conjurations onto your battlefield.
+
+=====
+
+Summon Three-Eyed Owl
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:class]]: Place a [[Three-Eyed Owl]] conjuration onto your battlefield.
+
+=====
+
+Sympathy Pain
+Reaction Spell - Discard
+2 [[charm:class]]
+
+Play this spell after your Phoenixborn has received damage. Deal 3 damage to a target unit or Phoenixborn.
+
+=====
+
+Three-Eyed Owl
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 0 - Copies 5
+
+Memory Drain 1: [[main]] - [[exhaust]]: Choose a target player to discard 1 card of their choice from their hand.
+
+=====
+
+Transfer
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+Move 1 token from a target player's non-Phoenixborn card onto another non-Phoenixborn card that player controls.
+
+=====
+
+Undying Heart
+Alteration Spell - Unit
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+Life +2 - Recover +2
+
+* Respark: 2 [[basic]]

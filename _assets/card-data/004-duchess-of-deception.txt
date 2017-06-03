@@ -1,0 +1,113 @@
+Body Inversion
+Alteration Spell - Unit
+[[main]] - 2 [[illusion:class]]
+
+This spell cannot be attached to a unit that already has a spell with the word "Inversion" in its title attached to it.
+
+When attaching this spell to a unit that has the Illusion ability, the player that played this spell may select 2 Illusion dice in their exhausted pool and place them into their active pool on the side of their choice.
+
+* Switch this unit's printed attack and life values.
+
+=====
+
+Figures In The Fog
+Reaction Spell - Discard
+2 [[illusion:class]] - 1 [[basic]]
+
+You may play this spell when an opponent chooses to counter with a unit they control. Prevent all damage the attacking unit or units would receive from the the countering unit in this battle.
+
+=====
+
+Flash Archer
+Ally - Battlefield
+[[main]] - 2 [[illusion:class]] - 2 [[basic]]
+Attack 4 - Life 2 - Recover 2
+
+Doublt Shot 1: [[side]] - [[exhaust]]: Deal 1 damage to a target unit. Then you may deal 1 damage to a target unit.
+
+=====
+
+Illusionary Cycle (Victoria Glassfire)
+Action Spell - Discard
+[[main]]
+
+Select 1 Illusion die in your exhausted pool and place it into your active pool on a side of your choice. Shuffle this card into your draw pile.
+
+=====
+
+Particle Shield
+Reaction Spell - Discard
+1 [[basic]]
+
+You may play this spell when a unit you control would receive 1 or more damage. This spell may be played even if you have already played reaction spells this turn. Prevent 1 damage to that unit. Shuffle this card into your draw pile.
+
+=====
+
+Secret Door
+Ready Spell - Spellboard
+[[main]] - 1 [[illusion:class]] - 1 [[basic]]
+
+After a reaction spell is played and its effects have been resolved, you may place 1 exhaustion token on this spell to draw 1 card, or discard this card to take the reaction spell just played from its owner's discard pile and place it in its owner's hand.
+
+=====
+
+Shadow Hound
+Conjuration - Battlefield
+Attack 3 - Life 5 - Recover 0 - Copies 3
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+=====
+
+Shadow Spirit
+Conjuration - Battlefield
+Attack 2 - Life X - Recover 0 - Copies 4
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+* X = the number of [[Summon Shadow Spirit]] spells on your spellboard.
+
+=====
+
+Summon Shadow Hound
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[illusion:class]]: Place a [[Shadow Hound]] conjuration onto your battlefield.
+
+Focus 1: You may deal 1 damage to a target unit.
+
+Focus 2: Then you may deal 1 damage to a target unit.
+
+=====
+
+Summon Shadow Spirit
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust] - 1 [[illusion:power]]: Place a [[Shadow Spirit]] conjuration onto your battlefield.
+
+=====
+
+To Shadows
+Ready Spell - Spellboard
+[[main]]
+
+[[side]] - [[exhaust]] - 1 [[illusion:class]]: Choose a target unit to gain the following ability for the remainder of this turn:
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+=====
+
+Vanish
+Reaction Spell - Discard
+2 [[illusion:class]]
+
+You may play this spell when an opponent would use a spell, ability, or dice power that targets you, your draw pile, your discard pile, or your Phoenixborn. Cancel the effects of that spell, ability, or dice power.
+
+=====
+
+Victoria Glassfire
+Battlefield 5 - Life 18 - Spellboard 5
+
+Shadow Spring: [[side]] - [[exhaust]] - 1 [[illusion:power]]: Select 2 dice in your exhausted pool and place them into your active pool on a side of your choice.

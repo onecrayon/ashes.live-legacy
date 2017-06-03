@@ -1,0 +1,125 @@
+Emperor Lion
+Conjuration - Battlefield
+Attack 3 - Life 3 - Recover 0 - Copies 3
+
+Spite 1: When this unit deals damage to a Phoenixborn by attacking, you may deal 1 additional damage to that Phoenixborn.
+
+* Healing Aura 1: The recover value of all other units you control is increased by 1.
+
+=====
+
+Heal
+Action Spell - Discard
+[[side]] - 1 [[divine:class]]
+
+Remove all wound tokens from a target unit or 2 wound tokens from a target Phoenixborn.
+
+=====
+
+Holy Knight
+Ally - Battlefield
+[[main]] - 1 [[divine:power]] - 2 [[divine:class]] - 1 [[basic]]
+Attack 5 - Life 3 - Recover 2
+
+Impenetrable: This unit cannot be affected by spells, abilities, or dice powers used by an opponent.
+
+=====
+
+Law Of Assurance
+Ready Spell - Spellboard
+[[main]] - 1 [[divine:class]] - 1 [[basic]]
+
+When this spell comes into play, you may select 2 dice in your exhausted pool and place them into your active pool on a side of your choice.
+
+Players' active dice pools cannot be affected by spells, abilities, or dice powers used by their opponents.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Law Of Sight
+Ready Spell - Spellboard
+[[side]] - 1 [[divine:class]] - 1 [[basic]]
+
+When this spell comes into play, you may draw up to 2 cards.
+
+No player may play reaction spells.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Meteor
+Action Spell - Discard
+[[main]] - 2 [[divine:power]]
+
+Deal 2 damage to all units.
+
+For each unit, place 1 exhaustion token on that unit unless its controlling player spends 1 [[basic]].
+
+=====
+
+Odette Diamondcrest
+Battlefield 5 - Life 17 - Spellboard 4
+
+Retribution: After this Phoenixborn receives damage while guarding, place 2 wound tokens on a target attacking unit.
+
+=====
+
+Power Through
+Alteration Spell - Unit
+[[side]] - 1 [[divine:class]] - 1 [[basic]]
+Attack +1
+
+This unit now has the following ability:
+
+Overkill 2: When this unit destroys a unit an opponent controls by attacking, deal 2 damage to that opponent's Phoenixborn.
+
+* Respark: 1 [[discard]]
+
+=====
+
+Shield Mage
+Ally - Battlefield
+[[main]] - 1 [[divine:power]]
+Attack 0 - Life 2 - Recover 2
+
+Exert: [[side]]: Place 1 exhaustion token on this unit.
+
+* Protective Aura 1: While this unit has 1 or more exhaustion tokens on it, the life value of all other units you control is increased by 1.
+
+=====
+
+Summon Emperor Lion
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[divine:class]] - 1 [[basic]]: Place an [[Emperor Lion]] conjuration onto your battlefield.
+
+=====
+
+Summon Winged Lioness
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[divine:class]] - 1 [[basic]]: Place a [[Winged Lioness]] conjuration onto your battlefield.
+
+=====
+
+Sword Of Virtue (Odette Diamondcrest)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Destroy a target unit or remove all wound tokens from a target unit.
+
+=====
+
+Winged Lioness
+Conjuration - Battlefield
+Attack 2 - Life 2 - Recover 1
+
+Stalk: This unit cannot be guarded against.

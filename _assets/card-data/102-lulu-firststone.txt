@@ -1,0 +1,12 @@
+Lulu Firststone
+Battlefield 4 - Life 21 - Spellboard 4
+
+Bolster: [[side]] - [[exhaust]] - 1 [[basic]]: Add 1 to the attack value of all units you currently control for the remainder of this turn.
+
+=====
+
+Phoenix Barrage (Lulu Firststone)
+Action Spell - Discard
+[[main]] - 3 [[basic]]
+
+Deal 4 damage to a target unit. Deal 2 damage to a target Phoenixborn.

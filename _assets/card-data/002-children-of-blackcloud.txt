@@ -1,0 +1,106 @@
+Blackcloud Ninja (Brennen Blackcloud)
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]] - 2 [[basic]]
+Attack 3 - Life 2 - Recover 2
+
+Seal Strike 1: When this unit comes into play, you may spend 1 [[basic]] to place 1 exhaustion token on a target ready spell.
+
+Shadow Strike 2: [[main]] - [[exhaust]]: Deal 2 damage to a target unit.
+
+=====
+
+Blood Chains
+Action Spell - Discard
+[[main]] - 1 [[ceremonial:class]]
+
+Choose a unit you control and destroy it. Place X exhaustion tokens on a target unit.
+
+X = the chosen unit's life value minus the number of wound tokens on the chosen unit.
+
+=====
+
+Brennen Blackcloud
+Battlefield 5 - Life 20 - Spellboard 3
+
+Spirit Burn: [[side]] - [[exhaust]] - 1 [[basic]]: Destroy a unit you control. If you do, you may deal 2 damage to a target unit or Phoenixborn.
+
+=====
+
+Chant Of Protection
+Ready Spell - Spellboard
+[[main]] - 1 [[basic]] - 1 [[discard]]
+
+* When this spell comes into play, place 3 status tokens on it. Discard this spell when it no longer has any status tokens on it.
+
+When your Phoenixborn would receive damage, you may remove any number of status tokens from this spell. For each status token removed, prevent 1 damage to your Phoenixborn.
+
+=====
+
+Chant Of The Dead
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:class]]
+
+* When an ally you control is destroyed, you may place 1 status token on this spell.
+
+During your turn, if this spell has 3 or more status tokens on it, you may discard this spell to select 3 dice in your exhausted pool and place them into your active pool on a side of your choice.
+
+=====
+
+Choke
+Reaction Spell - Discard
+1 [[ceremonial:class]]
+
+You may play this spell when an opponent would use a unit or Phoenixborn ability that is not inexhaustible. Cancel the effects of that ability for the remainder of this turn.
+
+=====
+
+Crimson Bomber
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]]
+Attack 3 - Life 2 - Recover 0
+
+Detonate 3: [[side]]: Destroy this unit to place 1 wound token on up to 3 target units.
+
+=====
+
+Dread Wraith
+Conjuration - Battlefield
+Attack 1 - Life 6 - Recover 0 - Copies 2
+
+* Rage 1: Add 1 to this unit's attack value for each wound token on this unit.
+
+=====
+
+Fire Archer
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]]
+Attack 1 - Life 1 - Recover 0
+
+Ambush 1: When this unit comes into play, you may deal 1 damage to a target unit or Phoenixborn.
+
+=====
+
+Poison
+Alteration Spell - Unit
+[[main]] - 1 [[ceremonial:class]]
+
+* After you take a main action other than pass, deal 1 damage to this unit.
+
+=====
+
+Regress
+Alteration Spell - Unit
+[[main]] - 1 [[ceremonial:class]] - 1 [[basic]]
+Attack -5
+
+When attaching this spell, discard all other alteration spells attached to this unit.
+
+=====
+
+Summon Dread Wraith
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[ceremonial:class]]: Place a [[Dread Wraith]] conjuration on to your battlefield.
+
+Focus 2: You may remove 1 exhaustion token from a Dread Wraith you control.

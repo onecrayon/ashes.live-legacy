@@ -1,0 +1,121 @@
+Crystal Shield
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 1 [[basic]]
+Life +2
+
+This unit now has the following ability:
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+=====
+
+Deep Freeze
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]]
+
+* When attaching this spell, place 3 status tokens on this spell. Discard this spell when it no longer has any status tokens on it. As long as this spell is attached to this unit, this unit is considered to be exhausted.
+
+* This unit now has the following ability:
+
+* Thaw: [[side]]: Remove 1 status token from a Deep Freeze alteration spell attached to this unit.
+
+=====
+
+Freezing Blast
+Action Spell - Discard
+[[main]] - 2 [[natural:class]]
+
+Deal 2 damage to a target unit. Remove 2 status tokens from that unit.
+
+=====
+
+Frostback Bear
+Conjuration - Battlefield
+Attack 2 - Life 3 - Recover 0 - Copies 4
+
+Freeze 1: When this unit deals damage to another unit, you may spend 1 [[basic]] to place 1 exhaustion token on that unit.
+
+Spite 1: When this unit deals damage to a Phoenixborn, you may deal 1 additional damage to that Phoenixborn.
+
+=====
+
+Frost Bite
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]]: Deal 1 damage to a target unit or Phoenixborn.
+
+Focus 1: You may change the activation cost of this ability to [[main]] - [[exhaust]] - 1 [[basic]].
+
+=====
+
+Frost Fang
+Ally - Battlefield
+[[main]] - 1 [[natural:power]]
+Attack 1 - Life 1 - Recover 1
+
+* Rapid Healing 1: When this unit would receive damage, you may spend any number of [[basic]]. For each 1 [[basic]] spent, prevent 1 damage.
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+=====
+
+Frozen Crown
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 2 [[basic]]
+Attack +3
+
+=====
+
+Ice Buff (Rin Northfell)
+Conjured Alteration Spell - Unit
+Life +1 - Copies 5
+
+=====
+
+Ice Golem
+Conjuration - Battlefield
+Attack 3 - Life 2 - Recover 0 - Copies 3
+
+* Skin Morph 2: Add 2 to this unit's life value if it has 1 or more alteration spells attached to it.
+
+=====
+
+Ice Trap
+Reaction Spell - Discard
+1 [[natural:class]]
+
+You may play this spell after a unit with a life value of 2 or less comes into play. Destroy that target unit.
+
+=====
+
+Rin Northfell
+Battlefield 6 - Life 17 - Spellboard 4
+
+Ice Buff: [[side]] - [[exhaust]]: Attach an [[Ice Buff]] conjured alteration spell to a target unit you control.
+
+=====
+
+Rin's Fury (Rin Northfell)
+Action Spell - Discard
+[[main]] - 3 [[basic]]
+
+You may select up to 5 dice in your exhausted pool, re-roll them, and place them into your active pool. You may spend any number of [[natural:power]] just rolled to deal that much damage to a target unit or Phoenixborn.
+
+=====
+
+Summon Frostback Bear
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:power]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]] - 1 [[basic]]: Place a [[Frostback Bear]] conjuration onto your battlefield.
+
+=====
+
+Summon Ice Golem
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[natural:class]] - 1 [[basic]]: Place an [[Ice Golem]] conjuration onto your battlefield.
+
+Focus 2: You may remove 1 wound token from all Ice Golems you control.

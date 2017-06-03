@@ -1,0 +1,13 @@
+Gobi Sunshield (Orrick Gilstream)
+Ally - Battlefield
+[[main]] - 4 [[basic]]
+Attack 2 - Life 5 - Recover 3
+
+Alert: Do not place an exhaustion token on this unit as a result of its countering.
+
+=====
+
+Orrick Gilstream
+Battlefield 5 - Life 19 - Spellboard 4
+
+Bounty: [[side]] - [[exhaust]] - 2 [[basic]]: Select up to 4 dice in your exhausted pool. They must all be different types. Re-roll them, and place them into your active pool.

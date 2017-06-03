@@ -1,0 +1,111 @@
+Crescendo
+Reaction Spell - Discard
+1 [[sympathy:class]] - 1 [[discard]]
+
+You may play this spell after you have declared attackers. Deal 1 damage to a target unit you control to deal 3 damage to a target unit.
+
+=====
+
+Encore (Namine Hymntide)
+Action Spell - Discard
+[[main]]
+
+Search your discard pile for a card other than Encore and place it on the top or bottom of your draw pile. Draw 1 card.
+
+=====
+
+Flute Mage
+Ally - Battlefield
+[[main]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 1 - Life 2 - Recover 1
+
+Enliven: [[side]] - [[exhaust]]: Remove 1 exhaustion token from a target unit.
+
+=====
+
+Guilt Link
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]]
+
+When your Phoenixborn receives 1 or more damage, you may place 1 exhaustion token on this spell to place 1 wound token on a target unit or Phoenixborn. The player that controls the targeted unit or Phoenixborn may discard 1 ready spell they control or 1 unit they control to prevent that wound from being placed.
+
+=====
+
+Magic Syphon
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]]
+
+[[side]] - [[exhaust]]: Change 1 die in your active pool to a side of your choice. Change 1 die in a target player's active pool to a side of your choice.
+
+=====
+
+Namine Hymntide
+Battlefield 6 - Life 17 - Spellboard 4
+
+Calming Melody: [[side]] - [[exhaust]] - 1 [[sympathy:class]]: Draw 1 card. You may place 1 exhaustion token on this card and 1 exhaustion token on a target Phoenixborn.
+
+=====
+
+River Skald
+Ally - Battlefield
+[[main]] - 1 [[sympathy:power]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 3 - Life 2 - Recover 2
+
+Harsh Melody: When you draw 1 or more cards during your turn, you may place 1 exhaustion token on this unit to place a number of wound tokens equal to this unit's attack value on a target unit.
+
+=====
+
+Salamander Monk
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 2
+
+* Spirit Form: When this unit is destroyed, place a [[Salamander Monk Spirit]] conjuration onto your battlefield.
+
+=====
+
+Salamander Monk Spirit
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 3
+
+* Temporary: This unit cannot block or be chosen at the target of an attack.
+
+=====
+
+Shatter Pulse
+Reaction Spell - Discard
+2 [[sympathy:class]] - 1 [[basic]]
+
+You may play this spell after a unit you control is destroyed. Destroy a target unit. You may change 2 dice in a target player's active pool to a side of your choice.
+
+=====
+
+Squall Stallion
+Conjuration - Battlefield
+Attack 1 - Life 3 - Recover 0 - Copies 5
+
+Opportunist 2: When you draw 1 or more cards during a player's turn, add 2 to this unit's attack value for the remainder of that turn.
+
+=====
+
+String Mage
+Ally - Battlefield
+[[main]] - 1 [[sympathy:power]] - 1 [[sympathy:class]]
+Attack 1 - Life 3 - Recover 2
+
+Exchange Link 1: [[side]]: Move 1 wound or status token from a target unit onto this unit, or move 1 wound or status token from this unit onto a target unit.
+
+=====
+
+Summon Salamander Monk
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[sympathy:class]]: Place a [[Salamander Monk]] conjuration onto your battlefield.
+
+=====
+
+Summon Squall Stallion
+Ready Spell - Battlefield
+[[main]] - 1 [[sympathy:power]]
+
+[[main]] - [[exhaust]] - 1 [[sympathy:class]] - 1 [[basic]]: Draw 1 card. Place a [[Squall Stallion]] conjuration onto your battlefield.

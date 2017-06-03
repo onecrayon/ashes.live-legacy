@@ -1,0 +1,13 @@
+Dimona Odinstar
+Battlefield 5 - Life 17 - Spellboard 5
+
+Order: [[side]] - [[exhaust]] - 2 [[basic]]: Remove 1 exhaustion token from a target unit on your battlefield.
+
+=====
+
+Rayward Knight (Dimona Odinstar)
+Ally - Battlefield
+[[main]] - 3 [[basic]]
+Attack 3 - Life 3 - Recover 3
+
+* Endurance: Remove all exhaustion tokens from this unit at the end of each round.

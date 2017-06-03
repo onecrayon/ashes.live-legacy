@@ -1,0 +1,124 @@
+Amplify
+Alteration Spell - Unit
+[[main]] - 1 [[charm:class]]
+Attack +X - Life +X - Recover +X
+
+* X = the number of charm dice on this unit.
+
+* Respark: 1 [[basic]]
+
+=====
+
+Anguish (Leo Sunshadow)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Choose a target Phoenixborn. Its controlling player may discard 1 card at random from their hand. If they do not or cannot, place 2 wound tokens on that Phoenixborn. Then choose a target Phoenixborn. Its controlling player may move 2 dice of your choice from their active pool to their exhausted pool. If they do not or cannot, place 2 wound tokens on that Phoenixborn.
+
+=====
+
+Beast Tamer
+Ally - Battlefield
+[[main]] - 1 [[charm:power]] - 1 [[charm:class]] - 1 [[basic]]
+Attack 3 - Life 3 - Recover 2
+
+Diminish 1: After an opponent has declared attackers, you may spend 1 [[basic]] to reduce the attack value of each attacking unit by 1 for the remainder of this turn.
+
+=====
+
+Change Psyche
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+Remove 1 exhaustion token from a target unit or place 1 exhaustion token on a target unit.
+
+=====
+
+Dispel
+Action Spell - Discard
+[[main]] - 1 [[basic]]
+
+Remove 2 status tokens from a target card or choose a target alteration spell. If that alteration spell is a conjured alteration spell, return it to its owner's conjuration pile. Otherwise, shuffle it into its owner's draw pile.
+
+=====
+
+Glow Finch (Leo Sunshadow)
+Conjuration - Battlefield
+Attack 0 - Life 2 - Recover 1 - Copies 1
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+Decoy: When a unit you control would become the target of a spell, ability or dice power, and this unit could have been chosen as that target, you may place 1 exhaustion token on this unit to change the chosen target to be this unit instead.
+
+* Last Request 1: When this unit is destroyed, discard 1 card off the top of a target player's draw pile.
+
+* Magic Rejuvenation: [[side]]: Remove an alteration spell attached to this unit from the game. If you do, remove all exhaustion tokens from this unit.
+
+=====
+
+Leo Sunshadow
+Battlefield 6 - Life 19 - Spellboard 3
+
+Summon Glow Finch: [[side]] - [[exhaust]] - 1 [[basic]]: Place a [[Glow Finch]] conjuration onto your battlefield.
+
+=====
+
+Memory Theft
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:class]]: Look at a target player's hand. That player may discard 1 card of your choice from that hand. If they do not or cannot, place 1 wound token on their Phoenixborn.
+
+=====
+
+Mind Probe
+Action Spell - Discard
+[[main]] - 1 [[charm:class]]
+
+Choose a target opponent to reveal the top 5 cards of their draw pile. Choose 1 of those revealed cards and remove it from the game. Return the rest of the revealed cards to the top of that opponent's draw pile in the order of your choice.
+
+=====
+
+Nightshade Swallow
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 1 - Copies 5
+
+Deathstrike: When this unit deals 1 or more damage to a unit it is attacking or countering, destroy the unit that received damage.
+
+=====
+
+Orchid Dove
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 5
+
+* Peaceful Melody: Your opponents cannot take an Attack a Phoenixborn main action or Attack a Unit main action. During their turn an opponent may spend 1 [[basic]]. If they do, all units are no longer considered to have the Peaceful Melody ability for the remainder of that turn.
+
+=====
+
+Remorse
+Reaction Spell - Discard
+1 [[charm:class]] - 1 [[basic]]
+
+You may play this spell after an opponent takes an Attack a Phoenixborn main action or Attack a Unit main action. Deal 2 damage to a target Phoenixborn. The player that controls that Phoenixborn must discard 2 cards off the top of their draw pile. If they cannot, deal 1 additional damage to their Phoenixborn.
+
+=====
+
+Summon Nightshade Swallow
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[charm:class]]: Place a [[Nightshade Swallow]] conjuration onto your battlefield.
+
+Focus 1: You may choose a target player to discard 1 card off the top of their draw pile if you have fewer dice in your active pool than an opponent.
+
+=====
+
+Summon Orchid Dove
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:class]]: Place an [[Orchid Dove]] conjuration onto your battlefield.
+
+Focus 1: You may change the activation cost of this spell to [[main]] - [[exhaust]] - 1 [[basic]].
+
+Focus 2: You may deal 1 damage to a target player's Phoenxiborn if they do not have any cards in their draw pile.
