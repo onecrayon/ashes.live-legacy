@@ -42,8 +42,27 @@ For development servers:
 
 ## SCRATCH
 
-Users have three bits of identifying info:
+Filters:
 
-* Email (unique; used to log in)
-* Username (no restrictions; display only)
-* Badge (randomly auto-generated 3-8 character string, but they get to pick from ~8 options at account creation; to get options, randomly generate some extra 3-length and 4-length strings, filter out ones already in use, filter out non-kid-friendly strings, then provide a selection that's weighted toward shorter badges; as I run out of short ones, expand the number of characters available)
+* Dice types required (both AND and OR)
+* Card type (including summon vs. other ready spells?)
+* Set (core, expansions, promo Phoenixborn)
+* Text search: card title and effect text
+
+Sorting:
+
+* Name (alphabetical)
+* Card type (grouped by card type, then name)
+* Dice types (grouped by dice types required, then name)
+* Cost? (sorted by number and type of dice required)
+
+1 basic = 1
+1 class = 1.01
+1 power = 1.02
+1 discard = .03
+side = .04
+main = .05
+
+2 basic = 2
+1 basic + 1 class = 2.01
+1 basic + 1 power = 2.02
