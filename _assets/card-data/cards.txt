@@ -841,7 +841,7 @@ Alteration Spell - Unit
 
 Power Through
 Alteration Spell - Unit
-[[side]] - 1 [[divine:power]] - 1 [[basic]]
+[[side]] - 1 [[divine:class]] - 1 [[basic]]
 Attack +1
 
 This unit now has the following ability:
@@ -1051,7 +1051,7 @@ You may play this spell after a unit you control is destroyed. Destroy a target 
 
 Shield Mage
 Ally - Battlefield
-[[main]] - 1 [[divine:class]]
+[[main]] - 1 [[divine:power]]
 Attack 0 - Life 2 - Recover 2
 
 Exert: [[side]]: Place 1 exhaustion token on this unit.
