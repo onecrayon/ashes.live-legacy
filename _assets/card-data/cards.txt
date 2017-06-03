@@ -1164,3 +1164,287 @@ Ally - Battlefield
 Attack 1 - Life 3 - Recover 2
 
 Exchange Link 1: [[side]]: Move 1 wound or status token from a target unit onto this unit, or move 1 wound or status token from this unit onto a target unit.
+
+=====
+
+Summon Blood Puppet
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]]: Place a [[Blood Puppet]] conjuration onto a target player's battlefield.
+
+=====
+
+Summon Blue Jaguar (Aradel Summergaard)
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[basic]]: Place a [[Blue Jaguar]] conjuration onto your battlefield.
+
+=====
+
+Summon Butterfly Monk
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[natural:power]]: Place a [[Butterfly Monk]] conjuration onto your battlefield.
+
+=====
+
+Summon Dread Wraith
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[basic]]: Place a [[Dread Wraith]] conjuration on to your battlefield.
+
+Focus 2: You may remove 1 exhaustion token from a Dread Wraith you control.
+
+=====
+
+Summon Emperor Lion
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[divine:class]] - 1 [[basic]]: Place an [[Emperor Lion]] conjuration onto your battlefield.
+
+=====
+
+Summon False Demon
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[illusion:class]] - 1 [[basic]]: Place a [[False Demon]] conjuration onto your battlefield.
+
+=====
+
+Summon Frostback Bear
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:power]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]] - 1 [[basic]]: Place a [[Frostback Bear]] conjuration onto your battlefield.
+
+=====
+
+Summon Gilder
+Ready Spell - Spellboard
+[[main]] - 1 [[charm:class]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]]: Place a [[Gilder]] conjuration onto your battlefield. You may deal 1 damage to a target unit.
+
+=====
+
+Summon Ice Golem
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[natural:class]] - 1 [[basic]]: Place an [[Ice Golem]] conjuration onto your battlefield.
+
+Focus 2: You may remove 1 wound token from all Ice Golems you control.
+
+=====
+
+Summon Iron Rhino
+Ready Spell - Spellboard
+[[main]] - 1 [[natural:class]]
+
+[[main]] - [[exhaust]] - 6 [[basic]]: Place an [[Iron Rhino]] conjuration onto your battlefield.
+
+Focus 1: Reduce the activate cost of this spell by 1 [[basic]].
+
+Focus 2: Reduce the activation cost of this spell by an additional 1 [[basic]].
+
+=====
+
+Summon Masked Wolf (Noah Redmoon)
+Ready Spell - Spellboard
+[[main]]
+
+[[side]] - [[exhaust]] - 1 [[illusion:class]] - 1 [[basic]]: Place a [[Masked Wolf]] conjuration onto your battlefield.
+
+Focus 1: You may change the activation cost of this ability to [[side]] - [[exhaust]] - 1 [[illusion:power]].
+
+=====
+
+Summon Mist Spirit
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[illusion:class]]: Place a [[Mist Spirit]] conjuration onto your battlefield. You may spend an additional 1 [[basic]] when activating this spell to place an additional [[Mist Spirit]] conjuration onto your battlefield.
+
+=====
+
+Summon Nightshade Swallow
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[charm:class]]: Place a [[Nightshade Swallow]] conjuration onto your battlefield.
+
+Focus 1: You may choose a target player to discard 1 card off the top of their draw pile if you have fewer dice in your active pool than an opponent.
+
+=====
+
+Summon Orchid Dove
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:class]]: Place an [[Orchid Dove]] conjuration onto your battlefield.
+
+Focus 1: You may change the activation cost of this spell to [[main]] - [[exhaust]] - 1 [[basic]].
+
+Focus 2: You may deal 1 damage to a target player's Phoenxiborn if they do not have any cards in their draw pile.
+
+=====
+
+Summon Salamander Monk
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[sympathy:class]]: Place a [[Salamander Monk]] conjuration onto your battlefield.
+
+=====
+
+Summon Seaside Raven (Saria Guideman)
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[basic]]: Place a [[Seaside Raven]] conjuration onto your battlefield.
+
+=====
+
+Summon Shadow Hound
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[illusion:class]]: Place a [[Shadow Hound]] conjuration onto your battlefield.
+
+Focus 1: You may deal 1 damage to a target unit.
+
+Focus 2: Then you may deal 1 damage to a target unit.
+
+=====
+
+Summon Shadow Spirit
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust] - 1 [[illusion:power]]: Place a [[Shadow Spirit]] conjuration onto your battlefield.
+
+=====
+
+Summon Silver Snake (Maeoni Viper)
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:power]] - 1 [[natural:power]]: Place a [[Silver Snake]] conjuration onto your battlefield.
+
+Focus 1: Place 1 status token on that Silver Snake.
+
+Focus 2: Place 1 additional status token on that Silver Snake.
+
+* Spell Guard: This spell cannot be affected by an opponent's spell.
+
+=====
+
+Summon Sleeping Widows
+Reaction Spell - Discard
+2 [[ceremonial:class]]
+
+You may play this spell when a unit you control is destroyed. Place up to 2 [[Sleeping Widow]] conjurations onto your battlefield.
+
+=====
+
+Summon Squall Stallion
+Ready Spell - Battlefield
+[[main]] - 1 [[sympathy:power]]
+
+[[main]] - [[exhaust]] - 1 [[sympathy:class]] - 1 [[basic]]: Draw 1 card. Place a [[Squall Stallion]] conjuration onto your battlefield.
+
+=====
+
+Summon Three-Eyed Owl
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[charm:class]]: Place a [[Three-Eyed Owl]] conjuration onto your battlefield.
+
+=====
+
+Summon Winged Lioness
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[divine:class]] - 1 [[basic]]: Place a [[Winged Lioness]] conjuration onto your battlefield.
+
+=====
+
+Sword Of Virtue (Odette Diamondcrest)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Destroy a target unit or remove all wound tokens from a target unit.
+
+=====
+
+Sympathy Pain
+Reaction Spell - Discard
+2 [[charm:class]]
+
+Play this spell after your Phoenixborn has received damage. Deal 3 damage to a target unit or Phoenixborn.
+
+=====
+
+Three-Eyed Owl
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 0 - Copies 5
+
+Memory Drain 1: [[main]] - [[exhaust]]: Choose a target player to discard 1 card of their choice from their hand.
+
+=====
+
+To Shadows
+Ready Spell - Spellboard
+[[main]]
+
+[[side]] - [[exhaust]] - 1 [[illusion:class]]: Choose a target unit to gain the following ability for the remainder of this turn:
+
+* Illusion: If this unit receives damage as a result of a unit's attack or counter, destroy this unit.
+
+=====
+
+Transfer
+Action Spell - Discard
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+
+Move 1 token from a target player's non-Phoenixborn card onto another non-Phoenixborn card that player controls.
+
+=====
+
+Undying Heart
+Alteration Spell - Unit
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+Life +2 - Recover +2
+
+* Respark: 2 [[basic]]
+
+=====
+
+Vanish
+Reaction Spell - Discard
+2 [[illusion:class]]
+
+You may play this spell when an opponent would use a spell, ability, or dice power that targets you, your draw pile, your discard pile, or your Phoenixborn. Cancel the effects of that spell, ability, or dice power.
+
+=====
+
+Victoria Glassfire
+Battlefield 5 - Life 18 - Spellboard 5
+
+Shadow Spring: [[side]] - [[exhaust]] - 1 [[illusion:power]]: Select 2 dice in your exhausted pool and place them into your active pool on a side of your choice.
+
+=====
+
+Winged Lioness
+Conjuration - Battlefield
+Attack 2 - Life 2 - Recover 1
+
+Stalk: This unit cannot be guarded against.
