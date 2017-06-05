@@ -71,17 +71,16 @@ var fs = require('fs'),
 	}
 
 if (files) {
+	var data = []
+	
 	files.forEach(function (filePath) {
 		if (!filePath.endsWith('.txt')) {
 			return
 		}
 		
 		var	cardText = fs.readFileSync(path.join(dir, filePath)).toString(),
-			outPath = path.join(dir, filePath.replace(/\.txt$/, '.json')),
-			outFile = fs.createWriteStream(outPath, { encoding: "utf8" }),
 			setNumber = parseInt(filePath),
-			cards = cardText.split(/^={3,}\n+/m),
-			data = []
+			cards = cardText.split(/^={3,}\n+/m)
 		
 		cards.forEach(function (cardData) {
 			if (!cardData) {
@@ -203,12 +202,15 @@ if (files) {
 			// And finally append our card and continue
 			data.push(card)
 		})
-		
-		outFile.write(JSON.stringify(data))
-		outFile.end()
-		
-		console.log('Writing to ' + outPath + ' complete!')
 	})
+	
+	var outPath = path.join(dir, '_export.json'),
+		outFile = fs.createWriteStream(outPath, { encoding: "utf8" })
+	
+	outFile.write(JSON.stringify(data))
+	outFile.end()
+	
+	console.log('Writing to ' + outPath + ' complete!')
 }
 
 console.log('All card data files parsed!')
