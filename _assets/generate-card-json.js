@@ -118,6 +118,35 @@ if (files) {
 				} else {
 					card.cost = meta[2].split(sep)
 					diceType = parseCostsToDiceTypes(card.cost, diceTypes)
+					// Calculate cost weighting
+					var cardWeight = 0,
+						diceTypes = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy']
+					card.cost.forEach(function (cost) {
+						var costMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]$/)
+						if (!costMatch) {
+							return
+						}
+						var costNumber = costMatch[1] ? parseInt(costMatch[1]) : null,
+							costTypeArray = costMatch[2].split(':'),
+							costType = costTypeArray[0],
+							costSubtype = costTypeArray.length > 1 ? costTypeArray[1] : null
+						if (diceTypes.indexOf(costType) >= 0 && costNumber) {
+							cardWeight += costNumber
+							if (costSubtype == 'class') {
+								cardWeight += costNumber * .01
+							} else if (costSubtype == 'power') {
+								cardWeight += costNumber * .02
+							}
+						} else if (costType == 'discard' && costNumber) {
+							cardWeight += costNumber * .03
+						} else if (costType == 'side') {
+							cardWeight += .04
+						} else if (costType == 'main') {
+							cardWeight += .05
+						}
+					})
+					card.weight = cardWeight
+					// Grab stats list
 					if (meta.length > 3) {
 						stats = meta[3].split(sep)
 					}
