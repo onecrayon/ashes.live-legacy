@@ -79,6 +79,7 @@ if (files) {
 		var	cardText = fs.readFileSync(path.join(dir, filePath)).toString(),
 			outPath = path.join(dir, filePath.replace(/\.txt$/, '.json')),
 			outFile = fs.createWriteStream(outPath, { encoding: "utf8" }),
+			setNumber = parseInt(filePath),
 			cards = cardText.split(/^={3,}\n+/m),
 			data = []
 		
@@ -93,7 +94,8 @@ if (files) {
 				titleMatch = meta[0].match(/^(.+?)(?:[ ]\(([a-z ]+)\))?$/i),
 				card = {
 					'name': titleMatch[1],
-					'stub': titleMatch[1].replace(/[ ]/g, '-').replace(/[^a-z0-9-]/ig, '').toLowerCase()
+					'stub': titleMatch[1].replace(/[ ]/g, '-').replace(/[^a-z0-9-]/ig, '').toLowerCase(),
+					'set': setNumber
 				},
 				stats = null,
 				conjurations = [],
