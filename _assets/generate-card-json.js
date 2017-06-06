@@ -80,7 +80,7 @@ if (files) {
 		}
 		
 		var	cardText = fs.readFileSync(path.join(dir, filePath)).toString(),
-			setNumber = parseInt(filePath),
+			releaseNumber = parseInt(filePath),
 			cards = cardText.split(/^={3,}\n+/m)
 		
 		cards.forEach(function (cardData) {
@@ -95,7 +95,7 @@ if (files) {
 				card = {
 					'name': titleMatch[1],
 					'stub': titleMatch[1].replace(/[ ]/g, '-').replace(/[^a-z0-9-]/ig, '').toLowerCase(),
-					'set': setNumber
+					'release': releaseNumber
 				},
 				stats = null,
 				conjurations = [],
