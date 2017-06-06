@@ -71,7 +71,8 @@ var fs = require('fs'),
 	}
 
 if (files) {
-	var data = []
+	var data = [],
+		longestName = ''
 	
 	files.forEach(function (filePath) {
 		if (!filePath.endsWith('.txt')) {
@@ -99,6 +100,11 @@ if (files) {
 				stats = null,
 				conjurations = [],
 				diceTypes = []
+			
+			// Track longest name (for setting up database)
+			if (card.name.length > longestName.length) {
+				longestName = card.name
+			}
 			
 			// Check to see if we are working with a phoenixborn
 			if (meta.length == 2) {
@@ -213,4 +219,5 @@ if (files) {
 	console.log('Writing to ' + outPath + ' complete!')
 }
 
+console.log('Longest name is ' + longestName.length + ' chars long')
 console.log('All card data files parsed!')
