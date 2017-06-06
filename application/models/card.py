@@ -15,8 +15,8 @@ class Card(db.Model):
     release = db.Column(db.Integer, nullable=False, index=True, default=0)
     card_type = db.Column(db.String(25), nullable=False, index=True)
     cost_weight = db.Column(db.Integer, nullable=False, index=True, default=0)
-    json = db.Column(db.Text, nullable=False)
-    text = db.Column(db.Text, nullable=False)
+    json = db.Column(db.Text)
+    text = db.Column(db.Text)
     summon_id = db.Column(db.Integer, db.ForeignKey('card.id'), nullable=True)
     
     dice = db.relationship('Die', secondary=card_dice, back_populates='cards')
