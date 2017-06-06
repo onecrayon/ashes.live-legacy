@@ -138,18 +138,18 @@ if (files) {
 							costType = costTypeArray[0],
 							costSubtype = costTypeArray.length > 1 ? costTypeArray[1] : null
 						if (possibleDice.indexOf(costType) >= 0 && costNumber) {
-							cardWeight += costNumber
+							cardWeight += costNumber * 100
 							if (costSubtype == 'class') {
-								cardWeight += costNumber * .01
+								cardWeight += costNumber * 1
 							} else if (costSubtype == 'power') {
-								cardWeight += costNumber * .02
+								cardWeight += costNumber * 2
 							}
 						} else if (costType == 'discard' && costNumber) {
-							cardWeight += costNumber * .03
+							cardWeight += costNumber * 3
 						} else if (costType == 'side') {
-							cardWeight += .04
+							cardWeight += 4
 						} else if (costType == 'main') {
-							cardWeight += .05
+							cardWeight += 5
 						}
 					})
 					card.weight = cardWeight
