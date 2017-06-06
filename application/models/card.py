@@ -17,12 +17,18 @@ class Card(db.Model):
     cost_weight = db.Column(db.Integer, nullable=False, index=True, default=0)
     json = db.Column(db.Text, nullable=False)
     text = db.Column(db.Text, nullable=False)
+    summon_id = db.Column(db.Integer, db.ForeignKey('card.id'), nullable=True)
     
     dice = db.relationship('Die', secondary=card_dice, back_populates='cards')
+    conjurations = db.relationship('Card')
 
 
 class Die(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(10))
+    stub = db.Column(db.String(10), nullable=False, unique=True)
     
     cards = db.relationship('Card', secondary=card_dice, back_populates='dice')
+
+
+# Define our index to ensure Alembic can automatically generate future migrations
+db.Index('ix_card_text', Card.name, Card.text)
