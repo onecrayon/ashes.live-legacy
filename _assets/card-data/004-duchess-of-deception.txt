@@ -85,7 +85,7 @@ Summon Shadow Spirit
 Ready Spell - Spellboard
 [[main]]
 
-[[main]] - [[exhaust] - 1 [[illusion:power]]: Place a [[Shadow Spirit]] conjuration onto your battlefield.
+[[main]] - [[exhaust]] - 1 [[illusion:power]]: Place a [[Shadow Spirit]] conjuration onto your battlefield.
 
 =====
 
