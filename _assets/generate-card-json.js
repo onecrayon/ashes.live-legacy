@@ -124,10 +124,10 @@ if (files) {
 					stats = meta[2].split(sep)
 				} else {
 					card.cost = meta[2].split(sep)
-					diceType = parseCostsToDiceTypes(card.cost, diceTypes)
+					parseCostsToDiceTypes(card.cost, diceTypes)
 					// Calculate cost weighting
 					var cardWeight = 0,
-						diceTypes = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy']
+						possibleDice = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy']
 					card.cost.forEach(function (cost) {
 						var costMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]$/)
 						if (!costMatch) {
@@ -137,7 +137,7 @@ if (files) {
 							costTypeArray = costMatch[2].split(':'),
 							costType = costTypeArray[0],
 							costSubtype = costTypeArray.length > 1 ? costTypeArray[1] : null
-						if (diceTypes.indexOf(costType) >= 0 && costNumber) {
+						if (possibleDice.indexOf(costType) >= 0 && costNumber) {
 							cardWeight += costNumber
 							if (costSubtype == 'class') {
 								cardWeight += costNumber * .01
