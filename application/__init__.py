@@ -11,6 +11,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 # Configure our app
 app = Flask(
     __name__,
+    static_url_path='',
     static_folder=os.path.join(current_path, 'static'),
     template_folder=os.path.join(current_path, 'templates')
 )
