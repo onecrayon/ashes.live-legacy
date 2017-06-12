@@ -3,12 +3,39 @@
 <head>
 	<title>{% block title %}Welcome{% endblock %} - Ashes.live</title>
 </head>
-<body>
-	{% block navigation %}
+<body class="{% block page_class %}static{% endblock %}">
 	<header id="header">
-		<p>(Header here)</p>
+		<nav>
+			<ul class="primary-nav">
+				<li class="home-link">
+					<a href="{{ url_for('index.landing_page') }}">Ashes.live</a>
+				</li>
+				<li class="deckbuilder-link">
+					<a href="{{ url_for('decks.player_decks') }}">My Decks</a>
+				</li>
+				<li class="logging-link">
+					{# {{ url_for('stats.log_game') }} #}
+					<a href="#">Log Game</a>
+				</li>
+			</ul>
+			<ul class="secondary-nav">
+				<li>
+					<a class="decks-link" href="{{ url_for('decks.all_decks') }}">All Decks</a>
+				</li>
+				<li class="mid-link">
+					{# {{ url_for('gallery.card_gallery') }} #}
+					<a class="gallery-link" href="#">Card Gallery</a>
+				</li>
+				<li>
+					{# {{ url_for('stats.view_stats') }} #}
+					<a class="stats-link" href="#">Statistics</a>
+				</li>
+				<li>
+					<a href="{{ url_for('player.player_account') }}">Account</a>
+				</li>
+			</ul>
+		</nav>
 	</header>
-	{% endblock %}
 	<div id="page">
 		{% block content %}{% endblock %}
 	</div>
