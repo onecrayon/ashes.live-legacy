@@ -8,3 +8,121 @@ html {
 	font-family: "Open Sans", Helvetica, sans-serif;
 }
 
+/* @group Header */
+
+#header {
+	ul {
+		.mixin-display-flex;
+		.mixin-justify-content(center);
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+	
+	a {
+		.font-size(18);
+		color: #000;
+		text-decoration: none;
+	}
+	
+	a:before {
+		.font-size(26);
+		padding-right: 7px;
+		vertical-align: bottom;
+	}
+	
+	.primary-nav {
+		background: #f3f1e7;
+		border-bottom: 1px solid #fff;
+		padding: 10px 20px;
+	}
+	
+	.secondary-nav {
+		border-top: 3px solid #dcdcdc;
+		padding: 10px 20px;
+		
+		li {
+			.mixin-flex(0 1 auto);
+			margin-right: 20px;
+		}
+		
+		li:last-of-type {
+			margin-right: 0px;
+		}
+		
+		.mid-link {
+			.mixin-flex(1 1 auto);
+		}
+	}
+	
+	.deckbuilder-link {
+		.mixin-order(1);
+		.mixin-flex(1 1 auto);
+		padding-right: 20px;
+	}
+	
+	.home-link {
+		.mixin-order(2);
+		.mixin-flex(0 1 auto);
+		
+		a {
+			background: url(../images/ashes-live-small.png) left top no-repeat;
+			display: inline-block;
+			height: 0px;
+			width: 266px;
+			padding-top: 30px;
+			overflow: hidden;
+		}
+	}
+	
+	.logging-link {
+		.mixin-order(3);
+		.mixin-flex(1 1 auto);
+		padding-left: 20px;
+		text-align: right;
+	}
+}
+
+.homepage #header {
+	.primary-nav {
+		padding-top: 27px;
+		
+		a {
+			display: inline-block;
+		}
+		
+		a:before {
+			display: block;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+		}
+	}
+	
+	.secondary-nav {
+		padding-top: 20px;
+	}
+	
+	.deckbuilder-link {
+		padding-right: 50px;
+		text-align: right;
+	}
+	
+	.home-link {
+		margin-bottom: -40px;
+		
+		a {
+			background-image: url(../images/ashes-live.png);
+			width: 366px;
+			padding-top: 107px;
+		}
+	}
+	
+	.logging-link {
+		padding-left: 50px;
+		text-align: left;
+	}
+}
+
+/* @end */
