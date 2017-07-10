@@ -33,18 +33,26 @@
 			</ul>
 			<ul class="secondary-nav">
 				<li>
-					<a class="decks-link" href="{{ url_for('decks.all_decks') }}">All Decks</a>
+					<a class="decks-link" href="{{ url_for('decks.all_decks') }}">
+						<i class="fa fa-eye" aria-hidden="true"></i> All Decks
+					</a>
 				</li>
 				<li class="mid-link">
 					{# {{ url_for('gallery.card_gallery') }} #}
-					<a class="gallery-link" href="#">Card Gallery</a>
+					<a class="gallery-link" href="#">
+						<i class="fa fa-th" aria-hidden="true"></i> Card Gallery
+					</a>
 				</li>
 				<li>
 					{# {{ url_for('stats.view_stats') }} #}
-					<a class="stats-link" href="#">Statistics</a>
+					<a class="stats-link" href="#">
+						<i class="fa fa-bar-chart" aria-hidden="true"></i> Statistics
+					</a>
 				</li>
 				<li>
-					<a href="{{ url_for('player.player_account') }}">Account</a>
+					<a href="{{ url_for('player.player_account') }}">
+						<i class="fa fa-user" aria-hidden="true"></i> Account
+					</a>
 				</li>
 			</ul>
 		</nav>
