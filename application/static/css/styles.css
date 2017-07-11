@@ -2915,10 +2915,52 @@ ul,
 ol {
   margin-top: 0;
 }
+a {
+  color: #2770c1;
+}
+a:link,
+a:visited {
+  text-decoration: none;
+}
+a:hover,
+a:active {
+  text-decoration: underline;
+}
 a.disabled {
   opacity: .4;
   pointer-events: none;
   cursor: text;
+}
+.form-field {
+  margin: 0 0 20px;
+  max-width: 320px;
+}
+.form-field label {
+  display: block;
+  margin: 0 0 5px;
+}
+.form-field input[type="checkbox"] + label {
+  display: inline;
+}
+.form-field input[type="text"],
+.form-field input[type="password"] {
+  font-size: 1.125em;
+  border: 2px solid #dcdcdc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+  width: 100%;
+}
+.btn {
+  font-size: 1.125em;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: 2px solid #dcdcdc;
+  text-decoration: none;
+}
+.btn.btn-primary {
+  color: #fff;
+  background: #2770c1;
 }
 #page,
 #footer {

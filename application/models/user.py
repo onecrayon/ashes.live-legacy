@@ -31,6 +31,13 @@ class User(db.Model, UserMixin):
             'Noah Redmoon', 'Odette Diamondcrest', 'Orrick Gilstream',
             'Rin Northfell', 'Saria Guideman', 'Victoria Glassfire'
         ])
+
+    @staticmethod
+    def log_in(email, password):
+        return User.query.filter(
+            User.email == email,
+            User.password == bcrypt.generate_password_hash(password)
+        )
     
     @staticmethod
     def fetch_badges(single=False, maximum=8, length=4):

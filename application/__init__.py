@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -25,3 +26,7 @@ app.config.from_pyfile('../config/{}/config.py'.format(ENVIRONMENT))
 # Configure our database
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
+
+# Configure login functionality
+login_manager = LoginManager()
+login_manager.init_app(app)
