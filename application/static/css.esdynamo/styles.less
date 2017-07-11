@@ -7,8 +7,19 @@
 @fa-font-path: "../fonts";
 @import "_imports/font-awesome/font-awesome";
 
+@color-black: #000;
+@color-gray: #dcdcdc;
+@color-white: #fff;
+@color-inexhaustible: #f7f5e8;
+@color-links: #2770c1;
+
 html {
 	font-family: "Open Sans", Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, ul, ol {
+	margin-top: 0;
 }
 
 a.disabled {
@@ -18,7 +29,8 @@ a.disabled {
 }
 
 #page, #footer {
-	padding: 0 20px;
+	.max-width();
+	padding: 20px;
 }
 
 #footer {
@@ -40,13 +52,33 @@ a.disabled {
 	
 	a {
 		.font-size(18);
-		color: #000;
+		color: @color-black;
 		text-decoration: none;
 	}
 	
+	a:hover, a:active {
+		color: @color-links;
+	}
+	
+	.navbar-wrapper {
+		background: @color-inexhaustible;
+		padding: 0 0 4px;
+		position: relative;
+		
+		&:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			height: 0;
+			width: 100%;
+			border-top: 1px solid @color-white;
+			border-bottom: 3px solid @color-gray;
+		}
+	}
+	
 	.primary-nav {
-		background: #f3f1e7;
-		border-bottom: 1px solid #fff;
+		.max-width();
 		padding: 10px 20px;
 		
 		a:before {
@@ -57,7 +89,7 @@ a.disabled {
 	}
 	
 	.secondary-nav {
-		border-top: 3px solid #dcdcdc;
+		.max-width();
 		padding: 10px 20px;
 		
 		li {
@@ -108,6 +140,7 @@ a.disabled {
 		
 		a {
 			display: inline-block;
+			padding-top: 6px;
 		}
 		
 		a:before {
@@ -130,6 +163,8 @@ a.disabled {
 	
 	.home-link {
 		margin-bottom: -40px;
+		position: relative;
+		z-index: 10;
 		
 		a {
 			background-image: url(../images/ashes-live.png);

@@ -19,18 +19,20 @@
 <body class="{% block page_class %}static{% endblock %}">
 	<header id="header">
 		<nav>
-			<ul class="primary-nav">
-				<li class="home-link">
-					<a href="{{ url_for('index.landing_page') }}">Ashes.live</a>
-				</li>
-				<li class="deckbuilder-link">
-					<a class="phg-basic-magic" href="{{ url_for('decks.player_decks') }}">My Decks</a>
-				</li>
-				<li class="logging-link">
-					{# {{ url_for('stats.log_game') }} #}
-					<a class="phg-exhaust disabled" href="#">Log Game</a>
-				</li>
-			</ul>
+			<div class="navbar-wrapper">
+				<ul class="primary-nav">
+					<li class="home-link">
+						<a href="{{ url_for('index.landing_page') }}">Ashes.live</a>
+					</li>
+					<li class="deckbuilder-link">
+						<a class="phg-basic-magic" href="{{ url_for('decks.player_decks') }}">My Decks</a>
+					</li>
+					<li class="logging-link">
+						{# {{ url_for('stats.log_game') }} #}
+						<a class="phg-exhaust disabled" href="#">Log Game</a>
+					</li>
+				</ul>
+			</div>
 			<ul class="secondary-nav">
 				<li>
 					<a class="decks-link" href="{{ url_for('decks.all_decks') }}">

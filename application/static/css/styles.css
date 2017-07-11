@@ -2904,6 +2904,17 @@ template {
 html {
   font-family: "Open Sans", Helvetica, sans-serif;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+  margin-top: 0;
+}
 a.disabled {
   opacity: .4;
   pointer-events: none;
@@ -2911,7 +2922,11 @@ a.disabled {
 }
 #page,
 #footer {
-  padding: 0 20px;
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
 }
 #footer {
   font-size: 0.75em;
@@ -2937,9 +2952,30 @@ a.disabled {
   color: #000;
   text-decoration: none;
 }
+#header a:hover,
+#header a:active {
+  color: #2770c1;
+}
+#header .navbar-wrapper {
+  background: #f7f5e8;
+  padding: 0 0 4px;
+  position: relative;
+}
+#header .navbar-wrapper:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  border-top: 1px solid #fff;
+  border-bottom: 3px solid #dcdcdc;
+}
 #header .primary-nav {
-  background: #f3f1e7;
-  border-bottom: 1px solid #fff;
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 10px 20px;
 }
 #header .primary-nav a:before {
@@ -2948,7 +2984,10 @@ a.disabled {
   vertical-align: bottom;
 }
 #header .secondary-nav {
-  border-top: 3px solid #dcdcdc;
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 10px 20px;
 }
 #header .secondary-nav li {
@@ -3013,6 +3052,7 @@ a.disabled {
 }
 .homepage #header .primary-nav a {
   display: inline-block;
+  padding-top: 6px;
 }
 .homepage #header .primary-nav a:before {
   display: block;
@@ -3030,6 +3070,8 @@ a.disabled {
 }
 .homepage #header .home-link {
   margin-bottom: -40px;
+  position: relative;
+  z-index: 10;
 }
 .homepage #header .home-link a {
   background-image: url(../images/ashes-live.png);
