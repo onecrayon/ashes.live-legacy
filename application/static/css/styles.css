@@ -2904,6 +2904,11 @@ template {
 html {
   font-family: "Open Sans", Helvetica, sans-serif;
 }
+a.disabled {
+  opacity: .4;
+  pointer-events: none;
+  cursor: text;
+}
 #page,
 #footer {
   padding: 0 20px;
