@@ -2934,6 +2934,30 @@ a.disabled {
   pointer-events: none;
   cursor: text;
 }
+.alerts {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.alerts li {
+  color: #6f6f6f;
+  background: rgba(111, 111, 111, 0.2);
+  border: 2px solid #6f6f6f;
+  border-radius: 5px;
+  font-weight: bold;
+  margin: 0 0 10px;
+  padding: 10px;
+}
+.alerts .success {
+  color: #0f0;
+  background: rgba(0, 255, 0, 0.2);
+  border: 2px solid #0f0;
+}
+.alerts .error {
+  color: #f00;
+  background: rgba(255, 0, 0, 0.2);
+  border: 2px solid #f00;
+}
 .form-field {
   margin: 0 0 20px;
   max-width: 320px;
@@ -2951,19 +2975,27 @@ a.disabled {
   border: 2px solid #dcdcdc;
   border-radius: 5px;
   box-sizing: border-box;
+  margin: 0;
   padding: 5px;
   width: 100%;
 }
+.form-field .alerts li {
+  margin: 10px 0 0;
+}
 .btn {
   font-size: 1.125rem;
+  color: #6f6f6f;
+  background: rgba(111, 111, 111, 0.2);
+  border: 2px solid #6f6f6f;
   border-radius: 5px;
-  padding: 10px 20px;
-  border: 2px solid #dcdcdc;
+  font-weight: bold;
+  padding: 10px;
   text-decoration: none;
 }
 .btn.btn-primary {
-  color: #fff;
-  background: #2770c1;
+  color: #2770c1;
+  background: rgba(39, 112, 193, 0.2);
+  border: 2px solid #2770c1;
 }
 #page,
 #footer {

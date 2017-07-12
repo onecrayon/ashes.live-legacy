@@ -1,21 +1,16 @@
+{% from "macros.html" import with_errors %}
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Log In{% endblock %}
 {% block content %}
-	<h1 class="phg-illusion-class">Login to continue</h1>
+	<h1 class="phg-illusion-class">Log in to continue</h1>
 	
 	<form method="POST" action="{{ url_for('player.login') }}">
 		{{ form.hidden_tag() }}
-		<div class="form-field">
-			{{ form.email.label }}
-			{{ form.email() }}
-		</div>
-		<div class="form-field">
-			{{ form.password.label }}
-			{{ form.password() }}
-		</div>
+		{{ with_errors(form.email) }}
+		{{ with_errors(form.password) }}
 		<div class="form-field">
 			{{ form.remember_me() }} {{ form.remember_me.label }}
 		</div>
-		<input class="btn btn-primary" type="submit" value="Login"> or <a href="{{ url_for('player.new_player') }}">create account</a>
+		<input class="btn btn-primary" type="submit" value="Log in"> or <a href="{{ url_for('player.new_player') }}">create account</a>
 	</form>
 {% endblock %}

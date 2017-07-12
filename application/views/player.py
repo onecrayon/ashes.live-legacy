@@ -1,16 +1,18 @@
 """Login/logout and account creation"""
 
-from flask import Blueprint, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from application import login_manager
 from application.forms.player import LoginForm
+from application.models.user import User
 
 mod = Blueprint('player', __name__, url_prefix='/player')
 
 
 # Configure login behavior
 login_manager.login_view = 'player.login'
+login_manager.login_message = None
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -42,6 +44,8 @@ def login():
             login_user(user, remember=form.remember_me.data)
             # Redirect logic handles `next` forwarding
             return form.redirect('index.landing_page')
+        else:
+            flash('Incorrect email or password.', 'error')
     return render_template('player/login.html', form=form)
 
 

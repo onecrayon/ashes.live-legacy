@@ -1,0 +1,13 @@
+{% macro with_errors(field) %}
+	<div class="form-field">
+		{{ field.label }}
+		{{ field(**kwargs) }}
+		{% if field.errors %}
+			<ul class="alerts">
+			{% for error in field.errors %}
+				<li class="error">{{ error }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+{% endmacro %}

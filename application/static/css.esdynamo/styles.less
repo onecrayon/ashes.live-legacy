@@ -8,10 +8,13 @@
 @import "_imports/font-awesome/font-awesome";
 
 @color-black: #000;
+@color-dark-gray: #6f6f6f;
 @color-gray: #dcdcdc;
 @color-white: #fff;
 @color-inexhaustible: #f7f5e8;
 @color-links: #2770c1;
+@color-error: #f00; // TODO: fix these colors!
+@color-success: #0f0;
 
 html {
 	font-family: "Open Sans", Helvetica, sans-serif;
@@ -50,6 +53,28 @@ a.disabled {
 	cursor: text;
 }
 
+.alerts {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		.alert(@color-dark-gray);
+		border-radius: 5px;
+		font-weight: bold;
+		margin: 0 0 10px;
+		padding: 10px;
+	}
+
+	.success {
+		.alert(@color-success);
+	}
+
+	.error {
+		.alert(@color-error);
+	}
+}
+
 .form-field {
 	margin: 0 0 20px;
 	max-width: 320px;
@@ -68,21 +93,26 @@ a.disabled {
 		border: 2px solid @color-gray;
 		border-radius: 5px;
 		box-sizing: border-box;
+		margin: 0;
 		padding: 5px;
 		width: 100%;
+	}
+
+	.alerts li {
+		margin: 10px 0 0;
 	}
 }
 
 .btn {
 	.font-size(18);
+	.alert(@color-dark-gray);
 	border-radius: 5px;
-	padding: 10px 20px;
-	border: 2px solid @color-gray;
+	font-weight: bold;
+	padding: 10px;
 	text-decoration: none;
 	
 	&.btn-primary {
-		color: @color-white;
-		background: @color-links;
+		.alert(@color-links);
 	}
 }
 

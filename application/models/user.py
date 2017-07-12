@@ -37,7 +37,7 @@ class User(db.Model, UserMixin):
         return User.query.filter(
             User.email == email,
             User.password == bcrypt.generate_password_hash(password)
-        )
+        ).first()
     
     @staticmethod
     def fetch_badges(single=False, maximum=8, length=4):
