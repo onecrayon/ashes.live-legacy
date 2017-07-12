@@ -65,11 +65,7 @@ def new():
         return redirect(url_for('index.landing_page'))
     if form.validate_on_submit():
         # TODO: create invite token and email the user
-        flash(
-            'Invitation sent! Please check your email to finalize your account.',
-            'success'
-        )
-        return redirect(url_for('player.login'))
+        return render_template('player/invite_sent.html', email=form.email.data)
     return render_template('player/new.html', form=form)
 
 
