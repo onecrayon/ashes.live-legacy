@@ -2911,6 +2911,7 @@ ol {
 }
 h1 {
   font-size: 1.5rem;
+  margin-bottom: 30px;
 }
 h1[class^="phg-"]:before,
 h1[class*=" phg-"]:before {
