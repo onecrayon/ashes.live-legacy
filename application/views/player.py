@@ -5,6 +5,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from application import login_manager
 from application.forms.player import InviteForm, LoginForm
+from application.models.invite import Invite
 from application.models.user import User
 
 mod = Blueprint('player', __name__, url_prefix='/player')
@@ -64,7 +65,16 @@ def new():
     if current_user.is_authenticated:
         return redirect(url_for('index.landing_page'))
     if form.validate_on_submit():
-        # TODO: create invite token and email the user
+        # Make sure we do not have any users with this email in the database
+        user = User.query.filter(User.email == form.email.data).first()
+        if user:
+            flash('This email is already in use; <a href="{}">reset your password</a>?'.format(
+            	url_for('player.reset')
+            ), 'error')
+            return render_template('player/new.html', form=form)
+        # Grab our invitation info
+        invitation = Invite.get_for_email(form.email.data)
+        # TODO: Email the user
         return render_template('player/invite_sent.html', email=form.email.data)
     return render_template('player/new.html', form=form)
 
@@ -72,4 +82,10 @@ def new():
 @mod.route('/verify/<uuid:token>/')
 def verify(token):
     """Verifies a player's email address, finalizes their account, and logs them in"""
+    pass
+
+
+@mod.route('/reset/', methods=['GET', 'POST'])
+def reset():
+    """Reset account password"""
     pass
