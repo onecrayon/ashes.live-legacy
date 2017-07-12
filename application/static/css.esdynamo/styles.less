@@ -121,6 +121,20 @@ a.disabled {
 	padding: 20px;
 }
 
+#main {
+	.mixin-display-flex;
+}
+
+#content {
+	.mixin-flex(2);
+	.mixin-order(1);
+}
+
+#sidebar {
+	.mixin-flex(1);
+	.mixin-order(2);
+}
+
 #footer {
 	.font-size(12);
 	padding-top: 50px;

@@ -4,7 +4,7 @@ from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from application import login_manager
-from application.forms.player import LoginForm
+from application.forms.player import InviteForm, LoginForm
 from application.models.user import User
 
 mod = Blueprint('player', __name__, url_prefix='/player')
@@ -21,13 +21,13 @@ def load_user(user_id):
 
 @mod.route('/')
 @login_required
-def player_account():
+def account():
     """Edit current player's account"""
     pass
 
 
 @mod.route('/<player_badge>/')
-def player_profile(player_badge):
+def view_profile(player_badge):
     """View a player's public profile"""
     pass
 
@@ -58,12 +58,22 @@ def logout():
 
 
 @mod.route('/new/', methods=['GET', 'POST'])
-def new_player():
+def new():
     """Create account page"""
-    pass
+    form = InviteForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('index.landing_page'))
+    if form.validate_on_submit():
+        # TODO: create invite token and email the user
+        flash(
+            'Invitation sent! Please check your email to finalize your account.',
+            'success'
+        )
+        return redirect(url_for('player.login'))
+    return render_template('player/new.html', form=form)
 
 
 @mod.route('/verify/<uuid:token>/')
-def verify_player(token):
+def verify(token):
     """Verifies a player's email address, finalizes their account, and logs them in"""
     pass

@@ -1,9 +1,12 @@
 {% from "macros.html" import with_errors %}
 {% extends "base.html" %}
 {% block title %}Log In{% endblock %}
-{% block content %}
+
+{% block heading %}
 	<h1 class="phg-illusion-class">Log in to continue</h1>
-	
+{% endblock %}
+
+{% block content %}
 	<form method="POST" action="{{ url_for('player.login') }}">
 		{{ form.hidden_tag() }}
 		{{ with_errors(form.email) }}
@@ -11,6 +14,6 @@
 		<div class="form-field">
 			{{ form.remember_me() }} {{ form.remember_me.label }}
 		</div>
-		<input class="btn btn-primary" type="submit" value="Log in"> or <a href="{{ url_for('player.new_player') }}">create account</a>
+		<input class="btn btn-primary" type="submit" value="Log in"> or <a href="{{ url_for('player.new') }}">create account</a>
 	</form>
 {% endblock %}

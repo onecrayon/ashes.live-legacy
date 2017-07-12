@@ -35,3 +35,9 @@ class LoginForm(FlaskForm):
         if is_safe_url(self.next.data):
             return redirect(self.next.data)
         return redirect(url_for(endpoint, **values))
+
+
+class InviteForm(FlaskForm):
+    email = StringField('Email', validators=[
+        Email(message='Invalid email.')
+    ])

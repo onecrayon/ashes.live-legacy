@@ -52,7 +52,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="{{ url_for('player.player_account') }}">
+					<a href="{{ url_for('player.account') }}">
 						<i class="fa fa-user" aria-hidden="true"></i> Account
 					</a>
 				</li>
@@ -69,12 +69,18 @@
 			</ul>
 		{% endif %}
 		{% endwith %}
-		{% block content %}{% endblock %}
+		{% block heading %}{% endblock %}
+		<div id="main">
+			<div id="sidebar">
+				{% block sidebar %}{% endblock %}
+			</div>
+			<div id="content">
+				{% block content %}{% endblock %}
+			</div>
+		</div>
 	</div>
-	{% block footer %}
 	<footer id="footer">
 		<p class="copyright">All images, graphics, textual and game contents &copy; 2015-2017 Plaid Hat Games. All rights reserved.</p>
 	</footer>
-	{% endblock %}
 </body>
 </html>

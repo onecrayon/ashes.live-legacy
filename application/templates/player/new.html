@@ -1,0 +1,19 @@
+{% from "macros.html" import with_errors %}
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-natural-class">Create your account</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="{{ url_for('player.new') }}">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.email) }}
+		<input class="btn btn-primary" type="submit" value="Create Account">
+	</form>
+{% endblock %}
+
+{% block sidebar %}
+	<p>Enter your email to start creating your account! Once you have verified your address, you will be able to choose your username and password, and start participating on Ashes.live!</p>
+{% endblock %}
