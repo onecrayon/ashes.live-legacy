@@ -3005,6 +3005,14 @@ a.disabled {
   margin-right: auto;
   padding: 20px;
 }
+#page p,
+#footer p,
+#page ul,
+#footer ul,
+#page ol,
+#footer ol {
+  line-height: 1.5;
+}
 #main {
   display: -webkit-box;
   display: -ms-flexbox;
