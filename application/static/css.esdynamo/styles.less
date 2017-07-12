@@ -36,6 +36,10 @@ h1 {
 	}
 }
 
+h2 {
+	font-weight: normal;
+}
+
 a {
 	color: @color-links;
 }
@@ -52,6 +56,14 @@ a.disabled {
 	opacity: .4;
 	pointer-events: none;
 	cursor: text;
+}
+
+.callout {
+	font-size: 112.5%; // 16px => 18px
+}
+
+.muted {
+	color: @color-gray;
 }
 
 .alerts {
@@ -117,12 +129,14 @@ a.disabled {
 	}
 }
 
+/* @group Main content */
+
 #page, #footer {
 	.max-width();
 	padding: 20px;
 	
 	p, ul, ol {
-		line-height: 1.5;
+		line-height: 1.5rem;
 	}
 }
 
@@ -133,6 +147,7 @@ a.disabled {
 #content {
 	.mixin-flex(2);
 	.mixin-order(1);
+	padding-right: 50px;
 }
 
 #sidebar {
@@ -145,6 +160,8 @@ a.disabled {
 	padding-top: 50px;
 	text-align: center;
 }
+
+/* @end */
 
 /* @group Header */
 

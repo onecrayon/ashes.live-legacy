@@ -2919,6 +2919,9 @@ h1[class*=" phg-"]:before {
   vertical-align: middle;
   margin-right: 10px;
 }
+h2 {
+  font-weight: normal;
+}
 a {
   color: #2770c1;
 }
@@ -2934,6 +2937,12 @@ a.disabled {
   opacity: .4;
   pointer-events: none;
   cursor: text;
+}
+.callout {
+  font-size: 112.5%;
+}
+.muted {
+  color: #dcdcdc;
 }
 .alerts {
   list-style-type: none;
@@ -2998,6 +3007,7 @@ a.disabled {
   background: rgba(39, 112, 193, 0.2);
   border: 2px solid #2770c1;
 }
+/* @group Main content */
 #page,
 #footer {
   box-sizing: border-box;
@@ -3012,7 +3022,7 @@ a.disabled {
 #footer ul,
 #page ol,
 #footer ol {
-  line-height: 1.5;
+  line-height: 1.5rem;
 }
 #main {
   display: -webkit-box;
@@ -3029,6 +3039,7 @@ a.disabled {
   -ms-flex-order: 1;
   -webkit-order: 1;
   order: 1;
+  padding-right: 50px;
 }
 #sidebar {
   -webkit-box-flex: 1;
@@ -3045,6 +3056,7 @@ a.disabled {
   padding-top: 50px;
   text-align: center;
 }
+/* @end */
 /* @group Header */
 #header ul {
   display: -webkit-box;
