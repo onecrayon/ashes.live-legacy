@@ -4,7 +4,7 @@ from flask_script import Manager
 
 from application import db
 from application.models import (
-    card, user
+    card, invite, user
 )
 from manager import app
 
