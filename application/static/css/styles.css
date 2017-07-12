@@ -2949,14 +2949,14 @@ a.disabled {
   padding: 10px;
 }
 .alerts .success {
-  color: #0f0;
-  background: rgba(0, 255, 0, 0.2);
-  border: 2px solid #0f0;
+  color: #006600;
+  background: rgba(0, 102, 0, 0.2);
+  border: 2px solid #006600;
 }
 .alerts .error {
-  color: #f00;
-  background: rgba(255, 0, 0, 0.2);
-  border: 2px solid #f00;
+  color: #b00000;
+  background: rgba(176, 0, 0, 0.2);
+  border: 2px solid #b00000;
 }
 .form-field {
   margin: 0 0 20px;
