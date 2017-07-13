@@ -3080,6 +3080,10 @@ a.disabled {
 #header a:active {
   color: #2770c1;
 }
+#header a:hover.disabled,
+#header a:active.disabled {
+  color: #000;
+}
 #header .navbar-wrapper {
   background: #f7f5e8;
   padding: 0 0 4px;
