@@ -62,7 +62,7 @@ def logout():
 
 @mod.route('/new/', methods=['GET', 'POST'])
 def new():
-    """Create account page"""
+    """Request account page"""
     form = InviteForm()
     if current_user.is_authenticated:
         return redirect(url_for('index.landing_page'))
@@ -85,9 +85,9 @@ def new():
     return render_template('player/new.html', form=form)
 
 
-@mod.route('/verify/<uuid:token>/')
-def verify(token):
-    """Verifies a player's email address, finalizes their account, and logs them in"""
+@mod.route('/create/<uuid:uuid>/')
+def create(uuid):
+    """Creates account page; accessed via emailed verification link"""
     pass
 
 
