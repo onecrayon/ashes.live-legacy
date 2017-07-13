@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>{% block title %}{% endblock %}</title>
+	<style>
+	html {
+		font: Helvetica, Arial, sans-serif;
+	}
+	p {
+		margin-bottom: 20px;
+	}
+	a:link,
+	a:visited {
+		color: #2770c1;
+		text-decoration: none;
+	}
+	a:hover,
+	a:active {
+		color: #2770c1;
+		text-decoration: underline;
+	}
+	#emailHeader {
+		background: #f7f5e8;
+		border-bottom: 1px solid #fff;
+	}
+	#emailBody {
+		border-top: 3px solid #dcdcdc;
+	}
+	.center {
+		text-align: center;
+	}
+	.btn {
+		display: inline-block;
+		font-size: 18px;
+		color: #2770c1;
+		background: #d5e3f2;
+		border: 2px solid #2770c1;
+		border-radius: 5px;
+		font-weight: bold;
+		padding: 10px;
+		text-decoration: none;
+	}
+	</style>
+</head>
+<body>
+	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+		<tr>
+			<td align="center" valign="top">
+				<table border="0" cellpadding="0" cellspacing="0" width="600" id="emailContainer">
+					<tr>
+						<td align="center" valign="top">
+							<table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailHeader">
+								<tr>
+									<td align="center" valign="top">
+										<a href="{{ site_url }}"><img src="{{ site_url }}/images/ashes-live-small.png" alt="Ashes.live" /></a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" valign="top">
+							<table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody">
+								<tr>
+									<td align="left" valign="top">
+										{% block content %}{% endblock %} 
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

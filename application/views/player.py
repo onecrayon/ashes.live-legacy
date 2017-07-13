@@ -1,9 +1,10 @@
 """Login/logout and account creation"""
 
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import current_app, Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
+from flask_mail import Message
 
-from application import login_manager
+from application import login_manager, mail
 from application.forms.player import InviteForm, LoginForm
 from application.models.invite import Invite
 from application.models.user import User
@@ -74,7 +75,22 @@ def new():
             return render_template('player/new.html', form=form)
         # Grab our invitation info
         invitation = Invite.get_for_email(form.email.data)
-        # TODO: Email the user
+        # Email the user
+        message = Message(
+            'Create your Ashes.live account!',
+            recipients=[invitation.email],
+            html=render_template(
+                'emails/invite_token.html',
+                site_url=current_app.config['SITE_URL'],
+                invite=invitation
+            ),
+            body=render_template(
+                'emails/invite_token.txt',
+                site_url=current_app.config['SITE_URL'],
+                invite=invitation
+            )
+        )
+        mail.send(message)
         return render_template('player/invite_sent.html', email=form.email.data)
     return render_template('player/new.html', form=form)
 
