@@ -5,7 +5,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
 from application import login_manager
-from application.forms.player import InviteForm, LoginForm
+from application.forms.player import EmailForm, LoginForm
 from application.models.invite import Invite
 from application.models.user import User
 from application.utils import send_message
@@ -63,7 +63,7 @@ def logout():
 @mod.route('/new/', methods=['GET', 'POST'])
 def new():
     """Request account page"""
-    form = InviteForm()
+    form = EmailForm()
     if current_user.is_authenticated:
         return redirect(url_for('index.landing_page'))
     if form.validate_on_submit():
