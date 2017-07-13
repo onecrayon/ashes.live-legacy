@@ -16,8 +16,13 @@ class Invite(db.Model):
         if invitation:
             invitation.requests = invitation.requests + 1
         else:
+            # Grab a unique UUID
+            uuid = str(uuid.uuid4())
+            while Invite.get(uuid):
+                uuid = str(uuid.uuid4())
+            # Create our invitation
             invitation = Invite(
-                uuid=str(uuid.uuid4()),
+                uuid=uuid,
                 email=email
             )
             db.session.add(invitation)
