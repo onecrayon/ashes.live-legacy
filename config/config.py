@@ -2,6 +2,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 ### Environment-specific ###
 
+# Site root URL; no trailing slash
+SITE_URL = 'http://ashes.live'
+
 # Flask
 SECRET_KEY = ''
 DEBUG = False
