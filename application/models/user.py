@@ -40,13 +40,24 @@ class User(db.Model, UserMixin):
         ).first()
     
     @staticmethod
-    def fetch_badges(single=False, maximum=8, length=4):
+    def fetch_badges(single=False, maximum=8, length=4, tries=1):
+        """Generates a list of user badges
+        
+        * `single`: if True, returns a single badge
+        * `maximum`: maximum number of badges to generate
+        * `length`: the length of each individual badge
+        * `tries`: do not set; used internally to track recursion on failure
+        """
+        # Increase the length if we failed to find badges 10 times in a row
+        if tries > 10:
+            return User.fetch_badges(single, maximum, length=length+1)
+        # Generate our badges
         options = generate_badges(number=maximum, length=length)
         # Test for kid-friendliness
         options = [x for x in options if kid_friendly(x)]
         # Highly unlikely, but if *all* options were bad, try again
         if not options:
-            return User.fetch_badges(single, maximum, length)
+            return User.fetch_badges(single, maximum, length, tries=tries+1)
         taken = [
             badge for (badge,) in db.session.query(User.badge).filter(User.badge.in_(options)).all()
         ]
@@ -54,7 +65,7 @@ class User(db.Model, UserMixin):
             options = [x for x in options if x not in taken]
         # Highly unlikely, but if all random badges are taken, try again
         if not options:
-            return User.fetch_badges(single, maximum, length)
+            return User.fetch_badges(single, maximum, length, tries=tries+1)
         return options[0] if single else options
 
 
