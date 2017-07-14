@@ -1,11 +1,11 @@
 """Login/logout and account creation"""
 
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, session, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
 from application import login_manager
-from application.forms.player import EmailForm, LoginForm
+from application.forms.player import CreateForm, EmailForm, LoginForm
 from application.models.invite import Invite
 from application.models.user import User
 from application.utils import send_message
@@ -85,10 +85,28 @@ def new():
     return render_template('player/new.html', form=form)
 
 
-@mod.route('/create/<uuid:uuid>/')
+@mod.route('/create/<string:uuid>/', methods=['GET', 'POST'])
 def create(uuid):
     """Creates account page; accessed via emailed verification link"""
-    pass
+    if current_user.is_authenticated:
+        return redirect(url_for('index.landing_page'))
+    invitation = Invite.query.get(uuid)
+    if not invitation:
+        flash('Your account invitation URL has expired; you can resend it below.', 'error')
+        return redirect(url_for('player.new'))
+    if not session.get('badge_choices'):
+        session['badge_choices'] = [(x, '#{}'.format(x)) for x in User.fetch_badges(maximum=9)]
+    form = CreateForm()
+    form.badge.choices = session['badge_choices']
+    form.badge.default = session['badge_choices'][0][0]
+    # Have to process the form in order for the default to take effect
+    form.process()
+    # Have to set email after re-processing, because processing clears it
+    form.email.data = invitation.email
+    if form.validate_on_submit():
+        # TODO: create our user account and log them in
+        pass
+    return render_template('player/create.html', form=form)
 
 
 @mod.route('/reset/', methods=['GET', 'POST'])

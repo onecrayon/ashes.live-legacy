@@ -1,13 +1,17 @@
+{% macro inline_errors(errors) %}
+	{% if errors %}
+		<ul class="alerts">
+		{% for error in errors %}
+			<li class="error">{{ error }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+{% endmacro %}
+
 {% macro with_errors(field) %}
 	<div class="form-field">
 		{{ field.label }}
 		{{ field(**kwargs) }}
-		{% if field.errors %}
-			<ul class="alerts">
-			{% for error in field.errors %}
-				<li class="error">{{ error }}</li>
-			{% endfor %}
-			</ul>
-		{% endif %}
+		{{ inline_errors(field.errors) }}
 	</div>
 {% endmacro %}

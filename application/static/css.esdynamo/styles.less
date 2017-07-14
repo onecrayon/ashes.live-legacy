@@ -8,11 +8,12 @@
 @import "_imports/font-awesome/font-awesome";
 
 @color-black: #000;
-@color-dark-gray: #6f6f6f;
 @color-gray: #dcdcdc;
+@color-mid-gray: #bfbfbf;
+@color-dark-gray: #6f6f6f;
 @color-white: #fff;
 @color-inexhaustible: #f7f5e8;
-@color-links: #2770c1;
+@color-link: #2770c1;
 @color-error: #b00000;
 @color-success: #006600;
 
@@ -41,7 +42,7 @@ h2 {
 }
 
 a {
-	color: @color-links;
+	color: @color-link;
 }
 
 a:link, a:visited {
@@ -64,6 +65,23 @@ a.disabled {
 
 .muted {
 	color: @color-gray;
+}
+
+.username {
+	border: 1px solid @color-mid-gray;
+	background: fadeout(@color-mid-gray, 80%);
+	border-radius: 5px;
+	font-weight: bold;
+	padding: 0 3px;
+}
+
+.badge {
+	color: @color-mid-gray;
+	font-weight: normal;
+	
+	&:before {
+		content: '#';
+	}
 }
 
 .alerts {
@@ -92,12 +110,12 @@ a.disabled {
 	margin: 0 0 20px;
 	max-width: 320px;
 	
-	label {
+	label, .label {
 		display: block;
 		margin: 0 0 5px;
 	}
 	
-	input[type="checkbox"] + label {
+	input[type="checkbox"] + label, input[type="radio"] + label {
 		display: inline;
 	}
 	
@@ -109,6 +127,11 @@ a.disabled {
 		margin: 0;
 		padding: 5px;
 		width: 100%;
+		
+		&[readonly], &[disabled] {
+			color: @color-mid-gray;
+			background: fadeout(@color-gray, 80%);
+		}
 	}
 
 	.alerts li {
@@ -125,7 +148,7 @@ a.disabled {
 	text-decoration: none;
 	
 	&.btn-primary {
-		.alert(@color-links);
+		.alert(@color-link);
 	}
 }
 
@@ -181,7 +204,7 @@ a.disabled {
 	}
 	
 	a:hover, a:active {
-		color: @color-links;
+		color: @color-link;
 
 		&.disabled {
 			color: @color-black;
@@ -308,6 +331,38 @@ a.disabled {
 	
 	.fa {
 		margin-right: 5px;
+	}
+}
+
+/* @end */
+
+/* @group Page-specific */
+
+.badge-field {
+	margin-bottom: 20px;
+	
+	ul {
+		.mixin-display-flex();
+		.mixin-flex-wrap(wrap);
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	
+	li {
+		.mixin-flex(1);
+		margin: 0 10px 10px 0;
+		white-space: nowrap;
+	}
+	
+	label {
+		.alert(@color-mid-gray);
+		border-radius: 5px;
+		padding: 0 3px;
+	}
+	
+	input:checked + label {
+		.alert(@color-link);
 	}
 }
 

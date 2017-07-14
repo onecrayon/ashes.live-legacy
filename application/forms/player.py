@@ -2,8 +2,8 @@ from urllib.parse import urljoin, urlparse
 
 from flask import redirect, request, url_for
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, HiddenField, PasswordField, StringField
-from wtforms.validators import DataRequired, Email
+from wtforms import BooleanField, HiddenField, PasswordField, RadioField, StringField
+from wtforms.validators import DataRequired, Email, EqualTo
 
 
 def is_safe_url(target):
@@ -16,13 +16,20 @@ def get_redirect_target():
     return request.args.get('next') if is_safe_url(request.args.get('next')) else None
 
 
-class LoginForm(FlaskForm):
+# Shared fields
+passwordField = PasswordField('Password', validators=[
+    DataRequired(message='Password is required.')
+])
+
+
+class EmailForm(FlaskForm):
     email = StringField('Email', validators=[
         Email(message='Invalid email.')
     ])
-    password = PasswordField('Password', validators=[
-        DataRequired(message='Password is required.')
-    ])
+
+
+class LoginForm(EmailForm):
+    password = passwordField
     remember_me = BooleanField('Remember me')
     next = HiddenField()
 
@@ -37,7 +44,12 @@ class LoginForm(FlaskForm):
         return redirect(url_for(endpoint, **values))
 
 
-class EmailForm(FlaskForm):
-    email = StringField('Email', validators=[
-        Email(message='Invalid email.')
+class CreateForm(FlaskForm):
+    email = StringField('Email', render_kw={'readonly': True})
+    username = StringField('Username', validators=[DataRequired()])
+    badge = RadioField('Badge', validators=[DataRequired()])
+    password = passwordField
+    password_confirm = PasswordField('Confirm Password', validators=[
+        DataRequired(message='Password confirmation is required.'),
+        EqualTo('password', message='Must match password.')
     ])

@@ -1,0 +1,35 @@
+{% from "macros.html" import with_errors, inline_errors %}
+{% extends "base.html" %}
+{% block title %}Finalize Account{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-illusion-power">Finalize your account</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="./">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.email) }}
+		{{ with_errors(form.username) }}
+		<div class="form-field badge-field">
+			<p class="label">Badge</p>
+			<ul>
+			{% for field in form.badge %}
+				<li>{{ field }} {{ field.label }}</li>
+			{% endfor %}
+			</ul>
+			{{ inline_errors(form.badge.errors) }}
+		</div>
+		{{ with_errors(form.password) }}
+		{{ with_errors(form.password_confirm) }}
+		<input class="btn btn-primary" type="submit" value="Join Ashes.live!">
+	</form>
+{% endblock %}
+
+{% block sidebar %}
+	<p class="callout">Welcome to Ashes.live!</p>
+	
+	<p><strong>Username</strong> can be anything (though please keep it kid-friendly!), and you will be identified around Ashes.live by a combination of your username and badge; e.g. <span class="username">Username<span class="badge">badge</span></span></p>
+	
+	<p>You can change your username whenever you like, but your badge is permanent.</p>
+{% endblock %}
