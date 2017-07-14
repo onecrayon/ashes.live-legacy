@@ -1,3 +1,5 @@
+SESSION_TYPE = 'sqlalchemy'
+SESSION_USE_SIGNER = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 ### Environment-specific ###

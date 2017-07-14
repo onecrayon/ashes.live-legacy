@@ -8,6 +8,9 @@ from application.models import (
 )
 from manager import app
 
+# Grab access to the session model, so that Alembic can see its table definition
+session_model = app.session_interface.sql_session_model
+
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
