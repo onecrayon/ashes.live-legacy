@@ -1,0 +1,26 @@
+{% from "macros.html" import with_errors %}
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-natural-class">Create your account</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="{{ url_for('player.new') }}">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.email) }}
+		<input class="btn btn-primary" type="submit" value="Create Account">
+	</form>
+{% endblock %}
+
+{% block sidebar %}
+	<p class="callout">Enter your email to start creating your account!</p>
+	
+	<ul>
+		<li>Build decks</li>
+		<li class="muted">Share decks</li>
+		<li class="muted">Discuss decks and cards</li>
+		<li class="muted">Log games and track your deck's performance</li>
+	</ul>
+{% endblock %}

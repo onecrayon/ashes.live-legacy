@@ -69,7 +69,7 @@ def request_invite():
             flash('This email is already in use; <a href="{}">reset your password</a>?'.format(
             	url_for('player.reset')
             ), 'error')
-            return render_template('player/new.html', form=form)
+            return render_template('player/new_invite.html', form=form)
         # Grab our invitation info
         invitation = Invite.get_for_email(form.email.data)
         # Email the user
@@ -78,7 +78,7 @@ def request_invite():
             invite=invitation
         )
         return render_template('player/invite_sent.html', email=form.email.data)
-    return render_template('player/new.html', form=form)
+    return render_template('player/new_invite.html', form=form)
 
 
 def create_account(uuid):
@@ -115,7 +115,7 @@ def create_account(uuid):
         login_user(user)
         flash('Welcome to Ashes.live!', 'success')
         return redirect(url_for('home.index'))
-    return render_template('player/create.html', form=form)
+    return render_template('player/new.html', form=form)
 
 
 @mod.route('/new/', methods=['GET', 'POST'])

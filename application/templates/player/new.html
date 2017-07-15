@@ -1,26 +1,35 @@
-{% from "macros.html" import with_errors %}
+{% from "macros.html" import with_errors, inline_errors %}
 {% extends "base.html" %}
-{% block title %}Create Account{% endblock %}
+{% block title %}Finalize Account{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-natural-class">Create your account</h1>
+	<h1 class="phg-illusion-power">Finalize your account</h1>
 {% endblock %}
 
 {% block content %}
-	<form method="POST" action="{{ url_for('player.new') }}">
+	<form method="POST" action="./">
 		{{ form.hidden_tag() }}
 		{{ with_errors(form.email) }}
-		<input class="btn btn-primary" type="submit" value="Create Account">
+		{{ with_errors(form.username) }}
+		<div class="form-field badge-field">
+			<p class="label">Badge</p>
+			<ul>
+			{% for field in form.badge %}
+				<li>{{ field }} {{ field.label }}</li>
+			{% endfor %}
+			</ul>
+			{{ inline_errors(form.badge.errors) }}
+		</div>
+		{{ with_errors(form.password) }}
+		{{ with_errors(form.password_confirm) }}
+		<input class="btn btn-primary" type="submit" value="Join Ashes.live!">
 	</form>
 {% endblock %}
 
 {% block sidebar %}
-	<p class="callout">Enter your email to start creating your account!</p>
+	<p class="callout">Welcome to Ashes.live!</p>
 	
-	<ul>
-		<li>Build decks</li>
-		<li class="muted">Share decks</li>
-		<li class="muted">Discuss decks and cards</li>
-		<li class="muted">Log games and track your deck's performance</li>
-	</ul>
+	<p><strong>Username</strong> can be anything (though please keep it kid-friendly!), and you will be identified around Ashes.live by a combination of your username and badge; e.g. <span class="username">Username<span class="badge">badge</span></span></p>
+	
+	<p>You can change your username whenever you like, but your badge is permanent.</p>
 {% endblock %}
