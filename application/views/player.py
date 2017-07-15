@@ -95,7 +95,7 @@ def create(uuid):
         flash('Your account invitation URL has expired; you can resend it below.', 'error')
         return redirect(url_for('player.new'))
     if not session.get('badge_choices'):
-        session['badge_choices'] = [(x, '#{}'.format(x)) for x in User.fetch_badges(maximum=9)]
+        session['badge_choices'] = [(x, '#{}'.format(x)) for x in User.fetch_badges(number=9)]
     form = CreateForm()
     form.badge.choices = session['badge_choices']
     form.badge.default = session['badge_choices'][0][0]
