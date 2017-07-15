@@ -9,6 +9,7 @@ from application.forms.player import CreateForm, EmailForm, LoginForm
 from application.models.invite import Invite
 from application.models.user import User
 from application.utils import send_message
+from application.wrappers import guest_required
 
 mod = Blueprint('player', __name__, url_prefix='/player')
 
@@ -36,11 +37,10 @@ def view_profile(player_badge):
 
 
 @mod.route('/login/', methods=['GET', 'POST'])
+@guest_required
 def login():
     """Log a player into the site"""
     form = LoginForm()
-    if current_user.is_authenticated:
-        return form.redirect('index.home')
     if form.validate_on_submit():
         user = User.log_in(form.email.data, form.password.data)
         if user:
@@ -61,11 +61,10 @@ def logout():
 
 
 @mod.route('/new/', methods=['GET', 'POST'])
+@guest_required
 def new():
     """Request account page"""
     form = EmailForm()
-    if current_user.is_authenticated:
-        return redirect(url_for('index.home'))
     if form.validate_on_submit():
         # Make sure we do not have any users with this email in the database
         user = User.query.filter(User.email == form.email.data).first()
