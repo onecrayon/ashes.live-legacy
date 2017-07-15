@@ -1,7 +1,8 @@
 from datetime import datetime
 from random import choice
-import string
 import re
+import string
+import uuid
 
 from flask_login.mixins import UserMixin
 from application import db, bcrypt
