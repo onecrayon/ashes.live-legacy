@@ -7,7 +7,7 @@ from flask_mail import Message
 from application import db, login_manager
 from application.models.invite import Invite
 from application.models.user import User
-from application.views.forms.player import CreateForm, EmailForm, LoginForm
+from application.views.forms.player import CreateForm, EmailForm, LoginForm, ResetForm
 from application.utils import send_message
 from application.wrappers import guest_required
 
@@ -83,8 +83,6 @@ def request_invite():
 
 def create_account(uuid):
     """Creates account page; accessed via emailed verification link"""
-    if current_user.is_authenticated:
-        return redirect(url_for('home.index'))
     invitation = Invite.query.get(uuid)
     if not invitation:
         flash('Your account invitation URL has expired; you can resend it below.', 'error')
@@ -150,11 +148,22 @@ def request_reset():
 
 
 def change_password(uuid):
-    pass
+    user = User.query.filter(User.reset_uuid == uuid).first()
+    if not user:
+        flash('Your reset URL has expired; you can resend it below.', 'error')
+        return redirect(url_for('player.reset'))
+    form = ResetForm()
+    if form.validate_on_submit():
+        # Reset the user's password
+        user.set_password(form.password.data)
+        login_user(user)
+        flash('Password successfully reset!', 'success')
+        return redirect(url_for('home.index'))
+    return render_template('player/reset.html', form=form)
 
 
 @mod.route('/reset/', methods=['GET', 'POST'])
-@mod.route('/reset/<uuid>', methods=['GET', 'POST'])
+@mod.route('/reset/<uuid>/', methods=['GET', 'POST'])
 @guest_required
 def reset(uuid=None):
     """Reset account password"""

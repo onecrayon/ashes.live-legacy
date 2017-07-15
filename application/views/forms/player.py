@@ -20,12 +20,21 @@ def get_redirect_target():
 passwordField = PasswordField('Password', validators=[
     DataRequired(message='Password is required.')
 ])
+passwordConfirmField = PasswordField('Confirm Password', validators=[
+    DataRequired(message='Password confirmation is required.'),
+    EqualTo('password', message='Must match password.')
+])
 
 
 class EmailForm(FlaskForm):
     email = StringField('Email', validators=[
         Email(message='Invalid email.')
     ])
+
+
+class ResetForm(FlaskForm):
+    password = passwordField
+    password_confirm = passwordConfirmField
 
 
 class LoginForm(EmailForm):
@@ -49,7 +58,4 @@ class CreateForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     badge = RadioField('Badge', validators=[DataRequired()])
     password = passwordField
-    password_confirm = PasswordField('Confirm Password', validators=[
-        DataRequired(message='Password confirmation is required.'),
-        EqualTo('password', message='Must match password.')
-    ])
+    password_confirm = passwordConfirmField

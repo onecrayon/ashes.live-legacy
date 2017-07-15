@@ -42,6 +42,11 @@ class User(db.Model, UserMixin):
         self.reset_uuid = str_id
         db.session.commit()
 
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password)
+        self.reset_uuid = None
+        db.session.commit()
+
     @staticmethod
     def log_in(email, password):
         user =  User.query.filter(

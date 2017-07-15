@@ -1,0 +1,16 @@
+{% from "macros.html" import with_errors, inline_errors %}
+{% extends "base.html" %}
+{% block title %}Reset Password{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-charm-power">Reset your password</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="./">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.password) }}
+		{{ with_errors(form.password_confirm) }}
+		<input class="btn btn-primary" type="submit" value="Reset password">
+	</form>
+{% endblock %}
