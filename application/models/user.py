@@ -34,10 +34,12 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def log_in(email, password):
-        return User.query.filter(
-            User.email == email,
-            User.password == bcrypt.generate_password_hash(password)
+        user =  User.query.filter(
+            User.email == email
         ).first()
+        if not user or not bcrypt.check_password_hash(user.password, password):
+            return None
+        return user
     
     @staticmethod
     def fetch_badges(single=False, number=8, length=4, _tries=1, _current=None):
