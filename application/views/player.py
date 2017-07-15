@@ -60,10 +60,7 @@ def logout():
     return redirect(url_for('home.index'))
 
 
-@mod.route('/new/', methods=['GET', 'POST'])
-@guest_required
-def new():
-    """Request account page"""
+def request_invite():
     form = EmailForm()
     if form.validate_on_submit():
         # Make sure we do not have any users with this email in the database
@@ -84,8 +81,7 @@ def new():
     return render_template('player/new.html', form=form)
 
 
-@mod.route('/create/<string:uuid>/', methods=['GET', 'POST'])
-def create(uuid):
+def create_account(uuid):
     """Creates account page; accessed via emailed verification link"""
     if current_user.is_authenticated:
         return redirect(url_for('home.index'))
@@ -120,6 +116,16 @@ def create(uuid):
         flash('Welcome to Ashes.live!', 'success')
         return redirect(url_for('home.index'))
     return render_template('player/create.html', form=form)
+
+
+@mod.route('/new/', methods=['GET', 'POST'])
+@mod.route('/new/<uuid>/', methods=['GET', 'POST'])
+@guest_required
+def new(uuid=None):
+    """Create account page"""
+    if uuid is None:
+        return request_invite()
+    return create_account(uuid)
 
 
 @mod.route('/reset/', methods=['GET', 'POST'])

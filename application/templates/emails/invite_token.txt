@@ -2,6 +2,6 @@ You're almost done!
 
 Visit this URL to finalize your Ashes.live account and start participating on the site:
 
-{{ site_url }}{{ url_for('player.create', uuid=invite.uuid) }}
+{{ site_url }}{{ url_for('player.new', uuid=invite.uuid) }}
 
 This email was sent to <{{ invite.email }}>. If you received it in error, please disregard it.
