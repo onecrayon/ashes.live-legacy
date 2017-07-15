@@ -1,10 +1,10 @@
 """Login/logout and account creation"""
 
-from flask import Blueprint, flash, redirect, render_template, session, url_for
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
-from application import login_manager
+from application import db, login_manager
 from application.forms.player import CreateForm, EmailForm, LoginForm
 from application.models.invite import Invite
 from application.models.user import User
@@ -19,7 +19,7 @@ login_manager.login_message = None
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.get(user_id)
 
 
 @mod.route('/')
@@ -100,12 +100,22 @@ def create(uuid):
     form.badge.choices = session['badge_choices']
     form.badge.default = session['badge_choices'][0][0]
     # Have to process the form in order for the default to take effect
-    form.process()
-    # Have to set email after re-processing, because processing clears it
+    form.process(request.form)
     form.email.data = invitation.email
     if form.validate_on_submit():
-        # TODO: create our user account and log them in
-        pass
+        # Create our user account and log them in
+        user = User(
+            email=form.email.data,
+            password=form.password.data,
+            badge=form.badge.data,
+            username=form.username.data
+        )
+        db.session.add(user)
+        db.session.commit()
+        # TODO: delete the invitation
+        login_user(user)
+        flash('Welcome to Ashes.live!', 'success')
+        return redirect(url_for('index.home'))
     return render_template('player/create.html', form=form)
 
 
