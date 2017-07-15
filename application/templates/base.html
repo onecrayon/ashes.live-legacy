@@ -56,6 +56,13 @@
 						<i class="fa fa-user" aria-hidden="true"></i> Account
 					</a>
 				</li>
+				{% if current_user.is_authenticated %}
+				<li>
+					<a href="{{ url_for('player.logout') }}">
+						<i class="fa fa-sign-out" aria-hidden="true"></i> Log out
+					</a>
+				</li>
+				{% endif %}
 			</ul>
 		</nav>
 	</header>
