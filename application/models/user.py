@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     badge = db.Column(db.String(8), unique=True, nullable=False, index=True)
     username = db.Column(db.String(42), nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    reset_uuid = db.Column(db.String(36), nullable=True, default=None, index=True, unique=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -31,6 +32,14 @@ class User(db.Model, UserMixin):
             'Noah Redmoon', 'Odette Diamondcrest', 'Orrick Gilstream',
             'Rin Northfell', 'Saria Guideman', 'Victoria Glassfire'
         ])
+
+    def generate_reset_uuid(self):
+        # Grab a unique UUID
+        str_id = str(uuid.uuid4())
+        while User.query.filter(User.reset_uuid == str_id).first():
+            str_id = str(uuid.uuid4())
+        self.reset_uuid = str_id
+        db.session.commit()
 
     @staticmethod
     def log_in(email, password):
