@@ -102,7 +102,7 @@ def create(uuid):
     form.process(request.form)
     form.email.data = invitation.email
     if form.validate_on_submit():
-        # Create our user account and log them in
+        # Create our user account
         user = User(
             email=form.email.data,
             password=form.password.data,
@@ -110,8 +110,12 @@ def create(uuid):
             username=form.username.data
         )
         db.session.add(user)
+        # Delete the invitation and session badges
+        db.session.delete(invitation)
+        session.pop('badge_choices', None)
+        # Commit our changes
         db.session.commit()
-        # TODO: delete the invitation
+        # Login, and redirect to the homepage
         login_user(user)
         flash('Welcome to Ashes.live!', 'success')
         return redirect(url_for('index.home'))
