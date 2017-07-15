@@ -128,7 +128,36 @@ def new(uuid=None):
     return create_account(uuid)
 
 
-@mod.route('/reset/', methods=['GET', 'POST'])
-def reset():
-    """Reset account password"""
+def request_reset():
+    form = EmailForm()
+    if form.validate_on_submit():
+        # Make sure we have a user with this email in the database
+        user = User.query.filter(User.email == form.email.data).first()
+        if not user:
+            flash('No account found; <a href="{}">create your account</a>?'.format(
+            	url_for('player.new')
+            ), 'error')
+            return render_template('player/reset_request.html', form=form)
+        # Mark account for password reset
+        user.generate_reset_uuid()
+        # Email the user
+        send_message(
+            user.email, 'Reset your Ashes.live password', 'reset_token',
+            user=user
+        )
+        return render_template('player/reset_sent.html', email=form.email.data)
+    return render_template('player/reset_request.html', form=form)
+
+
+def change_password(uuid):
     pass
+
+
+@mod.route('/reset/', methods=['GET', 'POST'])
+@mod.route('/reset/<uuid>', methods=['GET', 'POST'])
+@guest_required
+def reset(uuid=None):
+    """Reset account password"""
+    if uuid is None:
+        return request_reset()
+    return change_password(uuid)

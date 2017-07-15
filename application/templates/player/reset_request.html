@@ -1,0 +1,15 @@
+{% from "macros.html" import with_errors %}
+{% extends "base.html" %}
+{% block title %}Forgotten Password{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-charm-power">Forgot your password?</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="{{ url_for('player.reset') }}">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.email) }}
+		<input class="btn btn-primary" type="submit" value="Request password reset">
+	</form>
+{% endblock %}

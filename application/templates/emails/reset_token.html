@@ -1,0 +1,12 @@
+{% extends "emails/base.html" %}
+{% block content %}
+	<h2>Forgot your password?</h2>
+	
+	<p>Click this button to reset your Ashes.live password:</p>
+	
+	<p class="center"><a href="{{ site_url }}{{ url_for('player.reset', uuid=user.reset_uuid) }}" class="btn">Reset password</a></p>
+	
+	<p><small>Or visit: <a href="{{ site_url }}{{ url_for('player.reset', uuid=user.reset_uuid) }}">{{ site_url }}{{ url_for('player.reset', uuid=user.reset_uuid) }}</a></small></p>
+	
+	<p><small>This email was sent to &lt;<strong>{{ user.email }}</strong>&gt;. If you received it in error, please disregard it.</small></p>
+{% endblock %}
