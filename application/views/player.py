@@ -46,7 +46,7 @@ def login():
         if user:
             login_user(user, remember=form.remember_me.data)
             # Redirect logic handles `next` forwarding
-            return form.redirect('index.home')
+            return form.redirect('home.index')
         else:
             flash('Incorrect email or password.', 'error')
     return render_template('player/login.html', form=form)
@@ -57,7 +57,7 @@ def login():
 def logout():
     """Log a player out"""
     logout_user()
-    return redirect(url_for('index.home'))
+    return redirect(url_for('home.index'))
 
 
 @mod.route('/new/', methods=['GET', 'POST'])
@@ -88,7 +88,7 @@ def new():
 def create(uuid):
     """Creates account page; accessed via emailed verification link"""
     if current_user.is_authenticated:
-        return redirect(url_for('index.home'))
+        return redirect(url_for('home.index'))
     invitation = Invite.query.get(uuid)
     if not invitation:
         flash('Your account invitation URL has expired; you can resend it below.', 'error')
@@ -118,7 +118,7 @@ def create(uuid):
         # Login, and redirect to the homepage
         login_user(user)
         flash('Welcome to Ashes.live!', 'success')
-        return redirect(url_for('index.home'))
+        return redirect(url_for('home.index'))
     return render_template('player/create.html', form=form)
 
 

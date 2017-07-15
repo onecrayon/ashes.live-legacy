@@ -3,9 +3,9 @@
 from flask import Blueprint, render_template
 from application import app
 
-mod = Blueprint('index', __name__)
+mod = Blueprint('home', __name__)
 
 
 @mod.route('/')
-def home():
+def index():
     return render_template('index.html')
