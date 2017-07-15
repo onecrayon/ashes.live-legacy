@@ -5,9 +5,9 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
 from application import db, login_manager
-from application.forms.player import CreateForm, EmailForm, LoginForm
 from application.models.invite import Invite
 from application.models.user import User
+from application.views.forms.player import CreateForm, EmailForm, LoginForm
 from application.utils import send_message
 from application.wrappers import guest_required
 
