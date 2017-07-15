@@ -40,16 +40,17 @@ class User(db.Model, UserMixin):
         ).first()
     
     @staticmethod
-    def fetch_badges(single=False, number=8, length=4, tries=1):
+    def fetch_badges(single=False, number=8, length=4, _tries=1, _current=None):
         """Generates a list of user badges
         
         * `single`: if True, returns a single badge
         * `number`: number of badges to generate
         * `length`: the length of each individual badge
-        * `tries`: do not set; used internally to track recursion on failure
+        * `_tries`: do not set; used internally to track recursion on failure
+        * `_current`: do not set; used internally
         """
         # Increase the length if we failed to find badges 10 times in a row
-        if tries > 10:
+        if _tries > 10:
             return User.fetch_badges(single, number, length=length+1)
         # Generate our badges
         options = generate_badges(number=number, length=length)
@@ -57,7 +58,7 @@ class User(db.Model, UserMixin):
         options = [x for x in options if kid_friendly(x)]
         # Highly unlikely, but if *all* options were bad, try again
         if not options:
-            return User.fetch_badges(single, number, length, tries=tries+1)
+            return User.fetch_badges(single, number, length, _tries=_tries+1, _current=_current)
         taken = [
             badge for (badge,) in db.session.query(User.badge).filter(User.badge.in_(options)).all()
         ]
@@ -65,12 +66,14 @@ class User(db.Model, UserMixin):
             options = [x for x in options if x not in taken]
         # Highly unlikely, but if all random badges are taken, try again
         if not options:
-            return User.fetch_badges(single, number, length, tries=tries+1)
+            return User.fetch_badges(single, number, length, _tries=_tries+1, _current=_current)
+        # Add pre-located options to our list
+        if _current:
+            options = _current + options
         # If we had to discard some, generate some more to fill in the gaps
         if len(options) < number:
-            next_batch = User.fetch_badges(False, number, length)
-            options = (options + next_batch)[:number]
-        return options[0] if single else options
+            return User.fetch_badges(False, number, length, _tries=_tries+1,  _current=options)
+        return options[0] if single else options[:number]
 
 
 def generate_badges(number=8, length=4):
