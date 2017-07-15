@@ -7,5 +7,5 @@ mod = Blueprint('index', __name__)
 
 
 @mod.route('/')
-def landing_page():
+def home():
     return render_template('index.html')

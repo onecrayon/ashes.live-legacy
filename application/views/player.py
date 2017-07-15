@@ -40,13 +40,13 @@ def login():
     """Log a player into the site"""
     form = LoginForm()
     if current_user.is_authenticated:
-        return form.redirect('index.landing_page')
+        return form.redirect('index.home')
     if form.validate_on_submit():
         user = User.log_in(form.email.data, form.password.data)
         if user:
             login_user(user, remember=form.remember_me.data)
             # Redirect logic handles `next` forwarding
-            return form.redirect('index.landing_page')
+            return form.redirect('index.home')
         else:
             flash('Incorrect email or password.', 'error')
     return render_template('player/login.html', form=form)
@@ -57,7 +57,7 @@ def login():
 def logout():
     """Log a player out"""
     logout_user()
-    return redirect(url_for('index.landing_page'))
+    return redirect(url_for('index.home'))
 
 
 @mod.route('/new/', methods=['GET', 'POST'])
@@ -65,7 +65,7 @@ def new():
     """Request account page"""
     form = EmailForm()
     if current_user.is_authenticated:
-        return redirect(url_for('index.landing_page'))
+        return redirect(url_for('index.home'))
     if form.validate_on_submit():
         # Make sure we do not have any users with this email in the database
         user = User.query.filter(User.email == form.email.data).first()
@@ -89,7 +89,7 @@ def new():
 def create(uuid):
     """Creates account page; accessed via emailed verification link"""
     if current_user.is_authenticated:
-        return redirect(url_for('index.landing_page'))
+        return redirect(url_for('index.home'))
     invitation = Invite.query.get(uuid)
     if not invitation:
         flash('Your account invitation URL has expired; you can resend it below.', 'error')

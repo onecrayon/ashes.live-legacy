@@ -38,7 +38,7 @@ class LoginForm(EmailForm):
         if not self.next.data:
             self.next.data = get_redirect_target() or ''
 
-    def redirect(self, endpoint='index.landing_page', **values):
+    def redirect(self, endpoint='index.home', **values):
         if is_safe_url(self.next.data):
             return redirect(self.next.data)
         return redirect(url_for(endpoint, **values))
