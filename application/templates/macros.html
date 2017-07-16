@@ -1,12 +1,8 @@
 {% macro usertag(user, link=True) -%}
 	{% if link -%}
-		<a class="username" href="{{ url_for('player.view', badge=user.badge) }}">
-			{{ user.username }}<span class="badge">{{ user.badge }}</span>
-		</a>
+		<a class="username" href="{{ url_for('player.view', badge=user.badge) }}">{{ user.username }}<span class="badge">{{ user.badge }}</span></a>
 	{% else -%}
-		<span class="username">
-			{{ user.username }}<span class="badge">{{ user.badge }}</span>
-		</span>
+		<span class="username">{{ user.username }}<span class="badge">{{ user.badge }}</span></span>
 	{%- endif %}
 {%- endmacro %}
 

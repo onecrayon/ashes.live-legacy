@@ -3,7 +3,12 @@
 {% block title %}{{ user.username }}#{{ user.badge }}{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-natural-power">{{ usertag(user, False) }}</h1>
+	<h1 class="phg-illusion-power">
+		{{ usertag(user, False) }}
+		{% if current_user.id == user.id %}
+		<small><a href="{{ url_for('player.account') }}">(edit)</a></small>
+		{% endif %}
+	</h1>
 {% endblock %}
 
 {% block content %}

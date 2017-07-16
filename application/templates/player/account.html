@@ -3,7 +3,9 @@
 {% block title %}My Account{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-illusion-class">{{ usertag(user, False) }}</h1>
+	<h1 class="phg-illusion-class">
+		{{ usertag(user, False) }} <small><a href="{{ url_for('player.view', badge=user.badge) }}">(view)</a></small>
+	</h1>
 {% endblock %}
 
 {% block content %}
