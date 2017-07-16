@@ -1,6 +1,6 @@
 """Login/logout and account creation"""
 
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from flask import abort, Blueprint, flash, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
@@ -30,10 +30,14 @@ def account():
     pass
 
 
-@mod.route('/<player_badge>/')
-def view_profile(player_badge):
+@mod.route('/<badge>/')
+def view(badge):
     """View a player's public profile"""
-    pass
+    badge = badge.lower()
+    user = User.query.filter(User.badge == badge).first()
+    if not user:
+        return abort(404)
+    return render_template('player/view.html', user=user)
 
 
 @mod.route('/login/', methods=['GET', 'POST'])
