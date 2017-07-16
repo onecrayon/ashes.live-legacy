@@ -342,17 +342,17 @@ a.disabled {
 	margin-bottom: 20px;
 	
 	ul {
-		.mixin-display-flex();
-		.mixin-flex-wrap(wrap);
 		list-style-type: none;
 		padding: 0;
 		margin: 0;
 	}
 	
 	li {
-		.mixin-flex(1);
-		margin: 0 10px 10px 0;
-		white-space: nowrap;
+		display: inline-block;
+		box-sizing: border-box;
+		padding: 0 10px 0 0;
+		margin: 0 0 10px;
+		min-width: 33%;
 	}
 	
 	label {
