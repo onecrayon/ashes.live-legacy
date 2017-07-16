@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(42), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     reset_uuid = db.Column(db.String(36), nullable=True, default=None, index=True, unique=True)
+    newsletter_opt_in = db.Column(db.Boolean, nullable=False, default=False)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

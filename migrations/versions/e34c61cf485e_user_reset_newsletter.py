@@ -1,4 +1,4 @@
-"""User password reset column
+"""User reset and newsletter columns
 
 Revision ID: e34c61cf485e
 Revises: 73274bb2404e
@@ -19,8 +19,10 @@ depends_on = None
 def upgrade():
     op.add_column('user', sa.Column('reset_uuid', sa.String(length=36), nullable=True))
     op.create_index(op.f('ix_user_reset_uuid'), 'user', ['reset_uuid'], unique=True)
+    op.add_column('user', sa.Column('newsletter_opt_in', sa.Boolean(), nullable=False))
 
 
 def downgrade():
+    op.drop_column('user', 'newsletter_opt_in')
     op.drop_index(op.f('ix_user_reset_uuid'), table_name='user')
     op.drop_column('user', 'reset_uuid')
