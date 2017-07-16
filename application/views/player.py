@@ -105,7 +105,8 @@ def create_account(uuid):
             email=form.email.data,
             password=form.password.data,
             badge=form.badge.data,
-            username=form.username.data
+            username=form.username.data,
+            newsletter_opt_in=form.newsletter.data
         )
         db.session.add(user)
         # Delete the invitation and session badges

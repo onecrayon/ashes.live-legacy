@@ -24,6 +24,7 @@ passwordConfirmField = PasswordField('Confirm Password', validators=[
     DataRequired(message='Password confirmation is required.'),
     EqualTo('password', message='Must match password.')
 ])
+newsletterField = BooleanField('Notify me of new site features')
 
 
 class EmailForm(FlaskForm):
@@ -59,3 +60,4 @@ class CreateForm(FlaskForm):
     badge = RadioField('Badge', validators=[DataRequired()])
     password = passwordField
     password_confirm = passwordConfirmField
+    newsletter = newsletterField
