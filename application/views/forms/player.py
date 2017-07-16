@@ -17,6 +17,9 @@ def get_redirect_target():
 
 
 # Shared fields
+emailField = StringField('Email', validators=[
+    Email(message='Invalid email.')
+])
 usernameField = StringField('Username', validators=[DataRequired()])
 passwordField = PasswordField('Password', validators=[
     DataRequired(message='Password is required.')
@@ -28,20 +31,7 @@ passwordConfirmField = PasswordField('Confirm Password', validators=[
 newsletterField = BooleanField('Notify me of new site features')
 
 
-class EmailForm(FlaskForm):
-    email = StringField('Email', validators=[
-        Email(message='Invalid email.')
-    ])
-
-
-class ResetForm(FlaskForm):
-    password = passwordField
-    password_confirm = passwordConfirmField
-
-
-class LoginForm(EmailForm):
-    password = passwordField
-    remember_me = BooleanField('Remember me')
+class RedirectForm(FlaskForm):
     next = HiddenField()
 
     def __init__(self, *args, **kwargs):
@@ -53,6 +43,25 @@ class LoginForm(EmailForm):
         if is_safe_url(self.next.data):
             return redirect(self.next.data)
         return redirect(url_for(endpoint, **values))
+
+
+class LoginForm(RedirectForm):
+    email = emailField
+    password = passwordField
+    remember_me = BooleanField('Remember me')
+
+
+class ReauthorizeForm(RedirectForm):
+    password = passwordField
+
+
+class EmailForm(FlaskForm):
+    email = emailField
+
+
+class ResetForm(FlaskForm):
+    password = passwordField
+    password_confirm = passwordConfirmField
 
 
 class EditForm(FlaskForm):

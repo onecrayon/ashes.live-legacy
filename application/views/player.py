@@ -1,13 +1,17 @@
 """Login/logout and account creation"""
 
 from flask import abort, Blueprint, flash, redirect, render_template, request, session, url_for
-from flask_login import current_user, login_required, login_user, logout_user
+from flask_login import (
+    confirm_login, current_user, fresh_login_required, login_required, login_user, logout_user
+)
 from flask_mail import Message
 
 from application import db, login_manager
 from application.models.invite import Invite
 from application.models.user import User
-from application.views.forms.player import CreateForm, EditForm, EmailForm, LoginForm, ResetForm
+from application.views.forms.player import (
+    CreateForm, EditForm, EmailForm, LoginForm, ReauthorizeForm, ResetForm
+)
 from application.utils import send_message
 from application.wrappers import guest_required
 
@@ -17,15 +21,16 @@ mod = Blueprint('player', __name__, url_prefix='/player')
 # Configure login behavior
 login_manager.login_view = 'player.login'
 login_manager.login_message = None
+login_manager.refresh_view = 'player.reauthorize'
+login_manager.needs_refresh_message = None
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
 
 
-# TODO: make this require a fresh login (since it offers pasword updating)
 @mod.route('/', methods=['GET', 'POST'])
-@login_required
+@fresh_login_required
 def account():
     """Edit current player's account"""
     form = EditForm(obj=current_user)
@@ -66,6 +71,21 @@ def login():
         else:
             flash('Incorrect email or password.', 'error')
     return render_template('player/login.html', form=form)
+
+
+@mod.route('/reauthorize/', methods=['GET', 'POST'])
+@login_required
+def reauthorize():
+    """Reauthorize a player (to allow changing password or similar)"""
+    form = ReauthorizeForm()
+    if form.validate_on_submit():
+        user = User.log_in(current_user.email, form.password.data)
+        if user:
+            confirm_login()
+            return form.redirect('home.index')
+        else:
+            flash('Incorrect password.', 'error')
+    return render_template('player/reauthorize.html', form=form)
 
 
 @mod.route('/logout/')
