@@ -1,9 +1,9 @@
-{% from "macros.html" import with_errors, inline_errors %}
+{% from "macros.html" import with_errors, inline_errors, usertag %}
 {% extends "base.html" %}
 {% block title %}Finalize Account{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-illusion-power">Finalize your account</h1>
+	<h1 class="phg-illusion-class">Finalize your account</h1>
 {% endblock %}
 
 {% block content %}
@@ -32,7 +32,7 @@
 {% block sidebar %}
 	<p class="callout">Welcome to Ashes.live!</p>
 	
-	<p><strong>Username</strong> can be anything (though please keep it kid-friendly!), and you will be identified around Ashes.live by a combination of your username and badge; e.g. <span class="username">Username<span class="badge">badge</span></span></p>
+	<p><strong>Username</strong> can be anything (though please keep it kid-friendly!), and you will be identified around Ashes.live by a combination of your username and badge; e.g. {{ usertag(example_user, False) }}</p>
 	
 	<p>You can change your username whenever you like, but your badge is permanent.</p>
 {% endblock %}

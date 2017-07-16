@@ -1,4 +1,16 @@
-{% macro inline_errors(errors) %}
+{% macro usertag(user, link=True) -%}
+	{% if link -%}
+		<a class="username" href="{{ url_for('player.view', badge=user.badge) }}">
+			{{ user.username }}<span class="badge">{{ user.badge }}</span>
+		</a>
+	{% else -%}
+		<span class="username">
+			{{ user.username }}<span class="badge">{{ user.badge }}</span>
+		</span>
+	{%- endif %}
+{%- endmacro %}
+
+{% macro inline_errors(errors) -%}
 	{% if errors %}
 		<ul class="alerts">
 		{% for error in errors %}
@@ -6,12 +18,12 @@
 		{% endfor %}
 		</ul>
 	{% endif %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro with_errors(field) %}
+{% macro with_errors(field) -%}
 	<div class="form-field">
 		{{ field.label }}
 		{{ field(**kwargs) }}
 		{{ inline_errors(field.errors) }}
 	</div>
-{% endmacro %}
+{%- endmacro %}

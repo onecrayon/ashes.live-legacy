@@ -1,8 +1,9 @@
+{% from "macros.html" import usertag %}
 {% extends "base.html" %}
 {% block title %}{{ user.username }}#{{ user.badge }}{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-natural-power"><span class="username">{{ user.username }}<span class="badge">{{ user.badge }}</span></span></h1>
+	<h1 class="phg-natural-power">{{ usertag(user, False) }}</h1>
 {% endblock %}
 
 {% block content %}

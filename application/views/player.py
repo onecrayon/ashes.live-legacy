@@ -118,7 +118,8 @@ def create_account(uuid):
         login_user(user)
         flash('Welcome to Ashes.live!', 'success')
         return redirect(url_for('home.index'))
-    return render_template('player/new.html', form=form)
+    return render_template('player/new.html', form=form,
+                           example_user={'username': 'Username', 'badge': 'badge'})
 
 
 @mod.route('/new/', methods=['GET', 'POST'])
