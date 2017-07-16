@@ -7,7 +7,7 @@ from flask_mail import Message
 from application import db, login_manager
 from application.models.invite import Invite
 from application.models.user import User
-from application.views.forms.player import CreateForm, EmailForm, LoginForm, ResetForm
+from application.views.forms.player import CreateForm, EditForm, EmailForm, LoginForm, ResetForm
 from application.utils import send_message
 from application.wrappers import guest_required
 
@@ -23,11 +23,23 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-@mod.route('/')
+# TODO: make this require a fresh login (since it offers pasword updating)
+@mod.route('/', methods=['GET', 'POST'])
 @login_required
 def account():
     """Edit current player's account"""
-    pass
+    form = EditForm(obj=current_user)
+    if form.validate_on_submit():
+        # Save changes to account
+        current_user.username = form.username.data
+        current_user.newsletter_opt_in = form.newsletter_opt_in.data
+        if form.password.data:
+            # Setting the password commits the changes
+            current_user.set_password(form.password.data)
+        else:
+            db.session.commit()
+        flash('Account updated!', 'success')
+    return render_template('player/account.html', user=current_user, form=form)
 
 
 @mod.route('/<badge>/')
@@ -106,7 +118,7 @@ def create_account(uuid):
             password=form.password.data,
             badge=form.badge.data,
             username=form.username.data,
-            newsletter_opt_in=form.newsletter.data
+            newsletter_opt_in=form.newsletter_opt_in.data
         )
         db.session.add(user)
         # Delete the invitation and session badges

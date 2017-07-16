@@ -17,6 +17,7 @@ def get_redirect_target():
 
 
 # Shared fields
+usernameField = StringField('Username', validators=[DataRequired()])
 passwordField = PasswordField('Password', validators=[
     DataRequired(message='Password is required.')
 ])
@@ -54,10 +55,20 @@ class LoginForm(EmailForm):
         return redirect(url_for(endpoint, **values))
 
 
+class EditForm(FlaskForm):
+    email = StringField('Email', render_kw={'readonly': True})
+    username = usernameField
+    password = PasswordField('New Password (or leave blank)')
+    password_confirm = PasswordField('Confirm Password', validators=[
+        EqualTo('password', message='Must match password.')
+    ])
+    newsletter_opt_in = newsletterField
+
+
 class CreateForm(FlaskForm):
     email = StringField('Email', render_kw={'readonly': True})
-    username = StringField('Username', validators=[DataRequired()])
+    username = usernameField
     badge = RadioField('Badge', validators=[DataRequired()])
     password = passwordField
     password_confirm = passwordConfirmField
-    newsletter = newsletterField
+    newsletter_opt_in = newsletterField

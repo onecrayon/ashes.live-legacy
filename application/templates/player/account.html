@@ -1,0 +1,27 @@
+{% from "macros.html" import with_errors, usertag %}
+{% extends "base.html" %}
+{% block title %}My Account{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-illusion-class">{{ usertag(user, False) }}</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="./">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.email) }}
+		{{ with_errors(form.username) }}
+		{{ with_errors(form.password) }}
+		{{ with_errors(form.password_confirm) }}
+		<div class="form-field">
+			{{ form.newsletter_opt_in }} {{ form.newsletter_opt_in.label }}
+		</div>
+		<input class="btn btn-primary" type="submit" value="Update account">
+	</form>
+{% endblock %}
+
+{% block sidebar %}
+	<p>To update your email address, please contact <a href="mailto:hello@ashes.live?subject=Update email request">hello@ashes.live</a>.</p>
+
+	<p>New site feature notification emails are rare, and only focused on major new features or improvements.</p>
+{% endblock %}
