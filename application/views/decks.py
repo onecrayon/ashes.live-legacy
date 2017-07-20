@@ -1,6 +1,6 @@
 """Deck-building and viewing public decks"""
 
-from flask import Blueprint
+from flask import Blueprint, render_template
 from flask_login import login_required
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
@@ -30,4 +30,4 @@ def mine():
 @login_required
 def build(deck_id=None):
     """Edit a deck"""
-    pass
+    return render_template('decks/build.html')
