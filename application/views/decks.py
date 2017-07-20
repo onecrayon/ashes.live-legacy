@@ -7,27 +7,27 @@ mod = Blueprint('decks', __name__, url_prefix='/decks')
 
 
 @mod.route('/')
+def index():
+    """View list of all public decks"""
+    pass
+
+
+@mod.route('/<int:deck_id>/')
+def view(deck_id):
+    """View a public or own deck"""
+    pass
+
+
+@mod.route('/mine/')
 @login_required
-def player_decks():
+def mine():
     """View logged-in player's decks"""
     pass
 
 
 @mod.route('/build/')
-@mod.route('/build/<int:deck_id>')
+@mod.route('/build/<int:deck_id>/')
 @login_required
-def edit_deck(deck_id=None):
+def build(deck_id=None):
     """Edit a deck"""
-    pass
-
-
-@mod.route('/all/')
-def all_decks():
-    """View list of all public decks"""
-    pass
-
-
-@mod.route('/<int:deck_id>')
-def view_deck(deck_id):
-    """View a public or own deck"""
     pass

@@ -25,7 +25,7 @@
 						<a href="{{ url_for('home.index') }}">Ashes.live</a>
 					</li>
 					<li class="deckbuilder-link">
-						<a class="phg-basic-magic" href="{{ url_for('decks.player_decks') }}">My Decks</a>
+						<a class="phg-basic-magic" href="{{ url_for('decks.mine') }}">My Decks</a>
 					</li>
 					<li class="logging-link">
 						{# {{ url_for('stats.log_game') }} #}
@@ -35,18 +35,18 @@
 			</div>
 			<ul class="secondary-nav">
 				<li>
-					<a class="decks-link disabled" href="{{ url_for('decks.all_decks') }}">
+					<a class="decks-link disabled" href="{{ url_for('decks.index') }}">
 						<i class="fa fa-eye" aria-hidden="true"></i> All Decks
 					</a>
 				</li>
 				<li class="mid-link">
-					{# {{ url_for('gallery.card_gallery') }} #}
+					{# {{ url_for('gallery.index') }} #}
 					<a class="gallery-link disabled" href="#">
 						<i class="fa fa-th" aria-hidden="true"></i> Card Gallery
 					</a>
 				</li>
 				<li>
-					{# {{ url_for('stats.view_stats') }} #}
+					{# {{ url_for('stats.view') }} #}
 					<a class="stats-link disabled" href="#">
 						<i class="fa fa-bar-chart" aria-hidden="true"></i> Statistics
 					</a>
