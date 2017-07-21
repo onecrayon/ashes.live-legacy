@@ -1,11 +1,12 @@
 # Ashes.live Flask app
 
-The site has the following dependencies:
+The project has the following dependencies:
 
 * Python 3 / pip
 * virtualenv
+* Node.js / npm
 
-## Setup on macOS
+## Install project dependencies (macOS)
 
 1. Install [Homebrew](https://brew.sh/) then Python 3:
 
@@ -19,14 +20,17 @@ The site has the following dependencies:
 
         sudo pip install virtualenv
 
-4. Within the project directory, setup virtualenv:
+## Install site dependencies
+
+1. Within the project directory, setup virtualenv:
 
         virtualenv -p python3 venv
 
-5. Install site requirements:
+2. Install site requirements:
 
         . venv/bin/activate
         pip install -r requirements.txt
+        npm install
 
 ### Configuration
 
@@ -36,11 +40,14 @@ For development servers:
 2. Customize config variables for local development environment
 3. Execute the following:
 
-        . venv/bin/activate
-        ./cli.py runserver -r
+        npm run dev
 4. Load the specified URL in browser
 
 ## SCRATCH
+
+TODO:
+
+* Implement development vs. production environments in a way that works for both Python and webpack
 
 Filters:
 
@@ -54,15 +61,4 @@ Sorting:
 * Name (alphabetical)
 * Card type (grouped by card type, then name)
 * Dice types (grouped by dice types required, then name)
-* Cost? (sorted by number and type of dice required)
-
-1 basic = 1
-1 class = 1.01
-1 power = 1.02
-1 discard = .03
-side = .04
-main = .05
-
-2 basic = 2
-1 basic + 1 class = 2.01
-1 basic + 1 power = 2.02
+* Cost (via weight)

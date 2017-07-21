@@ -9,3 +9,6 @@ __pycache__/
 # virtualenv
 .venv
 venv
+
+# Node.js
+node_modules/
