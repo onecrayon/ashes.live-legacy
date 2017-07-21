@@ -6,14 +6,14 @@ from flask_login import (
 )
 from flask_mail import Message
 
-from application import db, login_manager
-from application.models.invite import Invite
-from application.models.user import User
-from application.views.forms.player import (
+from app import db, login_manager
+from app.models.invite import Invite
+from app.models.user import User
+from app.views.forms.player import (
     CreateForm, EditForm, EmailForm, LoginForm, ReauthorizeForm, ResetForm
 )
-from application.utils import send_message
-from application.wrappers import guest_required
+from app.utils import send_message
+from app.wrappers import guest_required
 
 mod = Blueprint('player', __name__, url_prefix='/player')
 

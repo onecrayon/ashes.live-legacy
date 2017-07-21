@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from application import app, error_handlers
-from application.views import (
+from app import app, error_handlers
+from app.views import (
 	decks as public_decks, home as public_home, player as public_player
 )
 

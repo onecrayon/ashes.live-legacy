@@ -1,4 +1,4 @@
-from application import db
+from app import db
 
 
 card_dice = db.Table(

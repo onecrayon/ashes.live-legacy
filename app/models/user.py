@@ -5,7 +5,7 @@ import string
 import uuid
 
 from flask_login.mixins import UserMixin
-from application import db, bcrypt
+from app import db, bcrypt
 
 
 class User(db.Model, UserMixin):

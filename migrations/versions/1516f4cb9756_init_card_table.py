@@ -11,8 +11,8 @@ import os.path
 from alembic import op
 import sqlalchemy as sa
 
-from application import db
-from application.models.card import Die, Card
+from app import db
+from app.models.card import Die, Card
 
 
 # revision identifiers, used by Alembic.

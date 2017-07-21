@@ -1,7 +1,7 @@
 from datetime import datetime
 import uuid
 
-from application import db
+from app import db
 
 
 class Invite(db.Model):

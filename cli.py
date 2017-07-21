@@ -2,8 +2,8 @@
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
-from application import db
-from application.models import (
+from app import db
+from app.models import (
     card, invite, user
 )
 from manager import app
