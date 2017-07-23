@@ -43,6 +43,12 @@ For development servers:
         npm run dev
 4. Load the specified URL in browser
 
+## Commands
+
+* `npm run dev`: run development server
+* `npm run build`: parse Javascript (via webpack) and LESS files
+* `npm run lint`: lint Javascript files
+
 ## SCRATCH
 
 TODO:
