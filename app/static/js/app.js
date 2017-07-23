@@ -73,9 +73,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* eslint-disable no-new */
-new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
+var vm = new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 	el: '#main',
-	template: '<h1>Coming soon!</h1>'
+	render: function(createElement) {
+		return createElement('p', ['Coming soon!'])
+	}
 })
 
 

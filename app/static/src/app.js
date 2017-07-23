@@ -1,7 +1,9 @@
 import Vue from 'vue'
 
 /* eslint-disable no-new */
-new Vue({
+var vm = new Vue({
 	el: '#main',
-	template: '<h1>Coming soon!</h1>'
+	render: function(createElement) {
+		return createElement('p', ['Coming soon!'])
+	}
 })
