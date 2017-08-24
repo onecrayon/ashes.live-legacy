@@ -336,7 +336,7 @@ a.disabled {
 
 /* @end */
 
-/* @group Page-specific */
+/* @group User styling */
 
 .badge-field {
 	margin-bottom: 20px;
@@ -364,6 +364,21 @@ a.disabled {
 	input:checked + label {
 		.alert(@color-link);
 	}
+}
+
+/* @end */
+
+/* @group Deckbuilder */
+
+#editor-meta {
+	.mixin-flex(1);
+	.mixin-order(1);
+	padding-right: 50px;
+}
+
+#editor-gallery {
+	.mixin-flex(2);
+	.mixin-order(2);
 }
 
 /* @end */
