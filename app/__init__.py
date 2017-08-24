@@ -31,7 +31,7 @@ db = SQLAlchemy(app)
 
 # Configure our server-side sessions
 app.config.from_mapping({
-	'SESSION_SQLALCHEMY': db
+    'SESSION_SQLALCHEMY': db
 })
 Session(app)
 
