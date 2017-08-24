@@ -3237,7 +3237,7 @@ a.disabled {
   margin-right: 5px;
 }
 /* @end */
-/* @group Page-specific */
+/* @group User styling */
 .badge-field {
   margin-bottom: 20px;
 }
@@ -3264,5 +3264,28 @@ a.disabled {
   color: #2770c1;
   background: rgba(39, 112, 193, 0.2);
   border: 2px solid #2770c1;
+}
+/* @end */
+/* @group Deckbuilder */
+#editor-meta {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-ordinal-group: 1;
+  -ms-flex-order: 1;
+  -webkit-order: 1;
+  order: 1;
+  padding-right: 50px;
+}
+#editor-gallery {
+  -webkit-box-flex: 2;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-box-ordinal-group: 2;
+  -ms-flex-order: 2;
+  -webkit-order: 2;
+  order: 2;
 }
 /* @end */
