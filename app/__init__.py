@@ -41,3 +41,6 @@ login_manager.init_app(app)
 
 # Configure mailer
 mail = Mail(app)
+
+# Include template filters (this import requires app to be configured)
+from app import template_filters  # noqa
