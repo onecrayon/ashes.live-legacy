@@ -1,5 +1,6 @@
 from flask import current_app, render_template
 from flask_mail import Message
+from premailer import transform as inline_css
 
 from app import mail
 
@@ -20,12 +21,12 @@ def send_message(recipient, subject, template_name, **kwargs):
     message = Message(
         subject,
         recipients=[recipient],
-        html=render_template(
+        html=inline_css(render_template(
             'emails/{}.html'.format(template_name),
             subject=subject,
             site_url=current_app.config['SITE_URL'],
             **kwargs
-        ),
+        )),
         body=render_template(
             'emails/{}.txt'.format(template_name),
             subject=subject,
