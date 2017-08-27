@@ -9,11 +9,17 @@ Vue.use(Vuex)
 
 var store = new Vuex.Store({
 	state: {
-		count: 0
+		deck: {
+			title: '',
+			phoenixborn: null
+		}
 	},
 	mutations: {
-		increment: function (state) {
-			state.count++
+		title: function (state, title) {
+			state.deck.title = title
+		},
+		phoenixborn: function (state, id) {
+			state.deck.phoenixborn = id
 		}
 	}
 })

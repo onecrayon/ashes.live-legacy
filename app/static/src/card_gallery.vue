@@ -1,16 +1,22 @@
 <template>
 	<div id="editor-gallery">
-		<p>Card gallery WIP: {{ count }}</p>
-		<p></p>
+		<div v-if="phoenixborn" class="gallery">
+			<div class="filters">
+				<p>Filters and card listings coming soon...</p>
+			</div>
+		</div>
+		<div v-else class="phoenixborn-picker">
+			<p>Pick a phoenixborn!</p>
+		</div>
 	</div>
 </template>
 
 <script>
 	export default {
 		computed: {
-			count () {
-		    	return this.$store.state.count
-		    }
+			phoenixborn () {
+				return this.$store.state.deck.phoenixborn
+			}
 		}
 	}
 </script>
