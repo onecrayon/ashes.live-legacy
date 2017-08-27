@@ -23,6 +23,7 @@
     "webpack": "^3.3.0"
   },
   "dependencies": {
+    "qwest": "^4.5.0",
     "vue": "^2.4.2",
     "vuex": "^2.3.1"
   }
