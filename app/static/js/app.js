@@ -60,11 +60,228 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -161,16 +378,16 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_meta_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_meta_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__deck_meta_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__card_gallery_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__card_gallery_vue__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__card_gallery_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__card_gallery_vue__);
 
 
@@ -183,11 +400,17 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODU
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	state: {
-		count: 0
+		deck: {
+			title: '',
+			phoenixborn: null
+		}
 	},
 	mutations: {
-		increment: function (state) {
-			state.count++
+		title: function (state, title) {
+			state.deck.title = title
+		},
+		phoenixborn: function (state, id) {
+			state.deck.phoenixborn = id
 		}
 	}
 })
@@ -209,7 +432,7 @@ var vm = new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7641,224 +7864,7 @@ setTimeout(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = (Vue$3);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3), __webpack_require__(4)))
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0), __webpack_require__(1)))
 
 /***/ }),
 /* 5 */
@@ -8678,11 +8684,11 @@ var index_esm = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(0)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(7),
   /* template */
-  __webpack_require__(8),
+  __webpack_require__(13),
   /* styles */
   null,
   /* scopeId */
@@ -8719,6 +8725,16 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qwest__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qwest___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_qwest__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8726,10 +8742,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+	computed: {
+		title: {
+			get () {
+				return this.$store.state.deck.title
+			},
+			set (value) {
+				this.$store.commit('title', value)
+			}
+		}
+	},
 	methods: {
-		incrementCount () {
-			this.$store.commit('increment')
+		saveDeck () {
+			// TODO
+			var title = this.$store.state.deck.title
+			console.log('Saving? ' + title)
+			__WEBPACK_IMPORTED_MODULE_0_qwest___default.a.get('/api').then(function(xhr, response) {
+				alert('"Saved" deck (' + title + ') with API version: ' + response.version)
+			}).catch(function(error, xhr, response) {
+				alert('Failed to save deck: ' + JSON.stringify(response))
+			})
 		}
 	}
 });
@@ -8739,17 +8774,999 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/*! qwest 4.5.0 (https://github.com/pyrsmk/qwest) */
+
+module.exports = function() {
+
+    var global = typeof window != 'undefined' ? window : self,
+        pinkyswear = __webpack_require__(9),
+        jparam = __webpack_require__(12),
+        defaultOptions = {},
+        // Default response type for XDR in auto mode
+        defaultXdrResponseType = 'json',
+        // Default data type
+        defaultDataType = 'post',
+        // Variables for limit mechanism
+        limit = null,
+        requests = 0,
+        request_stack = [],
+        // Get XMLHttpRequest object
+        getXHR = global.XMLHttpRequest? function(){
+            return new global.XMLHttpRequest();
+        }: function(){
+            return new ActiveXObject('Microsoft.XMLHTTP');
+        },
+        // Guess XHR version
+        xhr2 = (getXHR().responseType===''),
+
+    // Core function
+    qwest = function(method, url, data, options, before) {
+        // Format
+        method = method.toUpperCase();
+        data = data === undefined ? null : data;
+        options = options || {};
+        for(var name in defaultOptions) {
+            if(!(name in options)) {
+                if(typeof defaultOptions[name] == 'object' && typeof options[name] == 'object') {
+                    for(var name2 in defaultOptions[name]) {
+                        options[name][name2] = defaultOptions[name][name2];
+                    }
+                }
+                else {
+                    options[name] = defaultOptions[name];
+                }
+            }
+        }
+
+        // Define variables
+        var nativeResponseParsing = false,
+            crossOrigin,
+            xhr,
+            xdr = false,
+            timeout,
+            aborted = false,
+            attempts = 0,
+            headers = {},
+            mimeTypes = {
+                text: '*/*',
+                xml: 'text/xml',
+                json: 'application/json',
+                post: 'application/x-www-form-urlencoded',
+                document: 'text/html'
+            },
+            accept = {
+                text: '*/*',
+                xml: 'application/xml; q=1.0, text/xml; q=0.8, */*; q=0.1',
+                json: 'application/json; q=1.0, text/*; q=0.8, */*; q=0.1'
+            },
+            i, j,
+            response,
+            sending = false,
+
+        // Create the promise
+        promise = pinkyswear(function(pinky) {
+            pinky.abort = function() {
+                if(!aborted) {
+                    if(xhr && xhr.readyState != 4) { // https://stackoverflow.com/questions/7287706/ie-9-javascript-error-c00c023f
+                        xhr.abort();
+                    }
+                    if(sending) {
+                        --requests;
+                        sending = false;
+                    }
+                    aborted = true;
+                }
+            };
+            pinky.send = function() {
+                // Prevent further send() calls
+                if(sending) {
+                    return;
+                }
+                // Reached request limit, get out!
+                if(requests == limit) {
+                    request_stack.push(pinky);
+                    return;
+                }
+                // Verify if the request has not been previously aborted
+                if(aborted) {
+                    if(request_stack.length) {
+                        request_stack.shift().send();
+                    }
+                    return;
+                }
+                // The sending is running
+                ++requests;
+                sending = true;
+                // Get XHR object
+                xhr = getXHR();
+                if(crossOrigin) {
+                    if(!('withCredentials' in xhr) && global.XDomainRequest) {
+                        xhr = new XDomainRequest(); // CORS with IE8/9
+                        xdr = true;
+                        if(method != 'GET' && method != 'POST') {
+                            method = 'POST';
+                        }
+                    }
+                }
+                // Open connection
+                if(xdr) {
+                    xhr.open(method, url);
+                }
+                else {
+                    xhr.open(method, url, options.async, options.user, options.password);
+                    if(xhr2 && options.async) {
+                        xhr.withCredentials = options.withCredentials;
+                    }
+                }
+                // Set headers
+                if(!xdr) {
+                    for(var i in headers) {
+                        if(headers[i]) {
+                            xhr.setRequestHeader(i, headers[i]);
+                        }
+                    }
+                }
+                // Verify if the response type is supported by the current browser
+                if(xhr2 && options.responseType != 'auto') {
+                    try {
+                        xhr.responseType = options.responseType;
+                        nativeResponseParsing = (xhr.responseType == options.responseType);
+                    }
+                    catch(e) {}
+                }
+                // Plug response handler
+                if(xhr2 || xdr) {
+                    xhr.onload = handleResponse;
+                    xhr.onerror = handleError;
+                    // http://cypressnorth.com/programming/internet-explorer-aborting-ajax-requests-fixed/
+                    if(xdr) {
+                        xhr.onprogress = function() {};
+                    }
+                }
+                else {
+                    xhr.onreadystatechange = function() {
+                        if(xhr.readyState == 4) {
+                            handleResponse();
+                        }
+                    };
+                }
+                // Plug timeout
+                if(options.async) {
+                    if('timeout' in xhr) {
+                        xhr.timeout = options.timeout;
+                        xhr.ontimeout = handleTimeout;
+                    }
+                    else {
+                        timeout = setTimeout(handleTimeout, options.timeout);
+                    }
+                }
+                // http://cypressnorth.com/programming/internet-explorer-aborting-ajax-requests-fixed/
+                else if(xdr) {
+                    xhr.ontimeout = function() {};
+                }
+                // Override mime type to ensure the response is well parsed
+                if(options.responseType != 'auto' && 'overrideMimeType' in xhr) {
+                    xhr.overrideMimeType(mimeTypes[options.responseType]);
+                }
+                // Run 'before' callback
+                if(before) {
+                    before(xhr);
+                }
+                // Send request
+                if(xdr) {
+                    // https://developer.mozilla.org/en-US/docs/Web/API/XDomainRequest
+                    setTimeout(function() {
+                        xhr.send(method != 'GET'? data : null);
+                    }, 0);
+                }
+                else {
+                    xhr.send(method != 'GET' ? data : null);
+                }
+            };
+            return pinky;
+        }),
+
+        // Handle the response
+        handleResponse = function() {
+            var i, responseType;
+            // Stop sending state
+            sending = false;
+            clearTimeout(timeout);
+            // Launch next stacked request
+            if(request_stack.length) {
+                request_stack.shift().send();
+            }
+            // Verify if the request has not been previously aborted
+            if(aborted) {
+                return;
+            }
+            // Decrease the number of requests
+            --requests;
+            // Handle response
+            try{
+                // Process response
+                if(nativeResponseParsing) {
+                    if('response' in xhr && xhr.response === null) {
+                        throw 'The request response is empty';
+                    }
+                    response = xhr.response;
+                }
+                else {
+                    // Guess response type
+                    responseType = options.responseType;
+                    if(responseType == 'auto') {
+                        if(xdr) {
+                            responseType = defaultXdrResponseType;
+                        }
+                        else {
+                            var ct = xhr.getResponseHeader('Content-Type') || '';
+                            if(ct.indexOf(mimeTypes.json)>-1) {
+                                responseType = 'json';
+                            }
+                            else if(ct.indexOf(mimeTypes.xml) > -1) {
+                                responseType = 'xml';
+                            }
+                            else {
+                                responseType = 'text';
+                            }
+                        }
+                    }
+                    // Handle response type
+                    switch(responseType) {
+                        case 'json':
+                            if(xhr.responseText.length) {
+                                try {
+                                    if('JSON' in global) {
+                                        response = JSON.parse(xhr.responseText);
+                                    }
+                                    else {
+                                        response = new Function('return (' + xhr.responseText + ')')();
+                                    }
+                                }
+                                catch(e) {
+                                    throw "Error while parsing JSON body : "+e;
+                                }
+                            }
+                            break;
+                        case 'xml':
+                            // Based on jQuery's parseXML() function
+                            try {
+                                // Standard
+                                if(global.DOMParser) {
+                                    response = (new DOMParser()).parseFromString(xhr.responseText,'text/xml');
+                                }
+                                // IE<9
+                                else {
+                                    response = new ActiveXObject('Microsoft.XMLDOM');
+                                    response.async = 'false';
+                                    response.loadXML(xhr.responseText);
+                                }
+                            }
+                            catch(e) {
+                                response = undefined;
+                            }
+                            if(!response || !response.documentElement || response.getElementsByTagName('parsererror').length) {
+                                throw 'Invalid XML';
+                            }
+                            break;
+                        default:
+                            response = xhr.responseText;
+                    }
+                }
+                // Late status code verification to allow passing data when, per example, a 409 is returned
+                // --- https://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
+                if('status' in xhr && !/^2|1223/.test(xhr.status)) {
+                    throw xhr.status + ' (' + xhr.statusText + ')';
+                }
+                // Fulfilled
+                promise(true, [xhr, response]);
+            }
+            catch(e) {
+                // Rejected
+                promise(false, [e, xhr, response]);
+            }
+        },
+
+        // Handle errors
+        handleError = function(message) {
+            if(!aborted) {
+                message = typeof message == 'string' ? message : 'Connection aborted';
+                promise.abort();
+                promise(false, [new Error(message), xhr, null]);
+            }
+        },
+
+        // Handle timeouts
+        handleTimeout = function() {
+            if(!aborted) {
+                if(!options.attempts || ++attempts != options.attempts) {
+                    xhr.abort();
+                    sending = false;
+                    promise.send();
+                }
+                else {
+                    handleError('Timeout (' + url + ')');
+                }
+            }
+        };
+
+        // Normalize options
+        options.async = 'async' in options ? !!options.async : true;
+        options.cache = 'cache' in options ? !!options.cache : false;
+        options.dataType = 'dataType' in options ? options.dataType.toLowerCase() : defaultDataType;
+        options.responseType = 'responseType' in options ? options.responseType.toLowerCase() : 'auto';
+        options.user = options.user || '';
+        options.password = options.password || '';
+        options.withCredentials = !!options.withCredentials;
+        options.timeout = 'timeout' in options ? parseInt(options.timeout, 10) : 30000;
+        options.attempts = 'attempts' in options ? parseInt(options.attempts, 10) : 1;
+
+        // Guess if we're dealing with a cross-origin request
+        i = url.match(/\/\/(.+?)\//);
+        crossOrigin = i && (i[1] ? i[1] != location.host : false);
+
+        // Prepare data
+        if('ArrayBuffer' in global && data instanceof ArrayBuffer) {
+            options.dataType = 'arraybuffer';
+        }
+        else if('Blob' in global && data instanceof Blob) {
+            options.dataType = 'blob';
+        }
+        else if('Document' in global && data instanceof Document) {
+            options.dataType = 'document';
+        }
+        else if('FormData' in global && data instanceof FormData) {
+            options.dataType = 'formdata';
+        }
+        if(data !== null) {
+            switch(options.dataType) {
+                case 'json':
+                    data = JSON.stringify(data);
+                    break;
+                case 'post':
+                case 'queryString':
+                    data = jparam(data);
+            }
+        }
+
+        // Prepare headers
+        if(options.headers) {
+            var format = function(match,p1,p2) {
+                return p1 + p2.toUpperCase();
+            };
+            for(i in options.headers) {
+                headers[i.replace(/(^|-)([^-])/g,format)] = options.headers[i];
+            }
+        }
+        if(!('Content-Type' in headers) && method!='GET') {
+            if(options.dataType in mimeTypes) {
+                if(mimeTypes[options.dataType]) {
+                    headers['Content-Type'] = mimeTypes[options.dataType];
+                }
+            }
+        }
+        if(!headers.Accept) {
+            headers.Accept = (options.responseType in accept) ? accept[options.responseType] : '*/*';
+        }
+        if(!crossOrigin && !('X-Requested-With' in headers)) { // (that header breaks in legacy browsers with CORS)
+            headers['X-Requested-With'] = 'XMLHttpRequest';
+        }
+        if(!options.cache && !('Cache-Control' in headers)) {
+            headers['Cache-Control'] = 'no-cache';
+        }
+
+        // Prepare URL
+        if((method == 'GET' || options.dataType == 'queryString') && data && typeof data == 'string') {
+            url += (/\?/.test(url)?'&':'?') + data;
+        }
+
+        // Start the request
+        if(options.async) {
+            promise.send();
+        }
+
+        // Return promise
+        return promise;
+
+    };
+
+    // Define external qwest object
+    var getNewPromise = function(q) {
+            // Prepare
+            var promises = [],
+                loading = 0,
+                values = [];
+            // Create a new promise to handle all requests
+            return pinkyswear(function(pinky) {
+                // Basic request method
+                var method_index = -1,
+                    createMethod = function(method) {
+                        return function(url, data, options, before) {
+                            var index = ++method_index;
+                            ++loading;
+                            promises.push(qwest(method, pinky.base + url, data, options, before).then(function(xhr, response) {
+                                values[index] = arguments;
+                                if(!--loading) {
+                                    pinky(true, values.length == 1 ? values[0] : [values]);
+                                }
+                            }, function() {
+                                pinky(false, arguments);
+                            }));
+                            return pinky;
+                        };
+                    };
+                // Define external API
+                pinky.get = createMethod('GET');
+                pinky.post = createMethod('POST');
+                pinky.put = createMethod('PUT');
+                pinky['delete'] = createMethod('DELETE');
+                pinky['catch'] = function(f) {
+                    return pinky.then(null, f);
+                };
+                pinky.complete = function(f) {
+                    var func = function() {
+                        f(); // otherwise arguments will be passed to the callback
+                    };
+                    return pinky.then(func, func);
+                };
+                pinky.map = function(type, url, data, options, before) {
+                    return createMethod(type.toUpperCase()).call(this, url, data, options, before);
+                };
+                // Populate methods from external object
+                for(var prop in q) {
+                    if(!(prop in pinky)) {
+                        pinky[prop] = q[prop];
+                    }
+                }
+                // Set last methods
+                pinky.send = function() {
+                    for(var i=0, j=promises.length; i<j; ++i) {
+                        promises[i].send();
+                    }
+                    return pinky;
+                };
+                pinky.abort = function() {
+                    for(var i=0, j=promises.length; i<j; ++i) {
+                        promises[i].abort();
+                    }
+                    return pinky;
+                };
+                return pinky;
+            });
+        },
+        q = {
+            base: '',
+            get: function() {
+                return getNewPromise(q).get.apply(this, arguments);
+            },
+            post: function() {
+                return getNewPromise(q).post.apply(this, arguments);
+            },
+            put: function() {
+                return getNewPromise(q).put.apply(this, arguments);
+            },
+            'delete': function() {
+                return getNewPromise(q)['delete'].apply(this, arguments);
+            },
+            map: function() {
+                return getNewPromise(q).map.apply(this, arguments);
+            },
+            xhr2: xhr2,
+            limit: function(by) {
+                limit = by;
+                return q;
+            },
+            setDefaultOptions: function(options) {
+                defaultOptions = options;
+                return q;
+            },
+            setDefaultXdrResponseType: function(type) {
+                defaultXdrResponseType = type.toLowerCase();
+                return q;
+            },
+            setDefaultDataType: function(type) {
+                defaultDataType = type.toLowerCase();
+                return q;
+            },
+            getOpenRequests: function() {
+                return requests;
+            }
+        };
+
+    return q;
+
+}();
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(setImmediate, process) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * PinkySwear.js 2.2.2 - Minimalistic implementation of the Promises/A+ spec
+ * 
+ * Public Domain. Use, modify and distribute it any way you like. No attribution required.
+ *
+ * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+ *
+ * PinkySwear is a very small implementation of the Promises/A+ specification. After compilation with the
+ * Google Closure Compiler and gzipping it weighs less than 500 bytes. It is based on the implementation for 
+ * Minified.js and should be perfect for embedding. 
+ *
+ *
+ * PinkySwear has just three functions.
+ *
+ * To create a new promise in pending state, call pinkySwear():
+ *         var promise = pinkySwear();
+ *
+ * The returned object has a Promises/A+ compatible then() implementation:
+ *          promise.then(function(value) { alert("Success!"); }, function(value) { alert("Failure!"); });
+ *
+ *
+ * The promise returned by pinkySwear() is a function. To fulfill the promise, call the function with true as first argument and
+ * an optional array of values to pass to the then() handler. By putting more than one value in the array, you can pass more than one
+ * value to the then() handlers. Here an example to fulfill a promsise, this time with only one argument: 
+ *         promise(true, [42]);
+ *
+ * When the promise has been rejected, call it with false. Again, there may be more than one argument for the then() handler:
+ *         promise(true, [6, 6, 6]);
+ *         
+ * You can obtain the promise's current state by calling the function without arguments. It will be true if fulfilled,
+ * false if rejected, and otherwise undefined.
+ * 		   var state = promise(); 
+ * 
+ * https://github.com/timjansen/PinkySwear.js
+ */
+(function (root, factory) {
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else if (typeof module === 'object' && module.exports) {
+		module.exports = factory();
+	} else {
+		root.pinkySwear = factory();
+	}
+}(this, function() {
+	var undef;
+
+	function isFunction(f) {
+		return typeof f == 'function';
+	}
+	function isObject(f) {
+		return typeof f == 'object';
+	}
+	function defer(callback) {
+		if (typeof setImmediate != 'undefined')
+			setImmediate(callback);
+		else if (typeof process != 'undefined' && process['nextTick'])
+			process['nextTick'](callback);
+		else
+			setTimeout(callback, 0);
+	}
+
+	return function pinkySwear(extend) {
+		var state;           // undefined/null = pending, true = fulfilled, false = rejected
+		var values = [];     // an array of values as arguments for the then() handlers
+		var deferred = [];   // functions to call when set() is invoked
+
+		var set = function(newState, newValues) {
+			if (state == null && newState != null) {
+				state = newState;
+				values = newValues;
+				if (deferred.length)
+					defer(function() {
+						for (var i = 0; i < deferred.length; i++)
+							deferred[i]();
+					});
+			}
+			return state;
+		};
+
+		set['then'] = function (onFulfilled, onRejected) {
+			var promise2 = pinkySwear(extend);
+			var callCallbacks = function() {
+	    		try {
+	    			var f = (state ? onFulfilled : onRejected);
+	    			if (isFunction(f)) {
+		   				function resolve(x) {
+						    var then, cbCalled = 0;
+		   					try {
+				   				if (x && (isObject(x) || isFunction(x)) && isFunction(then = x['then'])) {
+										if (x === promise2)
+											throw new TypeError();
+										then['call'](x,
+											function() { if (!cbCalled++) resolve.apply(undef,arguments); } ,
+											function(value){ if (!cbCalled++) promise2(false,[value]);});
+				   				}
+				   				else
+				   					promise2(true, arguments);
+		   					}
+		   					catch(e) {
+		   						if (!cbCalled++)
+		   							promise2(false, [e]);
+		   					}
+		   				}
+		   				resolve(f.apply(undef, values || []));
+		   			}
+		   			else
+		   				promise2(state, values);
+				}
+				catch (e) {
+					promise2(false, [e]);
+				}
+			};
+			if (state != null)
+				defer(callCallbacks);
+			else
+				deferred.push(callCallbacks);
+			return promise2;
+		};
+        if(extend){
+            set = extend(set);
+        }
+		return set;
+	};
+}));
+
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10).setImmediate, __webpack_require__(0)))
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(11);
+exports.setImmediate = setImmediate;
+exports.clearImmediate = clearImmediate;
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
+
+    if (global.setImmediate) {
+        return;
+    }
+
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
+    } else {
+        // For older browsers
+        installSetTimeoutImplementation();
+    }
+
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(0)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * @preserve jquery-param (c) 2015 KNOWLEDGECODE | MIT
+ */
+/*global define */
+(function (global) {
+    'use strict';
+
+    var param = function (a) {
+        var add = function (s, k, v) {
+            v = typeof v === 'function' ? v() : v === null ? '' : v === undefined ? '' : v;
+            s[s.length] = encodeURIComponent(k) + '=' + encodeURIComponent(v);
+        }, buildParams = function (prefix, obj, s) {
+            var i, len, key;
+
+            if (Object.prototype.toString.call(obj) === '[object Array]') {
+                for (i = 0, len = obj.length; i < len; i++) {
+                    buildParams(prefix + '[' + (typeof obj[i] === 'object' ? i : '') + ']', obj[i], s);
+                }
+            } else if (obj && obj.toString() === '[object Object]') {
+                for (key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        if (prefix) {
+                            buildParams(prefix + '[' + key + ']', obj[key], s, add);
+                        } else {
+                            buildParams(key, obj[key], s, add);
+                        }
+                    }
+                }
+            } else if (prefix) {
+                add(s, prefix, obj);
+            } else {
+                for (key in obj) {
+                    add(s, key, obj[key]);
+                }
+            }
+            return s;
+        };
+        return buildParams('', a, []).join('&').replace(/%20/g, '+');
+    };
+
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        module.exports = param;
+    } else if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+            return param;
+        }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {
+        global.param = param;
+    }
+
+}(this));
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     attrs: {
       "id": "editor-meta"
     }
-  }, [_c('p', [_vm._v("Deck meta WIP: "), _c('button', {
+  }, [_c('div', {
+    staticClass: "deck-header"
+  }, [_c('div', {
+    staticClass: "form-field"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.title),
+      expression: "title"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "Untitled deck"
+    },
+    domProps: {
+      "value": (_vm.title)
+    },
     on: {
-      "click": _vm.incrementCount
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.title = $event.target.value
+      }
     }
-  }, [_vm._v("+1")])])])
-},staticRenderFns: []}
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": _vm.saveDeck
+    }
+  }, [_vm._v("Save")])]), _vm._v(" "), _vm._m(0)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "phoenixborn-detail"
+  }, [_c('p', [_vm._v("Phoenixborn image and deck details forthcoming...")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -8759,15 +9776,15 @@ if (false) {
 }
 
 /***/ }),
-/* 9 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(0)(
+var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(10),
+  __webpack_require__(15),
   /* template */
-  __webpack_require__(11),
+  __webpack_require__(16),
   /* styles */
   null,
   /* scopeId */
@@ -8799,7 +9816,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 10 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8811,18 +9828,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	computed: {
-		count () {
-	    	return this.$store.state.count
-	    }
+		phoenixborn () {
+			return this.$store.state.deck.phoenixborn
+		}
 	}
 });
 
 
 /***/ }),
-/* 11 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -8830,8 +9853,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "editor-gallery"
     }
-  }, [_c('p', [_vm._v("Card gallery WIP: " + _vm._s(_vm.count))]), _vm._v(" "), _c('p')])
-},staticRenderFns: []}
+  }, [(_vm.phoenixborn) ? _c('div', {
+    staticClass: "gallery"
+  }, [_vm._m(0)]) : _c('div', {
+    staticClass: "phoenixborn-picker"
+  }, [_c('p', [_vm._v("Pick a phoenixborn!")])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "filters"
+  }, [_c('p', [_vm._v("Filters and card listings coming soon...")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
