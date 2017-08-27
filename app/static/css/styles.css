@@ -2982,6 +2982,9 @@ a.disabled {
   background: rgba(176, 0, 0, 0.2);
   border: 2px solid #b00000;
 }
+#page > .alerts {
+  margin-bottom: 30px;
+}
 .form-field {
   margin: 0 0 20px;
   max-width: 320px;

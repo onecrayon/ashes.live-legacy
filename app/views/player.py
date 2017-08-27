@@ -22,7 +22,7 @@ mod = Blueprint('player', __name__, url_prefix='/player')
 login_manager.login_view = 'player.login'
 login_manager.login_message = None
 login_manager.refresh_view = 'player.reauthorize'
-login_manager.needs_refresh_message = None
+login_manager.needs_refresh_message = 'Verify your password below to continue'
 
 @login_manager.user_loader
 def load_user(user_id):
