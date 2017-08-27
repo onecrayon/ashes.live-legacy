@@ -168,8 +168,8 @@ module.exports = function normalizeComponent (
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_editor_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__deck_editor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_meta_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_meta_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__deck_meta_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__card_gallery_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__card_gallery_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__card_gallery_vue__);
 
@@ -201,7 +201,7 @@ var vm = new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 				id: 'main'
 			}
 		}, [
-			createElement(__WEBPACK_IMPORTED_MODULE_2__deck_editor_vue___default.a),
+			createElement(__WEBPACK_IMPORTED_MODULE_2__deck_meta_vue___default.a),
 			createElement(__WEBPACK_IMPORTED_MODULE_3__card_gallery_vue___default.a)
 		])
 	}
@@ -8690,9 +8690,9 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/ianbeck/Projects/ashes.live/app/static/src/deck_editor.vue"
+Component.options.__file = "/mnt/c/Users/georg/Projects/ashes.live/app/static/src/deck_meta.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] deck_editor.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] deck_meta.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -8701,9 +8701,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-13e63740", Component.options)
+    hotAPI.createRecord("data-v-b5775ad0", Component.options)
   } else {
-    hotAPI.reload("data-v-13e63740", Component.options)
+    hotAPI.reload("data-v-b5775ad0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -8744,7 +8744,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "editor-meta"
     }
-  }, [_c('p', [_vm._v("Deck editor WIP: "), _c('button', {
+  }, [_c('p', [_vm._v("Deck meta WIP: "), _c('button', {
     on: {
       "click": _vm.incrementCount
     }
@@ -8754,7 +8754,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-13e63740", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-b5775ad0", module.exports)
   }
 }
 
@@ -8775,7 +8775,7 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/ianbeck/Projects/ashes.live/app/static/src/card_gallery.vue"
+Component.options.__file = "/mnt/c/Users/georg/Projects/ashes.live/app/static/src/card_gallery.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] card_gallery.vue: functional components are not supported with templates, they should use render functions.")}
 
