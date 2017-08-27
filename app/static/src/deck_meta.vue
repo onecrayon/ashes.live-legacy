@@ -13,6 +13,8 @@
 </template>
 
 <script>
+	import qwest from 'qwest'
+
 	export default {
 		computed: {
 			title: {
@@ -27,7 +29,13 @@
 		methods: {
 			saveDeck () {
 				// TODO
-				alert('Saving deck `' + this.$store.state.deck.title + '`')
+				var title = this.$store.state.deck.title
+				console.log('Saving? ' + title)
+				qwest.get('/api').then(function(xhr, response) {
+					console.log('"Saved" deck (' + title + ') with API version: ' + response.version)
+				}).catch(function(error, xhr, response) {
+					console.log('Failed to save deck: ' + JSON.stringify(response))
+				})
 			}
 		}
 	}
