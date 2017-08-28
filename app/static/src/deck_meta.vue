@@ -4,7 +4,7 @@
 			<div class="form-field">
 				<input v-model="title" type="text" placeholder="Untitled deck">
 			</div>
-			<button v-on:click="saveDeck" class="btn btn-primary">Save</button>
+			<button v-on:click="save" class="btn btn-primary">Save</button>
 		</div>
 		<div class="phoenixborn-detail">
 			<p>Phoenixborn image and deck details forthcoming...</p>
@@ -27,7 +27,7 @@
 			}
 		},
 		methods: {
-			saveDeck () {
+			save () {
 				// TODO
 				var title = this.$store.state.deck.title
 				console.log('Saving? ' + title)
