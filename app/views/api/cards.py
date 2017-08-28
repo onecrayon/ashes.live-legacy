@@ -5,4 +5,4 @@ mod = Blueprint('api_cards', __name__, url_prefix='/api/cards')
 
 @mod.route('/')
 def listing():
-	return jsonify({'error': 'Coming soon'})
+    return jsonify({'error': 'Coming soon'})
