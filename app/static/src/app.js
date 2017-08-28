@@ -11,16 +11,36 @@ var store = new Vuex.Store({
 	state: {
 		deck: {
 			title: '',
-			phoenixborn: null
+			description: '',
+			phoenixborn: null,
+			dice: [],
+			cards: []
 		}
 	},
 	mutations: {
-		title: function (state, title) {
+		setTitle: function (state, title) {
 			state.deck.title = title
 		},
-		phoenixborn: function (state, id) {
+		setDescription: function (state, description) {
+			state.deck.description = description
+		},
+		setPhoenixborn: function (state, id) {
 			state.deck.phoenixborn = id
-		}
+		},
+		addDice: function (state, die, number) {
+			number = number || 1
+			while (number) {
+				state.deck.dice.push(die)
+				number--
+			}
+			while (state.deck.dice.length > 10) {
+				state.deck.dice.shift()
+			}
+		},
+		replaceDie: function (state, index, die) {
+			state.deck.dice[index] = die
+		},
+		// TODO: add methods for incrementing and decrementing card counts
 	}
 })
 

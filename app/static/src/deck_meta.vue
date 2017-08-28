@@ -22,7 +22,7 @@
 					return this.$store.state.deck.title
 				},
 				set (value) {
-					this.$store.commit('title', value)
+					this.$store.commit('setTitle', value)
 				}
 			}
 		},
