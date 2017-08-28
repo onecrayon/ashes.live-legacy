@@ -402,16 +402,36 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	state: {
 		deck: {
 			title: '',
-			phoenixborn: null
+			description: '',
+			phoenixborn: null,
+			dice: [],
+			cards: []
 		}
 	},
 	mutations: {
-		title: function (state, title) {
+		setTitle: function (state, title) {
 			state.deck.title = title
 		},
-		phoenixborn: function (state, id) {
+		setDescription: function (state, description) {
+			state.deck.description = description
+		},
+		setPhoenixborn: function (state, id) {
 			state.deck.phoenixborn = id
-		}
+		},
+		addDice: function (state, die, number) {
+			number = number || 1
+			while (number) {
+				state.deck.dice.push(die)
+				number--
+			}
+			while (state.deck.dice.length > 10) {
+				state.deck.dice.shift()
+			}
+		},
+		replaceDie: function (state, index, die) {
+			state.deck.dice[index] = die
+		},
+		// TODO: add methods for incrementing and decrementing card counts
 	}
 })
 
@@ -8751,19 +8771,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return this.$store.state.deck.title
 			},
 			set (value) {
-				this.$store.commit('title', value)
+				this.$store.commit('setTitle', value)
 			}
 		}
 	},
 	methods: {
-		saveDeck () {
+		save () {
 			// TODO
 			var title = this.$store.state.deck.title
 			console.log('Saving? ' + title)
 			__WEBPACK_IMPORTED_MODULE_0_qwest___default.a.get('/api').then(function(xhr, response) {
-				alert('"Saved" deck (' + title + ') with API version: ' + response.version)
+				console.log('"Saved" deck (' + title + ') with API version: ' + response.version)
 			}).catch(function(error, xhr, response) {
-				alert('Failed to save deck: ' + JSON.stringify(response))
+				console.log('Failed to save deck: ' + JSON.stringify(response))
 			})
 		}
 	}
@@ -9759,7 +9779,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     on: {
-      "click": _vm.saveDeck
+      "click": _vm.save
     }
   }, [_vm._v("Save")])]), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
