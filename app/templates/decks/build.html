@@ -15,5 +15,12 @@
 {% endblock %}
 
 {% block app %}
+	<script type="text/javascript">
+		var globals = window.globals || {}
+		globals.cardData = []
+		// TODO: populate cardData with all card JSON from the database
+		globals.diceData = []
+		// TODO: populate diceData with listing of dice types from the database
+	</script>
 	<script src="{{ url_for('static', filename='js/app.js') }}" type="text/javascript"></script>
 {% endblock %}
