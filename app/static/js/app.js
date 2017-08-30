@@ -385,18 +385,23 @@ module.exports = function normalizeComponent (
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_meta_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__deck_meta_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__deck_meta_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__card_gallery_vue__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__card_gallery_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__card_gallery_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__card_manager__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__deck_meta_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__deck_meta_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__deck_meta_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__card_gallery_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__card_gallery_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__card_gallery_vue__);
 
 
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */])
+
+__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
 /* eslint-disable no-new */
+
+var cm = new __WEBPACK_IMPORTED_MODULE_2__card_manager__["a" /* default */]();
+cm.test();
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	state: {
@@ -410,46 +415,42 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 	},
 	mutations: {
 		setTitle: function (state, title) {
-			state.deck.title = title
+			state.deck.title = title;
 		},
 		setDescription: function (state, description) {
-			state.deck.description = description
+			state.deck.description = description;
 		},
 		setPhoenixborn: function (state, id) {
-			state.deck.phoenixborn = id
+			state.deck.phoenixborn = id;
 		},
 		addDice: function (state, die, number) {
-			number = number || 1
+			number = number || 1;
 			while (number) {
-				state.deck.dice.push(die)
-				number--
+				state.deck.dice.push(die);
+				number--;
 			}
 			while (state.deck.dice.length > 10) {
-				state.deck.dice.shift()
+				state.deck.dice.shift();
 			}
 		},
 		replaceDie: function (state, index, die) {
-			state.deck.dice[index] = die
-		},
+			state.deck.dice[index] = die;
+		}
 		// TODO: add methods for incrementing and decrementing card counts
 	}
-})
+});
 
 var vm = new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 	el: '#main',
 	store,
-	render: function(createElement) {
-		return createElement('div',{
+	render(createElement) {
+		return createElement('div', {
 			domProps: {
 				id: 'main'
 			}
-		}, [
-			createElement(__WEBPACK_IMPORTED_MODULE_2__deck_meta_vue___default.a),
-			createElement(__WEBPACK_IMPORTED_MODULE_3__card_gallery_vue___default.a)
-		])
+		}, [createElement(__WEBPACK_IMPORTED_MODULE_3__deck_meta_vue___default.a), createElement(__WEBPACK_IMPORTED_MODULE_4__card_gallery_vue___default.a)]);
 	}
-})
-
+});
 
 /***/ }),
 /* 4 */
@@ -8701,14 +8702,32 @@ var index_esm = {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Offers interface for sorting, filtering, and selecting
+ * card JSON.
+ */
+/* harmony default export */ __webpack_exports__["a"] = (class {
+	constructor() {
+		// Construct stuff
+	}
+	test() {
+		console.log('testing testing testing');
+	}
+});
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(7),
+  __webpack_require__(8),
   /* template */
-  __webpack_require__(13),
+  __webpack_require__(14),
   /* styles */
   null,
   /* scopeId */
@@ -8716,7 +8735,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/mnt/c/Users/georg/Projects/ashes.live/app/static/src/deck_meta.vue"
+Component.options.__file = "/Users/ianbeck/Projects/ashes.live/app/static/src/deck_meta.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] deck_meta.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -8740,12 +8759,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qwest__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qwest__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qwest___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_qwest__);
 //
 //
@@ -8767,31 +8786,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	computed: {
 		title: {
-			get () {
-				return this.$store.state.deck.title
+			get() {
+				return this.$store.state.deck.title;
 			},
-			set (value) {
-				this.$store.commit('setTitle', value)
+			set(value) {
+				this.$store.commit('setTitle', value);
 			}
 		}
 	},
 	methods: {
-		save () {
+		save() {
 			// TODO
-			var title = this.$store.state.deck.title
-			console.log('Saving? ' + title)
-			__WEBPACK_IMPORTED_MODULE_0_qwest___default.a.get('/api').then(function(xhr, response) {
-				console.log('"Saved" deck (' + title + ') with API version: ' + response.version)
-			}).catch(function(error, xhr, response) {
-				console.log('Failed to save deck: ' + JSON.stringify(response))
-			})
+			var title = this.$store.state.deck.title;
+			console.log('Saving? ' + title);
+			__WEBPACK_IMPORTED_MODULE_0_qwest___default.a.get('/api').then(function (xhr, response) {
+				console.log('"Saved" deck (' + title + ') with API version: ' + response.version);
+			}).catch(function (error, xhr, response) {
+				console.log('Failed to save deck: ' + JSON.stringify(response));
+			});
 		}
 	}
 });
 
-
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*! qwest 4.5.0 (https://github.com/pyrsmk/qwest) */
@@ -8799,8 +8817,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports = function() {
 
     var global = typeof window != 'undefined' ? window : self,
-        pinkyswear = __webpack_require__(9),
-        jparam = __webpack_require__(12),
+        pinkyswear = __webpack_require__(10),
+        jparam = __webpack_require__(13),
         defaultOptions = {},
         // Default response type for XDR in auto mode
         defaultXdrResponseType = 'json',
@@ -9299,7 +9317,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(setImmediate, process) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -9431,10 +9449,10 @@ module.exports = function() {
 }));
 
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10).setImmediate, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11).setImmediate, __webpack_require__(0)))
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -9487,13 +9505,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(11);
+__webpack_require__(12);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -9686,7 +9704,7 @@ exports.clearImmediate = clearImmediate;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -9744,7 +9762,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -9796,15 +9814,15 @@ if (false) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(15),
-  /* template */
   __webpack_require__(16),
+  /* template */
+  __webpack_require__(17),
   /* styles */
   null,
   /* scopeId */
@@ -9812,7 +9830,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/mnt/c/Users/georg/Projects/ashes.live/app/static/src/card_gallery.vue"
+Component.options.__file = "/Users/ianbeck/Projects/ashes.live/app/static/src/card_gallery.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] card_gallery.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -9836,7 +9854,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9857,15 +9875,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	computed: {
-		phoenixborn () {
-			return this.$store.state.deck.phoenixborn
+		phoenixborn() {
+			return this.$store.state.deck.phoenixborn;
 		}
 	}
 });
 
-
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
