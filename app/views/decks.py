@@ -3,6 +3,8 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
 
+from app.services.cards import global_json
+
 mod = Blueprint('decks', __name__, url_prefix='/decks')
 
 
@@ -30,4 +32,4 @@ def mine():
 @login_required
 def build(deck_id=None):
     """Edit a deck"""
-    return render_template('decks/build.html')
+    return render_template('decks/build.html', **global_json())
