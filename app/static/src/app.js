@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import CardManager from './card_manager'
 import DeckMeta from './deck_meta.vue'
 import CardGallery from './card_gallery.vue'
 
 Vue.use(Vuex)
 
 /* eslint-disable no-new */
+
+var cardManager = new CardManager()
 
 var store = new Vuex.Store({
 	state: {
@@ -15,7 +18,8 @@ var store = new Vuex.Store({
 			phoenixborn: null,
 			dice: [],
 			cards: []
-		}
+		},
+		cards: cardManager
 	},
 	mutations: {
 		setTitle: function (state, title) {
@@ -47,7 +51,7 @@ var store = new Vuex.Store({
 var vm = new Vue({
 	el: '#main',
 	store,
-	render: function(createElement) {
+	render (createElement) {
 		return createElement('div',{
 			domProps: {
 				id: 'main'
