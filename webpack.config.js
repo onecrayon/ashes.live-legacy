@@ -13,6 +13,11 @@ module.exports = {
 			{
 				test: /\.vue$/,
 				loader: 'vue-loader'
+			},
+			{
+			  test: /\.js$/,
+			  loader: 'babel-loader',
+			  include: [path.resolve(__dirname, 'app/static/src')]
 			}
 		]
 	}
