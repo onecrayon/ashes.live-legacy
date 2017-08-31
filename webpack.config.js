@@ -1,4 +1,7 @@
 var path = require('path')
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+var webpack = require('webpack')
+var debug = process.env.NODE_ENV !== 'production'
 
 module.exports = {
 	entry: {
@@ -17,11 +20,12 @@ module.exports = {
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				include: [path.resolve(__dirname, 'app/static/src')],
-				options: {
-					presets: ['env']
-				}
+				include: [path.resolve(__dirname, 'app/static/src')]
 			}
 		]
-	}
+	},
+	plugins: debug ? [] : [
+		new LodashModuleReplacementPlugin,
+		new webpack.optimize.UglifyJsPlugin
+	]
 }
