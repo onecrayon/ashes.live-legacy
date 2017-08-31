@@ -379,31 +379,40 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__card_manager__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__deck_meta_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__deck_meta_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__deck_meta_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__card_gallery_vue__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__card_gallery_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__card_gallery_vue__);
 
 
+var _vue = __webpack_require__(4);
 
+var _vue2 = _interopRequireDefault(_vue);
 
+var _vuex = __webpack_require__(5);
 
+var _vuex2 = _interopRequireDefault(_vuex);
 
-__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+var _card_manager = __webpack_require__(6);
+
+var _card_manager2 = _interopRequireDefault(_card_manager);
+
+var _deck_meta = __webpack_require__(7);
+
+var _deck_meta2 = _interopRequireDefault(_deck_meta);
+
+var _card_gallery = __webpack_require__(15);
+
+var _card_gallery2 = _interopRequireDefault(_card_gallery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.use(_vuex2.default);
 
 /* eslint-disable no-new */
 
-var cm = new __WEBPACK_IMPORTED_MODULE_2__card_manager__["a" /* default */]();
-cm.test();
+var cardManager = new _card_manager2.default();
 
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+var store = new _vuex2.default.Store({
 	state: {
 		deck: {
 			title: '',
@@ -411,19 +420,20 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 			phoenixborn: null,
 			dice: [],
 			cards: []
-		}
+		},
+		cards: cardManager
 	},
 	mutations: {
-		setTitle: function (state, title) {
+		setTitle: function setTitle(state, title) {
 			state.deck.title = title;
 		},
-		setDescription: function (state, description) {
+		setDescription: function setDescription(state, description) {
 			state.deck.description = description;
 		},
-		setPhoenixborn: function (state, id) {
+		setPhoenixborn: function setPhoenixborn(state, id) {
 			state.deck.phoenixborn = id;
 		},
-		addDice: function (state, die, number) {
+		addDice: function addDice(state, die, number) {
 			number = number || 1;
 			while (number) {
 				state.deck.dice.push(die);
@@ -433,22 +443,22 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 				state.deck.dice.shift();
 			}
 		},
-		replaceDie: function (state, index, die) {
+		replaceDie: function replaceDie(state, index, die) {
 			state.deck.dice[index] = die;
 		}
 		// TODO: add methods for incrementing and decrementing card counts
 	}
 });
 
-var vm = new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
+var vm = new _vue2.default({
 	el: '#main',
-	store,
-	render(createElement) {
+	store: store,
+	render: function render(createElement) {
 		return createElement('div', {
 			domProps: {
 				id: 'main'
 			}
-		}, [createElement(__WEBPACK_IMPORTED_MODULE_3__deck_meta_vue___default.a), createElement(__WEBPACK_IMPORTED_MODULE_4__card_gallery_vue___default.a)]);
+		}, [createElement(_deck_meta2.default), createElement(_card_gallery2.default)]);
 	}
 });
 
@@ -457,6 +467,7 @@ var vm = new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
  * Vue.js v2.4.2
  * (c) 2014-2017 Evan You
@@ -7883,7 +7894,7 @@ setTimeout(function () {
 
 /*  */
 
-/* harmony default export */ __webpack_exports__["a"] = (Vue$3);
+/* harmony default export */ __webpack_exports__["default"] = (Vue$3);
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0), __webpack_require__(1)))
 
@@ -7892,11 +7903,12 @@ setTimeout(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export Store */
-/* unused harmony export mapState */
-/* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
-/* unused harmony export mapActions */
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapGetters", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /**
  * vuex v2.3.0
  * (c) 2017 Evan You
@@ -8697,26 +8709,58 @@ var index_esm = {
   mapActions: mapActions
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (index_esm);
+/* harmony default export */ __webpack_exports__["default"] = (index_esm);
 
 
 /***/ }),
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 /**
  * Offers interface for sorting, filtering, and selecting
  * card JSON.
  */
-/* harmony default export */ __webpack_exports__["a"] = (class {
-	constructor() {
-		// Construct stuff
+var _class = function () {
+	function _class() {
+		_classCallCheck(this, _class);
+
+		// TODO: loop over globals.cards and globals.dice to construct indices necessary for easily relating the two?
+		// Create lookup table by ID
+		this.idMap = {};
+		for (var card in globals.cardData) {
+			this.idMap[card.id] = card;
+		}
 	}
-	test() {
-		console.log('testing testing testing');
-	}
-});
+
+	_createClass(_class, [{
+		key: "cardById",
+		value: function cardById(id) {
+			return this.idMap[id] || null;
+		}
+	}, {
+		key: "cardsByType",
+		value: function cardsByType(type) {}
+		// TODO: return array of cards based on the given type and active sorting
+
+		// TODO: add methods for fetching, filtering, and sorting card and die data
+
+	}]);
+
+	return _class;
+}();
+
+exports.default = _class;
 
 /***/ }),
 /* 7 */
@@ -8760,53 +8804,58 @@ module.exports = Component.exports
 
 /***/ }),
 /* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qwest__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_qwest___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_qwest__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+var _qwest = __webpack_require__(9);
+
+var _qwest2 = _interopRequireDefault(_qwest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
 	computed: {
 		title: {
-			get() {
+			get: function get() {
 				return this.$store.state.deck.title;
 			},
-			set(value) {
+			set: function set(value) {
 				this.$store.commit('setTitle', value);
 			}
 		}
 	},
 	methods: {
-		save() {
+		save: function save() {
 			// TODO
 			var title = this.$store.state.deck.title;
 			console.log('Saving? ' + title);
-			__WEBPACK_IMPORTED_MODULE_0_qwest___default.a.get('/api').then(function (xhr, response) {
+			_qwest2.default.get('/api').then(function (xhr, response) {
 				console.log('"Saved" deck (' + title + ') with API version: ' + response.version);
 			}).catch(function (error, xhr, response) {
 				console.log('Failed to save deck: ' + JSON.stringify(response));
 			});
 		}
 	}
-});
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 9 */
@@ -9855,10 +9904,14 @@ module.exports = Component.exports
 
 /***/ }),
 /* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 //
 //
 //
@@ -9873,13 +9926,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+exports.default = {
 	computed: {
-		phoenixborn() {
+		phoenixborn: function phoenixborn() {
 			return this.$store.state.deck.phoenixborn;
 		}
 	}
-});
+};
 
 /***/ }),
 /* 17 */
