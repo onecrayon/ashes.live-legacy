@@ -15,9 +15,12 @@ module.exports = {
 				loader: 'vue-loader'
 			},
 			{
-			  test: /\.js$/,
-			  loader: 'babel-loader',
-			  include: [path.resolve(__dirname, 'app/static/src')]
+				test: /\.js$/,
+				loader: 'babel-loader',
+				include: [path.resolve(__dirname, 'app/static/src')],
+				options: {
+					presets: ['env']
+				}
 			}
 		]
 	}
