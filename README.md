@@ -53,7 +53,10 @@ For development servers:
 
 TODO:
 
+* Generate image paths serverside (and stash in the card's JSON?)
+    * Update the existing stub markup to use the generated image paths
 * Implement development vs. production environments in a way that works for both Python and webpack
+    * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 
 Filters:
 
