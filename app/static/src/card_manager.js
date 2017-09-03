@@ -9,7 +9,7 @@ export default class {
 		// TODO: loop over globals.cards and globals.dice to construct indices necessary for easily relating the two?
 		// Create lookup table by ID
 		this.idMap = {}
-		for (let card in globals.cardData) {
+		for (let card of globals.cardData) {
 			this.idMap[card.id] = card
 		}
 	}
@@ -27,7 +27,6 @@ export default class {
 		secondarySort = null,
 		secondaryOrder = 1
 	} = {}) {
-		console.log('filtering cards...')
 		// Only include conjurations if they are specifically called for
 		const excludeConjurations = types && includes(types, 'Conjuration')
 		let subset = filter(globals.cardData, (card) => {
@@ -62,7 +61,6 @@ export default class {
 			// TODO: implement text search logic
 			return true
 		})
-		console.log('subset?', subset)
 		subset.sort((a, b) => {
 			// When primarySort is 'name' we do not do a secondary sort (names are always unique)
 			if (primarySort == 'name') {

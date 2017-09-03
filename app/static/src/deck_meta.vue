@@ -2,12 +2,12 @@
 	<div id="editor-meta">
 		<div class="deck-header">
 			<div class="form-field">
-				<input v-model="title" type="text" placeholder="Untitled deck">
+				<input v-model="title" :disabled="!phoenixborn" type="text" placeholder="Untitled deck">
 			</div>
-			<button v-on:click="save" class="btn btn-primary">Save</button>
+			<button v-on:click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 		</div>
-		<div class="phoenixborn-detail">
-			<p>Phoenixborn image and deck details forthcoming...</p>
+		<div v-if="phoenixborn" class="phoenixborn-detail">
+			<img :src="'/images/cards/' + phoenixborn.stub + '.jpg'" :alt="phoenixborn.name">
 		</div>
 	</div>
 </template>
@@ -23,6 +23,14 @@
 				},
 				set (value) {
 					this.$store.commit('setTitle', value)
+				}
+			},
+			phoenixborn: {
+				get () {
+					return this.$store.state.deck.phoenixborn
+				},
+				set (cardId) {
+					this.$store.commit('setPhoenixborn', cardId)
 				}
 			}
 		},

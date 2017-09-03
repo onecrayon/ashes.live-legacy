@@ -8,9 +8,7 @@
 		<div v-else class="phoenixborn-picker">
 			<ul class="listing">
 				<li v-for="card of listing" :key="card.id">
-					<a v-on:click="phoenixborn = card.id">
-						<img :src="'/images/cards/' + card.stub + '.jpg'" :alt="card.name">
-					</a>
+					<img v-on:click="phoenixborn = card.id" :src="'/images/cards/' + card.stub + '.jpg'" :alt="card.name">
 				</li>
 			</ul>
 		</div>

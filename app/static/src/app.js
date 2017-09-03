@@ -40,7 +40,7 @@ var store = new Vuex.Store({
 			state.deck.description = description
 		},
 		setPhoenixborn (state, id) {
-			state.deck.phoenixborn = id
+			state.deck.phoenixborn = cardManager.cardById(id)
 		},
 		addDice (state, die, number) {
 			number = number || 1
