@@ -2,8 +2,16 @@
 	<div id="editor-gallery">
 		<div v-if="phoenixborn" class="gallery">
 			<div class="filters">
-				<p>Filters and card listings coming soon...</p>
+				<p>Filters coming soon...</p>
 			</div>
+			<ul class="listing">
+				<li v-for="card of listing" :key="card.id">
+					<img :src="'/images/cards/' + card.stub + '-slice.jpg'" :alt="card.name">
+					<div>
+						<h3>{{ card.name }}</h3>
+					</div>
+				</li>
+			</ul>
 		</div>
 		<div v-else class="phoenixborn-picker">
 			<ul class="listing">
@@ -31,6 +39,7 @@
 				},
 				set (cardId) {
 					this.$store.commit('setPhoenixborn', cardId)
+					this.$store.commit('filterCards')
 				}
 			},
 			listing () {
