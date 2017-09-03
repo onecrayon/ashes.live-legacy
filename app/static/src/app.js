@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 /* eslint-disable no-new */
 
-var cardManager = new CardManager()
+var cardManager = new CardManager
 
 var store = new Vuex.Store({
 	state: {
@@ -19,19 +19,30 @@ var store = new Vuex.Store({
 			dice: [],
 			cards: []
 		},
-		cards: cardManager
+		listing: [],
+		filters: {
+			search: null,
+			types: null,
+			releases: [0],
+			dice: null,
+			diceLogic: 'or',
+			primarySort: 'name',
+			primaryOrder: 1,
+			secondarySort: null,
+			secondaryOrder: 1
+		}
 	},
 	mutations: {
-		setTitle: function (state, title) {
+		setTitle (state, title) {
 			state.deck.title = title
 		},
-		setDescription: function (state, description) {
+		setDescription (state, description) {
 			state.deck.description = description
 		},
-		setPhoenixborn: function (state, id) {
+		setPhoenixborn (state, id) {
 			state.deck.phoenixborn = id
 		},
-		addDice: function (state, die, number) {
+		addDice (state, die, number) {
 			number = number || 1
 			while (number) {
 				state.deck.dice.push(die)
@@ -41,8 +52,12 @@ var store = new Vuex.Store({
 				state.deck.dice.shift()
 			}
 		},
-		replaceDie: function (state, index, die) {
+		replaceDie (state, index, die) {
 			state.deck.dice[index] = die
+		},
+		filterCards (state, options) {
+			options = options || state.filters
+			state.listing = cardManager.cardListing(options)
 		},
 		// TODO: add methods for incrementing and decrementing card counts
 	}

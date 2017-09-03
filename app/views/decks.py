@@ -24,7 +24,7 @@ def view(deck_id):
 @login_required
 def mine():
     """View logged-in player's decks"""
-    pass
+    return render_template('decks/mine.html')
 
 
 @mod.route('/build/')

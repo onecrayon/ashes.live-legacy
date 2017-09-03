@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}My Decks{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-basic-magic">My decks</h1>
+{% endblock %}
+
+{% block content %}
+	<p>Actual deck listing coming soon!</p>
+{% endblock %}
+
+{% block sidebar %}
+	<ul>
+		<li><a href="{{ url_for('decks.build') }}">
+			<i class="fa fa-plus">New Deck</i>
+		</a></li>
+	</ul>
+{% endblock %}
