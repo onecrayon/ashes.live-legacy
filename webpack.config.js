@@ -8,7 +8,7 @@ module.exports = {
 		app: './app/static/src/app.js'
 	},
 	output: {
-		filename: '[name].js',
+		filename: '[name]' + (!debug ? '.min' : '')  + '.js',
 		path: path.resolve(__dirname, 'app/static/js')
 	},
 	module: {
