@@ -14,6 +14,7 @@ class Card(db.Model):
     stub = db.Column(db.String(25), nullable=False, index=True, unique=True)
     release = db.Column(db.Integer, nullable=False, index=True, default=0)
     card_type = db.Column(db.String(25), nullable=False, index=True)
+    is_summon_spell = db.Column(db.Boolean, nullable=False, default=False)
     cost_weight = db.Column(db.Integer, nullable=False, index=True, default=0)
     json = db.Column(db.Text)
     text = db.Column(db.Text)
