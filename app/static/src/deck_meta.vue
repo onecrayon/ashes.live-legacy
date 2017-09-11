@@ -7,7 +7,7 @@
 			<button v-on:click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 		</div>
 		<div v-if="phoenixborn" class="phoenixborn-detail">
-			<img :src="'/images/cards/' + phoenixborn.stub + '.jpg'" :alt="phoenixborn.name">
+			<img :src="card.images.compressed" :alt="phoenixborn.name">
 		</div>
 	</div>
 </template>

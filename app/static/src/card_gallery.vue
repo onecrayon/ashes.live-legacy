@@ -6,7 +6,7 @@
 			</div>
 			<ul class="listing">
 				<li v-for="card of listing" :key="card.id">
-					<img :src="'/images/cards/' + card.stub + '-slice.jpg'" :alt="card.name">
+					<img :src="card.images.thumbnail" :alt="card.name">
 					<div>
 						<h3>{{ card.name }}</h3>
 					</div>
@@ -16,7 +16,7 @@
 		<div v-else class="phoenixborn-picker">
 			<ul class="listing">
 				<li v-for="card of listing" :key="card.id">
-					<img v-on:click="phoenixborn = card.id" :src="'/images/cards/' + card.stub + '.jpg'" :alt="card.name">
+					<img v-on:click="phoenixborn = card.id" :src="card.images.compressed" :alt="card.name">
 				</li>
 			</ul>
 		</div>
