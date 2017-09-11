@@ -1,0 +1,32 @@
+Redirect
+Reaction Spell - Discard
+1 [[charm:class]]
+
+You may play this spell when your Phoenixborn would be dealt damage and you have at least one unit in play. Do not deal that damage to your Phoenixborn. Instead deal that damage to a target unit you control.
+
+=====
+
+Spiked Armor
+Alteration Spell - Unit
+[[main]] - 1 [[natural:class]] - 1 [[basic]]
+Life +2
+
+* This unit now has the following ability:
+
+* Spiked Skin 2: When this unit is dealt damage by one or more attacking or countering units, deal 2 damage to each unit that is attacking or countering this unit.
+
+=====
+
+Sympathy Pain
+Reaction Spell - Discard
+2 [[charm:class]]
+
+You may play this spell after your Phoenixborn has received damage. Deal 3 damage to a target unit or Phoenixborn.
+
+=====
+
+Nightshade Swallow
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 1 - Copies 5
+
+Deathstrike: When this unit deals 1 or more damage to a unit it is attacking or countering, destroy that unit.
