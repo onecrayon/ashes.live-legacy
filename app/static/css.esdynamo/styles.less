@@ -45,6 +45,10 @@ h3 {
 	.font-size(18);
 }
 
+p, ul, ol {
+	.line-height(24);
+}
+
 a {
 	color: @color-link;
 }
@@ -266,10 +270,6 @@ a.disabled {
 #page, #footer {
 	.max-width();
 	padding: 20px;
-	
-	p, ul, ol {
-		line-height: 1.5rem;
-	}
 }
 
 #main {
@@ -298,6 +298,10 @@ a.disabled {
 /* @group Header */
 
 #header {
+	p, ul, ol {
+		line-height: 1;
+	}
+
 	ul {
 		.mixin-display-flex;
 		.mixin-justify-content(center);
@@ -507,35 +511,74 @@ a.disabled {
 	}
 }
 
-.gallery .filters {
-	.btn-all {
+.gallery {
+	.filters .btn-all {
 		min-width: 64px;
 	}
-}
 
-.gallery .card-detail {
-	.mixin-display-flex;
+	.listing {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
 
-	.thumbnail {
-		.mixin-flex(0 0 auto);
-		position: relative;
-		width: 95px;
-		height: 115px;
-
-		.btn-group {
-			margin: 0;
-			position: absolute;
-			bottom: 0px;
-			left: 0px;
+	.card-detail {
+		.mixin-display-flex;
+		border: 1px solid #939395;
+		margin: 0 0 5px;
+	
+		.thumbnail {
+			.mixin-flex(0 0 auto);
+			position: relative;
+			top: -1px;
+			left: -1px;
+			width: 95px;
+			height: 115px;
+			margin-bottom: -2px;
+	
+			.btn-group {
+				margin: 0;
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+			}
 		}
-	}
+	
+		.details {
+			.mixin-flex(1 1 auto);
+			padding: 10px;
 
-	.details {
-		.mixin-flex(1 1 auto)
-	}
+			h3 {
+				.line-height(18);
+				margin-bottom: 6px;
+			}
 
-	.costs {
-		.mixin-flex(0 0 auto)
+			.meta {
+				.font-size(12);
+				.line-height(12);
+				margin-bottom: 8px;
+			}
+
+			.effects {
+				.font-size(12);
+				.line-height(15);
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+
+				li {
+					margin-bottom: 5px;
+				}
+			}
+		}
+	
+		.costs {
+			.mixin-flex(0 0 auto);
+			list-style-type: none;
+			padding: 6px 10px 0 0;
+			margin: 0;
+			text-align: right;
+		}
 	}
 }
 
