@@ -89,13 +89,42 @@
 	<footer id="footer">
 		<p class="copyright">All images, graphics, textual and game contents &copy; {{ 2015 | copyright }} Plaid Hat Games. All rights reserved.</p>
 	</footer>
-	{% if cards_json or dice_json %}
 	<script type="text/javascript">
 		var globals = window.globals || {}
 		{% if cards_json %}globals.cardData = {{ cards_json | safe }}{% endif %}
-		{% if dice_json %}globals.diceData = {{ dice_json | safe }}{% endif %}
+		globals.diceData = [
+			'ceremonial', 'charm', 'illusion', 'natural',
+			'divine', 'sympathy'
+		]
+		globals.parseCardText = function (input) {
+			return input.replace(/\[\[([a-z ]+)(?::([a-z]+))?\]\]/i, function (_, primary, secondary) {
+				var lower_primary = primary.toLowerCase()
+				secondary = secondary && secondary.toLowerCase()
+				if (['discard', 'exhaust'].indexOf(lower_primary) > -1) {
+					return ['<span class="phg-"', lower_primary, '"></span>'].join('')
+				}
+				
+				if (globals.diceData.indexOf(lower_primary) > -1) {
+					if (lower_primary == 'basic') {
+						secondary = 'magic'
+					} else if (!secondary) {
+						secondary = 'power'
+					}
+				} else if (lower_primary == 'basic') {
+					secondary = 'magic'
+				} else if (lower_primary == 'main') {
+					secondary = 'action'
+				} else if (lower_primary == 'side') {
+					secondary = 'action'
+				} else if (secondary) {
+					return ['<i>', lower_primary, (secondary ? ' ' + secondary : ''), '</i>'].join('')
+				} else {
+					return ['<a href="/cards/', lower_primary.replace(' ', '-'), '">', primary, '</a>'].join('')
+				}
+				return ['<span class="phg-', lower_primary, '-', secondary, '"></span>'].join('')
+			})
+		}
 	</script>
-	{% endif %}
 	{% block app %}{% endblock %}
 </body>
 </html>
