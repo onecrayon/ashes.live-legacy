@@ -33,6 +33,7 @@ var store = new Vuex.Store({
 		}
 	},
 	mutations: {
+		// Deck editing methods
 		setTitle (state, title) {
 			state.deck.title = title
 		},
@@ -54,6 +55,19 @@ var store = new Vuex.Store({
 		},
 		replaceDie (state, index, die) {
 			state.deck.dice[index] = die
+		},
+		// Filter methods
+		toggleDiceLogic (state) {
+			state.filters.diceLogic = state.filters.diceLogic == 'or' ? 'and' : 'or'
+		},
+		toggleDieFilter (state, die) {
+			if (!state.filters.dice || !state.filters.dice.length) {
+				state.filters.dice = [die]
+			} else if (state.filters.dice.indexOf(die) > -1) {
+				state.filters.dice.splice(state.filters.dice.indexOf(die), 1)
+			} else {
+				state.filters.dice.push(die)
+			}
 		},
 		filterCards (state, options) {
 			options = options || state.filters
