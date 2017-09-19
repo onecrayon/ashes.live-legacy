@@ -5,6 +5,9 @@
 				<div class="btn-group">
 					<button v-on:click="toggleDiceLogic"
 						class="btn btn-all" :class="{active: diceLogicActive }">{{ diceLogicText }}:</button
+					><button v-on:click="toggleDie('basic')"
+						class="btn phg-basic-magic" :class="{active: basicActive }" :disabled="basicDisabled"
+						title="Basic"></button
 					><button v-on:click="toggleDie('ceremonial')"
 						class="btn phg-ceremonial-power" :class="{active: ceremonialActive }"
 						title="Ceremonial"></button
@@ -96,12 +99,14 @@
 				return this.$store.state.filters.diceLogic == 'or' ? 'Any' : 'All'
 			},
 			diceLogicActive () { return this.$store.state.filters.diceLogic == 'and' },
+			basicActive () { return includes(this.$store.state.filters.dice || [], 'basic') },
 			ceremonialActive () { return includes(this.$store.state.filters.dice || [], 'ceremonial') },
 			charmActive () { return includes(this.$store.state.filters.dice || [], 'charm') },
 			illusionActive () { return includes(this.$store.state.filters.dice || [], 'illusion') },
 			naturalActive () { return includes(this.$store.state.filters.dice || [], 'natural') },
 			divineActive () { return includes(this.$store.state.filters.dice || [], 'divine') },
 			sympathyActive () { return includes(this.$store.state.filters.dice || [], 'sympathy') },
+			basicDisabled() { return this.$store.state.filters.diceLogic == 'and' },
 			set5Disabled () { return !includes(this.$store.state.filters.releases, 5) },
 			set6Disabled () { return !includes(this.$store.state.filters.releases, 6) }
 		},

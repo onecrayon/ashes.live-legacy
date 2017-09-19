@@ -59,6 +59,11 @@ var store = new Vuex.Store({
 		// Filter methods
 		toggleDiceLogic (state) {
 			state.filters.diceLogic = state.filters.diceLogic == 'or' ? 'and' : 'or'
+			// Exclude basic die check from "and" comparisons
+			if (state.filters.diceLogic == 'and' && state.filters.dice
+					&& state.filters.dice.indexOf('basic') > -1) {
+				state.filters.dice.splice(state.filters.dice.indexOf('basic'), 1)
+			}
 		},
 		toggleDieFilter (state, die) {
 			if (!state.filters.dice || !state.filters.dice.length) {

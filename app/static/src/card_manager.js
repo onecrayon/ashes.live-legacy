@@ -60,8 +60,9 @@ export default class {
 						}
 					}
 					if (!valid) return false
-				} else {
-					// Card doesn't have any dice associated with it (probably basic-only)
+				} else if (!includes(dice, 'basic')) {
+					// Card doesn't have any dice associated with it,
+					// and we aren't filtering for basic-only
 					return false
 				}
 			}
