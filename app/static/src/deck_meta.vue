@@ -1,13 +1,15 @@
 <template>
 	<div id="editor-meta">
 		<div class="deck-header">
-			<div class="form-field">
-				<input v-model="title" :disabled="!phoenixborn" type="text" placeholder="Untitled deck">
+			<div class="input-group">
+				<div class="form-field">
+					<input v-model="title" :disabled="!phoenixborn" type="text" placeholder="Untitled deck">
+				</div>
+				<button v-on:click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 			</div>
-			<button v-on:click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 		</div>
 		<div v-if="phoenixborn" class="phoenixborn-detail">
-			<img :src="card.images.compressed" :alt="phoenixborn.name">
+			<img :src="phoenixborn.images.full" :alt="phoenixborn.name">
 		</div>
 	</div>
 </template>
