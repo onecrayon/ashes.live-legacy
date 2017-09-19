@@ -26,11 +26,35 @@
 				</div>
 			</div>
 			<ul class="listing">
-				<li v-for="card of listing" :key="card.id">
-					<img :src="card.images.thumbnail" :alt="card.name">
-					<div>
-						<h3>{{ card.name }}</h3>
+				<li v-for="card of listing" :key="card.id" class="card-detail">
+					<div class="thumbnail">
+						<img :src="card.images.thumbnail" :alt="card.name">
+						<!-- TODO: quantity buttons -->
 					</div>
+					<div class="details">
+						<h3>{{ card.name }}</h3>
+						<p class="meta">{{ card.type }} - {{ card.placement }}</p>
+						<ol class="effects">
+							<!-- TODO: handle inexhaustible abilities -->
+							<li v-for="effect of card.text">
+								<strong v-if="effect.name">{{ effect.name }}<span v-if="effect.cost || effect.name.startsWith('Focus')">:</span></strong>
+								<span v-if="effect.cost" class="costs">
+									<span v-for="cost of effect.cost" class="cost"
+										v-html="parseCardText(cost)"></span
+									><span v-if="effect.text">:</span>
+								</span>
+								<span v-if="!effect.name || effect.name.startsWith('Focus')" v-html="parseCardText(effect.text)"></span>
+							</li>
+						</ol>
+						<ul v-if="card.attack !== undefined || card.life !== undefined || card.recover !== undefined" class="statline">
+							<li v-if="card.attack !== undefined" class="attack">Attack {{ card.attack }}</li>
+							<li v-if="card.life !== undefined" class="life">Life {{ card.life }}</li>
+							<li v-if="card.recover !== undefined" class="recover">Recover {{ card.recover }}</li>
+						</ul>
+					</div>
+					<ol class="costs">
+						<li v-for="cost of card.cost" class="cost" v-html="parseCardText(cost)"></li>
+					</ol>
 				</li>
 			</ul>
 		</div>
@@ -82,6 +106,7 @@
 			set6Disabled () { return !includes(this.$store.state.filters.releases, 6) }
 		},
 		methods: {
+			parseCardText: globals.parseCardText,
 			toggleDiceLogic () {
 				this.$store.commit('toggleDiceLogic')
 				this.$store.commit('filterCards')
