@@ -2,7 +2,27 @@
 	<div id="editor-gallery">
 		<div v-if="phoenixborn" class="gallery">
 			<div class="filters">
-				<p>Filters coming soon...</p>
+				<div class="btn-group">
+					<button v-on:click="toggleDiceLogic" class="btn">{{ diceLogicText }}:</button
+					><button v-on:click="toggleDie('ceremonial')"
+						class="btn phg-ceremonial-power" :class="{active: ceremonialActive }"
+						title="Ceremonial"></button
+					><button v-on:click="toggleDie('charm')"
+						class="btn phg-charm-power" :class="{active: charmActive }"
+						title="Charm"></button
+					><button v-on:click="toggleDie('illusion')"
+						class="btn phg-illusion-power" :class="{active: illusionActive }"
+						title="Illusion"></button
+					><button v-on:click="toggleDie('natural')"
+						class="btn phg-natural-power" :class="{active: naturalActive }"
+						title="Natural"></button
+					><!--<button v-on:click="toggleDie('divine')"
+						class="btn phg-divine-power" :class="{active: divineActive }"
+						title="Divine"></button
+					><button v-on:click="toggleDie('sympathy')"
+						class="btn phg-sympathy-power" :class="{active: sympathyActive }"
+						title="Sympathy"></button>-->
+				</div>
 			</div>
 			<ul class="listing">
 				<li v-for="card of listing" :key="card.id">
@@ -24,6 +44,8 @@
 </template>
 
 <script>
+	import {includes} from 'lodash'
+	
 	export default {
 		created () {
 			if (this.$store.state.deck.phoenixborn) {
@@ -44,6 +66,25 @@
 			},
 			listing () {
 				return this.$store.state.listing
+			},
+			diceLogicText () {
+				return this.$store.state.filters.diceLogic == 'or' ? 'Any' : 'All'
+			},
+			ceremonialActive () { return includes(this.$store.state.filters.dice || [], 'ceremonial') },
+			charmActive () { return includes(this.$store.state.filters.dice || [], 'charm') },
+			illusionActive () { return includes(this.$store.state.filters.dice || [], 'illusion') },
+			naturalActive () { return includes(this.$store.state.filters.dice || [], 'natural') },
+			divineActive () { return includes(this.$store.state.filters.dice || [], 'divine') },
+			sympathyActive () { return includes(this.$store.state.filters.dice || [], 'sympathy') }
+		},
+		methods: {
+			toggleDiceLogic () {
+				this.$store.commit('toggleDiceLogic')
+				this.$store.commit('filterCards')
+			},
+			toggleDie (die) {
+				this.$store.commit('toggleDieFilter', die)
+				this.$store.commit('filterCards')
 			}
 		}
 	}

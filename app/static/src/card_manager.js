@@ -43,7 +43,7 @@ export default class {
 			if (releases && !releases.includes(card.release)) {
 				return false
 			}
-			if (dice) {
+			if (dice && dice.length) {
 				if (diceLogic == 'and') {
 					// TODO: replace this with a lodash method?
 					for (const die of dice) {
@@ -51,7 +51,7 @@ export default class {
 							return false
 						}
 					}
-				} else {
+				} else if (card.dice && card.dice.length) {
 					let valid = false
 					for (const die of card.dice) {
 						if (includes(dice, die)) {
@@ -60,6 +60,9 @@ export default class {
 						}
 					}
 					if (!valid) return false
+				} else {
+					// Card doesn't have any dice associated with it (probably basic-only)
+					return false
 				}
 			}
 			// TODO: implement text search logic
