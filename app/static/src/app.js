@@ -74,6 +74,15 @@ var store = new Vuex.Store({
 				state.filters.dice.push(die)
 			}
 		},
+		toggleTypeFilter (state, typeName) {
+			if (!state.filters.types || !state.filters.types.length) {
+				state.filters.types = [typeName]
+			} else if (state.filters.types.indexOf(typeName) > -1) {
+				state.filters.types.splice(state.filters.types.indexOf(typeName), 1)
+			} else {
+				state.filters.types.push(typeName)
+			}
+		},
 		filterCards (state, options) {
 			options = options || state.filters
 			state.listing = cardManager.cardListing(options)

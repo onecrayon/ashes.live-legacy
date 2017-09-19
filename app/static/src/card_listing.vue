@@ -5,13 +5,13 @@
 				<img :src="card.images.thumbnail" :alt="card.name">
 				<div class="btn-group">
 					<button class="btn btn-qty"
-						:class="{active: qtyActive(card.id, 0)}">0</button
+						:class="{active: isQtyActive(card.id, 0)}">0</button
 					><button class="btn btn-qty"
-						:class="{active: qtyActive(card.id, 1)}">1</button
+						:class="{active: isQtyActive(card.id, 1)}">1</button
 					><button class="btn btn-qty"
-						:class="{active: qtyActive(card.id, 2)}">2</button
+						:class="{active: isQtyActive(card.id, 2)}">2</button
 					><button class="btn btn-qty"
-						:class="{active: qtyActive(card.id, 3)}">3</button>
+						:class="{active: isQtyActive(card.id, 3)}">3</button>
 				</div>
 			</div>
 			<div class="details">
@@ -20,14 +20,14 @@
 				<ol class="effects">
 					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
 						<strong v-if="effect.name">
-							{{ effect.name }}<span v-if="effect.cost || effect.name.startsWith('Focus')">:</span>
+							{{ effect.name }}<span v-if="effect.cost || startsWith(effect.name, 'Focus')">:</span>
 						</strong>
 						<span v-if="effect.cost" class="costs">
 							<span v-for="cost of effect.cost" class="cost"
 								v-html="parseCardText(cost)"></span
 							><span v-if="effect.text">:</span>
 						</span>
-						<span v-if="!effect.name || effect.name.startsWith('Focus')"
+						<span v-if="!effect.name || startsWith(effect.name, 'Focus')"
 							v-html="parseCardText(effect.text)"></span>
 					</li>
 				</ol>
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+	import {startsWith} from 'lodash'
+	
 	export default {
 		computed: {
 			listing () {
@@ -58,9 +60,12 @@
 					|| card.life !== undefined
 					|| card.recover !== undefined
 			},
-			qtyActive (id, qty) {
+			isQtyActive (id, qty) {
 				// TODO: write actual counting logic
 				return qty == 0
+			},
+			startsWith (str, substr) {
+				return startsWith(str, substr)
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-import {filter, includes} from 'lodash'
+import {filter, includes, startsWith} from 'lodash'
 
 /**
  * Offers interface for sorting, filtering, and selecting
@@ -37,15 +37,16 @@ export default class {
 			if (excludePhoenixborn && card.type == 'Phoenixborn') {
 				return false
 			}
-			if (types && !includes(types, card.type)) {
+			if (types && types.length
+					&& !includes(types, card.type)
+					&& (!includes(types, 'summon') || !startsWith(card.name, 'Summon'))) {
 				return false
 			}
-			if (releases && !releases.includes(card.release)) {
+			if (releases && releases.length && !releases.includes(card.release)) {
 				return false
 			}
 			if (dice && dice.length) {
 				if (diceLogic == 'and') {
-					// TODO: replace this with a lodash method?
 					for (const die of dice) {
 						if (!includes(card.dice, die)) {
 							return false
