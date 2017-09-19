@@ -125,6 +125,7 @@ a.disabled {
 	
 	input[type="text"], input[type="password"] {
 		.font-size(18);
+		.placeholder-color(@color-dark-gray);
 		border: 2px solid @color-gray;
 		border-radius: 5px;
 		box-sizing: border-box;
@@ -133,6 +134,7 @@ a.disabled {
 		width: 100%;
 		
 		&[readonly], &[disabled] {
+			.placeholder-color(@color-gray);
 			color: @color-mid-gray;
 			background: fadeout(@color-gray, 80%);
 		}
