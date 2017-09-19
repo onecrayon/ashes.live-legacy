@@ -1,0 +1,60 @@
+<template>
+	<ul class="listing">
+		<li v-for="card of listing" :key="card.id" class="card-detail">
+			<div class="thumbnail">
+				<img :src="card.images.thumbnail" :alt="card.name">
+				<div class="btn-group">
+					<button class="btn btn-qty">0</button
+					><button class="btn btn-qty">1</button
+					><button class="btn btn-qty">2</button
+					><button class="btn btn-qty">3</button>
+				</div>
+			</div>
+			<div class="details">
+				<h3>{{ card.name }}</h3>
+				<p class="meta">{{ card.type }} - {{ card.placement }}</p>
+				<ol class="effects">
+					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
+						<strong v-if="effect.name">
+							{{ effect.name }}<span v-if="effect.cost || effect.name.startsWith('Focus')">:</span>
+						</strong>
+						<span v-if="effect.cost" class="costs">
+							<span v-for="cost of effect.cost" class="cost"
+								v-html="parseCardText(cost)"></span
+							><span v-if="effect.text">:</span>
+						</span>
+						<span v-if="!effect.name || effect.name.startsWith('Focus')"
+							v-html="parseCardText(effect.text)"></span>
+					</li>
+				</ol>
+				<ul v-if="hasStatline(card)" class="statline">
+					<li v-if="card.attack !== undefined" class="attack">Attack {{ card.attack }}</li>
+					<li v-if="card.life !== undefined" class="life">Life {{ card.life }}</li>
+					<li v-if="card.recover !== undefined" class="recover">Recover {{ card.recover }}</li>
+				</ul>
+			</div>
+			<ol class="costs">
+				<li v-for="cost of card.cost" class="cost" v-html="parseCardText(cost)"></li>
+			</ol>
+		</li>
+	</ul>
+</template>
+
+<script>
+	export default {
+		computed: {
+			listing () {
+				return this.$store.state.listing
+			}
+		},
+		methods: {
+			parseCardText: globals.parseCardText,
+			hasStatline (card) {
+				return card.attack !== undefined
+					|| card.life !== undefined
+					|| card.recover !== undefined
+			}
+		}
+	}
+</script>
+
