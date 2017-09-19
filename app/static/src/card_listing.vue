@@ -4,10 +4,14 @@
 			<div class="thumbnail">
 				<img :src="card.images.thumbnail" :alt="card.name">
 				<div class="btn-group">
-					<button class="btn btn-qty">0</button
-					><button class="btn btn-qty">1</button
-					><button class="btn btn-qty">2</button
-					><button class="btn btn-qty">3</button>
+					<button class="btn btn-qty"
+						:class="{active: qtyActive(card.id, 0)}">0</button
+					><button class="btn btn-qty"
+						:class="{active: qtyActive(card.id, 1)}">1</button
+					><button class="btn btn-qty"
+						:class="{active: qtyActive(card.id, 2)}">2</button
+					><button class="btn btn-qty"
+						:class="{active: qtyActive(card.id, 3)}">3</button>
 				</div>
 			</div>
 			<div class="details">
@@ -53,6 +57,10 @@
 				return card.attack !== undefined
 					|| card.life !== undefined
 					|| card.recover !== undefined
+			},
+			qtyActive (id, qty) {
+				// TODO: write actual counting logic
+				return qty == 0
 			}
 		}
 	}

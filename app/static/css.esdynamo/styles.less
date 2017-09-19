@@ -41,6 +41,10 @@ h2 {
 	font-weight: normal;
 }
 
+h3 {
+	.font-size(18);
+}
+
 a {
 	color: @color-link;
 }
@@ -226,6 +230,34 @@ a.disabled {
 	.btn + .btn:last-child {
 		border-radius: 0 5px 5px 0;
 		border-right-width: 2px;
+	}
+
+	.btn-qty {
+		background: rgba(255, 255, 255, .6);
+		border: none;
+		border-top: 1px solid rgba(0, 0, 0, .6);
+		border-right: 1px solid rgba(0, 0, 0, .6);
+		border-radius: 0;
+		color: @color-black;
+		font-weight: normal;
+		padding: 2px 2px 1px;
+		text-align: center;
+		width: 24px;
+
+		&.active {
+			background: rgba(0, 0, 0, .6);
+			color: @color-white;
+		}
+	}
+
+	.btn-qty:first-child {
+		border-radius: 0;
+		width: 23px;
+	}
+
+	.btn-qty + .btn-qty:last-child {
+		border-radius: 0;
+		border-right: none;
 	}
 }
 
@@ -478,6 +510,32 @@ a.disabled {
 .gallery .filters {
 	.btn-all {
 		min-width: 64px;
+	}
+}
+
+.gallery .card-detail {
+	.mixin-display-flex;
+
+	.thumbnail {
+		.mixin-flex(0 0 auto);
+		position: relative;
+		width: 95px;
+		height: 115px;
+
+		.btn-group {
+			margin: 0;
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+		}
+	}
+
+	.details {
+		.mixin-flex(1 1 auto)
+	}
+
+	.costs {
+		.mixin-flex(0 0 auto)
 	}
 }
 
