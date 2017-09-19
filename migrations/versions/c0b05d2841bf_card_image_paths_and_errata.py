@@ -50,6 +50,8 @@ def upgrade():
             card.cost_weight = card_update['cost_weight']
             card.text = card_update['text']
             json_data.update(card_update['json_data'])
+        # NOTE: if reusing this logic, only check for the conjurations and startswith('Summon')!
+        # Otherwise we miss things like Summon Sleeping Widows
         if card.card_type == 'Ready Spell' and len(card.conjurations) and card.name.startswith('Summon'):
             card.is_summon_spell = True
         json_data['images'] = {
