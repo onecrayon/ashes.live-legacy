@@ -14,20 +14,18 @@
 						:class="{active: isQtyActive(card.id, 3)}">3</button>
 				</div>
 			</div>
-			<div class="details">
-				<h3>{{ card.name }}</h3>
+			<div class="details" :class="{'with-statline': hasStatline(card)} ">
+				<h3><a :href="urlFor(card)" class="card">{{ card.name }} <i class="fa fa-search-plus"></i></a></h3>
 				<p class="meta">{{ card.type }} - {{ card.placement }}</p>
 				<ol class="effects">
 					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
-						<strong v-if="effect.name">
-							{{ effect.name }}<span v-if="effect.cost || startsWith(effect.name, 'Focus')">:</span>
-						</strong>
-						<span v-if="effect.cost" class="costs">
-							<span v-for="cost of effect.cost" class="cost"
-								v-html="parseCardText(cost)"></span
-							><span v-if="effect.text">:</span>
-						</span>
-						<span v-if="!effect.name || startsWith(effect.name, 'Focus')"
+						<strong v-if="effect.name" :title="effectTextTooltip(effect)">
+							{{ effect.name }}<span v-if="effect.cost || startsWith(effect.name, 'Focus')">: </span
+						></strong
+						><span v-if="effect.cost" class="costs"
+							><span v-for="cost of effect.cost" class="cost"
+								v-html="parseCardText(cost)"></span><span v-if="effect.text">: </span></span
+						><span v-if="!effect.name || startsWith(effect.name, 'Focus')"
 							v-html="parseCardText(effect.text)"></span>
 					</li>
 				</ol>
@@ -63,6 +61,14 @@
 			isQtyActive (id, qty) {
 				// TODO: write actual counting logic
 				return qty == 0
+			},
+			effectTextTooltip (effect) {
+				if (effect.text && !startsWith(effect.name, 'Focus')) {
+					return effect.text
+				}
+			},
+			urlFor (data) {
+				return '/cards/' + data.stub
 			},
 			startsWith (str, substr) {
 				return startsWith(str, substr)

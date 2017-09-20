@@ -16,6 +16,9 @@
 @color-link: #2770c1;
 @color-error: #b00000;
 @color-success: #006600;
+@color-attack: #b25864;
+@color-life: #5e8664;
+@color-recover: #6178a2;
 
 html {
 	font-family: "Open Sans", Helvetica, sans-serif;
@@ -65,6 +68,18 @@ a.disabled {
 	opacity: .4;
 	pointer-events: none;
 	cursor: text;
+}
+
+a.card {
+	color: @color-black;
+	font-weight: bold;
+
+	.fa {
+		font-size: 75%;
+		color: @color-mid-gray;
+		font-weight: normal;
+		vertical-align: middle;
+	}
 }
 
 .callout {
@@ -553,6 +568,11 @@ a.disabled {
 		.details {
 			.mixin-flex(1 1 auto);
 			padding: 10px;
+			position: relative;
+
+			&.with-statline {
+				padding-bottom: 20px;
+			}
 
 			h3 {
 				.line-height(18);
@@ -577,8 +597,40 @@ a.disabled {
 				}
 			}
 		}
+
+		.statline {
+			.font-size(12);
+			.line-height(15);
+			font-weight: bold;
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			bottom: 0;
+			left: 10px;
+
+			li {
+				float: left;
+				border: 1px solid;
+				border-bottom: none;
+				padding: 1px 3px 0;
+				margin-right: 5px;
+			}
+
+			.attack {
+				border-color: @color-attack;
+			}
+
+			.life {
+				border-color: @color-life;
+			}
+
+			.recover {
+				border-color: @color-recover;
+			}
+		}
 	
-		.costs {
+		& > .costs {
 			.mixin-flex(0 0 auto);
 			list-style-type: none;
 			padding: 6px 10px 0 0;

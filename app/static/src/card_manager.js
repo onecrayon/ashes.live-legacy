@@ -73,10 +73,10 @@ export default class {
 		subset.sort((a, b) => {
 			// When primarySort is 'name' we do not do a secondary sort (names are always unique)
 			if (primarySort == 'name') {
-				if (b < a) {
+				if (b.name < a.name) {
 					return primaryOrder
 				}
-				return a == b ? 0 : -primaryOrder
+				return a.name == b.name ? 0 : -primaryOrder
 			}
 			// TODO: implement sorting by other column (including secondarySort)
 		})
