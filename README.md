@@ -60,13 +60,13 @@ TODO:
 Filters:
 
 - Dice types required (both AND and OR)
-* Card type (including summon vs. other ready spells?)
+- Card type (including summon vs. other ready spells?)
 * Set (core, expansions, promo Phoenixborn)
 * Text search: card title and effect text
 
 Sorting:
 
-* Name (alphabetical)
-* Card type (grouped by card type, then name)
+- Name (alphabetical)
+- Card type (grouped by card type, then name)
 * Dice types (grouped by dice types required, then name)
-* Cost (via weight)
+- Cost (via weight)

@@ -71,14 +71,17 @@ export default class {
 			return true
 		})
 		subset.sort((a, b) => {
+			// TODO: implement sorting by dice type
 			// When primarySort is 'name' we do not do a secondary sort (names are always unique)
-			if (primarySort == 'name') {
-				if (b.name < a.name) {
-					return primaryOrder
+			// Only need to do secondarySort if primarySort is equal
+			if (a[primarySort] == b[primarySort]) {
+				if (!secondarySort) return 0
+				if (b[secondarySort] < a[secondarySort]) {
+					return secondaryOrder
 				}
-				return a.name == b.name ? 0 : -primaryOrder
+				return a[secondarySort] == b[secondarySort] ? 0 : -secondaryOrder
 			}
-			// TODO: implement sorting by other column (including secondarySort)
+			return b[primarySort] < a[primarySort] ? primaryOrder : -primaryOrder
 		})
 		return subset
 	}

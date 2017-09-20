@@ -40,6 +40,19 @@
 				class="btn btn-small" :class="{active: isTypeActive('summon')}">Summon</button
 			>
 		</div>
+		<div class="btn-group">
+			<button v-on:click="toggleOrdering()"
+				class="btn btn-small">Sort <i class="fa" :class="orderIconClass"></i></button
+			><button v-on:click="sortBy('name')"
+				class="btn btn-small" :class="{active: isSortedBy('name')}">Name</button
+			><button v-on:click="sortBy('type')"
+				class="btn btn-small" :class="{active: isSortedBy('type')}">Type</button
+			><!--<button v-on:click="sortBy('dice')"
+				class="btn btn-small" :class="{active: isSortedBy('dice')}">Dice</button
+			>--><button v-on:click="sortBy('weight')"
+				class="btn btn-small" :class="{active: isSortedBy('weight')}">Cost</button
+			>
+		</div>
 	</div>
 </template>
 
@@ -56,6 +69,9 @@
 			},
 			isBasicDisabled () {
 				return this.$store.state.filters.diceLogic == 'and'
+			},
+			orderIconClass () {
+				return 'fa-sort-' + (this.$store.state.filters.primaryOrder == 1 ? 'asc' : 'desc')
 			}
 		},
 		methods: {
@@ -71,6 +87,14 @@
 				this.$store.commit('toggleTypeFilter', typeName)
 				this.$store.commit('filterCards')
 			},
+			toggleOrdering () {
+				this.$store.commit('toggleSortOrder')
+				this.$store.commit('filterCards')
+			},
+			sortBy (field) {
+				this.$store.commit('setSort', field)
+				this.$store.commit('filterCards')
+			},
 			isDieActive (die) {
 				return includes(this.$store.state.filters.dice || [], die)
 			},
@@ -79,6 +103,9 @@
 			},
 			isSetDisabled (setNumber) {
 				return !includes(this.$store.state.filters.releases, setNumber)
+			},
+			isSortedBy (field) {
+				return this.$store.state.filters.primarySort == field
 			}
 		}
 	}

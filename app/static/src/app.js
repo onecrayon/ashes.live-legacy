@@ -83,6 +83,20 @@ var store = new Vuex.Store({
 				state.filters.types.push(typeName)
 			}
 		},
+		// Sorting methods
+		toggleSortOrder (state) {
+			state.filters.primaryOrder *= -1
+			state.filters.secondaryOrder *= -1
+		},
+		setSort (state, field) {
+			if (field != 'name') {
+				state.filters.primarySort = field
+				state.filters.secondarySort = 'name'
+			} else {
+				state.filters.primarySort = 'name'
+				state.filters.secondarySort = null
+			}
+		},
 		filterCards (state, options) {
 			options = options || state.filters
 			state.listing = cardManager.cardListing(options)
