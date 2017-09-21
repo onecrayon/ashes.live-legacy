@@ -20,12 +20,12 @@
 				<ol class="effects">
 					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
 						<strong v-if="effect.name" :title="effectTextTooltip(effect)">
-							{{ effect.name }}<span v-if="effect.cost || startsWith(effect.name, 'Focus')">: </span
+							{{ effect.name }}<span v-if="effect.cost || isEffectTextException(effect)">: </span
 						></strong
 						><span v-if="effect.cost" class="costs"
 							><span v-for="cost of effect.cost" class="cost"
 								v-html="parseCardText(cost)"></span><span v-if="effect.text">: </span></span
-						><span v-if="!effect.name || startsWith(effect.name, 'Focus')"
+						><span v-if="!effect.name || isEffectTextException(effect)"
 							v-html="parseCardText(effect.text)"></span>
 					</li>
 				</ol>
@@ -62,8 +62,11 @@
 				// TODO: write actual counting logic
 				return qty == 0
 			},
+			isEffectTextException (effect) {
+				return startsWith(effect.name, 'Focus') || startsWith(effect.name, 'Respark')
+			},
 			effectTextTooltip (effect) {
-				if (effect.text && !startsWith(effect.name, 'Focus')) {
+				if (effect.text && !this.isEffectTextException(effect)) {
 					return effect.text
 				}
 			},
