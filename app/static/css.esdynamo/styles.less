@@ -572,11 +572,18 @@ a.card {
 		margin: 0 0 5px;
 	
 		& > .costs {
+			.line-height(22);
 			.mixin-flex(0 0 auto);
 			list-style-type: none;
-			padding: 6px 10px 0 0;
+			padding: 6px 8px 0 0;
 			margin: 0;
 			text-align: right;
+			
+			[class^="phg-"], [class*=" phg-"] {
+				display: inline-block;
+				min-width: 20px;
+				text-align: center;
+			}
 		}
 	}
 
