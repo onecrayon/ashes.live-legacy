@@ -1,0 +1,9 @@
+Empower
+Ready Spell - Spellboard
+[[main]] - 2 [[natural:class]]
+
+After a player has declared attackers, you may spend 1 [[basic]] and place 1 exhaustion token on this spell. If you do, add 1 to a target unit's attack value for the remainder of this turn.
+
+In addition, you may draw 1 card. If you do, discard 1 card.
+
+Focus 1: In addition, you may select 1 die in your exhausted pool, re-roll it, and place it into your active pool.

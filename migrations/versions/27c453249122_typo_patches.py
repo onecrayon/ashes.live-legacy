@@ -6,6 +6,7 @@ Create Date: 2017-09-19 15:25:24.128602
 
 """
 import json
+import os.path
 
 from alembic import op
 import sqlalchemy as sa
@@ -57,6 +58,31 @@ def upgrade():
         owls_json['images']['thumbnail'] = '/images/cards/three-eyed-owl-slice.jpg'
         owls.json = json.dumps(owls_json)
     
+    # Simple typos
+    my_dir = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(my_dir, '../data/27c453249122_typo_patches.json'), 'r') as f:
+        data = json.load(f)
+    update_map = {}
+    for card in data:
+        card_text = []
+        for effect in card.get('text', []):
+            if 'name' in effect:
+                card_text.append(effect['name'])
+            card_text.append(effect['text'].replace('[[', '').replace(']]', ''))
+        update_map[card['stub']] = {
+            'text': ' '.join(card_text),
+            'json_data': card
+        }
+    cards = Card.query.filter(
+        Card.stub.in_(list(update_map.keys()))
+    ).all()
+    for card in cards:
+        json_data = json.loads(card.json)
+        card_update = update_map[card.stub]
+        card.text = card_update['text']
+        json_data.update(card_update['json_data'])
+        card.json = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
+
     # And commit our fixes
     db.session.commit()
 
