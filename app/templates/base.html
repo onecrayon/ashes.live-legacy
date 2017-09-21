@@ -101,30 +101,31 @@
 				if (dash) {
 					return ' <span class="divider"></span> '
 				}
-				var lower_primary = primary.toLowerCase()
+				var lowerPrimary = primary.toLowerCase()
 				secondary = secondary && secondary.toLowerCase()
-				if (['discard', 'exhaust'].indexOf(lower_primary) > -1) {
-					return ['<span class="phg-', lower_primary, '"></span>'].join('')
+				if (['discard', 'exhaust'].indexOf(lowerPrimary) > -1) {
+					return ['<span class="phg-', lowerPrimary, '" title="', primary, '"></span>'].join('')
 				}
 				
-				if (globals.diceData.indexOf(lower_primary) > -1) {
-					if (lower_primary == 'basic') {
-						secondary = 'magic'
-					} else if (!secondary) {
+				if (globals.diceData.indexOf(lowerPrimary) > -1) {
+					if (!secondary) {
 						secondary = 'power'
 					}
-				} else if (lower_primary == 'basic') {
+				} else if (lowerPrimary == 'basic') {
 					secondary = 'magic'
-				} else if (lower_primary == 'main') {
+				} else if (lowerPrimary == 'main') {
 					secondary = 'action'
-				} else if (lower_primary == 'side') {
+				} else if (lowerPrimary == 'side') {
 					secondary = 'action'
 				} else if (secondary) {
-					return ['<i>', lower_primary, (secondary ? ' ' + secondary : ''), '</i>'].join('')
+					return ['<i>', lowerPrimary, (secondary ? ' ' + secondary : ''), '</i>'].join('')
 				} else {
-					return ['<a href="/cards/', lower_primary.replace(' ', '-'), '" class="card">', primary, '</a>'].join('')
+					return ['<a href="/cards/', lowerPrimary.replace(' ', '-'), '" class="card">', primary, '</a>'].join('')
 				}
-				return ['<span class="phg-', lower_primary, '-', secondary, '"></span>'].join('')
+				return [
+					'<span class="phg-', lowerPrimary, '-', secondary, '" title="',
+					primary, (secondary ? ' ' + secondary, ''), '"></span>'
+				].join('')
 			})
 		}
 	</script>
