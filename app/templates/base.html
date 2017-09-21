@@ -97,7 +97,10 @@
 			'divine', 'sympathy'
 		]
 		globals.parseCardText = function (input) {
-			return input.replace(/\[\[([a-z -]+)(?::([a-z]+))?\]\]/i, function (_, primary, secondary) {
+			return input.replace(/\[\[([a-z -]+)(?::([a-z]+))?\]\]|( - )/ig, function (_, primary, secondary, dash) {
+				if (dash) {
+					return ' <span class="divider"></span> '
+				}
 				var lower_primary = primary.toLowerCase()
 				secondary = secondary && secondary.toLowerCase()
 				if (['discard', 'exhaust'].indexOf(lower_primary) > -1) {
