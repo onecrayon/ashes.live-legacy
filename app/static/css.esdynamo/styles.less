@@ -13,6 +13,7 @@
 @color-dark-gray: #6f6f6f;
 @color-white: #fff;
 @color-inexhaustible: #f7f5e8;
+@color-inexhaustible-dark: #8d7b53;
 @color-link: #2770c1;
 @color-error: #b00000;
 @color-success: #006600;
@@ -98,6 +99,28 @@ a.card {
 	&:before {
 		content: '#';
 	}
+}
+
+.costs {
+	.cost {
+		padding-right: 10px;
+		margin-right: 3px;
+		background: url('../images/icon-diamond-bullet.png') no-repeat right center;
+	}
+
+	.cost:last-of-type {
+		padding: 0;
+		margin: 0;
+		background: none;
+	}
+}
+
+.divider {
+	background: url('../images/icon-diamond-bullet.png') no-repeat center center;
+	display: inline-block;
+	height: 7px;
+	width: 7px;
+	vertical-align: middle;
 }
 
 .alerts {
@@ -593,6 +616,12 @@ a.card {
 			.phg-basic-magic:before {
 				top: -2px;
 			}
+
+			.cost {
+				padding: 0;
+				margin: 0;
+				background: none;
+			}
 		}
 	}
 
@@ -615,11 +644,11 @@ a.card {
 
 	.details {
 		.mixin-flex(1 1 auto);
-		padding: 10px;
+		padding: 10px 10px 5px;
 		position: relative;
 
 		&.with-statline {
-			padding-bottom: 20px;
+			padding-bottom: 16px;
 		}
 
 		h3 {
@@ -640,7 +669,33 @@ a.card {
 			padding: 0;
 			margin: 0;
 
+			[class^="phg-"], [class*=" phg-"] {
+				.font-size(15);
+			}
+
 			li {
+				padding-bottom: 5px;
+			}
+		}
+
+		.inexhaustible {
+			background: @color-inexhaustible;
+			border: 1px solid @color-inexhaustible-dark;
+			padding: 5px;
+			position: relative;
+
+			& + li {
+				margin-top: 5px;
+			}
+
+			& + .inexhaustible {
+				border-top: none;
+				margin-top: 0;
+				top: -6px;
+				margin-bottom: -6px;
+			}
+
+			&:last-of-type {
 				margin-bottom: 5px;
 			}
 		}

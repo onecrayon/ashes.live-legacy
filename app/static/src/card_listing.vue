@@ -16,17 +16,18 @@
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
 				<h3><a :href="urlFor(card)" class="card">{{ card.name }}</a></h3>
-				<p class="meta">{{ card.type }} - {{ card.placement }}</p>
+				<p class="meta">{{ card.type }} <span class="divider"></span> {{ card.placement }}</p>
 				<ol class="effects">
 					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
 						<strong v-if="effect.name" :title="effectTextTooltip(effect)">
-							{{ effect.name }}<span v-if="effect.cost || isEffectTextException(effect)">: </span
-						></strong
+							{{ effect.name }}</strong
 						><span v-if="effect.cost" class="costs"
-							><span v-for="cost of effect.cost" class="cost"
-								v-html="parseCardText(cost)"></span><span v-if="effect.text">: </span></span
+							><span v-if="effect.name">: </span
+						><span v-for="cost of effect.cost" class="cost"
+								v-html="parseCardText(cost)"></span></span
 						><span v-if="!effect.name || isEffectTextException(effect)"
-							v-html="parseCardText(effect.text)"></span>
+							><span v-if="effect.name || effect.cost">: </span
+						><span v-html="parseCardText(effect.text)"></span></span>
 					</li>
 				</ol>
 				<ul v-if="hasStatline(card)" class="statline">
