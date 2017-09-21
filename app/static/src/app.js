@@ -103,7 +103,10 @@ var store = new Vuex.Store({
 			state.filters.secondaryOrder *= -1
 		},
 		setSort (state, field) {
-			if (field != 'name') {
+			if (field == 'dice') {
+				state.filters.primarySort = field
+				state.filters.secondarySort = 'weight'
+			} else if (field != 'name') {
 				state.filters.primarySort = field
 				state.filters.secondarySort = 'name'
 			} else {

@@ -25,6 +25,24 @@ function getDiceWeight (dice) {
 	return parseInt(weights.join(''))
 }
 
+function attributeSort(a, b, primarySort, primaryOrder, secondarySort, secondaryOrder) {
+	if (a[primarySort] == b[primarySort]) {
+		// If primarySorts are equal, we are not sorting by name (names are unique)
+		// so ensure that we end with a name sort
+		if (!secondarySort || secondarySort == 'name') {
+			return attributeSort(
+				a, b, 'name', secondaryOrder, null, secondaryOrder
+			)
+		} else {
+			return attributeSort(
+				a, b, secondarySort, secondaryOrder,
+				'name', secondaryOrder
+			)
+		}
+	}
+	return b[primarySort] < a[primarySort] ? primaryOrder : -primaryOrder
+}
+
 /**
  * Offers interface for sorting, filtering, and selecting
  * card JSON.
@@ -105,11 +123,9 @@ export default class {
 				bDice.sort()
 				// If the arrays are equal, check secondarySort
 				if (isEqual(aDice, bDice)) {
-					if (!secondarySort) return 0
-					if (b[secondarySort] < a[secondarySort]) {
-						return secondaryOrder
-					}
-					return a[secondarySort] == b[secondarySort] ? 0 : -secondaryOrder
+					return attributeSort(
+						a, b, secondarySort, secondaryOrder, null, secondaryOrder
+					)
 				}
 				// Arrays are not equal, so we need to compare them
 				let aWeight = getDiceWeight(aDice)
@@ -117,15 +133,9 @@ export default class {
 				return bWeight < aWeight ? primaryOrder : -primaryOrder
 			}
 			// Not sorting by dice, so just compare attributes normally
-			// Only need to do secondarySort if primarySort is equal
-			if (a[primarySort] == b[primarySort]) {
-				if (!secondarySort) return 0
-				if (b[secondarySort] < a[secondarySort]) {
-					return secondaryOrder
-				}
-				return a[secondarySort] == b[secondarySort] ? 0 : -secondaryOrder
-			}
-			return b[primarySort] < a[primarySort] ? primaryOrder : -primaryOrder
+			return attributeSort(
+				a, b, primarySort, primaryOrder, secondarySort, secondaryOrder
+			)
 		})
 		return subset
 	}
