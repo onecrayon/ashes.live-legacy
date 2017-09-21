@@ -101,7 +101,7 @@
 				var lower_primary = primary.toLowerCase()
 				secondary = secondary && secondary.toLowerCase()
 				if (['discard', 'exhaust'].indexOf(lower_primary) > -1) {
-					return ['<span class="phg-"', lower_primary, '"></span>'].join('')
+					return ['<span class="phg-', lower_primary, '"></span>'].join('')
 				}
 				
 				if (globals.diceData.indexOf(lower_primary) > -1) {
