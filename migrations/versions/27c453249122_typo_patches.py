@@ -46,6 +46,17 @@ def upgrade():
         widows_json['images']['thumbnail'] = '/images/cards/sleeping-widow-slice.jpg'
         widows.json = json.dumps(widows_json)
     
+    # For some reason Summon Three-Eyed Owl is missing its thumbnail
+    owls = Card.query.filter(
+        Card.stub == 'summon-three-eyed-owl',
+        Card.is_summon_spell.is_(False)
+    ).first()
+    if owls:
+        owls.is_summon_spell = True
+        owls_json = json.loads(owls.json)
+        owls_json['images']['thumbnail'] = '/images/cards/three-eyed-owl-slice.jpg'
+        owls.json = json.dumps(owls_json)
+    
     # And commit our fixes
     db.session.commit()
 

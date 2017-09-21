@@ -15,7 +15,7 @@
 				</div>
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
-				<h3><a :href="urlFor(card)" class="card">{{ card.name }} <i class="fa fa-search-plus"></i></a></h3>
+				<h3><a :href="urlFor(card)" class="card">{{ card.name }}</a></h3>
 				<p class="meta">{{ card.type }} - {{ card.placement }}</p>
 				<ol class="effects">
 					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">

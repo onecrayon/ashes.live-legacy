@@ -56,6 +56,7 @@ TODO:
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine and Sympathy dice icons, and add to the PHG font
+* Only show Phoenixborn-specific cards in listings if the Phoenixborn is selected
 
 Filters:
 
@@ -63,10 +64,3 @@ Filters:
 - Card type (including summon vs. other ready spells?)
 * Set (core, expansions, promo Phoenixborn)
 * Text search: card title and effect text
-
-Sorting:
-
-- Name (alphabetical)
-- Card type (grouped by card type, then name)
-* Dice types (grouped by dice types required, then name)
-- Cost (via weight)

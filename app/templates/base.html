@@ -119,7 +119,7 @@
 				} else if (secondary) {
 					return ['<i>', lower_primary, (secondary ? ' ' + secondary : ''), '</i>'].join('')
 				} else {
-					return ['<a href="/cards/', lower_primary.replace(' ', '-'), '" class="card">', primary, ' <i class="fa fa-search-plus"></i></a>'].join('')
+					return ['<a href="/cards/', lower_primary.replace(' ', '-'), '" class="card">', primary, '</a>'].join('')
 				}
 				return ['<span class="phg-', lower_primary, '-', secondary, '"></span>'].join('')
 			})

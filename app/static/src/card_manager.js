@@ -1,4 +1,29 @@
-import {filter, includes, startsWith} from 'lodash'
+import {filter, includes, isEqual, startsWith} from 'lodash'
+
+const diceWeightMap = {
+	'ceremonial': 1,
+	'charm': 2,
+	'illusion': 3,
+	'natural': 4,
+	'divine': 5,
+	'sympathy': 6
+}
+function getDiceWeight (dice) {
+	// First, determine our diceWeightMap numbers
+	let weights = []
+	for (let die of dice) {
+		weights.push(diceWeightMap[die])
+	}
+	weights.sort()
+	// Ensure we have 4 "digits" in weights
+	let weightsLength = weights.length
+	while (weightsLength < 4) {
+		weights.push(0)
+		weightsLength++
+	}
+	// And convert our weight to an integer
+	return parseInt(weights.join(''))
+}
 
 /**
  * Offers interface for sorting, filtering, and selecting
@@ -71,8 +96,27 @@ export default class {
 			return true
 		})
 		subset.sort((a, b) => {
-			// TODO: implement sorting by dice type
-			// When primarySort is 'name' we do not do a secondary sort (names are always unique)
+			// Sorting by dice requires special weighting
+			if (primarySort == 'dice') {
+				// Grab sorted versions of our dice arrays
+				let aDice = a.dice && a.dice.length ? a.dice : []
+				let bDice = b.dice && b.dice.length ? b.dice : []
+				aDice.sort()
+				bDice.sort()
+				// If the arrays are equal, check secondarySort
+				if (isEqual(aDice, bDice)) {
+					if (!secondarySort) return 0
+					if (b[secondarySort] < a[secondarySort]) {
+						return secondaryOrder
+					}
+					return a[secondarySort] == b[secondarySort] ? 0 : -secondaryOrder
+				}
+				// Arrays are not equal, so we need to compare them
+				let aWeight = getDiceWeight(aDice)
+				let bWeight = getDiceWeight(bDice)
+				return bWeight < aWeight ? primaryOrder : -primaryOrder
+			}
+			// Not sorting by dice, so just compare attributes normally
 			// Only need to do secondarySort if primarySort is equal
 			if (a[primarySort] == b[primarySort]) {
 				if (!secondarySort) return 0

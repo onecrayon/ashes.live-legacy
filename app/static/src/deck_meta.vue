@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<div v-if="phoenixborn" class="phoenixborn-detail">
-			<img :src="phoenixborn.images.full" :alt="phoenixborn.name">
+			<h3><a :href="phoenixbornUrl" class="card">{{ phoenixborn.name }}</a></h3>
 		</div>
 	</div>
 </template>
@@ -34,6 +34,9 @@
 				set (cardId) {
 					this.$store.commit('setPhoenixborn', cardId)
 				}
+			},
+			phoenixbornUrl () {
+				return '/cards/' + this.$store.state.deck.phoenixborn.stub
 			}
 		},
 		methods: {
