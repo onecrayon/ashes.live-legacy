@@ -10,6 +10,17 @@ Vue.use(Vuex)
 
 var cardManager = new CardManager
 
+function disableReleaseDice(state) {
+	if ((!state.filters.releases || state.filters.releases.indexOf(5) == -1)
+			&& state.filters.dice && state.filters.dice.indexOf('divine') > -1) {
+		state.filters.dice.splice(state.filters.dice.indexOf('divine'), 1)
+	}
+	if ((!state.filters.releases || state.filters.releases.indexOf(6) == -1)
+			&& state.filters.dice && state.filters.dice.indexOf('sympathy') > -1) {
+		state.filters.dice.splice(state.filters.dice.indexOf('sympathy'), 1)
+	}
+}
+
 var store = new Vuex.Store({
 	state: {
 		deck: {
@@ -84,18 +95,20 @@ var store = new Vuex.Store({
 				state.filters.types.push(typeName)
 			}
 		},
-		toggleSet (state, setNumber) {
-			if (state.filters.releases.indexOf(setNumber) > -1) {
-				state.filters.releases.splice(state.filters.releases.indexOf(setNumber), 1)
-				if (setNumber == 5 && state.filters.dice && state.filters.dice.indexOf('divine') > -1) {
-					state.filters.dice.splice(state.filters.dice.indexOf('divine'), 1)
-				}
-				if (setNumber == 6 && state.filters.dice && state.filters.dice.indexOf('sympathy') > -1) {
-					state.filters.dice.splice(state.filters.dice.indexOf('sympathy'), 1)
-				}
+		toggleRelease (state, releaseNumber) {
+			if (state.filters.releases === null) {
+				state.filters.releases = [releaseNumber]
+			} else if (state.filters.releases.indexOf(releaseNumber) > -1) {
+				state.filters.releases.splice(state.filters.releases.indexOf(releaseNumber), 1)
+				disableReleaseDice(state)
 			} else {
-				state.filters.releases.push(setNumber)
+				state.filters.releases.push(releaseNumber)
 			}
+		},
+		setReleases (state, releases) {
+			state.filters.releases = releases
+			disableReleaseDice(state)
+
 		},
 		// Sorting methods
 		toggleSortOrder (state) {

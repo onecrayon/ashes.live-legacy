@@ -21,10 +21,10 @@
 					title="Natural"></button
 				><button v-on:click="toggleDie('divine')"
 					class="btn phg-divine-power" :class="{active: isDieActive('divine') }"
-					:disabled="!isShowingSet(5)" title="Divine">D</button
+					:disabled="!isShowingRelease(5)" title="Divine">D</button
 				><button v-on:click="toggleDie('sympathy')"
 					class="btn phg-sympathy-power" :class="{active: isDieActive('sympathy') }"
-					:disabled="!isShowingSet(6)" title="Sympathy">S</button>
+					:disabled="!isShowingRelease(6)" title="Sympathy">S</button>
 			</div>
 			<div class="form-field col-flex">
 				<!-- TODO: implement filtering by text logic -->
@@ -51,6 +51,15 @@
 				><button v-on:click="toggleCardType('summon')"
 					class="btn btn-small" :class="{active: isTypeActive('summon')}"
 					><i class="fa fa-plus-square"></i> Summon</button
+				>
+			</div>
+			<div class="btn-group col">
+				<button v-on:click="setReleases([0])"
+					class="btn btn-small" :class="{active: isReleases([0])}"
+					>Core</button
+				><button v-on:click="setReleases(null)"
+					class="btn btn-small" :class="{active: isReleases(null)}"
+					>All</button
 				>
 			</div>
 		</div>
@@ -85,7 +94,7 @@
 </template>
 
 <script>
-	import {includes} from 'lodash'
+	import {clone, includes, isEqual} from 'lodash'
 
 	export default {
 		computed: {
@@ -119,16 +128,16 @@
 				this.$store.commit('toggleSortOrder')
 				this.$store.commit('filterCards')
 			},
-			toggleSet (setNumber) {
-				this.$store.commit('toggleSet', setNumber)
-				this.$store.commit('filterCards')
-			},
 			sortBy (field) {
 				this.$store.commit('setSort', field)
 				this.$store.commit('filterCards')
 			},
 			setListType (listType) {
 				this.$store.commit('setListType', listType)
+			},
+			setReleases (releases) {
+				this.$store.commit('setReleases', releases)
+				this.$store.commit('filterCards')
 			},
 			isDieActive (die) {
 				return includes(this.$store.state.filters.dice || [], die)
@@ -142,8 +151,17 @@
 			isListType (listType) {
 				return this.$store.state.listType == listType
 			},
-			isShowingSet (setNumber) {
-				return includes(this.$store.state.filters.releases, setNumber)
+			isShowingRelease (releaseNumber) {
+				return includes(this.$store.state.filters.releases, releaseNumber)
+			},
+			isReleases (releases) {
+				if (releases === null || this.$store.state.filters.releases === null) {
+					return releases === this.$store.state.filters.releases
+				}
+				let current = clone(this.$store.state.filters.releases)
+				current.sort()
+				releases.sort()
+				return isEqual(releases, current)
 			}
 		}
 	}
