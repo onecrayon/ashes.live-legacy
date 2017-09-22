@@ -130,8 +130,20 @@ var store = new Vuex.Store({
 		},
 		resetFilters (state) {
 			state.filters.search = null
-			state.filters.type = null
+			state.filters.types = null
 			state.filters.dice = null
+			// If only "promo" cards are being shown, it's possible that
+			// clearing filters will not show anything if the selected
+			// phoenixborn is not a promo
+			let onlyPromos = true
+			for (let release of state.filters.releases) {
+				if (release < 100) {
+					onlyPromos = false
+				}
+			}
+			if (onlyPromos && state.deck.phoenixborn.release < 100) {
+				state.filters.releases = [0]
+			}
 		},
 		// Sorting methods
 		toggleSortOrder (state) {
