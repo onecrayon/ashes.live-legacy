@@ -9,13 +9,17 @@
 			</div>
 		</div>
 		<div v-if="phoenixborn" class="phoenixborn-detail">
-			<h3><a :href="phoenixbornUrl" class="card">{{ phoenixborn.name }}</a></h3>
+			<h3>
+				<i v-on:click="clearPhoenixborn" class="fa fa-refresh" title="Swap Phoenixborn"></i>
+				<a :href="cardUrl(phoenixborn)" class="card">{{ phoenixborn.name }}</a>
+			</h3>
 		</div>
 	</div>
 </template>
 
 <script>
 	import qwest from 'qwest'
+	import {cardUrl} from './utils'
 
 	export default {
 		computed: {
@@ -27,19 +31,17 @@
 					this.$store.commit('setTitle', value)
 				}
 			},
-			phoenixborn: {
-				get () {
-					return this.$store.state.deck.phoenixborn
-				},
-				set (cardId) {
-					this.$store.commit('setPhoenixborn', cardId)
-				}
-			},
-			phoenixbornUrl () {
-				return '/cards/' + this.$store.state.deck.phoenixborn.stub
+			phoenixborn () {
+				return this.$store.state.deck.phoenixborn
 			}
 		},
 		methods: {
+			cardUrl,
+			clearPhoenixborn () {
+				this.$store.commit('setTypes', ['Phoenixborn'])
+				this.$store.commit('setPhoenixborn', null)
+				this.$store.commit('filterCards')
+			},
 			save () {
 				// TODO
 				var title = this.$store.state.deck.title
