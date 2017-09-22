@@ -16,6 +16,7 @@
 				</div>
 			</div>	
 			<ul class="listing">
+				<no-results></no-results>
 				<li v-for="card of listing" :key="card.id">
 					<a v-on:click.prevent="phoenixborn = card.id" :href="cardUrl(card)" class="card">
 						<img :src="card.images.compressed" :alt="card.name">
@@ -33,6 +34,7 @@
 	import ReleaseFilter from './filters/releases.vue'
 	import SortFilter from './filters/sort.vue'
 	import TextFilter from './filters/text.vue'
+	import NoResults from './no_results.vue'
 	import {cardUrl} from './utils'
 	
 	export default {
@@ -42,7 +44,8 @@
 			'dice-filter': DiceFilter,
 			'release-filter': ReleaseFilter,
 			'sort-filter': SortFilter,
-			'text-filter': TextFilter
+			'text-filter': TextFilter,
+			'no-results': NoResults
 		},
 		created () {
 			if (!this.$store.state.deck.phoenixborn) {

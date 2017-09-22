@@ -1,9 +1,6 @@
 <template>
 	<ul class="listing">
-		<li v-if="!listing.length">
-			<h3>No cards match your filters</h3>
-			<p><button v-on:click="resetFilters" class="btn btn-primary">Clear filters</button></p>
-		</li>
+		<no-results></no-results>
 		<li v-for="card of listing" :key="card.id" class="card-detail">
 			<div class="thumbnail">
 				<img :src="card.images.thumbnail" :alt="card.name">
@@ -55,8 +52,12 @@
 <script>
 	import {cardUrl, parseCardText} from './utils'
 	import {startsWith} from 'lodash'
+	import NoResults from './no_results.vue'
 	
 	export default {
+		components: {
+			'no-results': NoResults
+		},
 		computed: {
 			listing () {
 				return this.$store.state.listing
@@ -82,10 +83,6 @@
 				if (effect.text && !this.isEffectTextException(effect)) {
 					return effect.text
 				}
-			},
-			resetFilters () {
-				this.$store.commit('resetFilters')
-				this.$store.commit('filterCards')
 			}
 		}
 	}

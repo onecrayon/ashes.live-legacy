@@ -564,6 +564,10 @@ a.card {
 		
 		li {
 			float: left;
+
+			&.no-results {
+				float: none;
+			}
 		}
 		
 		img {
@@ -736,6 +740,13 @@ a.card {
 			border-color: @color-recover;
 		}
 	}
+}
+
+.no-results {
+	background: @color-inexhaustible;
+	border: 1px solid @color-gray;
+	padding: 40px 20px 20px;
+	text-align: center;
 }
 
 /* @end */
