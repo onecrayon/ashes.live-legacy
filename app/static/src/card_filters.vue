@@ -33,7 +33,7 @@
 			<div class="btn-group col">
 				<button v-on:click="setListType('grid')"
 					class="btn btn-small" :class="{active: isListType('grid')}" disabled
-					><i class="fa fa-th-large" title="Grid"></i></button
+					><i class="fa fa-th" title="Grid"></i></button
 				><button v-on:click="setListType('list')"
 					class="btn btn-small" :class="{active: isListType('list')}" disabled
 					><i class="fa fa-th-list" title="List"></i></button
