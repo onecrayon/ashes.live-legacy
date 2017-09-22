@@ -15,7 +15,12 @@
 				</div>
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
-				<h3><a :href="cardUrl(card)" class="card">{{ card.name }}</a></h3>
+				<h3>
+					<a :href="cardUrl(card)" class="card">{{ card.name }}</a>
+					<span v-if="card.phoenixborn" class="phoenixborn" :title="card.phoenixborn">
+						({{ card.phoenixborn.split(' ')[0] }})
+					</span>
+				</h3>
 				<p class="meta">{{ card.type }} <span class="divider"></span> {{ card.placement }}</p>
 				<ol class="effects">
 					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
