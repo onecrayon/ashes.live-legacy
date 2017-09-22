@@ -128,6 +128,11 @@ var store = new Vuex.Store({
 				}
 			}
 		},
+		resetFilters (state) {
+			state.filters.search = null
+			state.filters.type = null
+			state.filters.dice = null
+		},
 		// Sorting methods
 		toggleSortOrder (state) {
 			state.filters.primaryOrder *= -1

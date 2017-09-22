@@ -1,5 +1,9 @@
 <template>
 	<ul class="listing">
+		<li v-if="!listing.length">
+			<h3>No cards match your filters</h3>
+			<p><button v-on:click="resetFilters" class="btn btn-primary">Clear filters</button></p>
+		</li>
 		<li v-for="card of listing" :key="card.id" class="card-detail">
 			<div class="thumbnail">
 				<img :src="card.images.thumbnail" :alt="card.name">
@@ -61,6 +65,7 @@
 		methods: {
 			cardUrl,
 			parseCardText,
+			startsWith,
 			hasStatline (card) {
 				return card.attack !== undefined
 					|| card.life !== undefined
@@ -78,8 +83,9 @@
 					return effect.text
 				}
 			},
-			startsWith (str, substr) {
-				return startsWith(str, substr)
+			resetFilters () {
+				this.$store.commit('resetFilters')
+				this.$store.commit('filterCards')
 			}
 		}
 	}
