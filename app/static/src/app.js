@@ -95,6 +95,9 @@ var store = new Vuex.Store({
 				state.filters.types.push(typeName)
 			}
 		},
+		setTypes (state, types) {
+			state.filters.types = types
+		},
 		toggleRelease (state, releaseNumber) {
 			if (state.filters.releases === null) {
 				state.filters.releases = [releaseNumber]
@@ -105,10 +108,23 @@ var store = new Vuex.Store({
 				state.filters.releases.push(releaseNumber)
 			}
 		},
-		setReleases (state, releases) {
-			state.filters.releases = releases
-			disableReleaseDice(state)
-
+		toggleReleases (state, releases) {
+			if (state.filters.releases === null) {
+				state.filters.releases = releases
+			} else {
+				for (let release of releases) {
+					if (state.filters.releases.indexOf(release) > -1) {
+						state.filters.releases.splice(state.filters.releases.indexOf(release), 1)
+					} else {
+						state.filters.releases.push(release)
+					}
+				}
+				disableReleaseDice(state)
+				// Disallow a completely empty list by defaulting to showing the core set
+				if (!state.filters.releases.length) {
+					state.filters.releases = [0]
+				}
+			}
 		},
 		// Sorting methods
 		toggleSortOrder (state) {

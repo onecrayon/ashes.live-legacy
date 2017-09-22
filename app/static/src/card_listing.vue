@@ -15,7 +15,7 @@
 				</div>
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
-				<h3><a :href="urlFor(card)" class="card">{{ card.name }}</a></h3>
+				<h3><a :href="cardUrl(card)" class="card">{{ card.name }}</a></h3>
 				<p class="meta">{{ card.type }} <span class="divider"></span> {{ card.placement }}</p>
 				<ol class="effects">
 					<li v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+	import {cardUrl, parseCardText} from './utils'
 	import {startsWith} from 'lodash'
 	
 	export default {
@@ -53,7 +54,8 @@
 			}
 		},
 		methods: {
-			parseCardText: globals.parseCardText,
+			cardUrl,
+			parseCardText,
 			hasStatline (card) {
 				return card.attack !== undefined
 					|| card.life !== undefined
@@ -70,9 +72,6 @@
 				if (effect.text && !this.isEffectTextException(effect)) {
 					return effect.text
 				}
-			},
-			urlFor (data) {
-				return '/cards/' + data.stub
 			},
 			startsWith (str, substr) {
 				return startsWith(str, substr)

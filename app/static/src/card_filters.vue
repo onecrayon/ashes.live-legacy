@@ -1,35 +1,8 @@
 <template>
 	<div class="filters">
 		<div class="responsive-cols main-filters">
-			<div class="btn-group col">
-				<button v-on:click="toggleDiceLogic"
-					class="btn btn-all" :class="{active: isDiceLogicActive }">{{ diceLogicText }}:</button
-				><button v-on:click="toggleDie('basic')"
-					class="btn phg-basic-magic" :class="{active: isDieActive('basic') }"
-					:disabled="isBasicDisabled" title="Basic"></button
-				><button v-on:click="toggleDie('ceremonial')"
-					class="btn phg-ceremonial-power" :class="{active: isDieActive('ceremonial') }"
-					title="Ceremonial"></button
-				><button v-on:click="toggleDie('charm')"
-					class="btn phg-charm-power" :class="{active: isDieActive('charm') }"
-					title="Charm"></button
-				><button v-on:click="toggleDie('illusion')"
-					class="btn phg-illusion-power" :class="{active: isDieActive('illusion') }"
-					title="Illusion"></button
-				><button v-on:click="toggleDie('natural')"
-					class="btn phg-natural-power" :class="{active: isDieActive('natural') }"
-					title="Natural"></button
-				><button v-on:click="toggleDie('divine')"
-					class="btn phg-divine-power" :class="{active: isDieActive('divine') }"
-					:disabled="!isShowingRelease(5)" title="Divine">D</button
-				><button v-on:click="toggleDie('sympathy')"
-					class="btn phg-sympathy-power" :class="{active: isDieActive('sympathy') }"
-					:disabled="!isShowingRelease(6)" title="Sympathy">S</button>
-			</div>
-			<div class="form-field col-flex">
-				<!-- TODO: implement filtering by text logic -->
-				<input type="text" placeholder="Filter by name or text..." disabled>
-			</div>
+			<dice-filter class="col"></dice-filter>
+			<text-filter class="col-flex"></text-filter>
 		</div>
 		<div class="secondary-filters responsive-cols">
 			<div class="btn-group col">
@@ -53,30 +26,10 @@
 					><i class="fa fa-plus-square"></i> Summon</button
 				>
 			</div>
-			<div class="btn-group col">
-				<button v-on:click="setReleases([0])"
-					class="btn btn-small" :class="{active: isReleases([0])}"
-					>Core</button
-				><button v-on:click="setReleases(null)"
-					class="btn btn-small" :class="{active: isReleases(null)}"
-					>All</button
-				>
-			</div>
+			<release-filter class="col"></release-filter>
 		</div>
 		<div class="responsive-cols listing-controls">
-			<div class="btn-group col">
-				<button v-on:click="toggleOrdering()"
-					class="btn btn-small">Sort <i class="fa" :class="orderIconClass"></i></button
-				><button v-on:click="sortBy('name')"
-					class="btn btn-small" :class="{active: isSortedBy('name')}">Name</button
-				><button v-on:click="sortBy('type')"
-					class="btn btn-small" :class="{active: isSortedBy('type')}">Type</button
-				><button v-on:click="sortBy('dice')"
-					class="btn btn-small" :class="{active: isSortedBy('dice')}">Dice</button
-				><button v-on:click="sortBy('weight')"
-					class="btn btn-small" :class="{active: isSortedBy('weight')}">Cost</button
-				>
-			</div>
+			<sort-filter class="col"></sort-filter>
 			<div class="btn-group col">
 				<button v-on:click="setListType('grid')"
 					class="btn btn-small" :class="{active: isListType('grid')}" disabled
@@ -94,74 +47,32 @@
 </template>
 
 <script>
-	import {clone, includes, isEqual} from 'lodash'
+	import DiceFilter from './filters/dice.vue'
+	import ReleaseFilter from './filters/releases.vue'
+	import SortFilter from './filters/sort.vue'
+	import TextFilter from './filters/text.vue'
+	import {includes} from 'lodash'
 
 	export default {
-		computed: {
-			diceLogicText () {
-				return this.$store.state.filters.diceLogic == 'or' ? 'Any' : 'All'
-			},
-			isDiceLogicActive () {
-				return this.$store.state.filters.diceLogic == 'and'
-			},
-			isBasicDisabled () {
-				return this.$store.state.filters.diceLogic == 'and'
-			},
-			orderIconClass () {
-				return 'fa-chevron-' + (this.$store.state.filters.primaryOrder == 1 ? 'up' : 'down')
-			}
+		components: {
+			'dice-filter': DiceFilter,
+			'release-filter': ReleaseFilter,
+			'sort-filter': SortFilter,
+			'text-filter': TextFilter
 		},
 		methods: {
-			toggleDiceLogic () {
-				this.$store.commit('toggleDiceLogic')
-				this.$store.commit('filterCards')
-			},
-			toggleDie (die) {
-				this.$store.commit('toggleDieFilter', die)
-				this.$store.commit('filterCards')
-			},
 			toggleCardType (typeName) {
 				this.$store.commit('toggleTypeFilter', typeName)
-				this.$store.commit('filterCards')
-			},
-			toggleOrdering () {
-				this.$store.commit('toggleSortOrder')
-				this.$store.commit('filterCards')
-			},
-			sortBy (field) {
-				this.$store.commit('setSort', field)
 				this.$store.commit('filterCards')
 			},
 			setListType (listType) {
 				this.$store.commit('setListType', listType)
 			},
-			setReleases (releases) {
-				this.$store.commit('setReleases', releases)
-				this.$store.commit('filterCards')
-			},
-			isDieActive (die) {
-				return includes(this.$store.state.filters.dice || [], die)
-			},
 			isTypeActive (typeName) {
 				return includes(this.$store.state.filters.types || [], typeName)
 			},
-			isSortedBy (field) {
-				return this.$store.state.filters.primarySort == field
-			},
 			isListType (listType) {
 				return this.$store.state.listType == listType
-			},
-			isShowingRelease (releaseNumber) {
-				return includes(this.$store.state.filters.releases, releaseNumber)
-			},
-			isReleases (releases) {
-				if (releases === null || this.$store.state.filters.releases === null) {
-					return releases === this.$store.state.filters.releases
-				}
-				let current = clone(this.$store.state.filters.releases)
-				current.sort()
-				releases.sort()
-				return isEqual(releases, current)
 			}
 		}
 	}

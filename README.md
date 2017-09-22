@@ -57,10 +57,12 @@ TODO:
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine and Sympathy dice icons, and add to the PHG font
 * Only show Phoenixborn-specific cards in listings if the Phoenixborn is selected
+    * Style Phoenixborn-specific cards somehow so you can tell them apart from normal cards
+* Add "no results" message for when the listing is empty
 
 Filters:
 
 - Dice types required (both AND and OR)
 - Card type (including summon vs. other ready spells?)
-* Set (core, expansions, promo Phoenixborn)
+- Set (core, expansions, promo Phoenixborn)
 * Text search: card title and effect text

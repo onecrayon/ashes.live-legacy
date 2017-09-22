@@ -1,0 +1,41 @@
+<template>
+	<div class="btn-group">
+		<button v-on:click="toggleOrdering()"
+			class="btn btn-small">Sort <i class="fa" :class="orderIconClass"></i></button
+		><button v-on:click="sortBy('name')"
+			class="btn btn-small" :class="{active: isSortedBy('name')}">Name</button
+		><button v-if="normalListing" v-on:click="sortBy('type')"
+			class="btn btn-small" :class="{active: isSortedBy('type')}">Type</button
+		><button v-if="normalListing" v-on:click="sortBy('dice')"
+			class="btn btn-small" :class="{active: isSortedBy('dice')}">Dice</button
+		><button v-if="normalListing" v-on:click="sortBy('weight')"
+			class="btn btn-small" :class="{active: isSortedBy('weight')}">Cost</button
+		>
+	</div>
+</template>
+
+<script>
+	export default {
+		computed: {
+			normalListing () {
+				return !!this.$store.state.deck.phoenixborn
+			},
+			orderIconClass () {
+				return 'fa-chevron-' + (this.$store.state.filters.primaryOrder == 1 ? 'up' : 'down')
+			}
+		},
+		methods: {
+			toggleOrdering () {
+				this.$store.commit('toggleSortOrder')
+				this.$store.commit('filterCards')
+			},
+			sortBy (field) {
+				this.$store.commit('setSort', field)
+				this.$store.commit('filterCards')
+			},
+			isSortedBy (field) {
+				return this.$store.state.filters.primarySort == field
+			}
+		}
+	}
+</script>
