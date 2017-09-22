@@ -707,6 +707,23 @@ a.card {
 				margin-bottom: 5px;
 			}
 		}
+
+		li + .inexhaustible:before, .inexhaustible:first-of-type:before {
+			content: '';
+			background: url('../images/icon-inexhaustible.png') no-repeat left top;
+			width: 11px;
+			height: 11px;
+			position: absolute;
+			top: -6px;
+			left: 50%;
+			margin-left: -6px;
+		}
+
+		.inexhaustible + .inexhaustible:before {
+			background: none;
+			width: 0;
+			height: 0;
+		}
 	}
 
 	.statline {
