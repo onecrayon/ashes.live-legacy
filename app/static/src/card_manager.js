@@ -65,6 +65,7 @@ export default class {
 		releases = [0],
 		dice = null,
 		diceLogic = 'or',
+		phoenixborn = null,
 		primarySort = 'name',
 		primaryOrder = 1,
 		secondarySort = null,
@@ -78,6 +79,9 @@ export default class {
 				return false
 			}
 			if (excludePhoenixborn && card.type == 'Phoenixborn') {
+				return false
+			}
+			if (phoenixborn && card.phoenixborn && card.phoenixborn != phoenixborn) {
 				return false
 			}
 			if (types && types.length

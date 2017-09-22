@@ -38,6 +38,7 @@ var store = new Vuex.Store({
 			releases: [0],
 			dice: null,
 			diceLogic: 'or',
+			phoenixborn: null,
 			primarySort: 'name',
 			primaryOrder: 1,
 			secondarySort: null,
@@ -54,6 +55,7 @@ var store = new Vuex.Store({
 		},
 		setPhoenixborn (state, id) {
 			state.deck.phoenixborn = cardManager.cardById(id)
+			state.filters.phoenixborn = state.deck.phoenixborn ? state.deck.phoenixborn.name : null
 		},
 		addDice (state, die, number) {
 			number = number || 1
