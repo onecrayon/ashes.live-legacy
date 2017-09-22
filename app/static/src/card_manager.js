@@ -52,8 +52,20 @@ export default class {
 		// TODO: loop over globals.cards and globals.dice to construct indices necessary for easily relating the two?
 		// Create lookup table by ID
 		this.idMap = {}
+		let nameMap = {}
 		for (let card of globals.cardData) {
 			this.idMap[card.id] = card
+			nameMap[card.name] = card
+		}
+		// Attach conjurations
+		for (let card of globals.cardData) {
+			if (card.conjurations && card.conjurations.length) {
+				let conjurations = []
+				for (let cardName of card.conjurations) {
+					conjurations.push(nameMap[cardName])
+				}
+				card.conjurations = conjurations
+			}
 		}
 	}
 	cardById (id) {

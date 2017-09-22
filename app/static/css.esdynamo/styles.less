@@ -10,6 +10,7 @@
 @color-black: #000;
 @color-gray: #dcdcdc;
 @color-mid-gray: #bfbfbf;
+@color-border-gray: #939395;
 @color-dark-gray: #6f6f6f;
 @color-white: #fff;
 @color-inexhaustible: #f7f5e8;
@@ -600,7 +601,7 @@ a.card {
 
 	.card-detail {
 		.mixin-display-flex;
-		border: 1px solid #939395;
+		border: 1px solid @color-border-gray;
 		margin: 0 0 5px;
 	
 		& > .costs {
@@ -723,6 +724,50 @@ a.card {
 			background: none;
 			width: 0;
 			height: 0;
+		}
+	}
+
+	.summon-effect .costs {
+		margin-bottom: 3px;
+	}
+
+	.conjuration {
+		.mixin-display-flex;
+		border-radius: 3px;
+		border: 1px solid @color-border-gray;
+		padding: 3px;
+
+		h4 {
+			.font-size(16);
+			.line-height(16);
+			.mixin-flex(0 0 auto);
+			margin: 0;
+		}
+
+		.effect {
+			.mixin-flex(0 0 auto);
+			.line-height(16);
+			padding-top: 1px;
+			padding-left: 10px;
+			margin-left: 3px;
+			background: url('../images/icon-diamond-bullet.png') no-repeat left center;
+		}
+
+		.statline {
+			.mixin-flex(1 1 auto);
+			position: static;
+			top: auto;
+			left: auto;
+			text-align: right;
+
+			li {
+				display: inline-block;
+				float: none;
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
+				padding-bottom: 1px;
+				margin: 0 0 0 5px;
+			}
 		}
 	}
 

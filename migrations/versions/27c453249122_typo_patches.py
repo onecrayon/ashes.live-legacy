@@ -56,6 +56,7 @@ def upgrade():
         owls.is_summon_spell = True
         owls_json = json.loads(owls.json)
         owls_json['images']['thumbnail'] = '/images/cards/three-eyed-owl-slice.jpg'
+        owls_json['conjurations'] = ['Three-Eyed Owl']
         owls.json = json.dumps(owls_json)
     
     # Simple typos
