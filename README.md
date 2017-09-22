@@ -56,7 +56,12 @@ TODO:
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine and Sympathy dice icons, and add to the PHG font
-* Style "no results" message for when the listing is empty
+* Implement the deck meta section
+* Implement deck management via the number buttons
+* Implement site-wide "card detail" hover effect
+* Implement responsive behaviors for filters (collapse to icons, flow nicely)
+* Implement different listing styles, and refactor into components
+* Implement "set height" behavior for card details, with expansion button
 
 Filters:
 
