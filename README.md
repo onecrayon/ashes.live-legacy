@@ -56,16 +56,10 @@ TODO:
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine and Sympathy dice icons, and add to the PHG font
+* Fix the styling for the search "clear" button
 * Implement the deck meta section
 * Implement deck management via the number buttons
 * Implement site-wide "card detail" hover effect
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
 * Implement different listing styles, and refactor into components
 * Implement "set height" behavior for card details, with expansion button
-
-Filters:
-
-- Dice types required (both AND and OR)
-- Card type (including summon vs. other ready spells?)
-- Set (core, expansions, promo Phoenixborn)
-* Text search: card title and effect text
