@@ -12,7 +12,7 @@ from alembic import op
 import sqlalchemy as sa
 
 from app import db
-from app.models.card import Die, Card
+from app.models.card import Card
 
 
 # revision identifiers, used by Alembic.

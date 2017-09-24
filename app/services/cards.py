@@ -1,4 +1,4 @@
-from app.models.card import Card, Die
+from app.models.card import Card
 
 
 def global_json():

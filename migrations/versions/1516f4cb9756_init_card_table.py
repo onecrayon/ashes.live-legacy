@@ -12,7 +12,7 @@ from alembic import op
 import sqlalchemy as sa
 
 from app import db
-from app.models.card import Die, Card
+from app.models.card import Card
 
 
 # revision identifiers, used by Alembic.
@@ -92,9 +92,10 @@ def upgrade():
         json_data = next(card_data)
         json_data['id'] = card.id
         card.json = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
-        for die_stub in json_data.get('dice', []):
-            die = Die.query.filter(Die.stub == die_stub).first()
-            card.dice.append(die)
+        # DISABLED: downstream update to Card model discards the usage of the Die model
+        # for die_stub in json_data.get('dice', []):
+        #     die = Die.query.filter(Die.stub == die_stub).first()
+        #     card.dice.append(die)
         for conjuration_name in json_data.get('conjurations', []):
             conjuration = Card.query.filter(Card.name == conjuration_name).first()
             card.conjurations.append(conjuration)

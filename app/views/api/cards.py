@@ -30,7 +30,16 @@ def search():
         query = query.filter(
             Card.release.in_(releases)
         )
-    # TODO: figure out how to filter out based on dice
+    dice = data.get('dice')
+    diceLogic = data.get('diceLogic', 'or')
+    if dice and diceLogic == 'or':
+        query = query.filter(
+            Card.has_any_dice_filter(dice)
+        )
+    elif dice:
+        query = query.filter(
+            Card.has_all_dice_filter(dice)
+        )
     # TODO: figure out how to filter out cards based on the selected Phoenixborn
     search = data.get('search')
     if search:

@@ -1,22 +1,8 @@
 from datetime import datetime
 
 from app import db
-from app.models.card import Card, Die
+from app.models.card import Card
 from app.models.user import User
-
-
-decks_cards = db.Table(
-    'decks_cards',
-    db.Column('deck_id', db.Integer, db.ForeignKey('deck.id')),
-    db.Column('card_id', db.Integer, db.ForeignKey(Card.id))
-)
-
-
-decks_dice = db.Table(
-    'decks_dice',
-    db.Column('deck_id', db.Integer, db.ForeignKey('deck.id')),
-    db.Column('die_id', db.Integer, db.ForeignKey(Die.id))
-)
 
 
 class Deck(db.Model):
@@ -31,5 +17,23 @@ class Deck(db.Model):
     
     user = db.relationship(User)
     phoenixborn = db.relationship(Card)
-    cards = db.relationship(Card, secondary=decks_cards)
-    dice = db.relationship(Die, secondary=decks_dice)
+    # `cards` and `dice` are defined via backref in the models below
+
+
+class DeckCard(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, index=True)
+    card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=False)
+    count = db.Column(db.SmallInteger, nullable=False)
+
+    card = db.relationship(Card)
+    deck = db.relationship(Deck, backref='cards')
+
+
+class DeckDie(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, index=True)
+    die_flag = db.Column(db.Integer, nullable=False)
+    count = db.Column(db.SmallInteger, nullable=False)
+
+    deck = db.relationship(Deck, backref='dice')
