@@ -45,18 +45,23 @@ def upgrade():
     op.drop_table('decks_dice')
     op.drop_table('die')
     op.add_column('card', sa.Column('dice_flags', sa.Integer(), nullable=False))
+    op.add_column('card', sa.Column('phoenixborn', sa.String(length=25), nullable=True))
     op.create_index(op.f('ix_card_dice_flags'), 'card', ['dice_flags'], unique=False)
+    op.create_index(op.f('ix_card_phoenixborn'), 'card', ['phoenixborn'], unique=False)
 
     # Go through all cards and set their dice flags appropriately
     cards = Card.query.all()
     for card in cards:
         card_json = json.loads(card.json)
         card.dice_flags = Card.dice_to_flags(card_json.get('dice'))
+        card.phoenixborn = card_json.get('phoenixborn')
     db.session.commit()
 
 
 def downgrade():
     op.drop_index(op.f('ix_card_dice_flags'), table_name='card')
+    op.drop_index(op.f('ix_card_phoenixborn'), table_name='card')
+    op.drop_column('card', 'phoenixborn')
     op.drop_column('card', 'dice_flags')
     op.create_table('die',
         sa.Column('id', sa.Integer, nullable=False),
@@ -81,7 +86,5 @@ def downgrade():
         sa.ForeignKeyConstraint(['card_id'], ['card.id'], name='decks_cards_ibfk_1'),
         sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], name='decks_cards_ibfk_2')
     )
-    op.drop_index(op.f('ix_deck_die_deck_id'), table_name='deck_die')
     op.drop_table('deck_die')
-    op.drop_index(op.f('ix_deck_card_deck_id'), table_name='deck_card')
     op.drop_table('deck_card')

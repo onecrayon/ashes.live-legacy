@@ -19,6 +19,7 @@ class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(25), nullable=False, index=True, unique=True)
     stub = db.Column(db.String(25), nullable=False, index=True, unique=True)
+    phoenixborn = db.Column(db.String(25), nullable=True, index=True)
     release = db.Column(db.Integer, nullable=False, index=True, default=0)
     card_type = db.Column(db.String(25), nullable=False, index=True)
     is_summon_spell = db.Column(db.Boolean, nullable=False, default=False)

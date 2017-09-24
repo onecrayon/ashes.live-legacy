@@ -106,7 +106,8 @@ export default class {
 		const excludeConjurations = !types || !includes(types, 'Conjuration')
 		const excludePhoenixborn = !types || !includes(types, 'Phoenixborn')
 		let subset = filter(globals.cardData, (card) => {
-			if (excludeConjurations && card.type == 'Conjuration') {
+			if (excludeConjurations 
+					&& (card.type == 'Conjuration' || card.type == 'Conjured Alteration Spell')) {
 				return false
 			}
 			if (excludePhoenixborn && card.type == 'Phoenixborn') {

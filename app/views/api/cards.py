@@ -25,6 +25,10 @@ def search():
         query = query.filter(
             Card.card_type.in_(types)
         )
+    else:
+        query = query.filter(
+            Card.card_type.notin_(['Phoenixborn', 'Conjuration', 'Conjured Alteration Spell'])
+        )
     releases = data.get('releases')
     if releases:
         query = query.filter(
@@ -40,7 +44,12 @@ def search():
         query = query.filter(
             Card.has_all_dice_filter(dice)
         )
-    # TODO: figure out how to filter out cards based on the selected Phoenixborn
+    phoenixborn = data.get('phoenixborn')
+    if phoenixborn:
+        query = query.filter(db.or_(
+            Card.phoenixborn.is_(None),
+            Card.phoenixborn == phoenixborn
+        ))
     search = data.get('search')
     if search:
         # Setup prefix search so that we can get partial word matches
