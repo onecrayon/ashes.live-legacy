@@ -60,5 +60,8 @@ TODO:
 * Implement deck management via the number buttons
 * Implement site-wide "card detail" hover effect
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
-* Implement different listing styles, and refactor into components
+
+Optional before release:
+
 * Implement "set height" behavior for card details, with expansion button?
+* Implement different listing styles, and refactor into components
