@@ -106,7 +106,6 @@
 				return startsWith(effect.name, 'Focus') || startsWith(effect.name, 'Respark')
 			},
 			isReadySummon (card) {
-				console.log('checking card:', card)
 				return card.type == 'Ready Spell' && startsWith(card.name, 'Summon')
 			}
 		}

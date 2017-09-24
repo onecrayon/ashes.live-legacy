@@ -1,3 +1,5 @@
+from sqlalchemy_fulltext import FullText
+
 from app import db
 
 
@@ -29,6 +31,10 @@ class Die(db.Model):
     stub = db.Column(db.String(10), nullable=False, unique=True)
     
     cards = db.relationship('Card', secondary=card_dice, back_populates='dice')
+
+
+class NameTextSearch(FullText, Card):
+    __fulltext_columns__ = ('name', 'text')
 
 
 # Define our index to ensure Alembic can automatically generate future migrations

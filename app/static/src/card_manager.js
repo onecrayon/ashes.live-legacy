@@ -1,3 +1,4 @@
+import qwest from 'qwest'
 import {filter, includes, isEqual, startsWith} from 'lodash'
 
 const diceWeightMap = {
@@ -49,7 +50,6 @@ function attributeSort(a, b, primarySort, primaryOrder, secondarySort, secondary
  */
 export default class {
 	constructor () {
-		// TODO: loop over globals.cards and globals.dice to construct indices necessary for easily relating the two?
 		// Create lookup table by ID
 		this.idMap = {}
 		let nameMap = {}
@@ -71,7 +71,7 @@ export default class {
 	cardById (id) {
 		return this.idMap[id] || null
 	}
-	cardListing ({
+	cardListing (callback, {
 		search = null,
 		types = null,
 		releases = [0],
@@ -83,6 +83,25 @@ export default class {
 		secondarySort = null,
 		secondaryOrder = 1
 	} = {}) {
+		if (search) {
+			qwest.post('/api/cards/search', {
+				search: search,
+				types: types,
+				releases: releases,
+				dice: dice,
+				diceLogic: diceLogic,
+				phoenixborn: phoenixborn
+			}, {dataType: 'json'}).then((xhr, response) => {
+				let cards = this.idsToListing(response)
+				callback(this.sortListing(cards, {
+					primaryOrder, primarySort, secondaryOrder, secondarySort
+				}))
+			}).catch(function(error, xhr, response) {
+				console.log('Failure!', response)
+				callback(null)
+			})
+			return
+		}
 		// Only include conjurations if they are specifically called for
 		const excludeConjurations = !types || !includes(types, 'Conjuration')
 		const excludePhoenixborn = !types || !includes(types, 'Phoenixborn')
@@ -126,10 +145,19 @@ export default class {
 					return false
 				}
 			}
-			// TODO: implement text search logic
 			return true
 		})
-		subset.sort((a, b) => {
+		callback(this.sortListing(subset, {
+			primaryOrder, primarySort, secondaryOrder, secondarySort
+		}))
+	}
+	sortListing (cards, {
+		primarySort = 'name',
+		primaryOrder = 1,
+		secondarySort = null,
+		secondaryOrder = 1
+	} = {}) {
+		cards.sort((a, b) => {
 			// Sorting by dice requires special weighting
 			if (primarySort == 'dice') {
 				// Grab sorted versions of our dice arrays
@@ -153,6 +181,13 @@ export default class {
 				a, b, primarySort, primaryOrder, secondarySort, secondaryOrder
 			)
 		})
-		return subset
+		return cards
+	}
+	idsToListing (ids) {
+		let cards = []
+		for (let id of ids) {
+			cards.push(this.cardById(id))
+		}
+		return cards
 	}
 }
