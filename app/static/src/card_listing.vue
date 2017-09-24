@@ -23,35 +23,7 @@
 					</span>
 				</h3>
 				<p class="meta">{{ card.type }} <span class="divider"></span> {{ card.placement }}</p>
-				<ol class="effects">
-					<li v-if="isReadySummon(card)" class="summon-effect">
-						<div class="costs">
-							<span v-for="cost of card.text[0].cost" class="cost" v-html="parseCardText(cost)"></span>: 
-						</div>
-						<div class="conjuration"
-							><h4><a :href="cardUrl(card.conjurations[0])" class="card">{{ card.conjurations[0].name  }}</a></h4
-							><span v-for="effect of namedEffects(card.conjurations[0].text)" class="effect"
-								:title="effectTextTooltip(effect, true)"
-								>{{ effect.name }}</span
-							><ul class="statline"
-								><li v-if="card.conjurations[0].attack !== undefined" class="attack">Attack {{ card.conjurations[0].attack }}</li
-								><li v-if="card.conjurations[0].life !== undefined" class="life">Life {{ card.conjurations[0].life }}</li
-								><li v-if="card.conjurations[0].recover !== undefined" class="recover">Recover {{ card.conjurations[0].recover }}</li
-							></ul
-						></div>
-					</li>
-					<li v-else v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
-						<strong v-if="effect.name" :title="effectTextTooltip(effect)">
-							{{ effect.name }}</strong
-						><span v-if="effect.cost" class="costs"
-							><span v-if="effect.name">: </span
-						><span v-for="cost of effect.cost" class="cost"
-								v-html="parseCardText(cost)"></span></span
-						><span v-if="!effect.name || isEffectTextException(effect)"
-							><span v-if="effect.name || effect.cost">: </span
-						><span v-html="parseCardText(effect.text)"></span></span>
-					</li>
-				</ol>
+				<card-effects :card="card"></card-effects>
 				<ul v-if="hasStatline(card)" class="statline">
 					<li v-if="card.attack !== undefined" class="attack">Attack {{ card.attack }}</li>
 					<li v-if="card.life !== undefined" class="life">Life {{ card.life }}</li>
@@ -68,10 +40,12 @@
 <script>
 	import {cardUrl, parseCardText} from './utils'
 	import {filter, startsWith} from 'lodash'
+	import CardEffects from './listing/card_effects.vue'
 	import NoResults from './no_results.vue'
 	
 	export default {
 		components: {
+			'card-effects': CardEffects,
 			'no-results': NoResults
 		},
 		computed: {
@@ -83,16 +57,6 @@
 			cardUrl,
 			parseCardText,
 			startsWith,
-			effectTextTooltip (effect, showAll) {
-				if (showAll || (effect.text && !this.isEffectTextException(effect))) {
-					return effect.text
-				}
-			},
-			namedEffects (effects) {
-				return filter(effects, (effect) => {
-					return !!effect.name
-				})
-			},
 			hasStatline (card) {
 				return card.attack !== undefined
 					|| card.life !== undefined
@@ -101,12 +65,6 @@
 			isQtyActive (id, qty) {
 				// TODO: write actual counting logic
 				return qty == 0
-			},
-			isEffectTextException (effect) {
-				return startsWith(effect.name, 'Focus') || startsWith(effect.name, 'Respark')
-			},
-			isReadySummon (card) {
-				return card.type == 'Ready Spell' && startsWith(card.name, 'Summon')
 			}
 		}
 	}

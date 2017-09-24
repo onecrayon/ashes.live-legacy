@@ -325,6 +325,84 @@ a.card {
 	}
 }
 
+.card-effects {
+	.font-size(12);
+	.line-height(15);
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+
+	[class^="phg-"], [class*=" phg-"] {
+		.font-size(15);
+	}
+
+	li {
+		padding-bottom: 5px;
+	}
+}
+
+.inexhaustible {
+	background: @color-inexhaustible;
+	border: 1px solid @color-inexhaustible-dark;
+	padding: 5px;
+	position: relative;
+
+	& + li {
+		margin-top: 5px;
+	}
+
+	& + .inexhaustible {
+		border-top: none;
+		margin-top: 0;
+		top: -6px;
+		margin-bottom: -6px;
+	}
+
+	&:last-of-type {
+		margin-bottom: 5px;
+	}
+}
+
+li + .inexhaustible:before, .inexhaustible:first-of-type:before {
+	content: '';
+	background: url('../images/icon-inexhaustible.png') no-repeat left top;
+	width: 11px;
+	height: 11px;
+	position: absolute;
+	top: -6px;
+	left: 50%;
+	margin-left: -6px;
+}
+
+.inexhaustible + .inexhaustible:before {
+	background: none;
+	width: 0;
+	height: 0;
+}
+
+.dice {
+	.mixin-display-flex;
+	.mixin-flex-wrap(wrap);
+	.mixin-justify-content(space-between);
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	.die {
+		.font-size(24);
+		.line-height(48);
+		.mixin-flex(0 0 auto);
+		color: @color-dark-gray;
+		border-radius: 5px;
+		border: 1px dashed @color-border-gray;
+		padding: 5px;
+		margin: 0 0 10px;
+		height: 48px;
+		width: 48px;
+		text-align: center;
+	}
+}
+
 /* @group Main content */
 
 #page, #footer {
@@ -580,6 +658,56 @@ a.card {
 	}
 }
 
+.phoenixborn-header {
+	text-align: center;
+
+	.refresh-btn {
+		float: left;
+	}
+}
+
+.phoenixborn-detail {
+	border: 1px solid @color-border-gray;
+	border-radius: 5px;
+	position: relative;
+	padding: 17px 10px 10px;
+	margin: 0 0 20px;
+
+	.statline {
+		.font-size(12);
+		.line-height(15);
+		font-weight: bold;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		top: -10px;
+		left: 0;
+		right: 0;
+		text-align: center;
+
+		li {
+			display: inline-block;
+			background: @color-white;
+			border: 1px solid;
+			padding: 1px 3px 0;
+			margin: 0;
+		}
+
+		.battlefield {
+			border-color: @color-attack;
+		}
+
+		.life {
+			border-color: @color-life;
+		}
+
+		.spellboard {
+			border-color: @color-recover;
+		}
+	}
+}
+
 .gallery {
 	.filters .btn-all {
 		min-width: 64px;
@@ -671,61 +799,6 @@ a.card {
 			.font-size(12);
 			.line-height(12);
 			margin-bottom: 8px;
-		}
-
-		.effects {
-			.font-size(12);
-			.line-height(15);
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-
-			[class^="phg-"], [class*=" phg-"] {
-				.font-size(15);
-			}
-
-			li {
-				padding-bottom: 5px;
-			}
-		}
-
-		.inexhaustible {
-			background: @color-inexhaustible;
-			border: 1px solid @color-inexhaustible-dark;
-			padding: 5px;
-			position: relative;
-
-			& + li {
-				margin-top: 5px;
-			}
-
-			& + .inexhaustible {
-				border-top: none;
-				margin-top: 0;
-				top: -6px;
-				margin-bottom: -6px;
-			}
-
-			&:last-of-type {
-				margin-bottom: 5px;
-			}
-		}
-
-		li + .inexhaustible:before, .inexhaustible:first-of-type:before {
-			content: '';
-			background: url('../images/icon-inexhaustible.png') no-repeat left top;
-			width: 11px;
-			height: 11px;
-			position: absolute;
-			top: -6px;
-			left: 50%;
-			margin-left: -6px;
-		}
-
-		.inexhaustible + .inexhaustible:before {
-			background: none;
-			width: 0;
-			height: 0;
 		}
 	}
 
