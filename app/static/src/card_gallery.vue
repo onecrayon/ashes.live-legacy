@@ -34,7 +34,7 @@
 	import ReleaseFilter from './filters/releases.vue'
 	import SortFilter from './filters/sort.vue'
 	import TextFilter from './filters/text.vue'
-	import NoResults from './no_results.vue'
+	import NoResults from './listing/no_results.vue'
 	import {cardUrl} from './utils'
 	
 	export default {

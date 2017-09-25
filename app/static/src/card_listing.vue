@@ -41,7 +41,7 @@
 	import {cardUrl, parseCardText} from './utils'
 	import {filter, startsWith} from 'lodash'
 	import CardEffects from './listing/card_effects.vue'
-	import NoResults from './no_results.vue'
+	import NoResults from './listing/no_results.vue'
 	
 	export default {
 		components: {
