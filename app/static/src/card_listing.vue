@@ -4,20 +4,7 @@
 		<li v-for="card of listing" :key="card.id" class="card-detail">
 			<div class="thumbnail">
 				<img :src="card.images.thumbnail" :alt="card.name">
-				<div class="btn-group">
-					<button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 0)}"
-						@click="setCardQty(card.id, 0)">0</button
-					><button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 1)}"
-						@click="setCardQty(card.id, 1)">1</button
-					><button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 2)}"
-						@click="setCardQty(card.id, 2)">2</button
-					><button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 3)}"
-						@click="setCardQty(card.id, 3)">3</button>
-				</div>
+				<qty-buttons :card="card"></qty-buttons>
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
 				<h3>
@@ -46,11 +33,13 @@
 	import {filter, startsWith} from 'lodash'
 	import CardEffects from './listing/card_effects.vue'
 	import NoResults from './listing/no_results.vue'
+	import QtyButtons from './listing/qty_buttons.vue'
 	
 	export default {
 		components: {
 			'card-effects': CardEffects,
-			'no-results': NoResults
+			'no-results': NoResults,
+			'qty-buttons': QtyButtons
 		},
 		computed: {
 			listing () {
@@ -65,14 +54,6 @@
 				return card.attack !== undefined
 					|| card.life !== undefined
 					|| card.recover !== undefined
-			},
-			setCardQty (id, qty) {
-				this.$store.commit('setCardQty', {id: id, qty: qty})
-			},
-			isQtyActive (id, qty) {
-
-				return (!this.$store.state.deck.cards[id] && qty == 0)
-					|| this.$store.state.deck.cards[id] == qty
 			}
 		}
 	}

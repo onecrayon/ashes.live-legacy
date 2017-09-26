@@ -20,6 +20,29 @@ function disableReleaseDice(state) {
 	}
 }
 
+function gatherConjurations (card, conjurationList) {
+	if (card && card.conjurations) {
+		for (let conjuration of card.conjurations) {
+			conjurationList.push({
+				'count': conjuration.copies,
+				'data': conjuration
+			})
+			gatherConjurations(conjuration, conjurationList)
+		}
+	}
+}
+
+function pluralCardType (cardType) {
+	if (cardType == 'Ally') {
+		return 'Allies'
+	}
+	return cardType + 's'
+}
+
+const cardTypeOrder = [
+	'Ready Spell', 'Ally', 'Alteration Spell', 'Action Spell', 'Reaction Spell'
+]
+
 export default new Vuex.Store({
 	state: {
 		deck: {
@@ -56,6 +79,55 @@ export default new Vuex.Store({
 			return reduce(state.deck.dice, (result, value, key) => {
 				return result + value
 			}, 0)
+		},
+		deckSections (state) {
+			const ids = Object.keys(state.deck.cards)
+			if (!ids.length) return []
+			let sections = {}
+			const cards = cardManager.idsToListing(ids)
+			let conjurations = []
+			for (let card of cards) {
+				if (!sections[card.type]) {
+					sections[card.type] = []
+				}
+				sections[card.type].push({
+					'count': state.deck.cards[card.id],
+					'data': card
+				})
+				gatherConjurations(card, conjurations)
+			}
+			gatherConjurations(state.deck.phoenixborn, conjurations)
+			let sectionTitles = Object.keys(sections)
+			sectionTitles.sort((a, b) => {
+				return cardTypeOrder.indexOf(a) < cardTypeOrder.indexOf(b) ? -1 : 1
+			})
+			let sortedSections = []
+			for (let section of sectionTitles) {
+				let contents = sections[section]
+				contents.sort((a, b) => {
+					if (a.data.name == b.data.name) {
+						return 0
+					}
+					return a.data.name < b.data.name ? -1 : 1
+				})
+				sortedSections.push({
+					'title': pluralCardType(section),
+					'contents': contents
+				})
+			}
+			if (conjurations.length) {
+				conjurations.sort((a, b) => {
+					if (a.data.name == b.data.name) {
+						return 0
+					}
+					return a.data.name < b.data.name ? -1 : 1
+				})
+				sortedSections.push({
+					'title': 'Conjuration Deck',
+					'contents': conjurations
+				})
+			}
+			return sortedSections
 		}
 	},
 	mutations: {
@@ -69,6 +141,16 @@ export default new Vuex.Store({
 		setPhoenixborn (state, id) {
 			state.deck.phoenixborn = cardManager.cardById(id)
 			state.filters.phoenixborn = state.deck.phoenixborn ? state.deck.phoenixborn.name : null
+			const ids = Object.keys(state.deck.cards)
+			if (state.deck.phoenixborn && ids.length) {
+				// Clear out any Phoenixborn-specific cards in the deck
+				const cards = cardManager.idsToListing(ids)
+				for (let card of cards) {
+					if (card.phoenixborn && card.phoenixborn != state.deck.phoenixborn.name) {
+						Vue.delete(state.deck.cards, card.id)
+					}
+				}
+			}
 		},
 		setDieCount (state, payload) {
 			state.deck.dice[payload.die] = payload.count

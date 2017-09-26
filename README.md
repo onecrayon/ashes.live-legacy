@@ -56,8 +56,11 @@ TODO:
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine  icons, and add to the PHG font
-* Implement the deck meta section
+* Implement dice type highlighting when deck uses cards that require those dice, but none are present
 * Implement site-wide "card detail" hover effect
+* Implement deck description setting (and possibly deck stats?)
+* Implement deck saving
+* Implement "my decks" listing page
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
 
 Optional before release:

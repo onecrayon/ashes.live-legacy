@@ -48,6 +48,25 @@
 					</button>
 				</div>
 			</div>
+			<div v-for="section of deckSections" :key="section.title" class="deck-section">
+			<hr v-if="section.title == 'Conjuration Deck'">
+			<h4>{{ section.title }}</h4>
+			<ul>
+				<li v-for="card of section.contents" :key="card.data.id">
+					<div v-if="section.title == 'Conjuration Deck'">
+						{{ card.count }}&times; <a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
+					</div>
+					<div v-else>
+						<qty-buttons :card="card.data" classes="btn-small"
+							zero-output="<i class='fa fa-times' title='Remove'></i>"></qty-buttons>
+						<a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
+						<span v-if="card.data.phoenixborn" class="phoenixborn" :title="card.data.phoenixborn">
+							({{ card.data.phoenixborn.split(' ')[0] }})
+						</span>
+					</div>
+				</li>
+			</ul>
+		</div>
 		</div>
 	</div>
 </template>
@@ -56,11 +75,13 @@
 	import qwest from 'qwest'
 	import {cardUrl} from './utils'
 	import CardEffects from './listing/card_effects.vue'
+	import QtyButtons from './listing/qty_buttons.vue'
 	import DieCounter from './deck/die_counter.vue'
 
 	export default {
 		components: {
 			'card-effects': CardEffects,
+			'qty-buttons': QtyButtons,
 			'die-counter': DieCounter
 		},
 		computed: {
@@ -94,6 +115,9 @@
 			},
 			diceEmpty () {
 				return this.$store.getters.totalDice == 0
+			},
+			deckSections () {
+				return this.$store.getters.deckSections
 			}
 		},
 		methods: {
