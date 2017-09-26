@@ -25,3 +25,35 @@
 	&::-moz-placeholder          {color: @color;}
 	&:-ms-input-placeholder      {color: @color;}
 }
+
+.dice-classes() {
+	.dice-colors(@text, @background) {
+		color: @text;
+		background: @background;
+		border-color: @text;
+	}
+
+	.ceremonial {
+		.dice-colors(#ee3342, #111821);
+	}
+
+	.charm {
+		.dice-colors(#f7e442, #f34f98);
+	}
+
+	.illusion {
+		.dice-colors(#8bc7ea, #490d67);
+	}
+
+	.natural {
+		.dice-colors(#cedb00, #004a98);
+	}
+
+	.divine {
+		.dice-colors(#b58a2b, #f2f2f2);
+	}
+
+	.sympathy {
+		.dice-colors(#e3c2af, #119981);
+	}
+}

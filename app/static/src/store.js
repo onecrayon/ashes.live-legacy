@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import CardManager from './card_manager'
+import {reduce} from 'lodash'
 
 /* eslint-disable no-new */
 
@@ -25,8 +26,15 @@ export default new Vuex.Store({
 			title: '',
 			description: '',
 			phoenixborn: null,
-			dice: [],
-			cards: []
+			dice: {
+				'ceremonial': 0,
+				'charm': 0,
+				'illusion': 0,
+				'natural': 0,
+				'divine': 0,
+				'sympathy': 0
+			},
+			cards: {}
 		},
 		listing: [],
 		listType: 'list',
@@ -43,6 +51,13 @@ export default new Vuex.Store({
 			secondaryOrder: 1
 		}
 	},
+	getters: {
+		totalDice (state) {
+			return reduce(state.deck.dice, (result, value, key) => {
+				return result + value
+			}, 0)
+		}
+	},
 	mutations: {
 		// Deck editing methods
 		setTitle (state, title) {
@@ -55,18 +70,13 @@ export default new Vuex.Store({
 			state.deck.phoenixborn = cardManager.cardById(id)
 			state.filters.phoenixborn = state.deck.phoenixborn ? state.deck.phoenixborn.name : null
 		},
-		addDice (state, die, number) {
-			number = number || 1
-			while (number) {
-				state.deck.dice.push(die)
-				number--
-			}
-			while (state.deck.dice.length > 10) {
-				state.deck.dice.shift()
-			}
+		setDieCount (state, payload) {
+			state.deck.dice[payload.die] = payload.count
 		},
-		replaceDie (state, index, die) {
-			state.deck.dice[index] = die
+		decrementDie (state, dieType) {
+			if (state.deck.dice[dieType] > 0) {
+				state.deck.dice[dieType] -= 1
+			}
 		},
 		// Filter methods
 		setSearch (state, search) {

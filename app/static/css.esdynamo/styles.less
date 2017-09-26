@@ -163,7 +163,7 @@ a.card {
 		display: inline;
 	}
 	
-	input[type="text"], input[type="password"] {
+	input[type="text"], input[type="password"], input[type="number"] {
 		.font-size(18);
 		.placeholder-color(@color-mid-gray);
 		border: 2px solid @color-gray;
@@ -208,7 +208,7 @@ a.card {
 	}
 	
 	&[readonly], &[disabled] {
-		.alert(@color-gray);
+		opacity: .4;
 	}
 	
 	&.active {
@@ -216,6 +216,8 @@ a.card {
 		color: @color-white;
 	}
 }
+
+.dice-classes();
 
 .input-group {
 	.mixin-display-flex;
@@ -228,7 +230,7 @@ a.card {
 		&:first-child {
 			.mixin-flex(1 1 auto);
 			
-			input[type="text"], input[type="password"] {
+			input[type="text"], input[type="password"], input[type="number"] {
 				border-radius: 5px 0 0 5px;
 				border-right-width: 0;
 				margin: 0;
@@ -389,17 +391,19 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 	padding: 0;
 
 	.die {
-		.font-size(24);
-		.line-height(48);
+		.font-size(16);
+		.line-height(24);
 		.mixin-flex(0 0 auto);
-		color: @color-dark-gray;
-		border-radius: 5px;
-		border: 1px dashed @color-border-gray;
-		padding: 5px;
+		border-radius: 3px;
 		margin: 0 0 10px;
-		height: 48px;
-		width: 48px;
+		height: 24px;
+		width: 24px;
 		text-align: center;
+	}
+
+	.basic {
+		color: @color-mid-gray;
+		background: @color-gray;
 	}
 }
 
@@ -705,6 +709,20 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		.spellboard {
 			border-color: @color-recover;
 		}
+	}
+}
+
+.dice-management {
+	.col {
+		margin: 0 0 10px;
+	}
+
+	input[type="number"] {
+		width: 50px;
+	}
+
+	.btn-die {
+		min-width: 46px;
 	}
 }
 

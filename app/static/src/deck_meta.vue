@@ -21,13 +21,22 @@
 				</ul>
 				<card-effects :card="phoenixborn" all-text="true"></card-effects>
 			</div>
+			<ul class="dice">
+				<li v-for="(die, index) of diceList" :key="index"
+						class="die" :class="[die ? die : 'basic']"
+						@click="clearDie(die)">
+					<span :class="'phg-' + (die ? die + '-power' : 'basic-magic')"></span>
+				</li>
+			</ul>
+			<div class="dice-management responsive-cols">
+				<die-counter die-type="ceremonial" class="col"></die-counter>
+				<die-counter die-type="charm" class="col"></die-counter>
+				<die-counter die-type="illusion" class="col"></die-counter>
+				<die-counter die-type="natural" class="col"></die-counter>
+				<die-counter die-type="divine" class="col"></die-counter>
+				<die-counter die-type="sympathy" class="col"></die-counter>
+			</div>
 		</div>
-		<ul v-if="phoenixborn" class="dice">
-			<li v-for="(die, index) of dice" :key="index" class="die" :class="[die ? die : '']">
-				<span v-if="die" :class="'phg-' + die + '-power'"></span>
-				<i v-if="!die" class="fa fa-plus"></i>
-			</li>
-		</ul>
 	</div>
 </template>
 
@@ -35,11 +44,12 @@
 	import qwest from 'qwest'
 	import {cardUrl} from './utils'
 	import CardEffects from './listing/card_effects.vue'
-	import {assign, clone, fill} from 'lodash'
+	import DieCounter from './deck/die_counter.vue'
 
 	export default {
 		components: {
-			'card-effects': CardEffects
+			'card-effects': CardEffects,
+			'die-counter': DieCounter
 		},
 		computed: {
 			title: {
@@ -53,10 +63,20 @@
 			phoenixborn () {
 				return this.$store.state.deck.phoenixborn
 			},
-			dice () {
-				let diceArray = clone(this.$store.state.deck.dice)
-				if (this.$store.state.deck.dice.length < 10) {
-					diceArray = assign(fill(new Array(10), null), diceArray)
+			diceList () {
+				let diceArray = new Array(10)
+				let nextIndex = 0
+				for (let dieType of Object.keys(this.$store.state.deck.dice)) {
+					const numDice = this.$store.state.deck.dice[dieType]
+					const maxIndex = nextIndex + numDice
+					while (nextIndex < maxIndex && nextIndex < 10) {
+						diceArray[nextIndex] = dieType
+						nextIndex++
+					}
+				}
+				while (nextIndex < 10) {
+					diceArray[nextIndex] = null
+					nextIndex++
 				}
 				return diceArray
 			}
@@ -67,6 +87,10 @@
 				this.$store.commit('setTypes', ['Phoenixborn'])
 				this.$store.commit('setPhoenixborn', null)
 				this.$store.commit('filterCards')
+			},
+			clearDie (die) {
+				if (!die) return
+				this.$store.commit('decrementDie', die)
 			},
 			save () {
 				// TODO
