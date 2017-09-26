@@ -2,7 +2,7 @@
 	<div class="input-group">
 		<div class="form-field">
 			<input v-model.number="diceCount" type="number" min="0" step="1"
-				:max="maxCount" @input="validateInput">
+				:max="maxCount" @input="validateInput" :class="{error: isMissing}">
 		</div>
 		<button @click.prevent="incrementCount" class="btn btn-die"
 			:class="dieType" :disabled="isDisabled">
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+	import {includes} from 'lodash'
+
 	export default {
 		props: ['dieType'],
 		computed: {
@@ -31,10 +33,12 @@
 			},
 			isDisabled () {
 				return this.diceCount >= this.maxCount
+			},
+			isMissing () {
+				return this.diceCount == 0 && includes(this.$store.getters.neededDice, this.dieType)
 			}
 		},
 		methods: {
-			// LEFT OFF: need to test and see if this dual-validation actually works
 			validateInput (event) {
 				const el = event.target
 				const value = parseInt(el.value) || 0

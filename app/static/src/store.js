@@ -128,6 +128,21 @@ export default new Vuex.Store({
 				})
 			}
 			return sortedSections
+		},
+		neededDice (state) {
+			const ids = Object.keys(state.deck.cards)
+			if (!ids.length) return []
+			const cards = cardManager.idsToListing(ids)
+			return reduce(cards, (result, card) => {
+				if (card.dice && card.dice.length) {
+					for (let die of card.dice) {
+						if (result.indexOf(die) == -1) {
+							result.push(die)
+						}
+					}
+				}
+				return result
+			}, [])
 		}
 	},
 	mutations: {
