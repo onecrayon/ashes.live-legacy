@@ -156,6 +156,8 @@ export default new Vuex.Store({
 		setPhoenixborn (state, id) {
 			state.deck.phoenixborn = cardManager.cardById(id)
 			state.filters.phoenixborn = state.deck.phoenixborn ? state.deck.phoenixborn.name : null
+			// Clear out the search, since the listing contents are updating
+			state.filters.search = null
 			const ids = Object.keys(state.deck.cards)
 			if (state.deck.phoenixborn && ids.length) {
 				// Clear out any Phoenixborn-specific cards in the deck

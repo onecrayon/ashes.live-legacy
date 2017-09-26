@@ -173,7 +173,7 @@ a.card {
 	input[type="text"], input[type="password"], input[type="number"] {
 		.font-size(18);
 		.placeholder-color(@color-mid-gray);
-		border: 2px solid @color-gray;
+		border: 2px solid @color-dark-gray;
 		border-radius: 5px;
 		box-sizing: border-box;
 		margin: 0;
@@ -184,6 +184,7 @@ a.card {
 			.placeholder-color(@color-gray);
 			color: @color-mid-gray;
 			background: fadeout(@color-gray, 80%);
+			border-color: @color-gray;
 		}
 
 		&.error {
