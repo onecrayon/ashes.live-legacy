@@ -83,6 +83,15 @@ export default new Vuex.Store({
 				state.deck.dice[dieType] = 0
 			}
 		},
+		setCardQty (state, payload) {
+			if (!state.deck.cards[payload.id] && payload.qty > 0) {
+				Vue.set(state.deck.cards, payload.id, payload.qty)
+			} else if (state.deck.cards[payload.id] && payload.qty == 0) {
+				Vue.delete(state.deck.cards, payload.id)
+			} else {
+				state.deck.cards[payload.id] = payload.qty
+			}
+		},
 		// Filter methods
 		setSearch (state, search) {
 			state.filters.search = search

@@ -6,13 +6,17 @@
 				<img :src="card.images.thumbnail" :alt="card.name">
 				<div class="btn-group">
 					<button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 0)}">0</button
+						:class="{active: isQtyActive(card.id, 0)}"
+						@click="setCardQty(card.id, 0)">0</button
 					><button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 1)}">1</button
+						:class="{active: isQtyActive(card.id, 1)}"
+						@click="setCardQty(card.id, 1)">1</button
 					><button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 2)}">2</button
+						:class="{active: isQtyActive(card.id, 2)}"
+						@click="setCardQty(card.id, 2)">2</button
 					><button class="btn btn-qty"
-						:class="{active: isQtyActive(card.id, 3)}">3</button>
+						:class="{active: isQtyActive(card.id, 3)}"
+						@click="setCardQty(card.id, 3)">3</button>
 				</div>
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
@@ -62,9 +66,13 @@
 					|| card.life !== undefined
 					|| card.recover !== undefined
 			},
+			setCardQty (id, qty) {
+				this.$store.commit('setCardQty', {id: id, qty: qty})
+			},
 			isQtyActive (id, qty) {
-				// TODO: write actual counting logic
-				return qty == 0
+
+				return (!this.$store.state.deck.cards[id] && qty == 0)
+					|| this.$store.state.deck.cards[id] == qty
 			}
 		}
 	}

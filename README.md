@@ -57,8 +57,6 @@ TODO:
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine  icons, and add to the PHG font
 * Implement the deck meta section
-    * Implement dice choosing logic (when setting a die that has unset die beneath it, set those to the same type?)
-* Implement deck management via the number buttons
 * Implement site-wide "card detail" hover effect
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
 
