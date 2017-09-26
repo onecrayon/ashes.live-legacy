@@ -22,7 +22,7 @@
 			:disabled="!isShowingRelease(5)" title="Divine">D</button
 		><button v-on:click="toggleDie('sympathy')"
 			class="btn phg-sympathy-power" :class="{active: isDieActive('sympathy') }"
-			:disabled="!isShowingRelease(6)" title="Sympathy">S</button>
+			:disabled="!isShowingRelease(6)" title="Sympathy"></button>
 	</div>
 </template>
 

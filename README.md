@@ -55,7 +55,8 @@ TODO:
 
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
-* Create Divine and Sympathy dice icons, and add to the PHG font
+* Create Divine  icons, and add to the PHG font
+    * Fatten up Sympathy icons (need 7px minimum width lines to match existing icons)
 * Implement the deck meta section
     * Implement dice choosing logic (when setting a die that has unset die beneath it, set those to the same type?)
 * Implement deck management via the number buttons
