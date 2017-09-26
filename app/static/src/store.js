@@ -78,9 +78,26 @@ export default new Vuex.Store({
 				state.deck.dice[dieType] -= 1
 			}
 		},
+		clearDice (state) {
+			for (let dieType of Object.keys(state.deck.dice)) {
+				state.deck.dice[dieType] = 0
+			}
+		},
 		// Filter methods
 		setSearch (state, search) {
 			state.filters.search = search
+		},
+		diceToFilters (state) {
+			state.filters.diceLogic = 'or'
+			let activeDice = ['basic']
+			for (let dieType of Object.keys(state.deck.dice)) {
+				if (state.deck.dice[dieType]
+						&& (dieType != 'divine' || state.filters.releases.indexOf(5) > -1)
+						&& (dieType != 'sympathy' || state.filters.releases.indexOf(6) > -1)) {
+					activeDice.push(dieType)
+				}
+			}
+			state.filters.dice = activeDice
 		},
 		toggleDiceLogic (state) {
 			state.filters.diceLogic = state.filters.diceLogic == 'or' ? 'and' : 'or'

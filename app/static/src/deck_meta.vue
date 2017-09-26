@@ -36,6 +36,18 @@
 				<die-counter die-type="divine" class="col"></die-counter>
 				<die-counter die-type="sympathy" class="col"></die-counter>
 			</div>
+			<div class="dice-controls responsive-cols">
+				<div class="col">
+					<button class="btn btn-small" @click="clearDice" :disabled="diceEmpty">
+						<i class="fa fa-times"></i> Clear Dice
+					</button>
+				</div>
+				<div class="col">
+					<button class="btn btn-small" @click="setDiceFilters" :disabled="diceEmpty">
+						Set Dice Filter <i class="fa fa-arrow-right"></i>
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -79,6 +91,9 @@
 					nextIndex++
 				}
 				return diceArray
+			},
+			diceEmpty () {
+				return this.$store.getters.totalDice == 0
 			}
 		},
 		methods: {
@@ -91,6 +106,13 @@
 			clearDie (die) {
 				if (!die) return
 				this.$store.commit('decrementDie', die)
+			},
+			clearDice () {
+				this.$store.commit('clearDice')
+			},
+			setDiceFilters () {
+				this.$store.commit('diceToFilters')
+				this.$store.commit('filterCards')
 			},
 			save () {
 				// TODO
