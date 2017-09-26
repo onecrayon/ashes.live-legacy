@@ -18,7 +18,7 @@
 			<ul class="listing">
 				<no-results></no-results>
 				<li v-for="card of listing" :key="card.id">
-					<a v-on:click.prevent="phoenixborn = card.id" :href="cardUrl(card)" class="card">
+					<a @click.prevent="phoenixborn = card.id" :href="cardUrl(card)" class="card">
 						<img :src="card.images.compressed" :alt="card.name">
 					</a>
 				</li>

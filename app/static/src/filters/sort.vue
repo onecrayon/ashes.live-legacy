@@ -1,14 +1,14 @@
 <template>
 	<div class="btn-group">
-		<button v-on:click="toggleOrdering()"
+		<button @click="toggleOrdering()"
 			class="btn btn-small">Sort <i class="fa" :class="orderIconClass"></i></button
-		><button v-on:click="sortBy('name')"
+		><button @click="sortBy('name')"
 			class="btn btn-small" :class="{active: isSortedBy('name')}">Name</button
-		><button v-if="normalListing" v-on:click="sortBy('type')"
+		><button v-if="normalListing" @click="sortBy('type')"
 			class="btn btn-small" :class="{active: isSortedBy('type')}">Type</button
-		><button v-if="normalListing" v-on:click="sortBy('dice')"
+		><button v-if="normalListing" @click="sortBy('dice')"
 			class="btn btn-small" :class="{active: isSortedBy('dice')}">Dice</button
-		><button v-if="normalListing" v-on:click="sortBy('weight')"
+		><button v-if="normalListing" @click="sortBy('weight')"
 			class="btn btn-small" :class="{active: isSortedBy('weight')}">Cost</button
 		>
 	</div>

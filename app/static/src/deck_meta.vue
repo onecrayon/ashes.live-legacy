@@ -5,12 +5,12 @@
 				<div class="form-field">
 					<input v-model="title" :disabled="!phoenixborn" type="text" placeholder="Untitled deck">
 				</div>
-				<button v-on:click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
+				<button @click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 			</div>
 		</div>
 		<div v-if="phoenixborn">
 			<h3 class="phoenixborn-header">
-				<span v-on:click="clearPhoenixborn" class="fa fa-refresh refresh-btn" title="Swap Phoenixborn"></span>
+				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" title="Swap Phoenixborn"></span>
 				<a :href="cardUrl(phoenixborn)" class="card">{{ phoenixborn.name }}</a>
 			</h3>
 			<div class="phoenixborn-detail">

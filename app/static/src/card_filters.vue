@@ -6,22 +6,22 @@
 		</div>
 		<div class="secondary-filters responsive-cols">
 			<div class="btn-group col">
-				<button v-on:click="toggleCardType('Ally')"
+				<button @click="toggleCardType('Ally')"
 					class="btn btn-small" :class="{active: isTypeActive('Ally')}"
 					><i class="fa fa-users"></i> Ally</button
-				><button v-on:click="toggleCardType('Action Spell')"
+				><button @click="toggleCardType('Action Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Action Spell')}"
 					><i class="fa fa-asterisk"></i> Action</button
-				><button v-on:click="toggleCardType('Reaction Spell')"
+				><button @click="toggleCardType('Reaction Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Reaction Spell')}"
 					><i class="fa fa-bolt"></i> Reaction</button
-				><button v-on:click="toggleCardType('Alteration Spell')"
+				><button @click="toggleCardType('Alteration Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Alteration Spell')}"
 					><i class="fa fa-clone"></i> Alteration</button
-				><button v-on:click="toggleCardType('Ready Spell')"
+				><button @click="toggleCardType('Ready Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Ready Spell')}"
 					><i class="fa fa-share-square"></i> Ready</button
-				><button v-on:click="toggleCardType('summon')"
+				><button @click="toggleCardType('summon')"
 					class="btn btn-small" :class="{active: isTypeActive('summon')}"
 					><i class="fa fa-plus-square"></i> Summon</button
 				>
@@ -31,13 +31,13 @@
 		<div class="responsive-cols listing-controls">
 			<sort-filter class="col"></sort-filter>
 			<div class="btn-group col">
-				<button v-on:click="setListType('grid')"
+				<button @click="setListType('grid')"
 					class="btn btn-small" :class="{active: isListType('grid')}" disabled
 					><i class="fa fa-th" title="Grid"></i></button
-				><button v-on:click="setListType('list')"
+				><button @click="setListType('list')"
 					class="btn btn-small" :class="{active: isListType('list')}" disabled
 					><i class="fa fa-th-list" title="List"></i></button
-				><button v-on:click="setListType('simple')"
+				><button @click="setListType('simple')"
 					class="btn btn-small" :class="{active: isListType('simple')}" disabled
 					><i class="fa fa-bars" title="Simple List"></i></button
 				>

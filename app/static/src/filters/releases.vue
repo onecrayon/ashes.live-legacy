@@ -1,12 +1,12 @@
 <template>
 	<div class="btn-group">
-		<button v-on:click="toggleReleases([0])"
+		<button @click="toggleReleases([0])"
 			class="btn btn-small" :class="{active: hasReleases([0])}"
 			>Core</button
-		><button v-on:click="toggleReleases([1, 2, 3, 4, 5, 6])"
+		><button @click="toggleReleases([1, 2, 3, 4, 5, 6])"
 			class="btn btn-small" :class="{active: hasReleases([1, 2, 3, 4, 5, 6])}"
 			title="Expansions">Exp.</button
-		><button v-on:click="toggleReleases([101, 102, 103])"
+		><button @click="toggleReleases([101, 102, 103])"
 			class="btn btn-small" :class="{active: hasReleases([101, 102, 103])}"
 			title="Promos">Pro.</button
 		>
