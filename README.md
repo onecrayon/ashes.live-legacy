@@ -57,6 +57,9 @@ TODO:
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine icons, and add to the PHG font
 * Implement site-wide "card detail" hover effect
+    * Figure out how to trigger this for card links rendered in lists (convert all to components, similar to `card_codes.vue`?)
+    * Style the popup, since it's butt-ugly right now
+    * Set explicit height on the popup so it can be positioned properly prior to image loading
 * Implement deck saving
 * Implement "my decks" listing page
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)

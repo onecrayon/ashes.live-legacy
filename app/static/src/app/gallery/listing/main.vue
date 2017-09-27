@@ -22,15 +22,18 @@
 				</ul>
 			</div>
 			<ol class="costs">
-				<li v-for="cost of card.cost" class="cost" v-html="parseCardCodes(cost)"></li>
+				<li v-for="cost of card.cost" class="cost">
+					<card-codes :content="cost"></card-codes>
+				</li>
 			</ol>
 		</li>
 	</ul>
 </template>
 
 <script>
-	import {cardUrl, parseCardCodes} from 'app/utils'
+	import {cardUrl} from 'app/utils'
 	import {filter, startsWith} from 'lodash'
+	import CardCodes from 'app/components/card_codes.vue'
 	import CardEffects from './card_effects.vue'
 	import NoResults from './no_results.vue'
 	import QtyButtons from './qty_buttons.vue'
@@ -39,7 +42,8 @@
 		components: {
 			'card-effects': CardEffects,
 			'no-results': NoResults,
-			'qty-buttons': QtyButtons
+			'qty-buttons': QtyButtons,
+			'card-codes': CardCodes
 		},
 		computed: {
 			listing () {
@@ -48,7 +52,6 @@
 		},
 		methods: {
 			cardUrl,
-			parseCardCodes,
 			startsWith,
 			hasStatline (card) {
 				return card.attack !== undefined

@@ -2,12 +2,12 @@
 	<ol class="card-effects">
 		<li v-if="isReadySummon(card)" class="summon-effect">
 			<div class="costs">
-				<span v-for="cost of card.text[0].cost" class="cost" v-html="parseCardCodes(cost)"></span>: 
+				<card-codes v-for="(cost, cost_index) of card.text[0].cost" :key="card.id + '-effect-0-cost-' + cost_index" class="cost" :content="cost"></card-codes>: 
 			</div>
 			<div class="conjuration"
 				><h4><a :href="cardUrl(card.conjurations[0])" class="card">{{ card.conjurations[0].name  }}</a></h4
-				><span v-for="effect of namedEffects(card.conjurations[0].text)" class="effect"
-					:title="effectTextTooltip(effect, true)"
+				><span v-for="(effect, effect_index) of namedEffects(card.conjurations[0].text)" class="effect"
+					:title="effectTextTooltip(effect, true)" :key="card.conjurations[0].id + '-effect-' + effect_index"
 					>{{ effect.name }}</span
 				><ul class="statline"
 					><li v-if="card.conjurations[0].attack !== undefined" class="attack">Attack {{ card.conjurations[0].attack }}</li
@@ -16,22 +16,24 @@
 				></ul
 			></div>
 		</li>
-		<li v-else v-for="effect of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']">
+		<li v-else v-for="(effect, effect_index) of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']"
+				:key="card.id + '-effect-' + effect_index">
 			<strong v-if="effect.name" :title="effectTextTooltip(effect)">
 				{{ effect.name }}</strong
 			><span v-if="effect.cost" class="costs"
 				><span v-if="effect.name">: </span
-			><span v-for="cost of effect.cost" class="cost"
-					v-html="parseCardCodes(cost)"></span></span
+			><card-codes v-for="(cost, cost_index) of effect.cost" class="cost"
+					:content="cost" :key="card.id + '-effect-' + effect_index + '-cost-' + cost_index"></card-codes></span
 			><span v-if="!effect.name || isEffectTextException(effect)"
 				><span v-if="effect.name || effect.cost">: </span
-			><span v-html="parseCardCodes(effect.text)"></span></span>
+			><card-codes :content="effect.text"></card-codes></span>
 		</li>
 	</ol>
 </template>
 
 <script>
-	import {cardUrl, parseCardCodes} from 'app/utils'
+	import {cardUrl} from 'app/utils'
+	import CardCodes from 'app/components/card_codes.vue'
 	import {filter, startsWith} from 'lodash'
 
 	export default {
@@ -39,9 +41,11 @@
 			'card',
 			'allText'
 		],
+		components: {
+			'card-codes': CardCodes
+		},
 		methods: {
 			cardUrl,
-			parseCardCodes,
 			namedEffects (effects) {
 				return filter(effects, (effect) => {
 					return !!effect.name

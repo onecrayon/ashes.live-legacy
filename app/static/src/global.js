@@ -1,3 +1,5 @@
+import tippy from 'tippy.js'
+
 var globals = window.globals || {}
 
 globals.cardUrl = function (data) {
@@ -40,3 +42,21 @@ globals.parseCardCodes = function (input) {
 		].join('')
 	})
 }
+
+globals.initCardPopups = function (target) {
+	// Setup card hover tooltips
+	const tip = tippy(target, {
+		theme: 'transparent',
+		html: '#card-detail-popup',
+		onShow: function () {
+			console.log('loading?')
+			// `this` inside callbacks refers to the popper element
+			const reference = tip.getReferenceElement(this)
+			const imgUrl = reference.href.replace(/(\/cards\/.+)$/i, '/images$1.png')
+			const content = this.querySelector('.tippy-tooltip-content')
+			content.innerHTML = '<img src="' + imgUrl + '" alt="' + reference.textContent + '" />'
+		}
+	})
+}
+// Init popups for statically-rendered content
+globals.initCardPopups('.card')

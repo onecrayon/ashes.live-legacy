@@ -93,6 +93,7 @@
 		var globals = window.globals || {}
 		{% if cards_json %}globals.cardData = {{ cards_json | safe }}{% endif %}
 	</script>
+	<div id="card-detail-popup" style="display: none;"></div>
 	<script type="text/javascript" src="/js/global.js"></script>
 	{% block app %}{% endblock %}
 </body>

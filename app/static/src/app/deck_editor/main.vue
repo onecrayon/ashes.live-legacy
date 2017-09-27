@@ -81,7 +81,7 @@
 <script>
 	import qwest from 'qwest'
 	import {cardUrl} from 'app/utils'
-	import TextEditor from 'app/forms/text_editor.vue'
+	import TextEditor from 'app/components/text_editor.vue'
 	import CardEffects from 'app/gallery/listing/card_effects.vue'
 	import QtyButtons from 'app/gallery/listing/qty_buttons.vue'
 	import DieCounter from './die_counter.vue'

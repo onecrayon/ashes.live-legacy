@@ -6,8 +6,8 @@
 
 			<p class="help-text">
 				<em>Supports card codes:</em><br>
-				<code>[[Anchornaut]]</code> <i class="fa fa-arrow-right"></i> <span v-html="parseCardCodes('[[Anchornaut]]')"></span><br>
-				<code>[[main]] - [[charm:class]]</code> <i class="fa fa-arrow-right"></i> <span v-html="parseCardCodes('[[main]] - [[charm:class]]')"></span><br>
+				<code>[[Anchornaut]]</code> <i class="fa fa-arrow-right"></i> <card-codes content="[[Anchornaut]]"></card-codes><br>
+				<code>[[main]] - [[charm:class]]</code> <i class="fa fa-arrow-right"></i> <card-codes content="[[main]] - [[charm:class]]"></card-codes><br>
 				<a href="#" @click.prevent="showAll = !showAll">Toggle full list</a>
 			</p>
 		</div>
@@ -17,7 +17,7 @@
 			<table class="help-text" cellpadding="0" cellspacing="0"><tbody>
 				<tr v-for="code of exampleCardCodes" :key="code">
 					<td><code>{{ code }}</code></td>
-					<td v-html="parseCardCodes(code)"></td>
+					<td><card-codes :content="code"></card-codes></td>
 				</tr>
 			</tbody></table>
 		</div>
@@ -25,11 +25,14 @@
 </template>
 
 <script>
-	import {parseCardCodes} from 'app/utils'
+	import CardCodes from 'app/components/card_codes.vue'
 	import {reduce} from 'lodash'
 
 	export default {
 		props: ['field', 'fieldName'],
+		components: {
+			'card-codes': CardCodes
+		},
 		data: function () {
 			return {
 				showAll: false,
@@ -45,9 +48,6 @@
 					'[[basic]]'
 				])
 			}
-		},
-		methods: {
-			parseCardCodes
 		}
 	}
 </script>
