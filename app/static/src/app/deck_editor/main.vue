@@ -165,10 +165,8 @@
 			},
 			save () {
 				// TODO
-				var title = this.$store.state.deck.title
-				console.log('Saving? ' + title)
-				qwest.get('/api').then(function(xhr, response) {
-					console.log('"Saved" deck (' + title + ') with API version: ' + response.version)
+				qwest.post('/api/decks/', this.$store.state.deck, {dataType: 'json'}).then(function(xhr, response) {
+					console.log('server response:', response)
 				}).catch(function(error, xhr, response) {
 					console.log('Failed to save deck: ' + JSON.stringify(response))
 				})
