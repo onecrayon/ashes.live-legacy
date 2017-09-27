@@ -8,7 +8,7 @@
 				<em>Supports card codes:</em><br>
 				<code>[[Anchornaut]]</code> <i class="fa fa-arrow-right"></i> <span v-html="parseCardCodes('[[Anchornaut]]')"></span><br>
 				<code>[[main]] - [[charm:class]]</code> <i class="fa fa-arrow-right"></i> <span v-html="parseCardCodes('[[main]] - [[charm:class]]')"></span><br>
-				<a href="#" @click="showAll = !showAll">Toggle full list</a>
+				<a href="#" @click.prevent="showAll = !showAll">Toggle full list</a>
 			</p>
 		</div>
 

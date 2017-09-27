@@ -93,7 +93,7 @@
 		var globals = window.globals || {}
 		{% if cards_json %}globals.cardData = {{ cards_json | safe }}{% endif %}
 	</script>
-	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="/js/global.js"></script>
 	{% block app %}{% endblock %}
 </body>
 </html>
