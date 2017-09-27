@@ -56,7 +56,7 @@
 		computed: {
 			phoenixborn: {
 				get () {
-					return this.$store.state.deck.phoenixborn
+					return this.$store.getters.phoenixborn
 				},
 				set (cardId) {
 					this.$store.commit('setPhoenixborn', cardId)

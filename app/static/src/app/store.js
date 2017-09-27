@@ -71,12 +71,15 @@ export default new Vuex.Store({
 		}
 	},
 	getters: {
+		phoenixborn (state) {
+			return cardManager.cardById(state.deck.phoenixborn)
+		},
 		totalDice (state) {
 			return reduce(state.deck.dice, (result, value, key) => {
 				return result + value
 			}, 0)
 		},
-		deckSections (state) {
+		deckSections (state, getters) {
 			const ids = Object.keys(state.deck.cards)
 			if (!ids.length) return []
 			let sections = {}
@@ -92,7 +95,7 @@ export default new Vuex.Store({
 				})
 				gatherConjurations(card, conjurations)
 			}
-			gatherConjurations(state.deck.phoenixborn, conjurations)
+			gatherConjurations(getters.phoenixborn, conjurations)
 			let sectionTitles = Object.keys(sections)
 			sectionTitles.sort((a, b) => {
 				return cardTypeOrder.indexOf(a) < cardTypeOrder.indexOf(b) ? -1 : 1
@@ -150,16 +153,17 @@ export default new Vuex.Store({
 			state.deck.description = description
 		},
 		setPhoenixborn (state, id) {
-			state.deck.phoenixborn = cardManager.cardById(id)
-			state.filters.phoenixborn = state.deck.phoenixborn ? state.deck.phoenixborn.name : null
+			const phoenixborn = cardManager.cardById(id)
+			state.deck.phoenixborn = id
+			state.filters.phoenixborn = phoenixborn ? phoenixborn.name : null
 			// Clear out the search, since the listing contents are updating
 			state.filters.search = null
 			const ids = Object.keys(state.deck.cards)
-			if (state.deck.phoenixborn && ids.length) {
+			if (phoenixborn && ids.length) {
 				// Clear out any Phoenixborn-specific cards in the deck
 				const cards = cardManager.idsToListing(ids)
 				for (let card of cards) {
-					if (card.phoenixborn && card.phoenixborn != state.deck.phoenixborn.name) {
+					if (card.phoenixborn && card.phoenixborn != phoenixborn.name) {
 						Vue.delete(state.deck.cards, card.id)
 					}
 				}
@@ -273,8 +277,11 @@ export default new Vuex.Store({
 					onlyPromos = false
 				}
 			}
-			if (onlyPromos && state.deck.phoenixborn.release < 100) {
-				state.filters.releases = [0]
+			if (onlyPromos) {
+				const phoenixborn = cardManager.cardById(state.deck.phoenixborn)
+				if (phoenixborn.release < 100) {
+					state.filters.releases = [0]
+				}
 			}
 		},
 		// Sorting methods

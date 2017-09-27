@@ -117,7 +117,7 @@
 				}
 			},
 			phoenixborn () {
-				return this.$store.state.deck.phoenixborn
+				return this.$store.getters.phoenixborn
 			},
 			diceList () {
 				let diceArray = new Array(10)
