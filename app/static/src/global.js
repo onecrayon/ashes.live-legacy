@@ -1,3 +1,5 @@
+var globals = window.globals || {}
+
 globals.cardUrl = function (data) {
 	return '/cards/' + data.stub
 }
@@ -10,7 +12,7 @@ globals.parseCardCodes = function (input) {
 		if (dash) {
 			return ' <span class="divider"></span> '
 		}
-		var lowerPrimary = primary.toLowerCase()
+		const lowerPrimary = primary.toLowerCase()
 		secondary = secondary && secondary.toLowerCase()
 		if (['discard', 'exhaust'].indexOf(lowerPrimary) > -1) {
 			return ['<span class="phg-', lowerPrimary, '" title="', primary, '"></span>'].join('')
