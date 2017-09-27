@@ -49,14 +49,10 @@ export default new Vuex.Store({
 			title: '',
 			description: '',
 			phoenixborn: null,
-			dice: {
-				'ceremonial': 0,
-				'charm': 0,
-				'illusion': 0,
-				'natural': 0,
-				'divine': 0,
-				'sympathy': 0
-			},
+			dice: reduce(globals.diceData, (result, value) => {
+				result[value] = 0
+				return result
+			}, {}),
 			cards: {}
 		},
 		listing: [],

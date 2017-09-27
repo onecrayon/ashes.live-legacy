@@ -38,12 +38,7 @@
 				</li>
 			</ul>
 			<div class="dice-management responsive-cols">
-				<die-counter die-type="ceremonial" class="col"></die-counter>
-				<die-counter die-type="charm" class="col"></die-counter>
-				<die-counter die-type="illusion" class="col"></die-counter>
-				<die-counter die-type="natural" class="col"></die-counter>
-				<die-counter die-type="divine" class="col"></die-counter>
-				<die-counter die-type="sympathy" class="col"></die-counter>
+				<die-counter v-for="dieType of diceNames" :key="dieType" :die-type="dieType" class="col"></die-counter>
 			</div>
 			<div class="dice-controls responsive-cols">
 				<div class="col">
@@ -145,6 +140,9 @@
 			},
 			deckSections () {
 				return this.$store.getters.deckSections
+			},
+			diceNames () {
+				return globals.diceData
 			}
 		},
 		methods: {

@@ -1,14 +1,11 @@
 import qwest from 'qwest'
-import {filter, includes, isEqual, startsWith} from 'lodash'
+import {filter, includes, isEqual, reduce, startsWith} from 'lodash'
 
-const diceWeightMap = {
-	'ceremonial': 1,
-	'charm': 2,
-	'illusion': 3,
-	'natural': 4,
-	'divine': 5,
-	'sympathy': 6
-}
+const diceWeightMap = reduce(globals.diceData, (result, value, index) => {
+	result[value] = index + 1
+	return result
+}, {})
+
 function getDiceWeight (dice) {
 	// First, determine our diceWeightMap numbers
 	let weights = []

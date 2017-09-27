@@ -26,32 +26,24 @@
 
 <script>
 	import {parseCardCodes} from 'app/utils'
+	import {reduce} from 'lodash'
 
 	export default {
 		props: ['field', 'fieldName'],
 		data: function () {
 			return {
 				showAll: false,
-				exampleCardCodes: [
+				exampleCardCodes: reduce(globals.diceData, (result, value) => {
+					result.push('[[' + value + ']]', '[[' + value + ':class]]')
+					return result
+				}, [
 					'[[Hammer Knight]]',
 					'[[main]]',
 					'[[side]]',
 					'[[exhaust]]',
 					'[[discard]]',
-					'[[basic]]',
-					'[[ceremonial]]',
-					'[[ceremonial:class]]',
-					'[[charm]]',
-					'[[charm:class]]',
-					'[[illusion]]',
-					'[[illusion:class]]',
-					'[[natural]]',
-					'[[natural:class]]',
-					'[[divine]]',
-					'[[divine:class]]',
-					'[[sympathy]]',
-					'[[sympathy:class]]'
-				]
+					'[[basic]]'
+				])
 			}
 		},
 		methods: {
