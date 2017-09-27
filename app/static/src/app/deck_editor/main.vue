@@ -20,7 +20,7 @@
 		<div v-if="activeTab == 'deck' && phoenixborn">
 			<h3 class="phoenixborn-header">
 				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" title="Swap Phoenixborn"></span>
-				<a :href="cardUrl(phoenixborn)" class="card">{{ phoenixborn.name }}</a>
+				<card-link :card="phoenixborn"></card-link>
 			</h3>
 			<div class="phoenixborn-detail">
 				<ul class="statline">
@@ -58,12 +58,12 @@
 				<ul>
 					<li v-for="card of section.contents" :key="card.data.id">
 						<div v-if="section.title == 'Conjuration Deck'">
-							{{ card.count }}&times; <a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
+							{{ card.count }}&times; <card-link :card="card.data"></card-link>
 						</div>
 						<div v-else>
 							<qty-buttons :card="card.data" classes="btn-small"
 								zero-output="<i class='fa fa-times' title='Remove'></i>"></qty-buttons>
-							<a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
+							<card-link :card="card.data"></card-link>
 							<span v-if="card.data.phoenixborn" class="phoenixborn" :title="card.data.phoenixborn">
 								({{ card.data.phoenixborn.split(' ')[0] }})
 							</span>
@@ -80,8 +80,8 @@
 
 <script>
 	import qwest from 'qwest'
-	import {cardUrl} from 'app/utils'
 	import TextEditor from 'app/components/text_editor.vue'
+	import CardLink from 'app/components/card_link.vue'
 	import CardEffects from 'app/gallery/listing/card_effects.vue'
 	import QtyButtons from 'app/gallery/listing/qty_buttons.vue'
 	import DieCounter from './die_counter.vue'
@@ -89,9 +89,10 @@
 	export default {
 		components: {
 			'card-effects': CardEffects,
+			'card-link': CardLink,
 			'qty-buttons': QtyButtons,
 			'die-counter': DieCounter,
-			'text-editor': TextEditor
+			'text-editor': TextEditor,
 		},
 		data: function () {
 			return {
@@ -146,7 +147,6 @@
 			}
 		},
 		methods: {
-			cardUrl,
 			clearPhoenixborn () {
 				this.$store.commit('setTypes', ['Phoenixborn'])
 				this.$store.commit('setPhoenixborn', null)

@@ -8,7 +8,7 @@
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
 				<h3>
-					<a :href="cardUrl(card)" class="card">{{ card.name }}</a>
+					<card-link :card="card"></card-link>
 					<span v-if="card.phoenixborn" class="phoenixborn" :title="card.phoenixborn">
 						({{ card.phoenixborn.split(' ')[0] }})
 					</span>
@@ -31,9 +31,9 @@
 </template>
 
 <script>
-	import {cardUrl} from 'app/utils'
 	import {filter, startsWith} from 'lodash'
 	import CardCodes from 'app/components/card_codes.vue'
+	import CardLink from 'app/components/card_link.vue'
 	import CardEffects from './card_effects.vue'
 	import NoResults from './no_results.vue'
 	import QtyButtons from './qty_buttons.vue'
@@ -41,6 +41,7 @@
 	export default {
 		components: {
 			'card-effects': CardEffects,
+			'card-link': CardLink,
 			'no-results': NoResults,
 			'qty-buttons': QtyButtons,
 			'card-codes': CardCodes
@@ -51,7 +52,6 @@
 			}
 		},
 		methods: {
-			cardUrl,
 			startsWith,
 			hasStatline (card) {
 				return card.attack !== undefined

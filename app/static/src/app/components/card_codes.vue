@@ -3,16 +3,16 @@
 </template>
 
 <script>
-	import {initCardPopups, parseCardCodes} from 'app/utils'
+	import {initCardTooltips, teardownTooltips, parseCardCodes} from 'app/utils'
 
 	export default {
 		props: ['content'],
-		mounted: function () {
-			const els = Array.from(this.$el.querySelectorAll('.card'))
-			if (els && els.length) {
-				initCardPopups(els)
-			}
+		mounted: initCardTooltips,
+		updated: function () {
+			teardownTooltips.call(this)
+			initCardTooltips.call(this)
 		},
+		beforeDestroy: teardownTooltips,
 		computed: {
 			parsedContent () {
 				return parseCardCodes(this.content)

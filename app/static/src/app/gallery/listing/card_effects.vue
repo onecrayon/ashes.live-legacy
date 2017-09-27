@@ -5,7 +5,7 @@
 				<card-codes v-for="(cost, cost_index) of card.text[0].cost" :key="card.id + '-effect-0-cost-' + cost_index" class="cost" :content="cost"></card-codes>: 
 			</div>
 			<div class="conjuration"
-				><h4><a :href="cardUrl(card.conjurations[0])" class="card">{{ card.conjurations[0].name  }}</a></h4
+				><h4><card-link :card="card.conjurations[0]"></card-link></h4
 				><span v-for="(effect, effect_index) of namedEffects(card.conjurations[0].text)" class="effect"
 					:title="effectTextTooltip(effect, true)" :key="card.conjurations[0].id + '-effect-' + effect_index"
 					>{{ effect.name }}</span
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-	import {cardUrl} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
+	import CardLink from 'app/components/card_link.vue'
 	import {filter, startsWith} from 'lodash'
 
 	export default {
@@ -42,10 +42,10 @@
 			'allText'
 		],
 		components: {
-			'card-codes': CardCodes
+			'card-codes': CardCodes,
+			'card-link': CardLink
 		},
 		methods: {
-			cardUrl,
 			namedEffects (effects) {
 				return filter(effects, (effect) => {
 					return !!effect.name

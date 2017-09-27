@@ -432,6 +432,32 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 	}
 }
 
+.card-popup {
+	height: 418px;
+	width: 299px;
+	position: relative;
+
+	.card-holder {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.loading-text {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		text-align: center;
+		color: @color-dark-gray;
+	}
+
+	img {
+		border-radius: 12px;
+		box-shadow: 0 0 3px @color-black;
+	}
+}
+
 /* @group Main content */
 
 #page, #footer {
