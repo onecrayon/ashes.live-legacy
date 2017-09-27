@@ -900,9 +900,28 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		.mixin-flex(1 1 auto);
 		padding: 10px 10px 5px;
 		position: relative;
+		height: 113px;
+		box-sizing: border-box;
+		overflow: hidden;
 
 		&.with-statline {
 			padding-bottom: 16px;
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			height: 20px;
+			width: 100%;
+			background-image: linear-gradient(to top, #fff, #fff 5px, rgba(255, 255, 255, 0));
+			z-index: 1;
+		}
+
+		&.with-statline:after {
+			height: 31px;
+			background-image: linear-gradient(to top, #fff, #fff 16px, rgba(255, 255, 255, 0));
 		}
 
 		h3 {
@@ -975,9 +994,11 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		position: absolute;
 		bottom: 0;
 		left: 10px;
+		z-index: 10;
 
 		li {
 			float: left;
+			background: @color-white;
 			border: 1px solid;
 			border-bottom: none;
 			padding: 1px 3px 0;

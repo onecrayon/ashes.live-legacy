@@ -63,5 +63,4 @@ TODO:
 
 Optional before release:
 
-* Implement "set height" behavior for card details, with expansion button?
 * Implement different listing styles, and refactor into components
