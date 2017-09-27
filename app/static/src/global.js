@@ -1,4 +1,5 @@
 import tippy from 'tippy.js'
+import {escape} from 'lodash'
 
 var globals = window.globals || {}
 
@@ -10,11 +11,11 @@ globals.diceData = [
 	'divine', 'sympathy'
 ]
 globals.parseCardCodes = function (input) {
-	return input.replace(/\[\[([a-z -]+)(?::([a-z]+))?\]\]|( - )/ig, function (_, primary, secondary, dash) {
+	return input.replace(/\[\[([a-z' -]+)(?::([a-z]+))?\]\]|( - )/ig, function (_, primary, secondary, dash) {
 		if (dash) {
 			return ' <span class="divider"></span> '
 		}
-		const lowerPrimary = primary.toLowerCase()
+		const lowerPrimary = primary.toLowerCase().replace('\'', '')
 		secondary = secondary && secondary.toLowerCase()
 		if (['discard', 'exhaust'].indexOf(lowerPrimary) > -1) {
 			return ['<span class="phg-', lowerPrimary, '" title="', primary, '"></span>'].join('')
@@ -31,14 +32,14 @@ globals.parseCardCodes = function (input) {
 		} else if (lowerPrimary == 'side') {
 			secondary = 'action'
 		} else if (secondary) {
-			return ['<i>', lowerPrimary, (secondary ? ' ' + secondary : ''), '</i>'].join('')
+			return ['<i>', escape(lowerPrimary), (secondary ? ' ' + escape(secondary) : ''), '</i>'].join('')
 		} else {
-			var data = {stub: lowerPrimary.replace(' ', '-')}
-			return ['<a href="', globals.cardUrl(data), '" class="card">', primary, '</a>'].join('')
+			var data = {stub: escape(lowerPrimary.replace(' ', '-'))}
+			return ['<a href="', globals.cardUrl(data), '" class="card">', escape(primary), '</a>'].join('')
 		}
 		return [
-			'<span class="phg-', lowerPrimary, '-', secondary, '" title="',
-			primary, (secondary ? ' ' + secondary : ''), '"></span>'
+			'<span class="phg-', escape(lowerPrimary), '-', escape(secondary), '" title="',
+			escape(primary), (secondary ? ' ' + escape(secondary) : ''), '"></span>'
 		].join('')
 	})
 }
