@@ -15,4 +15,5 @@ node_modules/
 
 # Built development files
 /app/static/js/app.js
+/app/static/js/global.js
 /app/static/css/styles.css

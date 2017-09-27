@@ -47,10 +47,10 @@
 </template>
 
 <script>
-	import DiceFilter from './filters/dice.vue'
-	import ReleaseFilter from './filters/releases.vue'
-	import SortFilter from './filters/sort.vue'
-	import TextFilter from './filters/text.vue'
+	import DiceFilter from './dice.vue'
+	import ReleaseFilter from './releases.vue'
+	import SortFilter from './sort.vue'
+	import TextFilter from './text.vue'
 	import {includes} from 'lodash'
 
 	export default {

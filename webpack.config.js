@@ -5,11 +5,12 @@ var debug = process.env.NODE_ENV !== 'production'
 
 module.exports = {
 	entry: {
-		app: './app/static/src/app.js'
+		'app': path.resolve(__dirname, './app/static/src/app.js'),
+		'global' : path.resolve(__dirname, './app/static/src/global.js')
 	},
 	output: {
-		filename: '[name]' + (!debug ? '.min' : '')  + '.js',
-		path: path.resolve(__dirname, 'app/static/js')
+		path: path.resolve(__dirname, 'app/static/js'),
+		filename: '[name]' + (!debug ? '.min' : '')  + '.js'
 	},
 	module: {
 		rules: [
@@ -23,6 +24,11 @@ module.exports = {
 				include: [path.resolve(__dirname, 'app/static/src')]
 			}
 		]
+	},
+	resolve: {
+		alias: {
+			'app': path.resolve(__dirname, 'app/static/src/app')
+		}
 	},
 	plugins: debug ? [] : [
 		new LodashModuleReplacementPlugin,

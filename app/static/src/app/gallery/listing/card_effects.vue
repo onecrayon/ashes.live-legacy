@@ -31,7 +31,7 @@
 </template>
 
 <script>
-	import {cardUrl, parseCardCodes} from '../utils'
+	import {cardUrl, parseCardCodes} from 'app/utils'
 	import {filter, startsWith} from 'lodash'
 
 	export default {

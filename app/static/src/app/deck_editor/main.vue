@@ -85,11 +85,11 @@
 
 <script>
 	import qwest from 'qwest'
-	import {cardUrl} from './utils'
-	import TextEditor from './text_editor.vue'
-	import CardEffects from './listing/card_effects.vue'
-	import QtyButtons from './listing/qty_buttons.vue'
-	import DieCounter from './deck/die_counter.vue'
+	import {cardUrl} from 'app/utils'
+	import TextEditor from 'app/forms/text_editor.vue'
+	import CardEffects from 'app/gallery/listing/card_effects.vue'
+	import QtyButtons from 'app/gallery/listing/qty_buttons.vue'
+	import DieCounter from './die_counter.vue'
 
 	export default {
 		components: {

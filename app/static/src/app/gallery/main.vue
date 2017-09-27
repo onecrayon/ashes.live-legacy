@@ -28,14 +28,14 @@
 </template>
 
 <script>
-	import CardFilters from './card_filters.vue'
-	import CardListing from './card_listing.vue'
+	import CardFilters from './filters/main.vue'
+	import CardListing from './listing/main.vue'
 	import DiceFilter from './filters/dice.vue'
 	import ReleaseFilter from './filters/releases.vue'
 	import SortFilter from './filters/sort.vue'
 	import TextFilter from './filters/text.vue'
 	import NoResults from './listing/no_results.vue'
-	import {cardUrl} from './utils'
+	import {cardUrl} from 'app/utils'
 	
 	export default {
 		components: {

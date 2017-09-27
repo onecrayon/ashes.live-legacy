@@ -25,7 +25,7 @@
 </template>
 
 <script>
-	import {parseCardCodes} from './utils'
+	import {parseCardCodes} from 'app/utils'
 
 	export default {
 		props: ['field', 'fieldName'],
