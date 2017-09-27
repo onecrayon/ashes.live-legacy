@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import store from './store'
-import DeckMeta from './deck_meta.vue'
+import DeckEditor from './deck_editor.vue'
 import CardGallery from './card_gallery.vue'
 
 /* eslint-disable no-new */
@@ -14,7 +14,7 @@ var vm = new Vue({
 				id: 'main'
 			}
 		}, [
-			createElement(DeckMeta),
+			createElement(DeckEditor),
 			createElement(CardGallery)
 		])
 	}

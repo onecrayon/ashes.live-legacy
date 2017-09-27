@@ -22,14 +22,14 @@
 				</ul>
 			</div>
 			<ol class="costs">
-				<li v-for="cost of card.cost" class="cost" v-html="parseCardText(cost)"></li>
+				<li v-for="cost of card.cost" class="cost" v-html="parseCardCodes(cost)"></li>
 			</ol>
 		</li>
 	</ul>
 </template>
 
 <script>
-	import {cardUrl, parseCardText} from './utils'
+	import {cardUrl, parseCardCodes} from './utils'
 	import {filter, startsWith} from 'lodash'
 	import CardEffects from './listing/card_effects.vue'
 	import NoResults from './listing/no_results.vue'
@@ -48,7 +48,7 @@
 		},
 		methods: {
 			cardUrl,
-			parseCardText,
+			parseCardCodes,
 			startsWith,
 			hasStatline (card) {
 				return card.attack !== undefined

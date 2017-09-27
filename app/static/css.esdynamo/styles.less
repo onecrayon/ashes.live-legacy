@@ -170,7 +170,8 @@ a.card {
 		display: inline;
 	}
 	
-	input[type="text"], input[type="password"], input[type="number"] {
+	input[type="text"], input[type="password"], input[type="number"],
+	textarea {
 		.font-size(18);
 		.placeholder-color(@color-mid-gray);
 		border: 2px solid @color-dark-gray;
@@ -289,6 +290,44 @@ a.card {
 	.btn + .btn:last-child {
 		border-radius: 0 5px 5px 0;
 		border-right-width: 2px;
+	}
+}
+
+.help-text {
+	.font-size(12);
+	.line-height(16);
+	margin-bottom: 20px;
+
+	[class^="phg-"], [class*=" phg-"] {
+		.font-size(15);
+	}
+}
+
+table.help-text {
+	td:first-of-type {
+		text-align: right;
+		border-right: 1px solid @color-gray;
+	}
+
+	td {
+		padding: 3px 5px;
+	}
+}
+
+.tabs {
+	border-bottom: 2px solid @color-dark-gray;
+	text-align: center;
+
+	.btn {
+		border: none;
+	}
+
+	.btn:first-child {
+		border-radius: 5px 0 0 0;
+	}
+
+	.btn + .btn:last-child {
+		border-radius: 0 5px 0 0;
 	}
 }
 
@@ -647,6 +686,10 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 	}
 }
 
+.deck-header .input-group {
+	margin-bottom: 10px;
+}
+
 .phoenixborn-header {
 	text-align: center;
 
@@ -743,6 +786,14 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 	.phoenixborn {
 		color: @color-mid-gray;
+	}
+}
+
+.editor .form-field {
+	max-width: none;
+
+	textarea {
+		height: 16rem;
 	}
 }
 

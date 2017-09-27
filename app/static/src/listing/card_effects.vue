@@ -2,7 +2,7 @@
 	<ol class="card-effects">
 		<li v-if="isReadySummon(card)" class="summon-effect">
 			<div class="costs">
-				<span v-for="cost of card.text[0].cost" class="cost" v-html="parseCardText(cost)"></span>: 
+				<span v-for="cost of card.text[0].cost" class="cost" v-html="parseCardCodes(cost)"></span>: 
 			</div>
 			<div class="conjuration"
 				><h4><a :href="cardUrl(card.conjurations[0])" class="card">{{ card.conjurations[0].name  }}</a></h4
@@ -22,16 +22,16 @@
 			><span v-if="effect.cost" class="costs"
 				><span v-if="effect.name">: </span
 			><span v-for="cost of effect.cost" class="cost"
-					v-html="parseCardText(cost)"></span></span
+					v-html="parseCardCodes(cost)"></span></span
 			><span v-if="!effect.name || isEffectTextException(effect)"
 				><span v-if="effect.name || effect.cost">: </span
-			><span v-html="parseCardText(effect.text)"></span></span>
+			><span v-html="parseCardCodes(effect.text)"></span></span>
 		</li>
 	</ol>
 </template>
 
 <script>
-	import {cardUrl, parseCardText} from '../utils'
+	import {cardUrl, parseCardCodes} from '../utils'
 	import {filter, startsWith} from 'lodash'
 
 	export default {
@@ -41,7 +41,7 @@
 		],
 		methods: {
 			cardUrl,
-			parseCardText,
+			parseCardCodes,
 			namedEffects (effects) {
 				return filter(effects, (effect) => {
 					return !!effect.name

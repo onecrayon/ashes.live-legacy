@@ -8,7 +8,16 @@
 				<button @click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 			</div>
 		</div>
-		<div v-if="phoenixborn">
+		<div v-if="!phoenixborn">
+			<p class="callout">Choose your deck's Phoenixborn to get started! <span class="muted">(Don't worry, you can always change your mind.)</span></p>
+		</div>
+		<div v-else class="tabs btn-group">
+			<button class="btn btn-small" :class="{active: activeTab == 'deck'}"
+				@click="activeTab = 'deck'" :disabled="!phoenixborn">Deck</button
+			><button class="btn btn-small" :class="{active: activeTab == 'meta'}"
+				@click="activeTab = 'meta'" :disabled="!phoenixborn">Meta</button>
+		</div>
+		<div v-if="activeTab == 'deck' && phoenixborn">
 			<h3 class="phoenixborn-header">
 				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" title="Swap Phoenixborn"></span>
 				<a :href="cardUrl(phoenixborn)" class="card">{{ phoenixborn.name }}</a>
@@ -49,24 +58,27 @@
 				</div>
 			</div>
 			<div v-for="section of deckSections" :key="section.title" class="deck-section">
-			<hr v-if="section.title == 'Conjuration Deck'">
-			<h4>{{ section.title }}</h4>
-			<ul>
-				<li v-for="card of section.contents" :key="card.data.id">
-					<div v-if="section.title == 'Conjuration Deck'">
-						{{ card.count }}&times; <a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
-					</div>
-					<div v-else>
-						<qty-buttons :card="card.data" classes="btn-small"
-							zero-output="<i class='fa fa-times' title='Remove'></i>"></qty-buttons>
-						<a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
-						<span v-if="card.data.phoenixborn" class="phoenixborn" :title="card.data.phoenixborn">
-							({{ card.data.phoenixborn.split(' ')[0] }})
-						</span>
-					</div>
-				</li>
-			</ul>
+				<hr v-if="section.title == 'Conjuration Deck'">
+				<h4>{{ section.title }}</h4>
+				<ul>
+					<li v-for="card of section.contents" :key="card.data.id">
+						<div v-if="section.title == 'Conjuration Deck'">
+							{{ card.count }}&times; <a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
+						</div>
+						<div v-else>
+							<qty-buttons :card="card.data" classes="btn-small"
+								zero-output="<i class='fa fa-times' title='Remove'></i>"></qty-buttons>
+							<a :href="cardUrl(card.data)" class="card">{{ card.data.name }}</a>
+							<span v-if="card.data.phoenixborn" class="phoenixborn" :title="card.data.phoenixborn">
+								({{ card.data.phoenixborn.split(' ')[0] }})
+							</span>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
+		<div v-else-if="activeTab == 'meta' && phoenixborn">
+			<text-editor :field="description" field-name="Description"></text-editor>
 		</div>
 	</div>
 </template>
@@ -74,6 +86,7 @@
 <script>
 	import qwest from 'qwest'
 	import {cardUrl} from './utils'
+	import TextEditor from './text_editor.vue'
 	import CardEffects from './listing/card_effects.vue'
 	import QtyButtons from './listing/qty_buttons.vue'
 	import DieCounter from './deck/die_counter.vue'
@@ -82,7 +95,13 @@
 		components: {
 			'card-effects': CardEffects,
 			'qty-buttons': QtyButtons,
-			'die-counter': DieCounter
+			'die-counter': DieCounter,
+			'text-editor': TextEditor
+		},
+		data: function () {
+			return {
+				activeTab: 'deck'
+			}
 		},
 		computed: {
 			title: {
@@ -91,6 +110,14 @@
 				},
 				set (value) {
 					this.$store.commit('setTitle', value)
+				}
+			},
+			description: {
+				get () {
+					return this.$store.state.deck.description
+				},
+				set (value) {
+					this.$store.commit('setDescription', value)
 				}
 			},
 			phoenixborn () {

@@ -10,6 +10,12 @@
 			class="btn btn-small" :class="{active: isSortedBy('dice')}">Dice</button
 		><button v-if="normalListing" @click="sortBy('weight')"
 			class="btn btn-small" :class="{active: isSortedBy('weight')}">Cost</button
+		><button v-if="!normalListing" @click="sortBy('life')"
+			class="btn btn-small" :class="{active: isSortedBy('life')}">Life</button
+		><button v-if="!normalListing" @click="sortBy('battlefield')"
+			class="btn btn-small" :class="{active: isSortedBy('battlefield')}">Battlefield</button
+		><button v-if="!normalListing" @click="sortBy('spellboard')"
+			class="btn btn-small" :class="{active: isSortedBy('spellboard')}">Spellboard</button
 		>
 	</div>
 </template>

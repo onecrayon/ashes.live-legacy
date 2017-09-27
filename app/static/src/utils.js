@@ -1,8 +1,8 @@
 // Alias global functions
 const cardUrl = globals.cardUrl
-const parseCardText = globals.parseCardText
+const parseCardCodes = globals.parseCardCodes
 
 export {
 	cardUrl,
-	parseCardText
+	parseCardCodes
 }

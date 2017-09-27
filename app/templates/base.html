@@ -99,7 +99,7 @@
 			'ceremonial', 'charm', 'illusion', 'natural',
 			'divine', 'sympathy'
 		]
-		globals.parseCardText = function (input) {
+		globals.parseCardCodes = function (input) {
 			return input.replace(/\[\[([a-z -]+)(?::([a-z]+))?\]\]|( - )/ig, function (_, primary, secondary, dash) {
 				if (dash) {
 					return ' <span class="divider"></span> '
