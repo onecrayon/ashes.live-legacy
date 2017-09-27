@@ -6,7 +6,7 @@
 			</div>
 			<div class="conjuration"
 				><h4><card-link :card="card.conjurations[0]"></card-link></h4
-				><span v-for="(effect, effect_index) of namedEffects(card.conjurations[0].text)" class="effect"
+				><span v-for="(effect, effect_index) of namedEffects(card.conjurations[0].text)" class="effect tooltip"
 					:title="effectTextTooltip(effect, true)" :key="card.conjurations[0].id + '-effect-' + effect_index"
 					>{{ effect.name }}</span
 				><ul class="statline"
@@ -18,7 +18,7 @@
 		</li>
 		<li v-else v-for="(effect, effect_index) of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']"
 				:key="card.id + '-effect-' + effect_index">
-			<strong v-if="effect.name" :title="effectTextTooltip(effect)">
+			<strong v-if="effect.name" :title="effectTextTooltip(effect)" :class="{tooltip: !!effectTextTooltip(effect)}">
 				{{ effect.name }}</strong
 			><span v-if="effect.cost" class="costs"
 				><span v-if="effect.name">: </span
@@ -34,6 +34,7 @@
 <script>
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
+	import {initTooltips, teardownTooltips} from 'app/utils'
 	import {filter, startsWith} from 'lodash'
 
 	export default {
@@ -45,6 +46,12 @@
 			'card-codes': CardCodes,
 			'card-link': CardLink
 		},
+		mounted: initTooltips,
+		updated: function () {
+			teardownTooltips.call(this)
+			initTooltips.call(this)
+		},
+		beforeDestroy: teardownTooltips,
 		methods: {
 			namedEffects (effects) {
 				return filter(effects, (effect) => {
@@ -54,7 +61,7 @@
 			effectTextTooltip (effect, showAll) {
 				if (this.allText) return
 				if (showAll || (effect.text && !this.isEffectTextException(effect))) {
-					return effect.text
+					return (showAll && effect.cost ? effect.cost.join(' - ') + ': ' : '')  + effect.text
 				}
 			},
 			isEffectTextException (effect) {
