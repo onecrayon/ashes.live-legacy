@@ -129,14 +129,11 @@ export default class {
 						}
 					}
 				} else if (card.dice && card.dice.length) {
-					let valid = false
 					for (const die of card.dice) {
-						if (includes(dice, die)) {
-							valid = true
-							continue
+						if (!includes(dice, die)) {
+							return false
 						}
 					}
-					if (!valid) return false
 				} else if (!includes(dice, 'basic')) {
 					// Card doesn't have any dice associated with it,
 					// and we aren't filtering for basic-only
