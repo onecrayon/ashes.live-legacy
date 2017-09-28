@@ -21,9 +21,8 @@ class Deck(db.Model):
 
 
 class DeckCard(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, index=True)
-    card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=False)
+    deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, primary_key=True)
+    card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=False, primary_key=True)
     count = db.Column(db.SmallInteger, nullable=False)
 
     card = db.relationship(Card)
@@ -31,9 +30,8 @@ class DeckCard(db.Model):
 
 
 class DeckDie(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, index=True)
-    die_flag = db.Column(db.Integer, nullable=False)
+    deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, primary_key=True)
+    die_flag = db.Column(db.Integer, nullable=False, primary_key=True)
     count = db.Column(db.SmallInteger, nullable=False)
 
     deck = db.relationship(Deck, backref='dice')

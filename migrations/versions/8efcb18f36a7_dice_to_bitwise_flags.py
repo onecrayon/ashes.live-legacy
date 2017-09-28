@@ -22,24 +22,20 @@ depends_on = None
 
 def upgrade():
     op.create_table('deck_card',
-        sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('deck_id', sa.Integer(), nullable=False),
         sa.Column('card_id', sa.Integer(), nullable=False),
         sa.Column('count', sa.SmallInteger(), nullable=False),
         sa.ForeignKeyConstraint(['card_id'], ['card.id'], ),
         sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], ),
-        sa.PrimaryKeyConstraint('id')
+        sa.PrimaryKeyConstraint('deck_id', 'card_id')
     )
-    op.create_index(op.f('ix_deck_card_deck_id'), 'deck_card', ['deck_id'], unique=False)
     op.create_table('deck_die',
-        sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('deck_id', sa.Integer(), nullable=False),
         sa.Column('die_flag', sa.Integer(), nullable=False),
         sa.Column('count', sa.SmallInteger(), nullable=False),
         sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], ),
-        sa.PrimaryKeyConstraint('id')
+        sa.PrimaryKeyConstraint('deck_id', 'die_flag')
     )
-    op.create_index(op.f('ix_deck_die_deck_id'), 'deck_die', ['deck_id'], unique=False)
     op.drop_table('decks_cards')
     op.drop_table('cards_dice')
     op.drop_table('decks_dice')
