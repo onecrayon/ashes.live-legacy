@@ -5,7 +5,7 @@ from premailer import transform as inline_css
 from app import mail
 
 
-def send_message(recipient, subject, template_name, **kwargs):
+def send_message(recipient, subject, template_name, sender=None, **kwargs):
     """Sends a two-part HTML+text email using the following files:
     
     * templates/emails/{template_name}.html
@@ -21,6 +21,7 @@ def send_message(recipient, subject, template_name, **kwargs):
     message = Message(
         subject,
         recipients=[recipient],
+        sender=sender if sender else current_app.config['MAIL_DEFAULT_SENDER'],
         html=inline_css(render_template(
             'emails/{}.html'.format(template_name),
             subject=subject,

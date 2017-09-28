@@ -56,11 +56,9 @@ TODO:
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine icons, and add to the PHG font
-* Implement deck saving
-    * Implement error handling and success notification alert
 * Implement "my decks" listing page
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
-* Update basic templates to remove any promises beyond the card browser and public decks
+* Implement something at `/cards/STUB` since those are all 404-ing
 
 Optional before release:
 

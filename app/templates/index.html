@@ -2,24 +2,31 @@
 {% block page_class %}homepage{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-charm-class">Recent activity</h1>
+	<h1 class="phg-charm-class">Ashes.live, beta v1</h1>
 {% endblock %}
 
 {% block content %}
 	<p class="callout">Welcome! This is a limited <strong>beta release</strong>, so not all features are implemented yet. If you would like to build decks or be notified when new features are implemented, please <a href="{{ url_for('player.new') }}">create an account</a>!</p>
+
+	<p>Please <a href="{{ url_for('home.feedback') }}"><i class="fa fa-envelope"></i> contact me</a> if you run into problems or have any suggestions or requests! You can find the link to the contact form at the upper right of every page.</p>
 	
 	<h2>Features</h2>
 	
 	<ul>
 		<li>Build private decks</li>
-		<li class="muted">Share decks</li>
-		<li class="muted">Card gallery</li>
-		<li class="muted">Discuss decks and cards</li>
-		<li class="muted">Log games</li>
-		<li class="muted">Track gameplay statistics</li>
+		<li class="muted">Share/view public decks (upcoming!)</li>
+		<li class="muted">Card gallery (upcoming!)</li>
+		<li class="muted">And more?!</li>
+	</ul>
+
+	<h2>Known issues</h2>
+
+	<ul>
+		<li>Some action and cost icons are solid instead of transparent on Windows</li>
+		<li>Behavior on mobile devices is...not great yet</li>
 	</ul>
 {% endblock %}
 
 {% block sidebar %}
-	<p class="callout"><strong>Ashes.live</strong> offers <strong>deckbuilding</strong>, stat tracking, and <strong>community</strong> discussion for the card game Ashes: Rise of the Phoenixborn by Plaid Hat Games.</p>
+	<p class="callout"><strong>Ashes.live</strong> offers <strong>deckbuilding</strong> for the card game Ashes: Rise of the Phoenixborn by <a href="https://www.plaidhatgames.com/games/ashes">Plaid Hat Games</a>.</p>
 {% endblock %}

@@ -1,0 +1,5 @@
+{% extends "emails/base.html" %}
+{% block content %}
+	{% if source_url %}<p>Feedback originated from <code>{{ source_url }}</code></p>{% endif %}
+	<pre>{{ message }}</pre>
+{% endblock %}

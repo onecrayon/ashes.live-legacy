@@ -10,9 +10,8 @@
 {% endblock %}
 
 {% block sidebar %}
-	<ul>
-		<li><a href="{{ url_for('decks.build') }}">
-			<i class="fa fa-plus">New Deck</i>
-		</a></li>
-	</ul>
+	<p><a href="{{ url_for('decks.build') }}" class="btn btn-primary">
+		<i class="fa fa-plus"></i> New Deck
+	</a></p>
+	<p>All decks are currently private; I will be adding the ability to share them soon!</p>
 {% endblock %}

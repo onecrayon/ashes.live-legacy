@@ -18,6 +18,7 @@
 @color-inexhaustible-dark: #8d7b53;
 @color-link: #2770c1;
 @color-error: #b00000;
+@color-warning: #b05000;
 @color-success: #006600;
 @color-attack: #b25864;
 @color-life: #5e8664;
@@ -95,7 +96,7 @@ a.card {
 
 .username {
 	border: 1px solid @color-mid-gray;
-	background: fadeout(@color-mid-gray, 80%);
+	background: tint(@color-mid-gray, 80%);
 	border-radius: 5px;
 	font-weight: bold;
 	padding: 0 3px;
@@ -175,6 +176,17 @@ a.card {
 	}
 }
 
+.help-badge {
+	.alert(@color-warning);
+	position: absolute;
+	top: 0;
+	right: 20px;
+	border-top: none;
+	border-radius: 0 0 5px 5px;
+	padding: 5px 10px;
+	z-index: 100;
+}
+
 .form-field {
 	margin: 0 0 20px;
 	max-width: 320px;
@@ -202,13 +214,13 @@ a.card {
 		&[readonly], &[disabled] {
 			.placeholder-color(@color-gray);
 			color: @color-mid-gray;
-			background: fadeout(@color-gray, 80%);
+			background: tint(@color-gray, 80%);
 			border-color: @color-gray;
 		}
 
 		&.error {
 			border-color: @color-error;
-			background: fadeout(@color-error, 80%);
+			background: tint(@color-error, 80%);
 		}
 	}
 
@@ -222,6 +234,7 @@ a.card {
 	.alert(@color-dark-gray);
 	border-radius: 5px;
 	font-weight: bold;
+	display: inline-block;
 	padding: 10px;
 	text-decoration: none;
 	
@@ -589,15 +602,15 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		}
 	}
 	
-	.deckbuilder-link {
+	.leading-link {
 		.mixin-order(1);
-		.mixin-flex(1 1 auto);
+		.mixin-flex(1 0 0);
 		padding-right: 20px;
 	}
 	
 	.home-link {
 		.mixin-order(2);
-		.mixin-flex(0 1 auto);
+		.mixin-flex(0 0 auto);
 		
 		a {
 			background: url(../images/ashes-live-small.png) left top no-repeat;
@@ -609,9 +622,9 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		}
 	}
 	
-	.logging-link {
+	.trailing-link {
 		.mixin-order(3);
-		.mixin-flex(1 1 auto);
+		.mixin-flex(1 0 0);
 		padding-left: 20px;
 		text-align: right;
 	}
@@ -639,7 +652,7 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		padding-top: 20px;
 	}
 	
-	.deckbuilder-link {
+	.leading-link {
 		padding-right: 50px;
 		text-align: right;
 	}
@@ -656,7 +669,7 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		}
 	}
 	
-	.logging-link {
+	.trailing-link {
 		padding-left: 50px;
 		text-align: left;
 	}

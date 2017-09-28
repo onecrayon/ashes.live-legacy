@@ -35,7 +35,7 @@ globals.parseCardCodes = function (input) {
 			return ['<i>', escape(lowerPrimary), (secondary ? ' ' + escape(secondary) : ''), '</i>'].join('')
 		} else {
 			var data = {stub: escape(lowerPrimary.replace(' ', '-'))}
-			return ['<a href="', globals.cardUrl(data), '" class="card">', escape(primary), '</a>'].join('')
+			return ['<a href="', globals.cardUrl(data), '" class="card" target="_blank">', escape(primary), '</a>'].join('')
 		}
 		return [
 			'<span class="phg-', escape(lowerPrimary), '-', escape(secondary), '" title="',

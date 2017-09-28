@@ -1,0 +1,3 @@
+{% if source_url %}Feedback originated from <{{ source_url }}>{% endif %}
+
+{{ message }}

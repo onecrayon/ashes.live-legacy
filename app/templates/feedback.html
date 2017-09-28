@@ -1,0 +1,22 @@
+{% from "macros.html" import with_errors %}
+{% extends "base.html" %}
+{% block title %}Send Feedback{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-sympathy-class">Help &amp; Feedback</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="{{ url_for('home.feedback') }}">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.email, disabled=current_user.is_authenticated) }}
+		{{ with_errors(form.message, rows='10') }}
+		<input class="btn btn-primary" type="submit" value="Send Feedback">
+	</form>
+{% endblock %}
+
+{% block sidebar %}
+	<p class="callout">Ashes.live is under active development, so please let me know if anything isn't working quite right or you have suggestions or feedback about the site!</p>
+
+	<p>If you are reporting a problem, please explain in detail what you were doing when the problem occurred so I can try to replicate the issue.</p>
+{% endblock %}
