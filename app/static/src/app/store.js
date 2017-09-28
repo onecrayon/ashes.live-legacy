@@ -79,6 +79,12 @@ export default new Vuex.Store({
 				return result + value
 			}, 0)
 		},
+		totalCards (state) {
+			return reduce(state.deck.cards, (result, value) => {
+				result += value
+				return result
+			}, 0)
+		},
 		deckSections (state, getters) {
 			const ids = Object.keys(state.deck.cards)
 			if (!ids.length) return []

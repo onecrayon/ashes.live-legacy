@@ -52,6 +52,13 @@
 					</button>
 				</div>
 			</div>
+			<hr>
+			<h3>
+				Cards
+				<span class="card-count">
+					<span :class="{error: totalCards > 30}">{{ totalCards }}</span> / 30
+				</span>
+			</h3>
 			<div v-for="section of deckSections" :key="section.title" class="deck-section">
 				<hr v-if="section.title == 'Conjuration Deck'">
 				<h4>{{ section.title }}</h4>
@@ -141,6 +148,9 @@
 			},
 			deckSections () {
 				return this.$store.getters.deckSections
+			},
+			totalCards () {
+				return this.$store.getters.totalCards
 			},
 			diceNames () {
 				return globals.diceData
