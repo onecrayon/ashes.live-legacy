@@ -64,7 +64,7 @@ export default new Vuex.Store({
 			releases: [0],
 			dice: null,
 			diceLogic: 'or',
-			phoenixborn: null,
+			phoenixborn: globals.deck ? cardManager.cardById(globals.deck.phoenixborn).name : null,
 			primarySort: 'name',
 			primaryOrder: 1,
 			secondarySort: null,
