@@ -57,8 +57,7 @@ TODO:
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine icons, and add to the PHG font
 * Implement deck saving
-    * Figure out what is going wrong with relationship saving for DeckCard and DeckDie on edit
-    * Implement error handling
+    * Implement error handling and success notification alert
 * Implement "my decks" listing page
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
 * Update basic templates to remove any promises beyond the card browser and public decks

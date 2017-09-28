@@ -20,7 +20,6 @@ def save(deck_id=None):
     data = request.get_json()
 
     # Do some validation
-    errors = {}
     deck_title = data.get('title')
     if deck_title and len(deck_title) > 255:
         return jsonify({'error': 'Deck does not validate.', 'validation': {
@@ -29,7 +28,10 @@ def save(deck_id=None):
 
     # Update or save deck data
     if deck_id:
-        deck = Deck.query.get(deck_id)
+        deck = Deck.query.options(
+            db.joinedload('cards'),
+            db.joinedload('dice')
+        ).get(deck_id)
         if not deck or deck.user_id != current_user.id:
             abort(404)
         deck.title = deck_title
@@ -42,11 +44,8 @@ def save(deck_id=None):
             user_id=current_user.id,
             phoenixborn_id=data.get('phoenixborn')
         )
-    db.session.add(deck)
-    db.session.commit()
-
-    # Now that we have a deck ID, update the  dice listing
-    deck_id = deck.id
+    
+    # Update the dice listing
     dice = []
     total_dice = 0
     for die, count in data.get('dice', {}).items():
@@ -57,17 +56,17 @@ def save(deck_id=None):
                 break
             total_dice = total_dice + count
             dice.append(DeckDie(
-                deck_id=deck_id,
                 die_flag=DiceFlags[die].value,
                 count=count
             ))
     deck.dice = dice
     # And then the card listing
     deck.cards = [DeckCard(
-        deck_id=deck_id,
-        card_id=card_id,
+        card_id=int(card_id),
         count=count if count <= 3 else 3
     ) for card_id, count in data.get('cards', {}).items()]
+    # Finally save everything up!
+    db.session.add(deck)
     db.session.commit()
 
-    return jsonify({'success': 'Deck saved!', 'data': {'id': deck_id}})
+    return jsonify({'success': 'Deck saved!', 'data': {'id': deck.id}})

@@ -26,14 +26,14 @@ def upgrade():
         sa.Column('card_id', sa.Integer(), nullable=False),
         sa.Column('count', sa.SmallInteger(), nullable=False),
         sa.ForeignKeyConstraint(['card_id'], ['card.id'], ),
-        sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], ),
+        sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], ondelete='CASCADE'),
         sa.PrimaryKeyConstraint('deck_id', 'card_id')
     )
     op.create_table('deck_die',
         sa.Column('deck_id', sa.Integer(), nullable=False),
         sa.Column('die_flag', sa.Integer(), nullable=False),
         sa.Column('count', sa.SmallInteger(), nullable=False),
-        sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], ),
+        sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], ondelete='CASCADE'),
         sa.PrimaryKeyConstraint('deck_id', 'die_flag')
     )
     op.drop_table('decks_cards')
