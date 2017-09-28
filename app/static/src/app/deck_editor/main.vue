@@ -174,10 +174,19 @@
 				this.$store.commit('filterCards')
 			},
 			save () {
-				// TODO
-				qwest.post('/api/decks/', this.$store.state.deck, {dataType: 'json'}).then(function(xhr, response) {
+				qwest.post(
+					'/api/decks/' + (this.$store.state.deck.id || ''),
+					this.$store.state.deck,
+					{dataType: 'json'}
+				).then((xhr, response) => {
 					console.log('server response:', response)
+					// TODO: handle validation errors
+					if (!this.$store.state.deck.id) {
+						this.$store.commit('setId', response.data.id)
+						history.pushState(null, 'Deck saved!', '/decks/build/' + response.data.id + '/')
+					}
 				}).catch(function(error, xhr, response) {
+					// TODO: handle generic/access errors
 					console.log('Failed to save deck: ' + JSON.stringify(response))
 				})
 			}

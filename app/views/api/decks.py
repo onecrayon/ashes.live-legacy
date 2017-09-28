@@ -29,10 +29,8 @@ def save(deck_id=None):
 
     # Update or save deck data
     if deck_id:
-        deck = Deck.query.options(
-            db.joinedload('user')
-        ).get(deck_id)
-        if not deck or deck.user.id != current_user.id:
+        deck = Deck.query.get(deck_id)
+        if not deck or deck.user_id != current_user.id:
             abort(404)
         deck.title = deck_title
         deck.description = data.get('description')

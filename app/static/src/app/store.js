@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import CardManager from './card_manager'
-import {reduce} from 'lodash'
+import {merge, reduce} from 'lodash'
 
 /* eslint-disable no-new */
 
@@ -45,7 +45,8 @@ const cardTypeOrder = [
 
 export default new Vuex.Store({
 	state: {
-		deck: {
+		deck: merge({
+			id: null,
 			title: '',
 			description: '',
 			phoenixborn: null,
@@ -54,7 +55,7 @@ export default new Vuex.Store({
 				return result
 			}, {}),
 			cards: {}
-		},
+		}, globals.deck || {}),
 		listing: [],
 		listType: 'list',
 		filters: {
@@ -152,6 +153,9 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		// Deck editing methods
+		setId (state, id) {
+			state.deck.id = id
+		},
 		setTitle (state, title) {
 			state.deck.title = title
 		},
@@ -316,7 +320,6 @@ export default new Vuex.Store({
 			cardManager.cardListing((cards) => {
 				state.listing = cards
 			}, options)
-		},
-		// TODO: add methods for incrementing and decrementing card counts
+		}
 	}
 })

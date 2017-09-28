@@ -15,5 +15,10 @@
 {% endblock %}
 
 {% block app %}
+	{% if deck_json %}
+	<script type="text/javascript">
+		globals.deck = {{ deck_json | safe }}
+	</script>
+	{% endif %}
 	<script src="{{ url_for('static', filename='js/app.js') }}" type="text/javascript"></script>
 {% endblock %}

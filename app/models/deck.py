@@ -26,7 +26,10 @@ class DeckCard(db.Model):
     count = db.Column(db.SmallInteger, nullable=False)
 
     card = db.relationship(Card)
-    deck = db.relationship(Deck, backref='cards')
+    deck = db.relationship(
+        Deck,
+        backref=db.backref('cards', cascade='all, delete-orphan')
+    )
 
 
 class DeckDie(db.Model):
@@ -34,4 +37,7 @@ class DeckDie(db.Model):
     die_flag = db.Column(db.Integer, nullable=False, primary_key=True)
     count = db.Column(db.SmallInteger, nullable=False)
 
-    deck = db.relationship(Deck, backref='dice')
+    deck = db.relationship(
+        Deck,
+        backref=db.backref('dice', cascade='all, delete-orphan')
+    )
