@@ -65,3 +65,4 @@ TODO:
 Optional before release:
 
 * Implement different listing styles, and refactor into components
+* Add animated transitions for things like alerts

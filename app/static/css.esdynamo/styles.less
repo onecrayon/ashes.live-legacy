@@ -143,6 +143,7 @@ a.card {
 		font-weight: bold;
 		margin: 0 0 10px;
 		padding: 10px;
+		position: relative;
 	}
 
 	.success {
@@ -151,6 +152,22 @@ a.card {
 
 	.error {
 		.alert(@color-error);
+	}
+
+	.btn-close {
+		position: absolute;
+		background: none;
+		border: none;
+		top: -3px;
+		right: -3px;
+	}
+	
+	.success .btn-close {
+		color: @color-success;
+	}
+
+	.error .btn-close {
+		color: @color-error;
 	}
 
 	#page > & {

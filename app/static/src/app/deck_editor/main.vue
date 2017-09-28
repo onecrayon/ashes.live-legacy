@@ -1,5 +1,12 @@
 <template>
 	<div id="editor-meta">
+		<ul v-if="alerts && alerts.length" class="alerts">
+			<li v-for="(alert, index) of alerts" :key="index" :class="[alert.type]">
+				<button class="btn-close" title="Dismiss"
+					@click="dismissAlert(index)"><i class="fa fa-times"></i></button>
+				{{ alert.message }}
+			</li>
+		</ul>
 		<div class="deck-header">
 			<div class="input-group">
 				<div class="form-field">
@@ -103,7 +110,8 @@
 		},
 		data: function () {
 			return {
-				activeTab: 'deck'
+				activeTab: 'deck',
+				alerts: []
 			}
 		},
 		computed: {
@@ -166,21 +174,30 @@
 				this.$store.commit('filterCards')
 			},
 			save () {
+				this.alerts = []
 				qwest.post(
 					'/api/decks/' + (this.$store.state.deck.id || ''),
 					this.$store.state.deck,
 					{dataType: 'json'}
 				).then((xhr, response) => {
-					console.log('server response:', response)
-					// TODO: handle validation errors
+					if (response.validation) {
+						this.alerts.push({'type': 'error', 'message': response.validation.title})
+					} else if (response.error) {
+						this.alerts.push({'type': 'error', 'message': response.error})
+					} else if (response.success) {
+						this.alerts.push({'type': 'success', 'message': response.success})
+					}
 					if (!this.$store.state.deck.id) {
 						this.$store.commit('setId', response.data.id)
 						history.pushState(null, 'Deck saved!', '/decks/build/' + response.data.id + '/')
 					}
 				}).catch(function(error, xhr, response) {
-					// TODO: handle generic/access errors
-					console.log('Failed to save deck: ' + JSON.stringify(response))
+					this.alerts.push({'type': 'error', error})
+					console.log('Failed to save deck:', response)
 				})
+			},
+			dismissAlert (index) {
+				this.alerts.splice(index, 1)
 			}
 		}
 	}

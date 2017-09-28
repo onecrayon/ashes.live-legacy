@@ -1,4 +1,4 @@
-from flask import current_app, Blueprint, jsonify, request
+from flask import abort, current_app, Blueprint, jsonify, request
 from flask_login import current_user, login_required
 
 from app import db
@@ -69,4 +69,4 @@ def save(deck_id=None):
     db.session.add(deck)
     db.session.commit()
 
-    return jsonify({'success': 'Deck saved!', 'data': {'id': deck.id}})
+    return jsonify({'success': 'Deck successfully saved!', 'data': {'id': deck.id}})
