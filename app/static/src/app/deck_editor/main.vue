@@ -80,7 +80,7 @@
 			</div>
 		</div>
 		<div v-else-if="activeTab == 'meta' && phoenixborn">
-			<text-editor :field="description" field-name="Description"></text-editor>
+			<text-editor state-path="deck.description" field-name="Description"></text-editor>
 		</div>
 	</div>
 </template>
@@ -113,14 +113,6 @@
 				},
 				set (value) {
 					this.$store.commit('setTitle', value)
-				}
-			},
-			description: {
-				get () {
-					return this.$store.state.deck.description
-				},
-				set (value) {
-					this.$store.commit('setDescription', value)
 				}
 			},
 			phoenixborn () {

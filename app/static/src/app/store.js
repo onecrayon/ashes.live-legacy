@@ -159,7 +159,7 @@ export default new Vuex.Store({
 		setTitle (state, title) {
 			state.deck.title = title
 		},
-		setDescription (state, description) {
+		setDeckDescription (state, description) {
 			state.deck.description = description
 		},
 		setPhoenixborn (state, id) {

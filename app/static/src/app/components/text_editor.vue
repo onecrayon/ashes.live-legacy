@@ -2,7 +2,7 @@
 	<div class="editor">
 		<div class="form-field">
 			<label :for="fieldName.toLowerCase() + '-editor-field'">{{ fieldName }}</label>
-			<textarea v-model="field" :id="fieldName.toLowerCase() + '-editor-field'"></textarea>
+			<textarea v-model="content" :id="fieldName.toLowerCase() + '-editor-field'"></textarea>
 
 			<p class="help-text">
 				<em>Supports card codes:</em><br>
@@ -26,15 +26,16 @@
 
 <script>
 	import CardCodes from 'app/components/card_codes.vue'
-	import {reduce} from 'lodash'
+	import {get, reduce} from 'lodash'
 
 	export default {
-		props: ['field', 'fieldName'],
+		props: ['statePath', 'fieldName'],
 		components: {
 			'card-codes': CardCodes
 		},
 		data: function () {
 			return {
+				setMethod: null,
 				showAll: false,
 				exampleCardCodes: reduce(globals.diceData, (result, value) => {
 					result.push('[[' + value + ']]', '[[' + value + ':class]]')
@@ -47,6 +48,21 @@
 					'[[discard]]',
 					'[[basic]]'
 				])
+			}
+		},
+		computed: {
+			content: {
+				get () {
+					return get(this.$store.state, this.statePath)
+				},
+				set (value) {
+					if (!this.setMethod) {
+						this.setMethod = 'set' + this.statePath.replace(/(?:^|\.)([a-z])/g, (_, letter) => {
+							return letter.toUpperCase()
+						})
+					}
+					this.$store.commit(this.setMethod, value)
+				}
 			}
 		}
 	}
