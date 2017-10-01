@@ -1,6 +1,8 @@
 SESSION_TYPE = 'sqlalchemy'
 SESSION_USE_SIGNER = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+# Number of results to show in paginated responses
+DEFAULT_PAGED_RESULTS = 25
 
 ### Environment-specific ###
 

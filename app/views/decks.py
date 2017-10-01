@@ -2,7 +2,7 @@
 
 import json
 
-from flask import Blueprint, render_template
+from flask import current_app, Blueprint, render_template
 from flask_login import current_user, login_required
 
 from app import db
@@ -16,20 +16,33 @@ mod = Blueprint('decks', __name__, url_prefix='/decks')
 @mod.route('/')
 def index():
     """View list of all public decks"""
-    pass
+    return render_template('wip.html')
 
 
 @mod.route('/<int:deck_id>/')
 def view(deck_id):
     """View a public or own deck"""
-    pass
+    return render_template('wip.html')
 
 
 @mod.route('/mine/')
+@mod.route('/mine/<int:page>/')
 @login_required
-def mine():
+def mine(page=None):
     """View logged-in player's decks"""
-    return render_template('decks/mine.html')
+    if not page:
+        page = 1
+    decks = Deck.query.options(
+        db.joinedload('phoenixborn'),
+        db.joinedload('cards'),
+        db.joinedload('dice')
+    ).filter(
+        Deck.user_id == current_user.id
+    ).order_by(Deck.modified.desc()).limit(
+        current_app.config['DEFAULT_PAGED_RESULTS']
+    ).offset((page - 1) * current_app.config['DEFAULT_PAGED_RESULTS']).all()
+    # TODO: parse and order the card results
+    return render_template('decks/mine.html', decks=decks)
 
 
 @mod.route('/build/')

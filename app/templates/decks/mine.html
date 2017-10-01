@@ -6,7 +6,36 @@
 {% endblock %}
 
 {% block content %}
-	<p>Actual deck listing coming soon!</p>
+	<ul class="deck-list">
+	{% for deck in decks %}
+		<li>
+			<div class="responsive-cols">
+				<h2 class="col-flex"><a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a></h2>
+
+				<ul class="dice col">
+				{% set current = {'count': 0} -%}
+				{% for dice in deck.dice -%}
+					{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
+					{% if current.update({'count': current.count + dice.count}) %}{% endif -%}
+					{% for x in range(dice.count) %}
+					<li class="die {{ dice.die_flag | die_name }}">
+						<span class="phg-{{ dice.die_flag | die_name }}-power" title="{{ dice.die_flag | die_name | capitalize }}"></span>
+					</li>
+					{% endfor %}
+				{% endfor %}
+				{% if current.count < 10 -%}
+				{% for x in range(10 - current.count) %}
+					<li class="die basic"><span class="phg-basic-magic"></span></li>
+				{% endfor %}
+				{% endif %}
+				</ul>
+			</div>
+			<hr>
+			<p class="muted">Card listing here...</p>
+		</li>
+	{% endfor %}
+	</ul>
+	{# TODO: add pagination links #}
 {% endblock %}
 
 {% block sidebar %}

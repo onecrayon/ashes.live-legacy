@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Work In Progress{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-exhaust">This is a work in progress...</h1>
+{% endblock %}
+
+{% block content %}
+	<p class="callout">Thank you for your interest in Ashes.live! This is one of the areas of the site that is still under construction, but check back soon!</p>
+
+	<p>If you would like to be notified of major feature updates, please {% if current_user.is_authenticated %}<a href=
+		{{ url_for('player.account') }}>modify your account settings</a>{% else %}<a href="{{ url_for('player.new') }}">create an account</a>{% endif %}.</p>
+{% endblock %}
