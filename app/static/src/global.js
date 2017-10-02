@@ -34,7 +34,7 @@ globals.parseCardCodes = function (input) {
 		} else if (secondary) {
 			return ['<i>', escape(lowerPrimary), (secondary ? ' ' + escape(secondary) : ''), '</i>'].join('')
 		} else {
-			var data = {stub: escape(lowerPrimary.replace(' ', '-'))}
+			var data = {stub: escape(lowerPrimary.replace(/ /g, '-'))}
 			return ['<a href="', globals.cardUrl(data), '" class="card" target="_blank">', escape(primary), '</a>'].join('')
 		}
 		return [
@@ -50,11 +50,18 @@ globals.initTooltips = function (el) {
 		const tip = tippy(els, {
 			delay: 250,
 			position: 'bottom-start',
+			interactive: true,
+			interactiveBorder: 10,
+			multiple: true,
 			onShow: function () {
 				const content = this.querySelector('.tippy-tooltip-content')
 				if (!/(?:^| )parsed-card-content/.test(content.className)) {
-					content.innerHTML = parseCardCodes(content.textContent)
+					content.innerHTML = globals.parseCardCodes(content.textContent)
 					content.className = content.className + ' parsed-card-content'
+					const moreEls = content.querySelectorAll('.card')
+					if (moreEls) {
+						globals.initCardPopups(Array.from(moreEls))
+					}
 				}
 			}
 		})
