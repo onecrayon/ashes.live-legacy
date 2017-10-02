@@ -9,7 +9,7 @@
 	<ul class="deck-list">
 	{% set current = {'count': 0, 'type': 'None'} -%}
 	{% for deck in decks %}
-		<li>
+		<li class="{{ deck.phoenixborn.stub }}">
 			<div class="responsive-cols no-wrap">
 				<h2 class="col-flex"><a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a></h2>
 

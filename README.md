@@ -58,9 +58,7 @@ TODO:
 * Create Divine icons, and add to the PHG font
 * Finish deck listing
     * Implement pagination links for My Decks listing
-    * Add semi-transparent underlay of the Phoenixborn's portrait to decks
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
-* Implement ability to delete decks (via deck-builder page? Or listing?)
 * Figure out how to handle Salamander Monk Spirit better (currently only disappears on click)
 
 Optional before release:
