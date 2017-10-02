@@ -3,7 +3,7 @@
 		<div class="form-field">
 			<input v-model="search" type="text" placeholder="Filter by name or text...">
 		</div>
-		<button @click="clearSearch" :disabled="!search" class="btn">Clear</button>
+		<button @click="clearSearch" :disabled="!search" class="btn" title="Clear Search"><i class="fa fa-times"></i></button>
 	</div>
 </template>
 
