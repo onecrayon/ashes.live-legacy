@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 import json
+import math
 from operator import itemgetter
 
 from flask import current_app, Blueprint, render_template
@@ -61,15 +62,17 @@ def mine(page=None):
     """View logged-in player's decks"""
     if not page:
         page = 1
-    decks = Deck.query.options(
+    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
+    query = Deck.query.options(
         db.joinedload('phoenixborn').joinedload('conjurations'),
         db.joinedload('cards').joinedload('card').joinedload('conjurations'),
         db.joinedload('dice')
     ).filter(
         Deck.user_id == current_user.id
-    ).order_by(Deck.modified.desc()).limit(
-        current_app.config['DEFAULT_PAGED_RESULTS']
-    ).offset((page - 1) * current_app.config['DEFAULT_PAGED_RESULTS']).all()
+    ).order_by(Deck.modified.desc()).limit(per_page).offset(
+        (page - 1) * per_page
+    )
+    decks = query.all()
     card_map = defaultdict(list)
     for deck in decks:
         process_cards(card_map, deck.id, deck.cards)
@@ -78,8 +81,22 @@ def mine(page=None):
         card_map[deck.id] = sorted(
             sorted(card_map[deck.id], key=itemgetter('name')),
         key=lambda x: TypeOrdering[x['type']])
-    current_app.logger.debug('{}'.format(card_map))
-    return render_template('decks/mine.html', decks=decks, card_map=card_map)
+    total_pages = math.ceil(query.limit(None).offset(None).count() / per_page)
+    pages = list(range(1, total_pages + 1))
+    spread = 2
+    extra_right = spread - page + 1 if page - 1 < spread else 0
+    extra_left = page + spread - total_pages if page + spread > total_pages else 0
+    if page + spread + extra_right < total_pages - 2:
+        del pages[page + spread + extra_right:total_pages - 1]
+    if page - spread - extra_left > 3:
+        del pages[1:page - spread - extra_left - 1]
+    return render_template(
+        'decks/mine.html',
+        decks=decks,
+        card_map=card_map,
+        page=page,
+        pages=pages
+    )
 
 
 @mod.route('/build/')

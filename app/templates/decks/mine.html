@@ -7,7 +7,7 @@
 
 {% block content %}
 	<ul class="deck-list">
-	{% set current = {'count': 0, 'type': 'None'} -%}
+	{% set current = {'count': 0, 'type': 'None', 'page': 0} -%}
 	{% for deck in decks %}
 		<li class="{{ deck.phoenixborn.stub }}">
 			<div class="responsive-cols no-wrap">
@@ -60,7 +60,25 @@
 		</li>
 	{% endfor %}
 	</ul>
-	{# TODO: add pagination links #}
+	{% if pages %}
+	<nav class="pagination">
+		<ul>
+			{% for page_num in pages %}
+			{% if (current.page + 1) is not equalto page_num %}
+			<li><a href="{{ url_for('decks.mine', page=page_num - 1 if current.page == 1 else current.page + 1) }}">...</a></li>
+			{% endif %}
+			{% if page_num is equalto page %}
+			<li class="active">{{ page_num }}</li>
+			{% else %}
+			<li><a href="{{ url_for('decks.mine', page=page_num if page_num > 1 else None) }}">
+				{{ page_num }}
+			</a></li>
+			{% endif %}
+			{% if current.update({'page': page_num}) %}{% endif -%}
+			{% endfor %}
+		</ul>
+	</nav>
+	{% endif %}
 {% endblock %}
 
 {% block sidebar %}

@@ -56,12 +56,10 @@ TODO:
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine icons, and add to the PHG font
-* Finish deck listing
-    * Implement pagination links for My Decks listing
-* Implement responsive behaviors for filters (collapse to icons, flow nicely)
-* Figure out how to handle Salamander Monk Spirit better (currently only disappears on click)
 
 Optional before release:
 
+* Figure out how to handle Salamander Monk Spirit better (currently only disappears on click)
+* Implement responsive behaviors for filters (collapse to icons, flow nicely)
 * Implement different listing styles, and refactor into components
 * Add animated transitions for things like alerts

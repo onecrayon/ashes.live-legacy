@@ -570,6 +570,30 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 	transform: scale(1.1);
 }
 
+.pagination {
+	ul {
+		list-style-type: none;
+		padding: 0;
+		text-align: center;
+	}
+
+	li {
+		display: inline-block;
+		border: 1px solid @color-link;
+	}
+
+	.active {
+		color: @color-black;
+		border-color: @color-black;
+		min-width: 25px;
+	}
+
+	a {
+		display: inline-block;
+		min-width: 25px;
+	}
+}
+
 /* @group Main content */
 
 #page, #footer {
