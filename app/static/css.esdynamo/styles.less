@@ -367,6 +367,10 @@ table.help-text {
 	.mixin-flex-wrap(wrap);
 	.mixin-justify-content(space-between);
 
+	&.no-wrap {
+		.mixin-flex-wrap(nowrap);
+	}
+
 	.col {
 		.mixin-flex(0 0 auto);
 		margin-right: 10px;
@@ -1115,6 +1119,34 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 	.dice {
 		width: 285px;
+	}
+
+	.card-listing {
+		h3 {
+			.font-size(15);
+			.line-height(15);
+			margin-bottom: 10px;
+		}
+
+		h4 {
+			.font-size(12);
+			.line-height(15);
+			margin-bottom: 5px;
+			font-weight: normal;
+		}
+
+		ul {
+			.font-size(12);
+			.line-height(15);
+			list-style-type: disc;
+			padding-left: 20px;
+		}
+	}
+
+	.card-type {
+		display: inline-block;
+		vertical-align: top;
+		padding: 0 10px 10px 0;
 	}
 }
 

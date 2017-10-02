@@ -56,9 +56,11 @@ TODO:
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
 * Create Divine icons, and add to the PHG font
-* Implement "my decks" listing page
+* Finish deck listing
+    * Implement pagination links for My Decks listing
+    * Add semi-transparent underlay of the Phoenixborn's portrait to decks
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
-* Implement something at `/cards/STUB` since those are all 404-ing
+* Implement ability to delete decks (via deck-builder page? Or listing?)
 
 Optional before release:
 

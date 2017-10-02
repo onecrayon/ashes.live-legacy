@@ -1,6 +1,8 @@
 """Deck-building and viewing public decks"""
 
+from collections import defaultdict
 import json
+from operator import itemgetter
 
 from flask import current_app, Blueprint, render_template
 from flask_login import current_user, login_required
@@ -11,6 +13,16 @@ from app.models.deck import Deck
 from app.services.cards import global_json
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
+
+
+TypeOrdering = {
+    'Ready Spell': 0,
+    'Ally': 1,
+    'Alteration Spell': 2,
+    'Action Spell': 3,
+    'Reaction Spell': 4,
+    'Conjurations': 5
+}
 
 
 @mod.route('/')
@@ -25,6 +37,23 @@ def view(deck_id):
     return render_template('wip.html')
 
 
+def process_cards(card_map, deck_id, deck_cards):
+    for deck_card in deck_cards:
+        card = deck_card.card if hasattr(deck_card, 'card') else deck_card
+        card_id = card.card_id if hasattr(card, 'card_id') else card.id
+        count = deck_card.count if hasattr(deck_card, 'count') else card.copies
+        card_map[deck_id].append({
+            'id':card_id,
+            'count': count,
+            'name': card.name,
+            'stub': card.stub,
+            'type': card.card_type if not card.card_type.startswith('Conjur')
+                else 'Conjurations'
+        })
+        if card.conjurations:
+            process_cards(card_map, deck_id, card.conjurations)
+
+
 @mod.route('/mine/')
 @mod.route('/mine/<int:page>/')
 @login_required
@@ -33,16 +62,24 @@ def mine(page=None):
     if not page:
         page = 1
     decks = Deck.query.options(
-        db.joinedload('phoenixborn'),
-        db.joinedload('cards'),
+        db.joinedload('phoenixborn').joinedload('conjurations'),
+        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
         db.joinedload('dice')
     ).filter(
         Deck.user_id == current_user.id
     ).order_by(Deck.modified.desc()).limit(
         current_app.config['DEFAULT_PAGED_RESULTS']
     ).offset((page - 1) * current_app.config['DEFAULT_PAGED_RESULTS']).all()
-    # TODO: parse and order the card results
-    return render_template('decks/mine.html', decks=decks)
+    card_map = defaultdict(list)
+    for deck in decks:
+        process_cards(card_map, deck.id, deck.cards)
+        if deck.phoenixborn.conjurations:
+            process_cards(card_map, deck.id, deck.phoenixborn.conjurations)
+        card_map[deck.id] = sorted(
+            sorted(card_map[deck.id], key=itemgetter('name')),
+        key=lambda x: TypeOrdering[x['type']])
+    current_app.logger.debug('{}'.format(card_map))
+    return render_template('decks/mine.html', decks=decks, card_map=card_map)
 
 
 @mod.route('/build/')

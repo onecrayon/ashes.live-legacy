@@ -7,13 +7,13 @@
 
 {% block content %}
 	<ul class="deck-list">
+	{% set current = {'count': 0, 'type': 'None'} -%}
 	{% for deck in decks %}
 		<li>
-			<div class="responsive-cols">
+			<div class="responsive-cols no-wrap">
 				<h2 class="col-flex"><a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a></h2>
 
 				<ul class="dice col">
-				{% set current = {'count': 0} -%}
 				{% for dice in deck.dice -%}
 					{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
 					{% if current.update({'count': current.count + dice.count}) %}{% endif -%}
@@ -23,7 +23,7 @@
 					</li>
 					{% endfor %}
 				{% endfor %}
-				{% if current.count < 10 -%}
+				{% if current.count is lessthan 10 -%}
 				{% for x in range(10 - current.count) %}
 					<li class="die basic"><span class="phg-basic-magic"></span></li>
 				{% endfor %}
@@ -31,7 +31,32 @@
 				</ul>
 			</div>
 			<hr>
-			<p class="muted">Card listing here...</p>
+			<div class="card-listing">
+				<h3>
+					<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
+						{{ deck.phoenixborn.name }}
+					</a>
+				</h3>
+			{% if card_map[deck.id] %}
+				<div class="card-type">
+				{% for card in card_map[deck.id] %}
+					{% if current.type is not equalto(card.type) %}
+						{% if current.type is not equalto('None') %}</ul></div><div class="card-type">{% endif %}
+						<h4>{{ card.type }}</h4>
+						<ul>
+						{% if current.update({'type': card.type}) %}{% endif -%}
+					{% endif %}
+					<li>
+						{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
+							{{ card.name }}
+						</a>
+					</li>
+				{% endfor %}
+					</ul>
+				</div>
+			{% if current.update({'type': 'None'}) %}{% endif -%}
+			{% endif %}
+			</div>
 		</li>
 	{% endfor %}
 	</ul>
