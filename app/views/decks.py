@@ -82,14 +82,17 @@ def mine(page=None):
             sorted(card_map[deck.id], key=itemgetter('name')),
         key=lambda x: TypeOrdering[x['type']])
     total_pages = math.ceil(query.limit(None).offset(None).count() / per_page)
-    pages = list(range(1, total_pages + 1))
-    spread = 2
-    extra_right = spread - page + 1 if page - 1 < spread else 0
-    extra_left = page + spread - total_pages if page + spread > total_pages else 0
-    if page + spread + extra_right < total_pages - 2:
-        del pages[page + spread + extra_right:total_pages - 1]
-    if page - spread - extra_left > 3:
-        del pages[1:page - spread - extra_left - 1]
+    if total_pages > 1:
+        pages = list(range(1, total_pages + 1))
+        spread = 2
+        extra_right = spread - page + 1 if page - 1 < spread else 0
+        extra_left = page + spread - total_pages if page + spread > total_pages else 0
+        if page + spread + extra_right < total_pages - 2:
+            del pages[page + spread + extra_right:total_pages - 1]
+        if page - spread - extra_left > 3:
+            del pages[1:page - spread - extra_left - 1]
+    else:
+        pages = None
     return render_template(
         'decks/mine.html',
         decks=decks,
