@@ -16,4 +16,4 @@ def die_name(flag):
 
 @app.template_filter('deck_title')
 def deck_title(deck):
-    return deck.title if deck.title else 'Untitled ' + deck.phoenixborn.name
+    return deck.title if deck.title else 'Untitled {}'.format(deck.phoenixborn.name)

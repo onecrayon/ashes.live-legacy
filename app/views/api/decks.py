@@ -1,9 +1,10 @@
-from flask import abort, current_app, Blueprint, jsonify, request
+from flask import abort, current_app, Blueprint, flash, jsonify, request
 from flask_login import current_user, login_required
 
 from app import db
 from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
+from app.template_filters import deck_title
 
 mod = Blueprint('api_decks', __name__, url_prefix='/api/decks')
 
@@ -70,3 +71,17 @@ def save(deck_id=None):
     db.session.commit()
 
     return jsonify({'success': 'Deck successfully saved!', 'data': {'id': deck.id}})
+
+
+@mod.route('/<int:deck_id>', methods=['DELETE'])
+@login_required
+def delete(deck_id):
+    deck = Deck.query.options(db.joinedload('phoenixborn')).get(deck_id)
+    if not deck or deck.user_id != current_user.id:
+        abort(404)
+    title = deck_title(deck)
+    db.session.delete(deck)
+    db.session.commit()
+    success_message = 'Your deck "{}" has been deleted!'.format(title)
+    flash(success_message, 'success')
+    return jsonify({'success': success_message})

@@ -22,7 +22,9 @@
 			<button class="btn btn-small" :class="{active: activeTab == 'deck'}"
 				@click="activeTab = 'deck'" :disabled="!phoenixborn">Deck</button
 			><button class="btn btn-small" :class="{active: activeTab == 'meta'}"
-				@click="activeTab = 'meta'" :disabled="!phoenixborn">Meta</button>
+				@click="activeTab = 'meta'" :disabled="!phoenixborn">Meta</button
+			><button class="btn btn-small" :class="{active: activeTab == 'actions'}"
+				@click="activeTab = 'actions'" :disabled="!phoenixborn">Actions</button>
 		</div>
 		<div v-if="activeTab == 'deck' && phoenixborn">
 			<h3 class="phoenixborn-header">
@@ -89,6 +91,12 @@
 		<div v-else-if="activeTab == 'meta' && phoenixborn">
 			<text-editor state-path="deck.description" field-name="Description"></text-editor>
 		</div>
+		<div v-else-if="activeTab == 'actions' && phoenixborn">
+			<button class="btn btn-block btn-danger" :disabled="!isSaved" @click="showDeleteModal = true">
+				<i class="fa fa-trash"></i> Delete Deck
+			</button>
+			<delete-modal :show="showDeleteModal" @close="showDeleteModal = false"></delete-modal>
+		</div>
 	</div>
 </template>
 
@@ -99,6 +107,7 @@
 	import CardEffects from 'app/gallery/listing/card_effects.vue'
 	import QtyButtons from 'app/gallery/listing/qty_buttons.vue'
 	import DieCounter from './die_counter.vue'
+	import DeleteModal from './delete_modal.vue'
 
 	export default {
 		components: {
@@ -107,11 +116,13 @@
 			'qty-buttons': QtyButtons,
 			'die-counter': DieCounter,
 			'text-editor': TextEditor,
+			'delete-modal': DeleteModal
 		},
 		data: function () {
 			return {
 				activeTab: 'deck',
-				alerts: []
+				alerts: [],
+				showDeleteModal: false
 			}
 		},
 		computed: {
@@ -154,6 +165,9 @@
 			},
 			diceNames () {
 				return globals.diceData
+			},
+			isSaved () {
+				return !!this.$store.state.deck.id
 			}
 		},
 		methods: {
