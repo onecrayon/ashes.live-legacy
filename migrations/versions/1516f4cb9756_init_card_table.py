@@ -27,12 +27,16 @@ def upgrade():
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('name', sa.String(length=25), nullable=False),
         sa.Column('stub', sa.String(length=25), nullable=False),
+        sa.Column('json', sa.Text()),
         sa.Column('release', sa.Integer(), nullable=False),
         sa.Column('card_type', sa.String(length=25), nullable=False),
         sa.Column('cost_weight', sa.Integer(), nullable=False),
-        sa.Column('json', sa.Text()),
-        sa.Column('text', sa.Text()),
+        sa.Column('dice_flags', sa.Integer(), nullable=False, server_default='0'),
+        sa.Column('phoenixborn', sa.String(length=25), nullable=True),
         sa.Column('summon_id', sa.Integer(), nullable=True),
+        sa.Column('copies', sa.SmallInteger(), nullable=True),
+        sa.Column('is_summon_spell', sa.Boolean(), nullable=False, server_default='0'),
+        sa.Column('text', sa.Text()),
         sa.ForeignKeyConstraint(['summon_id'], ['card.id'], ),
         sa.PrimaryKeyConstraint('id')
     )
@@ -41,6 +45,8 @@ def upgrade():
     op.create_index(op.f('ix_card_release'), 'card', ['release'], unique=False)
     op.create_index(op.f('ix_card_stub'), 'card', ['stub'], unique=True)
     op.create_index(op.f('ix_card_name'), 'card', ['name'], unique=True)
+    op.create_index(op.f('ix_card_dice_flags'), 'card', ['dice_flags'], unique=False)
+    op.create_index(op.f('ix_card_phoenixborn'), 'card', ['phoenixborn'], unique=False)
     op.execute('CREATE FULLTEXT INDEX ix_card_text ON card (name, text)')
     die_table = op.create_table('die',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -54,7 +60,7 @@ def upgrade():
         sa.ForeignKeyConstraint(['card_id'], ['card.id'], ),
         sa.ForeignKeyConstraint(['die_id'], ['die.id'], )
     )
-    
+
     # Insert dice information
     op.bulk_insert(die_table, [
         {'stub': 'ceremonial'},
@@ -64,7 +70,7 @@ def upgrade():
         {'stub': 'divine'},
         {'stub': 'sympathy'}
     ])
-    
+
     # Insert card data
     my_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(my_dir, '../data/1516f4cb9756_initial_import.json'), 'r') as f:

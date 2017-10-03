@@ -22,8 +22,6 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('card', sa.Column('copies', sa.SmallInteger(), nullable=True))
-
     cards = Card.query.filter(
         Card.card_type.in_(['Conjuration', 'Conjured Alteration Spell'])
     ).all()
@@ -42,4 +40,4 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_column('card', 'copies')
+    pass

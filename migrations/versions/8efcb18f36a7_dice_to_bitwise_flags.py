@@ -40,10 +40,6 @@ def upgrade():
     op.drop_table('cards_dice')
     op.drop_table('decks_dice')
     op.drop_table('die')
-    op.add_column('card', sa.Column('dice_flags', sa.Integer(), nullable=False))
-    op.add_column('card', sa.Column('phoenixborn', sa.String(length=25), nullable=True))
-    op.create_index(op.f('ix_card_dice_flags'), 'card', ['dice_flags'], unique=False)
-    op.create_index(op.f('ix_card_phoenixborn'), 'card', ['phoenixborn'], unique=False)
 
     # Go through all cards and set their dice flags appropriately
     cards = Card.query.all()
@@ -55,10 +51,6 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_index(op.f('ix_card_dice_flags'), table_name='card')
-    op.drop_index(op.f('ix_card_phoenixborn'), table_name='card')
-    op.drop_column('card', 'phoenixborn')
-    op.drop_column('card', 'dice_flags')
     op.create_table('die',
         sa.Column('id', sa.Integer, nullable=False),
         sa.Column('stub', sa.String(10), nullable=False),

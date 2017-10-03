@@ -23,8 +23,6 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('card', sa.Column('is_summon_spell', sa.Boolean(), nullable=False, server_default='0'))
-
     # Grab our card errata from FAQ 2.0 (2017)
     my_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(my_dir, '../data/c0b05d2841bf_errata_2017.json'), 'r') as f:
@@ -69,4 +67,4 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_column('card', 'is_summon_spell')
+    pass
