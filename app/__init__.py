@@ -26,7 +26,7 @@ app.config['ENVIRONMENT'] = ENVIRONMENT
 app.config.from_pyfile('../config/config.py')
 app.config.from_pyfile('../config/{}/config.py'.format(ENVIRONMENT))
 # Load our version (to append to query strings)
-package_json = json.load(open(os.path.join(current_path, '../package.json'))
+package_json = json.load(open(os.path.join(current_path, '../package.json')))
 app.config['VERSION'] = package_json['version']
 
 # Configure our database
