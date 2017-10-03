@@ -53,12 +53,11 @@ For development servers:
 
 TODO:
 
-* Figure out why I can't connect to my database on production (???)
 * Finish getting production setup and running
-    * Ensure ENVIRONMENT="production" is getting set for all production script runs
-    * Configure webapp.plist per http://jelockwood.blogspot.com/2013/06/running-django-webapps-with-os-x.html
-    * Write the WSGI file logic and serve the app from the site via Server.app
     * Write logic to populate admin account when building server up?
+* Add "no decks" for when the user has no decks
+* Modify the sign-up pages to only show items in the list that I know I'm planning to include
+* Serve the bulk of the images through Apache instead of Flask, since that Flask seems pretty slow over the network
 
 Optional before release:
 
