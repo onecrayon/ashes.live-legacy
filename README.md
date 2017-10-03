@@ -53,8 +53,12 @@ For development servers:
 
 TODO:
 
-* Implement development vs. production environments in a way that works for both Python and webpack
-    * Implement a way to serve up different JS and CSS files for production (`.min` versions)
+* Figure out why I can't connect to my database on production (???)
+* Finish getting production setup and running
+    * Ensure ENVIRONMENT="production" is getting set for all production script runs
+    * Configure webapp.plist per http://jelockwood.blogspot.com/2013/06/running-django-webapps-with-os-x.html
+    * Write the WSGI file logic and serve the app from the site via Server.app
+    * Write logic to populate admin account when building server up?
 
 Optional before release:
 
