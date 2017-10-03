@@ -55,7 +55,6 @@ TODO:
 
 * Implement development vs. production environments in a way that works for both Python and webpack
     * Implement a way to serve up different JS and CSS files for production (`.min` versions)
-* Create Divine icons, and add to the PHG font
 
 Optional before release:
 
