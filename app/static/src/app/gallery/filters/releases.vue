@@ -1,13 +1,13 @@
 <template>
 	<div class="btn-group">
-		<button @click="toggleReleases([0])"
-			class="btn btn-small" :class="{active: hasReleases([0])}"
+		<button @click="toggleReleases('core')"
+			class="btn btn-small" :class="{active: hasReleases('core')}"
 			>Core</button
-		><button @click="toggleReleases([1, 2, 3, 4, 5, 6])"
-			class="btn btn-small" :class="{active: hasReleases([1, 2, 3, 4, 5, 6])}"
+		><button @click="toggleReleases('expansions')"
+			class="btn btn-small" :class="{active: hasReleases('expansions')}"
 			title="Expansions">Exp.</button
-		><button @click="toggleReleases([101, 102, 103])"
-			class="btn btn-small" :class="{active: hasReleases([101, 102, 103])}"
+		><button @click="toggleReleases('promos')"
+			class="btn btn-small" :class="{active: hasReleases('promos')}"
 			title="Promos">Pro.</button
 		>
 	</div>
@@ -18,15 +18,15 @@
 
 	export default {
 		methods: {
-			toggleReleases (releases) {
-				this.$store.commit('toggleReleases', releases)
+			toggleReleases (releasesKey) {
+				this.$store.commit('toggleReleases', globals.releaseData[releasesKey])
 				this.$store.commit('filterCards')
 			},
-			hasReleases (releases) {
-				if (releases === null || this.$store.state.filters.releases === null) {
-					return releases === this.$store.state.filters.releases
+			hasReleases (releasesKey) {
+				if (releasesKey === null || this.$store.state.filters.releases === null) {
+					return releasesKey === null && this.$store.state.filters.releases === null
 				}
-				for (let release of releases) {
+				for (let release of globals.releaseData[releasesKey]) {
 					if (!includes(this.$store.state.filters.releases, release)) {
 						return false
 					}

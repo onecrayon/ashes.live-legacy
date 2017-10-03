@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import CardManager from './card_manager'
-import {merge, reduce} from 'lodash'
+import {concat, merge, reduce} from 'lodash'
 
 /* eslint-disable no-new */
 
@@ -43,6 +43,24 @@ const cardTypeOrder = [
 	'Ready Spell', 'Ally', 'Alteration Spell', 'Action Spell', 'Reaction Spell'
 ]
 
+let defaultReleases = globals.releaseData['core']
+let deckPhoenixborn = null
+if (globals.deck) {
+	deckPhoenixborn = cardManager.cardById(globals.deck.phoenixborn)
+	if (deckPhoenixborn.release > 100) {
+		defaultReleases = concat(
+			defaultReleases,
+			globals.releaseData['expansions'],
+			globals.releaseData['promos']
+		)
+	} else if (deckPhoenixborn.release > 0) {
+		defaultReleases = concat(
+			defaultReleases,
+			globals.releaseData['expansions']
+		)
+	}
+}
+
 export default new Vuex.Store({
 	state: {
 		deck: merge({
@@ -61,10 +79,10 @@ export default new Vuex.Store({
 		filters: {
 			search: null,
 			types: null,
-			releases: [0],
+			releases: defaultReleases,
 			dice: null,
 			diceLogic: 'or',
-			phoenixborn: globals.deck ? cardManager.cardById(globals.deck.phoenixborn).name : null,
+			phoenixborn: deckPhoenixborn ? deckPhoenixborn.name : null,
 			primarySort: 'name',
 			primaryOrder: 1,
 			secondarySort: null,

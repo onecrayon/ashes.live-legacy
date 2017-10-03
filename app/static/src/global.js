@@ -10,6 +10,11 @@ globals.diceData = [
 	'ceremonial', 'charm', 'illusion', 'natural',
 	'divine', 'sympathy'
 ]
+globals.releaseData = {
+	'core': [0],
+	'expansions': [1, 2, 3, 4, 5, 6],
+	'promos': [101, 102, 103]
+}
 globals.parseCardCodes = function (input) {
 	return input.replace(/\[\[([a-z' -]+)(?::([a-z]+))?\]\]|( - )/ig, function (_, primary, secondary, dash) {
 		if (dash) {
