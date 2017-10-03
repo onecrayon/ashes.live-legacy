@@ -25,4 +25,12 @@ def deck_title(deck):
 def production_url(url):
     if current_app.config['ENVIRONMENT'] == 'development':
         return url
-    return url.replace('.js', '.min.js').replace('.css', '.min.css')
+    if url.endswith('.js'):
+        return url.replace('.js', '.min.js?v={}'.format(
+            current_app.config['VERSION'])
+        )
+    if url.endswith('.css'):
+        return url.replace('.css', '.min.css?v={}'.format(
+            current_app.config['VERSION'])
+        )
+    return url
