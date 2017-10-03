@@ -14,7 +14,7 @@
 	<meta name="apple-mobile-web-app-title" content="Ashes.live">
 	<meta name="application-name" content="Ashes.live">
 	<meta name="theme-color" content="#f3f1e7">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') | production_url }}" />
 </head>
 <body class="{% block page_class %}static{% endblock %}">
 	<a href="{{ url_for('home.feedback') }}" class="help-badge" target="_blank"><i class="fa fa-envelope"></i> Help / feedback</a>
@@ -103,7 +103,7 @@
 			<div class="card-holder"></div>
 		</div>
 	</div>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/global.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/global.js') | production_url }}"></script>
 	{% block app %}{% endblock %}
 </body>
 </html>

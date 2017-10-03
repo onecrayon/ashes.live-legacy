@@ -1,5 +1,7 @@
 from datetime import date
 
+from flask import current_app
+
 from app import app
 from app.models.card import DiceFlags
 
@@ -17,3 +19,10 @@ def die_name(flag):
 @app.template_filter('deck_title')
 def deck_title(deck):
     return deck.title if deck.title else 'Untitled {}'.format(deck.phoenixborn.name)
+
+
+@app.template_filter('production_url')
+def production_url(url):
+    if current_app.config['ENVIRONMENT'] == 'development':
+        return url
+    return url.replace('.js', '.min.js').replace('.css', '.min.css')

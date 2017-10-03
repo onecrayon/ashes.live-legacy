@@ -20,5 +20,5 @@
 		globals.deck = {{ deck_json | safe }}
 	</script>
 	{% endif %}
-	<script src="{{ url_for('static', filename='js/app.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='js/app.js') | production_url }}" type="text/javascript"></script>
 {% endblock %}
