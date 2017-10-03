@@ -26,6 +26,7 @@
 
 <script>
 	import CardCodes from 'app/components/card_codes.vue'
+	import {globals} from 'app/utils'
 	import {get, reduce} from 'lodash'
 
 	export default {

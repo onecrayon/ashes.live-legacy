@@ -72,7 +72,7 @@
 				return includes(this.$store.state.filters.types || [], typeName)
 			},
 			isListType (listType) {
-				return this.$store.state.listType == listType
+				return this.$store.state.listType === listType
 			}
 		}
 	}

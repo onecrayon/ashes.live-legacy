@@ -17,7 +17,7 @@
 				this.$emit('close')
 			},
 			escapeClose (event) {
-				if (this.show && event.keyCode == 27) {
+				if (this.show && event.keyCode === 27) {
 					this.close()
 				}
 			}

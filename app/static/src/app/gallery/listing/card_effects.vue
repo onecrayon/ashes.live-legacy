@@ -61,14 +61,14 @@
 			effectTextTooltip (effect, showAll) {
 				if (this.allText) return
 				if (showAll || (effect.text && !this.isEffectTextException(effect))) {
-					return (showAll && effect.cost ? effect.cost.join(' - ') + ': ' : '')  + effect.text
+					return (showAll && effect.cost ? effect.cost.join(' - ') + ': ' : '') + effect.text
 				}
 			},
 			isEffectTextException (effect) {
 				return !!this.allText || startsWith(effect.name, 'Focus') || startsWith(effect.name, 'Respark')
 			},
 			isReadySummon (card) {
-				return card.type == 'Ready Spell' && startsWith(card.name, 'Summon')
+				return card.type === 'Ready Spell' && startsWith(card.name, 'Summon')
 			}
 		}
 	}

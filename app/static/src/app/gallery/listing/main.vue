@@ -31,7 +31,7 @@
 </template>
 
 <script>
-	import {filter, startsWith} from 'lodash'
+	import {startsWith} from 'lodash'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import CardEffects from './card_effects.vue'
@@ -54,9 +54,9 @@
 		methods: {
 			startsWith,
 			hasStatline (card) {
-				return card.attack !== undefined
-					|| card.life !== undefined
-					|| card.recover !== undefined
+				return card.attack !== undefined ||
+					card.life !== undefined ||
+					card.recover !== undefined
 			}
 		}
 	}

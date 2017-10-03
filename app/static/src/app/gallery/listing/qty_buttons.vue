@@ -23,8 +23,8 @@
 				this.$store.commit('setCardQty', {id: id, qty: qty})
 			},
 			isQtyActive (id, qty) {
-				return (!this.$store.state.deck.cards[id] && qty == 0)
-					|| this.$store.state.deck.cards[id] == qty
+				return (!this.$store.state.deck.cards[id] && qty === 0) ||
+					this.$store.state.deck.cards[id] === qty
 			}
 		}
 	}

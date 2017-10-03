@@ -2,20 +2,21 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import CardManager from './card_manager'
 import {concat, merge, reduce} from 'lodash'
+import {globals} from './utils'
 
 /* eslint-disable no-new */
 
 Vue.use(Vuex)
 
-const cardManager = new CardManager
+const cardManager = new CardManager()
 
-function disableReleaseDice(state) {
-	if ((!state.filters.releases || state.filters.releases.indexOf(5) == -1)
-			&& state.filters.dice && state.filters.dice.indexOf('divine') > -1) {
+function disableReleaseDice (state) {
+	if ((!state.filters.releases || state.filters.releases.indexOf(5) === -1) &&
+			state.filters.dice && state.filters.dice.indexOf('divine') > -1) {
 		state.filters.dice.splice(state.filters.dice.indexOf('divine'), 1)
 	}
-	if ((!state.filters.releases || state.filters.releases.indexOf(6) == -1)
-			&& state.filters.dice && state.filters.dice.indexOf('sympathy') > -1) {
+	if ((!state.filters.releases || state.filters.releases.indexOf(6) === -1) &&
+			state.filters.dice && state.filters.dice.indexOf('sympathy') > -1) {
 		state.filters.dice.splice(state.filters.dice.indexOf('sympathy'), 1)
 	}
 }
@@ -33,7 +34,7 @@ function gatherConjurations (card, conjurationList) {
 }
 
 function pluralCardType (cardType) {
-	if (cardType == 'Ally') {
+	if (cardType === 'Ally') {
 		return 'Allies'
 	}
 	return cardType + 's'
@@ -129,7 +130,7 @@ export default new Vuex.Store({
 			for (let section of sectionTitles) {
 				let contents = sections[section]
 				contents.sort((a, b) => {
-					if (a.data.name == b.data.name) {
+					if (a.data.name === b.data.name) {
 						return 0
 					}
 					return a.data.name < b.data.name ? -1 : 1
@@ -141,7 +142,7 @@ export default new Vuex.Store({
 			}
 			if (conjurations.length) {
 				conjurations.sort((a, b) => {
-					if (a.data.name == b.data.name) {
+					if (a.data.name === b.data.name) {
 						return 0
 					}
 					return a.data.name < b.data.name ? -1 : 1
@@ -160,7 +161,7 @@ export default new Vuex.Store({
 			return reduce(cards, (result, card) => {
 				if (card.dice && card.dice.length) {
 					for (let die of card.dice) {
-						if (result.indexOf(die) == -1) {
+						if (result.indexOf(die) === -1) {
 							result.push(die)
 						}
 					}
@@ -191,7 +192,7 @@ export default new Vuex.Store({
 				// Clear out any Phoenixborn-specific cards in the deck
 				const cards = cardManager.idsToListing(ids)
 				for (let card of cards) {
-					if (card.phoenixborn && card.phoenixborn != phoenixborn.name) {
+					if (card.phoenixborn && card.phoenixborn !== phoenixborn.name) {
 						Vue.delete(state.deck.cards, card.id)
 					}
 				}
@@ -213,7 +214,7 @@ export default new Vuex.Store({
 		setCardQty (state, payload) {
 			if (!state.deck.cards[payload.id] && payload.qty > 0) {
 				Vue.set(state.deck.cards, payload.id, payload.qty)
-			} else if (state.deck.cards[payload.id] && payload.qty == 0) {
+			} else if (state.deck.cards[payload.id] && payload.qty === 0) {
 				Vue.delete(state.deck.cards, payload.id)
 			} else {
 				state.deck.cards[payload.id] = payload.qty
@@ -227,19 +228,19 @@ export default new Vuex.Store({
 			state.filters.diceLogic = 'or'
 			let activeDice = ['basic']
 			for (let dieType of Object.keys(state.deck.dice)) {
-				if (state.deck.dice[dieType]
-						&& (dieType != 'divine' || state.filters.releases.indexOf(5) > -1)
-						&& (dieType != 'sympathy' || state.filters.releases.indexOf(6) > -1)) {
+				if (state.deck.dice[dieType] &&
+						(dieType !== 'divine' || state.filters.releases.indexOf(5) > -1) &&
+						(dieType !== 'sympathy' || state.filters.releases.indexOf(6) > -1)) {
 					activeDice.push(dieType)
 				}
 			}
 			state.filters.dice = activeDice
 		},
 		toggleDiceLogic (state) {
-			state.filters.diceLogic = state.filters.diceLogic == 'or' ? 'and' : 'or'
+			state.filters.diceLogic = state.filters.diceLogic === 'or' ? 'and' : 'or'
 			// Exclude basic die check from "and" comparisons
-			if (state.filters.diceLogic == 'and' && state.filters.dice
-					&& state.filters.dice.indexOf('basic') > -1) {
+			if (state.filters.diceLogic === 'and' && state.filters.dice &&
+					state.filters.dice.indexOf('basic') > -1) {
 				state.filters.dice.splice(state.filters.dice.indexOf('basic'), 1)
 			}
 		},
@@ -318,10 +319,10 @@ export default new Vuex.Store({
 			state.filters.secondaryOrder *= -1
 		},
 		setSort (state, field) {
-			if (field == 'dice') {
+			if (field === 'dice') {
 				state.filters.primarySort = field
 				state.filters.secondarySort = 'weight'
-			} else if (field != 'name') {
+			} else if (field !== 'name') {
 				state.filters.primarySort = field
 				state.filters.secondarySort = 'name'
 			} else {

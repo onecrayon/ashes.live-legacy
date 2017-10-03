@@ -27,7 +27,7 @@
 				return !!this.$store.state.deck.phoenixborn
 			},
 			orderIconClass () {
-				return 'fa-chevron-' + (this.$store.state.filters.primaryOrder == 1 ? 'up' : 'down')
+				return 'fa-chevron-' + (this.$store.state.filters.primaryOrder === 1 ? 'up' : 'down')
 			}
 		},
 		methods: {
@@ -40,7 +40,7 @@
 				this.$store.commit('filterCards')
 			},
 			isSortedBy (field) {
-				return this.$store.state.filters.primarySort == field
+				return this.$store.state.filters.primarySort === field
 			}
 		}
 	}

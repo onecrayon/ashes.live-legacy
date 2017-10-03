@@ -15,6 +15,7 @@
 
 <script>
 	import {includes} from 'lodash'
+	import {globals} from 'app/utils'
 
 	export default {
 		methods: {

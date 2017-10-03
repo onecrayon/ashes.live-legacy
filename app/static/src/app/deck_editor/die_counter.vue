@@ -35,7 +35,7 @@
 				return this.diceCount >= this.maxCount
 			},
 			isMissing () {
-				return this.diceCount == 0 && includes(this.$store.getters.neededDice, this.dieType)
+				return this.diceCount === 0 && includes(this.$store.getters.neededDice, this.dieType)
 			}
 		},
 		methods: {

@@ -25,16 +25,16 @@ globals.parseCardCodes = function (input) {
 		if (['discard', 'exhaust'].indexOf(lowerPrimary) > -1) {
 			return ['<span class="phg-', lowerPrimary, '" title="', primary, '"></span>'].join('')
 		}
-		
+
 		if (globals.diceData.indexOf(lowerPrimary) > -1) {
 			if (!secondary) {
 				secondary = 'power'
 			}
-		} else if (lowerPrimary == 'basic') {
+		} else if (lowerPrimary === 'basic') {
 			secondary = 'magic'
-		} else if (lowerPrimary == 'main') {
+		} else if (lowerPrimary === 'main') {
 			secondary = 'action'
-		} else if (lowerPrimary == 'side') {
+		} else if (lowerPrimary === 'side') {
 			secondary = 'action'
 		} else if (secondary) {
 			return ['<i>', escape(lowerPrimary), (secondary ? ' ' + escape(secondary) : ''), '</i>'].join('')

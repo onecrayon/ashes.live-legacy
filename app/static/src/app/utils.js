@@ -1,4 +1,5 @@
 // Alias global functions
+const globals = window.globals || {}
 const cardUrl = globals.cardUrl
 const parseCardCodes = globals.parseCardCodes
 const initTooltips = globals.initTooltips
@@ -19,6 +20,7 @@ function teardownTooltips () {
 }
 
 export {
+	globals,
 	cardUrl,
 	parseCardCodes,
 	initTooltips,

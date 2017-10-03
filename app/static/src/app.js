@@ -5,11 +5,11 @@ import CardGallery from 'app/gallery/main.vue'
 
 /* eslint-disable no-new */
 
-var vm = new Vue({
+new Vue({
 	el: '#main',
 	store,
 	render (createElement) {
-		return createElement('div',{
+		return createElement('div', {
 			domProps: {
 				id: 'main'
 			}

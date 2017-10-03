@@ -1,4 +1,5 @@
 import qwest from 'qwest'
+import {globals} from './utils'
 import {filter, includes, isEqual, reduce, startsWith} from 'lodash'
 
 const diceWeightMap = reduce(globals.diceData, (result, value, index) => {
@@ -23,11 +24,11 @@ function getDiceWeight (dice) {
 	return parseInt(weights.join(''))
 }
 
-function attributeSort(a, b, primarySort, primaryOrder, secondarySort, secondaryOrder) {
-	if (a[primarySort] == b[primarySort]) {
+function attributeSort (a, b, primarySort, primaryOrder, secondarySort, secondaryOrder) {
+	if (a[primarySort] === b[primarySort]) {
 		// If primarySorts are equal, we are not sorting by name (names are unique)
 		// so ensure that we end with a name sort
-		if (!secondarySort || secondarySort == 'name') {
+		if (!secondarySort || secondarySort === 'name') {
 			return attributeSort(
 				a, b, 'name', secondaryOrder, null, secondaryOrder
 			)
@@ -93,7 +94,7 @@ export default class {
 				callback(this.sortListing(cards, {
 					primaryOrder, primarySort, secondaryOrder, secondarySort
 				}))
-			}).catch(function(error, xhr, response) {
+			}).catch(function (error, xhr, response) {
 				console.log('Failure!', response)
 				callback(null)
 			})
@@ -103,26 +104,26 @@ export default class {
 		const excludeConjurations = !types || !includes(types, 'Conjuration')
 		const excludePhoenixborn = !types || !includes(types, 'Phoenixborn')
 		let subset = filter(globals.cardData, (card) => {
-			if (excludeConjurations 
-					&& (card.type == 'Conjuration' || card.type == 'Conjured Alteration Spell')) {
+			if (excludeConjurations &&
+					(card.type === 'Conjuration' || card.type === 'Conjured Alteration Spell')) {
 				return false
 			}
-			if (excludePhoenixborn && card.type == 'Phoenixborn') {
+			if (excludePhoenixborn && card.type === 'Phoenixborn') {
 				return false
 			}
-			if (phoenixborn && card.phoenixborn && card.phoenixborn != phoenixborn) {
+			if (phoenixborn && card.phoenixborn && card.phoenixborn !== phoenixborn) {
 				return false
 			}
-			if (types && types.length
-					&& !includes(types, card.type)
-					&& (!includes(types, 'summon') || !startsWith(card.name, 'Summon'))) {
+			if (types && types.length &&
+					!includes(types, card.type) &&
+					(!includes(types, 'summon') || !startsWith(card.name, 'Summon'))) {
 				return false
 			}
 			if (releases && releases.length && !releases.includes(card.release)) {
 				return false
 			}
 			if (dice && dice.length) {
-				if (diceLogic == 'and') {
+				if (diceLogic === 'and') {
 					for (const die of dice) {
 						if (!includes(card.dice, die)) {
 							return false
@@ -154,7 +155,7 @@ export default class {
 	} = {}) {
 		cards.sort((a, b) => {
 			// Sorting by dice requires special weighting
-			if (primarySort == 'dice') {
+			if (primarySort === 'dice') {
 				// Grab sorted versions of our dice arrays
 				let aDice = a.dice && a.dice.length ? a.dice : []
 				let bDice = b.dice && b.dice.length ? b.dice : []

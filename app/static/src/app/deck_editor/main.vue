@@ -108,6 +108,7 @@
 	import QtyButtons from 'app/gallery/listing/qty_buttons.vue'
 	import DieCounter from './die_counter.vue'
 	import DeleteModal from './delete_modal.vue'
+	import {globals} from 'app/utils'
 
 	export default {
 		components: {
@@ -155,7 +156,7 @@
 				return diceArray
 			},
 			diceEmpty () {
-				return this.$store.getters.totalDice == 0
+				return this.$store.getters.totalDice === 0
 			},
 			deckSections () {
 				return this.$store.getters.deckSections
@@ -205,7 +206,7 @@
 						this.$store.commit('setId', response.data.id)
 						history.pushState(null, 'Deck saved!', '/decks/build/' + response.data.id + '/')
 					}
-				}).catch(function(error, xhr, response) {
+				}).catch((error, xhr, response) => {
 					this.alerts.push({'type': 'error', error})
 					console.log('Failed to save deck:', response)
 				})

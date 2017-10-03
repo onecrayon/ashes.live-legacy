@@ -14,6 +14,7 @@
 
 <script>
 	import {capitalize, includes} from 'lodash'
+	import {globals} from 'app/utils'
 	
 	export default {
 		computed: {
@@ -21,13 +22,13 @@
 				return globals.diceData
 			},
 			diceLogicText () {
-				return this.$store.state.filters.diceLogic == 'or' ? 'Any' : 'All'
+				return this.$store.state.filters.diceLogic === 'or' ? 'Any' : 'All'
 			},
 			isDiceLogicActive () {
-				return this.$store.state.filters.diceLogic == 'and'
+				return this.$store.state.filters.diceLogic === 'and'
 			},
 			isBasicDisabled () {
-				return this.$store.state.filters.diceLogic == 'and'
+				return this.$store.state.filters.diceLogic === 'and'
 			}
 		},
 		methods: {
@@ -45,9 +46,9 @@
 			},
 			isShowingRelease (dieType) {
 				let releaseNumber = null
-				if (dieType == 'divine') {
+				if (dieType === 'divine') {
 					releaseNumber = 5
-				} else if (dieType == 'sympathy') {
+				} else if (dieType === 'sympathy') {
 					releaseNumber = 6
 				}
 				if (!releaseNumber) return true
