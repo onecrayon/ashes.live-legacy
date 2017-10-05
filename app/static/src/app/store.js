@@ -95,15 +95,20 @@ export default new Vuex.Store({
 			return cardManager.cardById(state.deck.phoenixborn)
 		},
 		totalDice (state) {
-			return reduce(state.deck.dice, (result, value, key) => {
-				return result + value
-			}, 0)
+			let totalDice = 0
+			const values = Object.values(state.deck.dice)
+			for (let value of values) {
+				totalDice += value
+			}
+			return totalDice
 		},
 		totalCards (state) {
-			return reduce(state.deck.cards, (result, value) => {
-				result += value
-				return result
-			}, 0)
+			let totalCards = 0
+			const values = Object.values(state.deck.cards)
+			for (let value of values) {
+				totalCards += value
+			}
+			return totalCards
 		},
 		deckSections (state, getters) {
 			const ids = Object.keys(state.deck.cards)
