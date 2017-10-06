@@ -8,22 +8,22 @@
 			<div class="btn-group col">
 				<button @click="toggleCardType('Ally')"
 					class="btn btn-small" :class="{active: isTypeActive('Ally')}"
-					><i class="fa fa-users"></i> Ally</button
+					><i class="fa" :class="typeToFontAwesome('Ally')"></i> Ally</button
 				><button @click="toggleCardType('Action Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Action Spell')}"
-					><i class="fa fa-asterisk"></i> Action</button
+					><i class="fa" :class="typeToFontAwesome('Action Spell')"></i> Action</button
 				><button @click="toggleCardType('Reaction Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Reaction Spell')}"
-					><i class="fa fa-bolt"></i> Reaction</button
+					><i class="fa" :class="typeToFontAwesome('Reaction Spell')"></i> Reaction</button
 				><button @click="toggleCardType('Alteration Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Alteration Spell')}"
-					><i class="fa fa-clone"></i> Alteration</button
+					><i class="fa" :class="typeToFontAwesome('Alteration Spell')"></i> Alteration</button
 				><button @click="toggleCardType('Ready Spell')"
 					class="btn btn-small" :class="{active: isTypeActive('Ready Spell')}"
-					><i class="fa fa-share-square"></i> Ready</button
+					><i class="fa" :class="typeToFontAwesome('Ready Spell')"></i> Ready</button
 				><button @click="toggleCardType('summon')"
 					class="btn btn-small" :class="{active: isTypeActive('summon')}"
-					><i class="fa fa-plus-square"></i> Summon</button
+					><i class="fa" :class="typeToFontAwesome('summon')"></i> Summon</button
 				>
 			</div>
 			<release-filter class="col"></release-filter>
@@ -52,6 +52,7 @@
 	import SortFilter from './sort.vue'
 	import TextFilter from './text.vue'
 	import {includes} from 'lodash'
+	import {typeToFontAwesome} from 'app/utils'
 
 	export default {
 		components: {
@@ -61,6 +62,7 @@
 			'text-filter': TextFilter
 		},
 		methods: {
+			typeToFontAwesome,
 			toggleCardType (typeName) {
 				this.$store.commit('toggleTypeFilter', typeName)
 				this.$store.commit('filterCards')

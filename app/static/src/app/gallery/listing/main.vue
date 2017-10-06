@@ -3,6 +3,7 @@
 		<no-results></no-results>
 		<li v-for="card of listing" :key="card.id" class="card-detail">
 			<div class="thumbnail">
+				<i class="fa fa-4x" :class="typeToFontAwesome(card.type)" aria-hidden="true"></i>
 				<img :src="assetPath(card.images.thumbnail)" :alt="card.name">
 				<qty-buttons :card="card"></qty-buttons>
 			</div>
@@ -32,7 +33,7 @@
 
 <script>
 	import {startsWith} from 'lodash'
-	import {assetPath} from 'app/utils'
+	import {assetPath, typeToFontAwesome} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import CardEffects from './card_effects.vue'
@@ -55,6 +56,7 @@
 		methods: {
 			startsWith,
 			assetPath,
+			typeToFontAwesome,
 			hasStatline (card) {
 				return card.attack !== undefined ||
 					card.life !== undefined ||

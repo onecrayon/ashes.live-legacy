@@ -836,14 +836,34 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		
 		li {
 			float: left;
+			position: relative;
+			width: 228px;
+			height: 310px;
 
 			&.no-results {
 				float: none;
+				width: auto;
+				height: auto;
 			}
+		}
+
+		.loading-text {
+			color: tint(@color-border-gray, 45%);
+			background: @color-border-gray;
+			border-radius: 7px;
+			box-sizing: border-box;
+			padding-top: 115px;
+			text-align: center;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: 206px;
+			height: 287px;
 		}
 		
 		img {
 			cursor: pointer;
+			position: absolute;
 			height: 310px;
 		}
 	}
@@ -1054,10 +1074,23 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 	.thumbnail {
 		.mixin-flex(0 0 auto);
+		background: @color-border-gray;
 		position: relative;
 		width: 95px;
 		height: 115px;
 		margin-bottom: -2px;
+
+		.fa {
+			color: tint(@color-border-gray, 20%);
+			position: absolute;
+			width: 100%;
+			line-height: 95px;
+			text-align: center;
+		}
+
+		img {
+			position: absolute;
+		}
 
 		.btn-group {
 			margin: 0;

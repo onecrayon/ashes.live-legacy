@@ -19,6 +19,10 @@
 				<no-results></no-results>
 				<li v-for="card of listing" :key="card.id">
 					<a @click.prevent="phoenixborn = card.id" :href="cardUrl(card)">
+						<span class="loading-text">
+							<i class="fa fa-spinner fa-spin" aria-hidden="true"></i><br>
+							{{ card.name }}
+						</span>
 						<img :src="assetPath(card.images.compressed)" :alt="card.name">
 					</a>
 				</li>
