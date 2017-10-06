@@ -4,6 +4,7 @@ const cardUrl = globals.cardUrl
 const parseCardCodes = globals.parseCardCodes
 const initTooltips = globals.initTooltips
 const initCardPopups = globals.initCardPopups
+const assetPath = globals.assetPath
 
 function initCardTooltips (el) {
 	const els = (el && [el]) || Array.from(this.$el.querySelectorAll('.card'))
@@ -25,5 +26,6 @@ export {
 	parseCardCodes,
 	initTooltips,
 	initCardTooltips,
-	teardownTooltips
+	teardownTooltips,
+	assetPath
 }

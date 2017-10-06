@@ -8,6 +8,8 @@ DEFAULT_PAGED_RESULTS = 10
 
 # Site root URL; no trailing slash
 SITE_URL = 'http://ashes.live'
+# Root CDN URL; no trailing slash (leave empty for locally-hosted resources)
+CDN_URL = ''
 
 # Flask
 SECRET_KEY = ''

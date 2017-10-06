@@ -3,7 +3,7 @@
 		<no-results></no-results>
 		<li v-for="card of listing" :key="card.id" class="card-detail">
 			<div class="thumbnail">
-				<img :src="card.images.thumbnail" :alt="card.name">
+				<img :src="assetPath(card.images.thumbnail)" :alt="card.name">
 				<qty-buttons :card="card"></qty-buttons>
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
@@ -32,6 +32,7 @@
 
 <script>
 	import {startsWith} from 'lodash'
+	import {assetPath} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import CardEffects from './card_effects.vue'
@@ -53,6 +54,7 @@
 		},
 		methods: {
 			startsWith,
+			assetPath,
 			hasStatline (card) {
 				return card.attack !== undefined ||
 					card.life !== undefined ||

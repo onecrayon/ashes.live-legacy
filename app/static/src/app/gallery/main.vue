@@ -19,7 +19,7 @@
 				<no-results></no-results>
 				<li v-for="card of listing" :key="card.id">
 					<a @click.prevent="phoenixborn = card.id" :href="cardUrl(card)">
-						<img :src="card.images.compressed" :alt="card.name">
+						<img :src="assetPath(card.images.compressed)" :alt="card.name">
 					</a>
 				</li>
 			</ul>
@@ -35,7 +35,7 @@
 	import SortFilter from './filters/sort.vue'
 	import TextFilter from './filters/text.vue'
 	import NoResults from './listing/no_results.vue'
-	import {cardUrl} from 'app/utils'
+	import {assetPath, cardUrl} from 'app/utils'
 	
 	export default {
 		components: {
@@ -69,6 +69,7 @@
 			}
 		},
 		methods: {
+			assetPath,
 			cardUrl
 		}
 	}

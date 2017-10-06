@@ -49,6 +49,13 @@ globals.parseCardCodes = function (input) {
 	})
 }
 
+globals.assetPath = function (url) {
+	if (url.charAt(0) !== '/') {
+		url = '/' + url
+	}
+	return globals.cdnUrl + url
+}
+
 globals.initTooltips = function (el) {
 	const els = (el && [el]) || Array.from(this.$el.querySelectorAll('.tooltip'))
 	if (els && els.length) {
@@ -82,7 +89,9 @@ globals.initCardPopups = function (target) {
 		onShow: function () {
 			// `this` inside callbacks refers to the popper element
 			const reference = tip.getReferenceElement(this)
-			const imgUrl = reference.href.replace(/(\/cards\/.+?)\/?$/i, '/images$1.png')
+			const imgUrl = reference.href.replace(/(\/cards\/.+?)\/?$/i, (_, url) => {
+				return globals.assetPath('/images' + url + '.png')
+			})
 			const content = this.querySelector('.card-holder')
 			content.innerHTML = '<img src="' + imgUrl + '" alt="' + reference.textContent + '" />'
 		}

@@ -96,6 +96,7 @@
 	<script type="text/javascript">
 		var globals = window.globals || {}
 		{% if cards_json %}globals.cardData = {{ cards_json | safe }}{% endif %}
+		globals.cdnUrl = '{{ config.CDN_URL }}'
 	</script>
 	<div id="card-detail-popup" style="display: none;">
 		<div class="card-popup">

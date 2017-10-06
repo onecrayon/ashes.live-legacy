@@ -7,7 +7,7 @@ from app.models.card import DiceFlags
 
 
 @app.template_filter('copyright')
-def copyright(value):
+def copyright_date(value):
     return '{}-{}'.format(value, date.today().year)
 
 
@@ -34,3 +34,10 @@ def production_url(url):
             current_app.config['VERSION'])
         )
     return url
+
+
+@app.template_filter('cdn_url')
+def cdn_url(url):
+    if not url.startswith('/'):
+        url = '/' + url
+    return '{}{}'.format(current_app.config['CDN_URL'], url)
