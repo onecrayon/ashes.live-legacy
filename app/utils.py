@@ -26,6 +26,8 @@ def send_message(recipient, subject, template_name, sender=None, **kwargs):
             'emails/{}.html'.format(template_name),
             subject=subject,
             site_url=current_app.config['SITE_URL'],
+            cdn_url=current_app.config['CDN_URL'] if current_app.config['CDN_URL']
+                else current_app.config['SITE_URL'],
             **kwargs
         )),
         body=render_template(
