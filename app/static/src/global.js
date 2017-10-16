@@ -89,7 +89,7 @@ globals.initCardPopups = function (target) {
 		onShow: function () {
 			// `this` inside callbacks refers to the popper element
 			const reference = tip.getReferenceElement(this)
-			const imgUrl = reference.href.replace(/(\/cards\/.+?)\/?$/i, (_, url) => {
+			const imgUrl = reference.href.replace(/^(?:.*?)(\/cards\/.+?)\/?$/i, (_, url) => {
 				return globals.assetPath('/images' + url + '.png')
 			})
 			const content = this.querySelector('.card-holder')
