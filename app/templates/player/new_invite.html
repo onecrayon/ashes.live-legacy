@@ -17,10 +17,5 @@
 {% block sidebar %}
 	<p class="callout">Enter your email to start creating your account!</p>
 	
-	<ul>
-		<li>Build private decks</li>
-		<li class="muted">Share/view public decks (upcoming!)</li>
-		<li class="muted">Card gallery (upcoming!)</li>
-		<li class="muted">And more?!</li>
-	</ul>
+	{% include "fragments/upcoming_list.html" %}
 {% endblock %}
