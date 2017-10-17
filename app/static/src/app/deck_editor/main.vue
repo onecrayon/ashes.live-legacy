@@ -92,6 +92,10 @@
 			<text-editor state-path="deck.description" field-name="Description"></text-editor>
 		</div>
 		<div v-else-if="activeTab == 'actions' && phoenixborn">
+			<button class="btn btn-block btn-primary" @click="showExportModal = true">
+				<i class="fa fa-share-square-o"></i> Export Deck
+			</button>
+			<export-modal :show="showExportModal" @close="showExportModal = false"></export-modal>
 			<button class="btn btn-block btn-danger" :disabled="!isSaved" @click="showDeleteModal = true">
 				<i class="fa fa-trash"></i> Delete Deck
 			</button>
@@ -108,6 +112,7 @@
 	import QtyButtons from 'app/gallery/listing/qty_buttons.vue'
 	import DieCounter from './die_counter.vue'
 	import DeleteModal from './delete_modal.vue'
+	import ExportModal from './export_modal.vue'
 	import {globals} from 'app/utils'
 
 	export default {
@@ -117,13 +122,15 @@
 			'qty-buttons': QtyButtons,
 			'die-counter': DieCounter,
 			'text-editor': TextEditor,
+			'export-modal': ExportModal,
 			'delete-modal': DeleteModal
 		},
 		data: function () {
 			return {
 				activeTab: 'deck',
 				alerts: [],
-				showDeleteModal: false
+				showDeleteModal: false,
+				showExportModal: false
 			}
 		},
 		computed: {
