@@ -93,7 +93,7 @@
 		</div>
 		<div v-else-if="activeTab == 'actions' && phoenixborn">
 			<button class="btn btn-block btn-primary" @click="showExportModal = true">
-				<i class="fa fa-share-square-o"></i> Export Deck
+				<i class="fa fa-share-square-o"></i> Export As Text
 			</button>
 			<export-modal :show="showExportModal" @close="showExportModal = false"></export-modal>
 			<button class="btn btn-block btn-danger" :disabled="!isSaved" @click="showDeleteModal = true">

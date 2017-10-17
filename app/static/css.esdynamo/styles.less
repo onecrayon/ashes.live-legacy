@@ -24,6 +24,8 @@
 @color-life: #5e8664;
 @color-recover: #6178a2;
 
+@import "_imports/switch";
+
 html {
 	font-family: "Open Sans", Helvetica, sans-serif;
 }
@@ -987,6 +989,25 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 	textarea {
 		height: 16rem;
+	}
+}
+
+.export-options {
+	list-style-type: none;
+	padding: 0;
+
+	li {
+		padding: 4px 0;
+	}
+}
+
+.deck-export textarea {
+	.font-size(12px);
+	height: 16rem;
+	width: 320px;
+
+	&[readonly] {
+		color: @color-black;
 	}
 }
 
