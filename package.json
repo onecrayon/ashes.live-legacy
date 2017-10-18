@@ -1,13 +1,13 @@
 {
   "name": "ashes-live",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "build": "webpack && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.css",
     "build-production": "webpack -p && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
     "dev": ". venv/bin/activate && ./cli.py runserver -r",
     "lint": "eslint --ext .js,.vue app/static/src"
   },
-  "homepage": "http://ashes.live",
+  "homepage": "https://ashes.live",
   "license": "ISC",
   "private": true,
   "devDependencies": {
