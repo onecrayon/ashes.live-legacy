@@ -17,12 +17,12 @@ mod = Blueprint('decks', __name__, url_prefix='/decks')
 
 
 TypeOrdering = {
-    'Ready Spell': 0,
-    'Ally': 1,
-    'Alteration Spell': 2,
-    'Action Spell': 3,
-    'Reaction Spell': 4,
-    'Conjurations': 5
+    'Ready Spells': 0,
+    'Allies': 1,
+    'Alteration Spells': 2,
+    'Action Spells': 3,
+    'Reaction Spells': 4,
+    'Conjuration Deck': 5
 }
 
 
@@ -38,6 +38,14 @@ def view(deck_id):
     return render_template('wip.html')
 
 
+def plural_card_type(card_type):
+    if card_type.startswith('Conjur'):
+        return 'Conjuration Deck'
+    if card_type.endswith('y'):
+        return card_type[:-1] + 'ies'
+    return card_type + 's'
+
+
 def process_cards(card_map, deck_id, deck_cards):
     for deck_card in deck_cards:
         card = deck_card.card if hasattr(deck_card, 'card') else deck_card
@@ -48,8 +56,7 @@ def process_cards(card_map, deck_id, deck_cards):
             'count': count,
             'name': card.name,
             'stub': card.stub,
-            'type': card.card_type if not card.card_type.startswith('Conjur')
-                else 'Conjurations'
+            'type': plural_card_type(card.card_type)
         })
         if card.conjurations:
             process_cards(card_map, deck_id, card.conjurations)
@@ -80,7 +87,8 @@ def mine(page=None):
             process_cards(card_map, deck.id, deck.phoenixborn.conjurations)
         card_map[deck.id] = sorted(
             sorted(card_map[deck.id], key=itemgetter('name')),
-        key=lambda x: TypeOrdering[x['type']])
+            key=lambda x: TypeOrdering[x['type']]
+        )
     total_pages = math.ceil(query.limit(None).offset(None).count() / per_page)
     if total_pages > 1:
         pages = list(range(1, total_pages + 1))
