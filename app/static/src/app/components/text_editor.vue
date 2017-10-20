@@ -26,8 +26,8 @@
 
 <script>
 	import CardCodes from 'app/components/card_codes.vue'
-	import {globals} from 'app/utils'
-	import {get, reduce} from 'lodash'
+	import {globals, getFromObject} from 'app/utils'
+	import {reduce} from 'lodash'
 
 	export default {
 		props: ['statePath', 'fieldName'],
@@ -54,7 +54,7 @@
 		computed: {
 			content: {
 				get () {
-					return get(this.$store.state, this.statePath)
+					return getFromObject(this.$store.state, this.statePath)
 				},
 				set (value) {
 					if (!this.setMethod) {

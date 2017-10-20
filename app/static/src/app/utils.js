@@ -38,6 +38,15 @@ function typeToFontAwesome (cardType) {
 	return 'fa-question-circle'
 }
 
+// Lodash `get` fails for some reason in production builds, so...
+function getFromObject (obj, path) {
+	for (let i = 0, parts = path.split('.'), len = parts.length; i < len; i++) {
+		obj = obj[parts[i]]
+		if (obj === undefined) break
+	}
+	return obj
+}
+
 export {
 	globals,
 	cardUrl,
@@ -46,5 +55,6 @@ export {
 	initCardTooltips,
 	teardownTooltips,
 	assetPath,
-	typeToFontAwesome
+	typeToFontAwesome,
+	getFromObject
 }
