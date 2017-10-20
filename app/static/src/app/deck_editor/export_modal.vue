@@ -10,12 +10,12 @@
 			<li class="col">
 				<div class="onoffswitch">
 					<input type="checkbox" class="onoffswitch-checkbox" id="card-count-input"
-						v-model="showCardCount">
+						v-model="showCardCounts">
 					<label class="onoffswitch-label" for="card-count-input">
 						<span class="onoffswitch-inner"></span>
 						<span class="onoffswitch-switch"></span>
 					</label>
-				</div> Card count
+				</div> Card totals
 			</li>
 			<li class="col">
 				<div class="onoffswitch">
@@ -53,7 +53,7 @@
 		data () {
 			return {
 				showAttribution: true,
-				showCardCount: true,
+				showCardCounts: true,
 				sortByType: true
 			}
 		},
@@ -86,9 +86,9 @@
 					text.push('\n')
 				}
 				if (this.$store.getters.totalCards) {
-					if (!this.sortByType || this.showCardCount) {
+					if (!this.sortByType || this.showCardCounts) {
 						text.push('Cards')
-						if (this.showCardCount) {
+						if (this.showCardCounts) {
 							text.push(' (', this.$store.getters.totalCards, '/30)')
 						}
 						text.push(':\n')
@@ -109,7 +109,11 @@
 					}
 					for (const section of this.$store.getters.deckSections) {
 						if (this.sortByType) {
-							text.push(section.title, ':\n')
+							text.push(section.title)
+							if (this.showCardCounts && section.count) {
+								text.push(' (', section.count, ')')
+							}
+							text.push(':\n')
 							pushCards(section.contents)
 							text.push('\n')
 						} else {

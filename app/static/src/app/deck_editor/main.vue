@@ -64,13 +64,13 @@
 			<hr>
 			<h3>
 				Cards
-				<span class="card-count">
+				<span class="card-count float-right">
 					<span :class="{error: totalCards > 30}">{{ totalCards }}</span> / 30
 				</span>
 			</h3>
 			<div v-for="section of deckSections" :key="section.title" class="deck-section">
 				<hr v-if="section.title == 'Conjuration Deck'">
-				<h4>{{ section.title }}</h4>
+				<h4>{{ section.title }}<span v-if="section.count" class="card-count"> ({{ section.count }})</span></h4>
 				<ul>
 					<li v-for="card of section.contents" :key="card.data.id">
 						<div v-if="section.title == 'Conjuration Deck'">

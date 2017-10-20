@@ -140,8 +140,12 @@ export default new Vuex.Store({
 					}
 					return a.data.name < b.data.name ? -1 : 1
 				})
+				const totalCards = reduce(contents, (total, card) => {
+					return total + card.count
+				}, 0)
 				sortedSections.push({
 					'title': pluralCardType(section),
+					'count': totalCards,
 					'contents': contents
 				})
 			}
