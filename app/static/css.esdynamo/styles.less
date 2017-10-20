@@ -1019,6 +1019,26 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 }
 
 .gallery {
+	.filters .btn-all {
+		min-width: 64px;
+	}
+
+	.main-filters, .listing-controls {
+		> .form-field, .btn-group, .input-group {
+			margin-bottom: 10px;
+		}
+	}
+
+	.secondary-filters .btn-group {
+		margin-bottom: 20px;
+	}
+}
+
+.listing {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+
 	.btn-group {
 		.btn-qty {
 			background: rgba(255, 255, 255, .6);
@@ -1047,26 +1067,6 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 			border-radius: 0;
 			border-right: none;
 		}
-	}
-
-	.filters .btn-all {
-		min-width: 64px;
-	}
-
-	.main-filters, .listing-controls {
-		> .form-field, .btn-group, .input-group {
-			margin-bottom: 10px;
-		}
-	}
-
-	.secondary-filters .btn-group {
-		margin-bottom: 20px;
-	}
-
-	.listing {
-		list-style-type: none;
-		padding: 0;
-		margin: 0;
 	}
 
 	.card-detail {
@@ -1248,6 +1248,84 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		.recover {
 			border-color: @color-recover;
 		}
+	}
+}
+
+.tabular-listing {
+	width: 100%;
+
+	td {
+		padding: 2px 5px;
+	}
+
+	.qty-col {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.type-col {
+		text-align: center;
+	}
+
+	.qty-col, .type-col, .stats-col, .costs-col {
+		white-space: nowrap;
+	}
+
+	.stats-col, .costs-col {
+		text-align: right;
+	}
+
+	.name-col {
+		text-align: left;
+		padding-left: 0;
+		// This forces this column to fill the available space
+		width: 99%;
+	}
+
+	.costs-col {
+		border-left: 1px solid @color-gray;
+	}
+
+	.qty-col {
+		border-bottom: 1px solid transparent;
+	}
+
+	.type-col, .name-col, .stats-col, .costs-col {
+		border-bottom: 1px solid @color-gray;
+	}
+
+	.btn-group {
+		margin-bottom: 0;
+	}
+
+	.phoenixborn {
+		color: @color-mid-gray;
+	}
+
+	.costs {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+
+		li {
+			display: inline-block;
+		}
+	}
+
+	.attack, .life, .recover {
+		font-weight: bold;
+	}
+
+	.attack {
+		color: @color-attack;
+	}
+
+	.life {
+		color: @color-life;
+	}
+
+	.recover {
+		color: @color-recover;
 	}
 }
 

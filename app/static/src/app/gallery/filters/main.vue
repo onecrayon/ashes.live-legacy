@@ -30,18 +30,18 @@
 		</div>
 		<div class="responsive-cols listing-controls">
 			<sort-filter class="col"></sort-filter>
-			<!--<div class="btn-group col">
-				<button @click="setListType('grid')"
+			<div class="btn-group col">
+				<!--<button @click="setListType('grid')"
 					class="btn btn-small" :class="{active: isListType('grid')}" disabled
 					><i class="fa fa-th" title="Grid"></i></button
-				><button @click="setListType('list')"
-					class="btn btn-small" :class="{active: isListType('list')}" disabled
+				>--><button @click="setListType('list')"
+					class="btn btn-small" :class="{active: isListType('list')}"
 					><i class="fa fa-th-list" title="List"></i></button
-				><button @click="setListType('simple')"
-					class="btn btn-small" :class="{active: isListType('simple')}" disabled
+				><button @click="setListType('table')"
+					class="btn btn-small" :class="{active: isListType('table')}"
 					><i class="fa fa-bars" title="Simple List"></i></button
 				>
-			</div>-->
+			</div>
 		</div>
 	</div>
 </template>

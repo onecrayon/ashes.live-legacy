@@ -1,5 +1,5 @@
 <template>
-	<a :href="href" class="card" target="_blank">{{ card.name }}</a>
+	<a :href="href" class="card" target="_blank"><slot>{{ card.name }}</slot></a>
 </template>
 
 <script>
