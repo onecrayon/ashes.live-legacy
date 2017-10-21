@@ -109,7 +109,9 @@ export default new Vuex.Store({
 			primarySort: 'name',
 			primaryOrder: 1,
 			secondarySort: null,
-			secondaryOrder: 1
+			secondaryOrder: 1,
+			// These options affect the deck listing display
+			showDetails: true
 		}, storeGetAll(), !globals.deck || !globals.deck.phoenixborn ? {
 			'primarySort': 'name',
 			'secondarySort': null
@@ -392,6 +394,11 @@ export default new Vuex.Store({
 			cardManager.cardListing((cards) => {
 				state.listing = cards
 			}, options)
+		},
+		// Deck listing methods
+		setShowDetails (state, value) {
+			state.options.showDetails = value
+			storeSet('showDetails', value)
 		}
 	}
 })

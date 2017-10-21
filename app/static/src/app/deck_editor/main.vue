@@ -30,8 +30,10 @@
 			<h3 class="phoenixborn-header">
 				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" title="Swap Phoenixborn"></span>
 				<card-link :card="phoenixborn"></card-link>
+				<span @click="showDetails = !showDetails" class="fa details-btn"
+					:class="showDetails ? 'fa-toggle-up' : 'fa-toggle-down'" title="Toggle Details"></span>
 			</h3>
-			<div class="phoenixborn-detail">
+			<div v-if="showDetails" class="phoenixborn-detail">
 				<ul class="statline">
 					<li class="battlefield">Battlefield {{ phoenixborn.battlefield }}</li>
 					<li class="life">Life {{ phoenixborn.life }}</li>
@@ -39,7 +41,7 @@
 				</ul>
 				<card-effects :card="phoenixborn" all-text="true"></card-effects>
 			</div>
-			<ul class="dice">
+			<ul v-if="showDetails" class="dice">
 				<li v-for="(die, index) of diceList" :key="index"
 						class="die" :class="[die ? die : 'basic']"
 						@click="clearDie(die)">
@@ -140,6 +142,14 @@
 				},
 				set (value) {
 					this.$store.commit('setTitle', value)
+				}
+			},
+			showDetails: {
+				get () {
+					return this.$store.state.options.showDetails
+				},
+				set (value) {
+					return this.$store.commit('setShowDetails', value)
 				}
 			},
 			phoenixborn () {
