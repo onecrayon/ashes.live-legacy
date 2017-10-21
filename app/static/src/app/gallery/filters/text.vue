@@ -14,7 +14,7 @@
 		computed: {
 			search: {
 				get () {
-					return this.$store.state.filters.search
+					return this.$store.state.options.search
 				},
 				set: debounce(function (value) {
 					let search = value || null

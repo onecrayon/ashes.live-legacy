@@ -22,13 +22,13 @@
 				return globals.diceData
 			},
 			diceLogicText () {
-				return this.$store.state.filters.diceLogic === 'or' ? 'Any' : 'All'
+				return this.$store.state.options.diceLogic === 'or' ? 'Any' : 'All'
 			},
 			isDiceLogicActive () {
-				return this.$store.state.filters.diceLogic === 'and'
+				return this.$store.state.options.diceLogic === 'and'
 			},
 			isBasicDisabled () {
-				return this.$store.state.filters.diceLogic === 'and'
+				return this.$store.state.options.diceLogic === 'and'
 			}
 		},
 		methods: {
@@ -42,7 +42,7 @@
 				this.$store.commit('filterCards')
 			},
 			isDieActive (die) {
-				return includes(this.$store.state.filters.dice || [], die)
+				return includes(this.$store.state.options.dice || [], die)
 			},
 			isShowingRelease (dieType) {
 				let releaseNumber = null
@@ -52,7 +52,7 @@
 					releaseNumber = 6
 				}
 				if (!releaseNumber) return true
-				return includes(this.$store.state.filters.releases, releaseNumber)
+				return includes(this.$store.state.options.releases, releaseNumber)
 			}
 		}
 	}

@@ -24,11 +24,11 @@
 				this.$store.commit('filterCards')
 			},
 			hasReleases (releasesKey) {
-				if (releasesKey === null || this.$store.state.filters.releases === null) {
-					return releasesKey === null && this.$store.state.filters.releases === null
+				if (releasesKey === null || this.$store.state.options.releases === null) {
+					return releasesKey === null && this.$store.state.options.releases === null
 				}
 				for (let release of globals.releaseData[releasesKey]) {
-					if (!includes(this.$store.state.filters.releases, release)) {
+					if (!includes(this.$store.state.options.releases, release)) {
 						return false
 					}
 				}

@@ -11,13 +11,13 @@ Vue.use(Vuex)
 const cardManager = new CardManager()
 
 function disableReleaseDice (state) {
-	if ((!state.filters.releases || state.filters.releases.indexOf(5) === -1) &&
-			state.filters.dice && state.filters.dice.indexOf('divine') > -1) {
-		state.filters.dice.splice(state.filters.dice.indexOf('divine'), 1)
+	if ((!state.options.releases || state.options.releases.indexOf(5) === -1) &&
+			state.options.dice && state.options.dice.indexOf('divine') > -1) {
+		state.options.dice.splice(state.options.dice.indexOf('divine'), 1)
 	}
-	if ((!state.filters.releases || state.filters.releases.indexOf(6) === -1) &&
-			state.filters.dice && state.filters.dice.indexOf('sympathy') > -1) {
-		state.filters.dice.splice(state.filters.dice.indexOf('sympathy'), 1)
+	if ((!state.options.releases || state.options.releases.indexOf(6) === -1) &&
+			state.options.dice && state.options.dice.indexOf('sympathy') > -1) {
+		state.options.dice.splice(state.options.dice.indexOf('sympathy'), 1)
 	}
 }
 
@@ -62,6 +62,26 @@ if (globals.deck) {
 	}
 }
 
+const storageOptionsKey = 'deckbuilder.options'
+function storeSet (key, value) {
+	const stashed = window.localStorage.getItem(storageOptionsKey)
+	let options = stashed ? JSON.parse(stashed) : {}
+	options[key] = value
+	window.localStorage.setItem(storageOptionsKey, JSON.stringify(options))
+}
+
+function storeGet (key) {
+	const stashed = window.localStorage.getItem(storageOptionsKey)
+	let options = stashed ? JSON.parse(stashed) : {}
+	return options[key]
+}
+
+function storeGetAll () {
+	const stashed = window.localStorage.getItem(storageOptionsKey)
+	const options = stashed ? JSON.parse(stashed) : {}
+	return options
+}
+
 export default new Vuex.Store({
 	state: {
 		deck: merge({
@@ -76,19 +96,24 @@ export default new Vuex.Store({
 			cards: {}
 		}, globals.deck || {}),
 		listing: [],
-		listType: 'list',
-		filters: {
+		options: merge({
+			// These options filter the list
 			search: null,
 			types: null,
 			releases: defaultReleases,
 			dice: null,
 			diceLogic: 'or',
 			phoenixborn: deckPhoenixborn ? deckPhoenixborn.name : null,
+			// These options affect listing display
+			listType: 'list',
 			primarySort: 'name',
 			primaryOrder: 1,
 			secondarySort: null,
 			secondaryOrder: 1
-		}
+		}, storeGetAll(), !globals.deck || !globals.deck.phoenixborn ? {
+			'primarySort': 'name',
+			'secondarySort': null
+		} : {})
 	},
 	getters: {
 		phoenixborn (state) {
@@ -193,9 +218,17 @@ export default new Vuex.Store({
 		setPhoenixborn (state, id) {
 			const phoenixborn = cardManager.cardById(id)
 			state.deck.phoenixborn = id
-			state.filters.phoenixborn = phoenixborn ? phoenixborn.name : null
+			state.options.phoenixborn = phoenixborn ? phoenixborn.name : null
+			// Configure the sorting options (because they differ between the listing types)
+			if (id) {
+				state.options.primarySort = storeGet('primarySort') || 'name'
+				state.options.secondarySort = storeGet('secondarySort') || null
+			} else {
+				state.options.primarySort = 'name'
+				state.options.secondarySort = null
+			}
 			// Clear out the search, since the listing contents are updating
-			state.filters.search = null
+			state.options.search = null
 			const ids = Object.keys(state.deck.cards)
 			if (phoenixborn && ids.length) {
 				// Clear out any Phoenixborn-specific cards in the deck
@@ -231,86 +264,88 @@ export default new Vuex.Store({
 		},
 		// Filter methods
 		setSearch (state, search) {
-			state.filters.search = search
+			state.options.search = search
 		},
 		diceToFilters (state) {
-			state.filters.diceLogic = 'or'
+			state.options.diceLogic = 'or'
 			let activeDice = ['basic']
 			for (let dieType of Object.keys(state.deck.dice)) {
 				if (state.deck.dice[dieType] &&
-						(dieType !== 'divine' || state.filters.releases.indexOf(5) > -1) &&
-						(dieType !== 'sympathy' || state.filters.releases.indexOf(6) > -1)) {
+						(dieType !== 'divine' || state.options.releases.indexOf(5) > -1) &&
+						(dieType !== 'sympathy' || state.options.releases.indexOf(6) > -1)) {
 					activeDice.push(dieType)
 				}
 			}
-			state.filters.dice = activeDice
+			state.options.dice = activeDice
 		},
 		toggleDiceLogic (state) {
-			state.filters.diceLogic = state.filters.diceLogic === 'or' ? 'and' : 'or'
+			state.options.diceLogic = state.options.diceLogic === 'or' ? 'and' : 'or'
 			// Exclude basic die check from "and" comparisons
-			if (state.filters.diceLogic === 'and' && state.filters.dice &&
-					state.filters.dice.indexOf('basic') > -1) {
-				state.filters.dice.splice(state.filters.dice.indexOf('basic'), 1)
+			if (state.options.diceLogic === 'and' && state.options.dice &&
+					state.options.dice.indexOf('basic') > -1) {
+				state.options.dice.splice(state.options.dice.indexOf('basic'), 1)
 			}
 		},
 		toggleDieFilter (state, die) {
-			if (!state.filters.dice || !state.filters.dice.length) {
-				state.filters.dice = [die]
-			} else if (state.filters.dice.indexOf(die) > -1) {
-				state.filters.dice.splice(state.filters.dice.indexOf(die), 1)
+			if (!state.options.dice || !state.options.dice.length) {
+				state.options.dice = [die]
+			} else if (state.options.dice.indexOf(die) > -1) {
+				state.options.dice.splice(state.options.dice.indexOf(die), 1)
 			} else {
-				state.filters.dice.push(die)
+				state.options.dice.push(die)
 			}
 		},
 		toggleTypeFilter (state, typeName) {
-			if (!state.filters.types || !state.filters.types.length) {
-				state.filters.types = [typeName]
-			} else if (state.filters.types.indexOf(typeName) > -1) {
-				state.filters.types.splice(state.filters.types.indexOf(typeName), 1)
+			if (!state.options.types || !state.options.types.length) {
+				state.options.types = [typeName]
+			} else if (state.options.types.indexOf(typeName) > -1) {
+				state.options.types.splice(state.options.types.indexOf(typeName), 1)
 			} else {
-				state.filters.types.push(typeName)
+				state.options.types.push(typeName)
 			}
 		},
 		setTypes (state, types) {
-			state.filters.types = types
+			state.options.types = types
 		},
 		toggleRelease (state, releaseNumber) {
-			if (state.filters.releases === null) {
-				state.filters.releases = [releaseNumber]
-			} else if (state.filters.releases.indexOf(releaseNumber) > -1) {
-				state.filters.releases.splice(state.filters.releases.indexOf(releaseNumber), 1)
+			if (state.options.releases === null) {
+				state.options.releases = [releaseNumber]
+			} else if (state.options.releases.indexOf(releaseNumber) > -1) {
+				state.options.releases.splice(state.options.releases.indexOf(releaseNumber), 1)
 				disableReleaseDice(state)
 			} else {
-				state.filters.releases.push(releaseNumber)
+				state.options.releases.push(releaseNumber)
 			}
+			storeSet('releases', state.options.releases)
 		},
 		toggleReleases (state, releases) {
-			if (state.filters.releases === null) {
-				state.filters.releases = releases
+			if (state.options.releases === null) {
+				state.options.releases = releases
 			} else {
 				for (let release of releases) {
-					if (state.filters.releases.indexOf(release) > -1) {
-						state.filters.releases.splice(state.filters.releases.indexOf(release), 1)
+					if (state.options.releases.indexOf(release) > -1) {
+						state.options.releases.splice(state.options.releases.indexOf(release), 1)
 					} else {
-						state.filters.releases.push(release)
+						state.options.releases.push(release)
 					}
 				}
 				disableReleaseDice(state)
 				// Disallow a completely empty list by defaulting to showing the core set
-				if (!state.filters.releases.length) {
-					state.filters.releases = [0]
+				if (!state.options.releases.length) {
+					state.options.releases = [0]
 				}
 			}
+			storeSet('releases', state.options.releases)
 		},
 		resetFilters (state) {
-			state.filters.search = null
-			state.filters.types = null
-			state.filters.dice = null
+			state.options.search = null
+			state.options.types = null
+			state.options.dice = null
 			// If only "promo" cards are being shown, it's possible that
 			// clearing filters will not show anything if the selected
 			// phoenixborn is not a promo
 			let onlyPromos = true
-			for (let release of state.filters.releases) {
+			for (let release of state.options.releases) {
 				if (release < 100) {
 					onlyPromos = false
 				}
@@ -318,33 +353,42 @@ export default new Vuex.Store({
 			if (onlyPromos) {
 				const phoenixborn = cardManager.cardById(state.deck.phoenixborn)
 				if (phoenixborn.release < 100) {
-					state.filters.releases = [0]
+					state.options.releases = [0]
 				}
 			}
 		},
 		// Sorting methods
 		toggleSortOrder (state) {
-			state.filters.primaryOrder *= -1
-			state.filters.secondaryOrder *= -1
+			state.options.primaryOrder *= -1
+			state.options.secondaryOrder *= -1
+			storeSet('primaryOrder', state.options.primaryOrder)
+			storeSet('secondaryOrder', state.options.secondaryOrder)
 		},
 		setSort (state, field) {
 			if (field === 'dice') {
-				state.filters.primarySort = field
-				state.filters.secondarySort = 'weight'
+				state.options.primarySort = field
+				state.options.secondarySort = 'weight'
 			} else if (field !== 'name') {
-				state.filters.primarySort = field
-				state.filters.secondarySort = 'name'
+				state.options.primarySort = field
+				state.options.secondarySort = 'name'
 			} else {
-				state.filters.primarySort = 'name'
-				state.filters.secondarySort = null
+				state.options.primarySort = 'name'
+				state.options.secondarySort = null
+			}
+			// We only persist the sort if we are working with the standard deckbuilder
+			// (because the Phoenixborn sort options are different)
+			if (state.deck.phoenixborn) {
+				storeSet('primarySort', state.options.primarySort)
+				storeSet('secondarySort', state.options.secondarySort)
 			}
 		},
 		// Listing methods
 		setListType (state, listType) {
-			state.listType = listType
+			state.options.listType = listType
+			storeSet('listType', listType)
 		},
 		filterCards (state, options) {
-			options = options || state.filters
+			options = options || state.options
 			cardManager.cardListing((cards) => {
 				state.listing = cards
 			}, options)

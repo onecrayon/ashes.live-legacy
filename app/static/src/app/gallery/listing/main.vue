@@ -16,7 +16,7 @@
 		},
 		methods: {
 			isListType (listType) {
-				return this.$store.state.listType === listType
+				return this.$store.state.options.listType === listType
 			}
 		}
 	}

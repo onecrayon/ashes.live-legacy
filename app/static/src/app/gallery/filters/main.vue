@@ -71,10 +71,10 @@
 				this.$store.commit('setListType', listType)
 			},
 			isTypeActive (typeName) {
-				return includes(this.$store.state.filters.types || [], typeName)
+				return includes(this.$store.state.options.types || [], typeName)
 			},
 			isListType (listType) {
-				return this.$store.state.listType === listType
+				return this.$store.state.options.listType === listType
 			}
 		}
 	}
