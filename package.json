@@ -3,7 +3,7 @@
   "version": "0.2.2",
   "scripts": {
     "build": "webpack && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.css",
-    "build-production": "webpack -p && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
+    "build-production": "export ENVIRONMENT='production' && export NODE_ENV='production' && webpack && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
     "dev": ". venv/bin/activate && ./cli.py runserver -r",
     "lint": "eslint --ext .js,.vue app/static/src"
   },
