@@ -9,14 +9,19 @@ class Deck(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(255), index=True)
     description = db.Column(db.Text)
-    public = db.Column(db.Boolean, nullable=False, default=False, index=True)
-    created = db.Column(db.DateTime, default=datetime.utcnow)
+    is_public = db.Column(db.Boolean, nullable=False, default=False, index=True)
+    is_snapshot = db.Column(db.Boolean, nullable=False, default=False, index=True)
+    created = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, index=True)
+    # Snapshots will always have a deck as their source; decks can be sourced from a private
+    # snapshot (if the two share a user_id) or any public snapshot
+    source_id = db.Column(db.Integer, db.ForeignKey('deck.id'), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False, index=True)
     phoenixborn_id = db.Column(db.Integer, db.ForeignKey(Card.id), index=True)
     
     user = db.relationship(User)
     phoenixborn = db.relationship(Card)
+    source = db.relationship('Deck')
     # `cards` and `dice` are defined via backref in the models below
 
 
