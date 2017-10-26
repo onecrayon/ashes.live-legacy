@@ -110,12 +110,5 @@ def upgrade():
 
 def downgrade():
     op.drop_table('cards_dice')
-    op.drop_index(op.f('ix_die_stub'), table_name='die')
     op.drop_table('die')
-    op.drop_index(op.f('ix_card_text'), table_name='card')
-    op.drop_index(op.f('ix_card_name'), table_name='card')
-    op.drop_index(op.f('ix_card_stub'), table_name='card')
-    op.drop_index(op.f('ix_card_release'), table_name='card')
-    op.drop_index(op.f('ix_card_cost_weight'), table_name='card')
-    op.drop_index(op.f('ix_card_card_type'), table_name='card')
     op.drop_table('card')
