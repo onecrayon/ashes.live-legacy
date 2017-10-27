@@ -204,6 +204,9 @@ export default new Vuex.Store({
 				}
 				return result
 			}, [])
+		},
+		untitledText (state, getters) {
+			return 'Untitled ' + ((getters.phoenixborn && getters.phoenixborn.name) || 'deck')
 		}
 	},
 	mutations: {

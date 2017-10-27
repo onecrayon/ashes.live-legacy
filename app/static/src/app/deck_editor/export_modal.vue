@@ -66,7 +66,7 @@
 			},
 			deckText () {
 				let text = [
-					this.$store.state.deck.title || 'Untitled ' + this.$store.getters.phoenixborn.name,
+					this.$store.state.deck.title || this.$store.getters.untitledText,
 					'\n\nPhoenixborn: ',
 					this.$store.getters.phoenixborn.name,
 					'\n\n'

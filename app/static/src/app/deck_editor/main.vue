@@ -10,7 +10,7 @@
 		<div class="deck-header">
 			<div class="input-group">
 				<div class="form-field">
-					<input v-model="title" :disabled="!phoenixborn" type="text" placeholder="Untitled deck">
+					<input v-model="title" :disabled="!phoenixborn" type="text" :placeholder="untitledText">
 				</div>
 				<button @click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 			</div>
@@ -64,31 +64,7 @@
 				</div>
 			</div>
 			<hr>
-			<h3>
-				Cards
-				<span class="card-count float-right">
-					<span :class="{error: totalCards > 30}">{{ totalCards }}</span> / 30
-				</span>
-			</h3>
-			<div v-for="section of deckSections" :key="section.title" class="deck-section">
-				<hr v-if="section.title == 'Conjuration Deck'">
-				<h4>{{ section.title }}<span v-if="section.count" class="card-count"> ({{ section.count }})</span></h4>
-				<ul>
-					<li v-for="card of section.contents" :key="card.data.id">
-						<div v-if="section.title == 'Conjuration Deck'">
-							{{ card.count }}&times; <card-link :card="card.data"></card-link>
-						</div>
-						<div v-else>
-							<qty-buttons :card="card.data" classes="btn-small"
-								zero-output="<i class='fa fa-times' title='Remove'></i>"></qty-buttons>
-							<card-link :card="card.data"></card-link>
-							<span v-if="card.data.phoenixborn" class="phoenixborn" :title="card.data.phoenixborn">
-								({{ card.data.phoenixborn.split(' ')[0] }})
-							</span>
-						</div>
-					</li>
-				</ul>
-			</div>
+			<deck-listing></deck-listing>
 		</div>
 		<div v-else-if="activeTab == 'meta' && phoenixborn">
 			<text-editor state-path="deck.description" field-name="Description"></text-editor>
@@ -102,6 +78,25 @@
 				<i class="fa fa-trash"></i> Delete Deck
 			</button>
 			<delete-modal :show="showDeleteModal" @close="showDeleteModal = false"></delete-modal>
+			<hr>
+			<h3>Snapshots</h3>
+
+			<p>Save snapshots of your deck to track changes over time.</p>
+
+			<button class="btn btn-primary btn-block" @click="newSnapshot(false)">
+				<i class="fa fa-camera"></i> New Snapshot
+			</button>
+			<!-- TODO: need to figure out how to actually handle snapshot display -->
+			<button class="btn btn-block" :disabled="!isSaved" @click="showSnapshots = true">
+				<i class="fa fa-eye"></i> View Snapshots
+			</button>
+
+			<p>Publishing your deck will create a public snapshot for others to view!</p>
+
+			<button class="btn btn-primary btn-block" @click="newSnapshot(true)">
+				<i class="fa fa-share-square-o"></i> Publish Deck
+			</button>
+			<snapshot-modal :show="showSnapshotModal" :public="createPublicSnapshot" @close="closeSnapshotModal"></snapshot-modal>
 		</div>
 	</div>
 </template>
@@ -110,29 +105,34 @@
 	import qwest from 'qwest'
 	import TextEditor from 'app/components/text_editor.vue'
 	import CardLink from 'app/components/card_link.vue'
+	import DeckListing from 'app/components/deck_listing.vue'
 	import CardEffects from 'app/gallery/listing/card_effects.vue'
-	import QtyButtons from 'app/gallery/listing/qty_buttons.vue'
 	import DieCounter from './die_counter.vue'
 	import DeleteModal from './delete_modal.vue'
 	import ExportModal from './export_modal.vue'
+	import SnapshotModal from './snapshot_modal.vue'
 	import {globals} from 'app/utils'
 
 	export default {
 		components: {
 			'card-effects': CardEffects,
 			'card-link': CardLink,
-			'qty-buttons': QtyButtons,
+			'deck-listing': DeckListing,
 			'die-counter': DieCounter,
 			'text-editor': TextEditor,
 			'export-modal': ExportModal,
-			'delete-modal': DeleteModal
+			'delete-modal': DeleteModal,
+			'snapshot-modal': SnapshotModal
 		},
-		data: function () {
+		data () {
 			return {
 				activeTab: 'deck',
 				alerts: [],
 				showDeleteModal: false,
-				showExportModal: false
+				showExportModal: false,
+				showSnapshotModal: false,
+				createPublicSnapshot: false,
+				showSnapshots: false
 			}
 		},
 		computed: {
@@ -143,6 +143,9 @@
 				set (value) {
 					this.$store.commit('setTitle', value)
 				}
+			},
+			untitledText () {
+				return this.$store.getters.untitledText
 			},
 			showDetails: {
 				get () {
@@ -175,17 +178,14 @@
 			diceEmpty () {
 				return this.$store.getters.totalDice === 0
 			},
-			deckSections () {
-				return this.$store.getters.deckSections
-			},
-			totalCards () {
-				return this.$store.getters.totalCards
-			},
 			diceNames () {
 				return globals.diceData
 			},
 			isSaved () {
-				return !!this.$store.state.deck.id
+				return !!this.deckId
+			},
+			deckId () {
+				return this.$store.state.deck.id
 			}
 		},
 		methods: {
@@ -230,6 +230,18 @@
 			},
 			dismissAlert (index) {
 				this.alerts.splice(index, 1)
+			},
+			newSnapshot (isPublic) {
+				if (isPublic && (this.$store.getters.totalDice !== 10 || this.$store.getters.totalCards !== 30)) {
+					this.alerts.push({'type': 'error', 'message': 'Your deck must contain 10 dice and 30 cards to publish it.'})
+					return
+				}
+				this.createPublicSnapshot = isPublic
+				this.showSnapshotModal = true
+			},
+			closeSnapshotModal () {
+				this.showSnapshotModal = false
+				this.createPublicSnapshot = false
 			}
 		}
 	}

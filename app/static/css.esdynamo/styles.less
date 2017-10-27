@@ -225,6 +225,10 @@ a.card {
 	input[type="checkbox"] + label, input[type="radio"] + label {
 		display: inline;
 	}
+
+	textarea {
+		height: 16rem;
+	}
 	
 	input[type="text"], input[type="password"], input[type="number"],
 	textarea {
@@ -270,6 +274,10 @@ a.card {
 	
 	&.btn-primary {
 		.alert(@color-link);
+	}
+
+	&.btn-success {
+		.alert(@color-success);
 	}
 
 	&.btn-danger {
@@ -555,6 +563,7 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 	border-radius: 5px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
 	transition: all .3s ease;
+	width: 100%;
 }
 
 /*
@@ -997,10 +1006,6 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 .editor .form-field {
 	max-width: none;
-
-	textarea {
-		height: 16rem;
-	}
 }
 
 .export-options {
@@ -1014,7 +1019,6 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 .deck-export textarea {
 	.font-size(12px);
-	height: 16rem;
 	width: 320px;
 
 	&[readonly] {
