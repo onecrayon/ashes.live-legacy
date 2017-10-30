@@ -73,11 +73,14 @@
 	<div id="page">
 		{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
-			<ul class="alerts">
+			<ul class="alerts" id="server-alerts">
 			{% for category, message in messages %}
 				<li class="{{ category }}">{{ message | safe }}</li>
 			{% endfor %}
 			</ul>
+			<script type="text/javascript">
+				document.getElementById('server-alerts').style.display = 'none'
+			</script>
 		{% endif %}
 		{% endwith %}
 		{% block heading %}{% endblock %}

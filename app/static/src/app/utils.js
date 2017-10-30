@@ -5,6 +5,7 @@ const parseCardCodes = globals.parseCardCodes
 const initTooltips = globals.initTooltips
 const initCardPopups = globals.initCardPopups
 const assetPath = globals.assetPath
+const notify = globals.notify
 
 function initCardTooltips (el) {
 	const els = (el && [el]) || Array.from(this.$el.querySelectorAll('.card'))
@@ -56,5 +57,6 @@ export {
 	teardownTooltips,
 	assetPath,
 	typeToFontAwesome,
-	getFromObject
+	getFromObject,
+	notify
 }

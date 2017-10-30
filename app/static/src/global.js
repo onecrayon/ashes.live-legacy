@@ -1,3 +1,4 @@
+import Noty from 'noty'
 import tippy from 'tippy.js'
 import {escape} from 'lodash'
 
@@ -100,3 +101,20 @@ globals.initCardPopups = function (target) {
 }
 // Init popups for statically-rendered content
 globals.initCardPopups('.card')
+
+globals.notify = function(message, category) {
+	new Noty({
+		type: category || 'info',
+		text: message,
+		timeout: category !== 'error' ? 5000 : 30000,
+		theme: 'metroui'
+	}).show()
+}
+// Display Flask alerts
+const alerts = document.getElementById('server-alerts')
+if (alerts) {
+	for (const alert of Array.from(alerts.children)) {
+		if (!alert.tagName || alert.tagName.toLowerCase() !== 'li') continue
+		globals.notify(alert.innerHTML, alert.className)
+	}
+}
