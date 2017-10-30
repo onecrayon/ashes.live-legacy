@@ -204,11 +204,9 @@
 					{dataType: 'json'}
 				).then((xhr, response) => {
 					if (response.validation) {
-						notify(response.validation.title, 'error')
-						return
+						return notify(response.validation.title, 'error')
 					} else if (response.error) {
-						notify(response.error, 'error')
-						return
+						return notify(response.error, 'error')
 					} else if (response.success) {
 						notify(response.success, 'success')
 					}
@@ -220,8 +218,7 @@
 			},
 			newSnapshot (isPublic) {
 				if (isPublic && (this.$store.getters.totalDice !== 10 || this.$store.getters.totalCards !== 30)) {
-					notify('Your deck must contain 10 dice and 30 cards to publish it.', 'error')
-					return
+					return notify('Your deck must contain 10 dice and 30 cards to publish it.', 'error')
 				}
 				this.createPublicSnapshot = isPublic
 				this.showSnapshotModal = true
