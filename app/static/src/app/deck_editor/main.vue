@@ -1,12 +1,5 @@
 <template>
 	<div id="editor-meta">
-		<ul v-if="alerts && alerts.length" class="alerts">
-			<li v-for="(alert, index) of alerts" :key="index" :class="[alert.type]">
-				<button class="btn-close" title="Dismiss"
-					@click="dismissAlert(index)"><i class="fa fa-times"></i></button>
-				{{ alert.message }}
-			</li>
-		</ul>
 		<div class="deck-header">
 			<div class="input-group">
 				<div class="form-field">
@@ -111,7 +104,7 @@
 	import DeleteModal from './delete_modal.vue'
 	import ExportModal from './export_modal.vue'
 	import SnapshotModal from './snapshot_modal.vue'
-	import {globals} from 'app/utils'
+	import {globals, notify} from 'app/utils'
 
 	export default {
 		components: {
@@ -127,7 +120,6 @@
 		data () {
 			return {
 				activeTab: 'deck',
-				alerts: [],
 				showDeleteModal: false,
 				showExportModal: false,
 				showSnapshotModal: false,
@@ -206,34 +198,29 @@
 				this.$store.commit('filterCards')
 			},
 			save () {
-				this.alerts = []
 				qwest.post(
 					'/api/decks/' + (this.$store.state.deck.id || ''),
 					this.$store.state.deck,
 					{dataType: 'json'}
 				).then((xhr, response) => {
 					if (response.validation) {
-						this.alerts.push({'type': 'error', 'message': response.validation.title})
+						notify(response.validation.title, 'error')
+						return
 					} else if (response.error) {
-						this.alerts.push({'type': 'error', 'message': response.error})
+						notify(response.error, 'error')
+						return
 					} else if (response.success) {
-						this.alerts.push({'type': 'success', 'message': response.success})
+						notify(response.success, 'success')
 					}
 					if (!this.$store.state.deck.id) {
 						this.$store.commit('setId', response.data.id)
 						history.pushState(null, 'Deck saved!', '/decks/build/' + response.data.id + '/')
 					}
-				}).catch((error, xhr, response) => {
-					this.alerts.push({'type': 'error', error})
-					console.log('Failed to save deck:', response)
 				})
-			},
-			dismissAlert (index) {
-				this.alerts.splice(index, 1)
 			},
 			newSnapshot (isPublic) {
 				if (isPublic && (this.$store.getters.totalDice !== 10 || this.$store.getters.totalCards !== 30)) {
-					this.alerts.push({'type': 'error', 'message': 'Your deck must contain 10 dice and 30 cards to publish it.'})
+					notify('Your deck must contain 10 dice and 30 cards to publish it.', 'error')
 					return
 				}
 				this.createPublicSnapshot = isPublic
