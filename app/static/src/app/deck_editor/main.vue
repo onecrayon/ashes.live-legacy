@@ -81,9 +81,9 @@
 			<hr>
 			<h3>Snapshots</h3>
 
-			<p>Save snapshots of your deck to track changes over time.</p>
+			<p>Save snapshots of your deck to track changes over time. <span v-if="!isSaved" class="muted">(Save your deck to enable.)</span></p>
 
-			<button class="btn btn-primary btn-block" @click="newSnapshot(false)">
+			<button class="btn btn-primary btn-block" :disabled="!isSaved" @click="newSnapshot(false)">
 				<i class="fa fa-camera"></i> New Snapshot
 			</button>
 			<!-- TODO: need to figure out how to actually handle snapshot display -->
@@ -93,7 +93,7 @@
 
 			<p>Publishing your deck will create a public snapshot for others to view!</p>
 
-			<button class="btn btn-primary btn-block" @click="newSnapshot(true)">
+			<button class="btn btn-primary btn-block" :disabled="!isSaved" @click="newSnapshot(true)">
 				<i class="fa fa-share-square-o"></i> Publish Deck
 			</button>
 			<snapshot-modal :show="showSnapshotModal" :public="createPublicSnapshot" @close="closeSnapshotModal"></snapshot-modal>
