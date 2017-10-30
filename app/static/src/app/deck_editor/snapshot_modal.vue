@@ -41,6 +41,7 @@
 	import qwest from 'qwest'
 	import DeckListing from 'app/components/deck_listing.vue'
 	import Modal from 'app/components/modal.vue'
+	import {merge} from 'lodash'
 
 	export default {
 		components: {
@@ -80,8 +81,24 @@
 		},
 		methods: {
 			saveSnapshot () {
-				console.log('save snapshot!')
-				this.close()
+				qwest.post(
+					'/api/decks/snapshot',
+					merge({}, this.$store.state.deck, {
+						'source_id': this.$store.state.deck.id,
+						'is_snapshot': true,
+						'is_public': this.public
+					}),
+					{dataType: 'json'}
+				).then((xhr, response) => {
+					if (response.validation) {
+						return notify(response.validation.title, 'error')
+					} else if (response.error) {
+						return notify(response.error, 'error')
+					} else if (response.success) {
+						notify(response.success, 'success')
+					}
+					this.close()
+				})
 			},
 			close () {
 				this.$emit('close')
