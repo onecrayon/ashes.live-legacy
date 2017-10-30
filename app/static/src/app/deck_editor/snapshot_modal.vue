@@ -58,7 +58,7 @@
 		computed: {
 			title: {
 				get () {
-					if (this._title !== null) return this._title
+					if (this._title || this._title === '') return this._title
 					return this.$store.state.deck.title
 				},
 				set (value) {
@@ -70,8 +70,11 @@
 			},
 			description: {
 				get () {
-					if (this._description === null) return this._description
+					if (this._description || this._description === '') return this._description
 					return this.$store.state.deck.description
+				},
+				set (value) {
+					this._description = value
 				}
 			}
 		},
