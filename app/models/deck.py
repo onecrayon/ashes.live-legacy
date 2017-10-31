@@ -24,6 +24,18 @@ class Deck(db.Model):
     source = db.relationship('Deck')
     # `cards` and `dice` are defined via backref in the models below
 
+    def public_snapshots(self, limit=None):
+        if self.is_snapshot:
+            return None
+        query = Deck.query.filter(
+            Deck.source_id == self.id,
+            Deck.is_snapshot.is_(True),
+            Deck.is_public.is_(True)
+        ).order_by(Deck.created.desc())
+        if limit:
+            query = query.limit(limit)
+        return query.all()
+
 
 class DeckCard(db.Model):
     deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, primary_key=True)

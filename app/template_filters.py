@@ -1,6 +1,8 @@
 from datetime import date
+import re
 
-from flask import current_app
+from flask import current_app, url_for
+from jinja2 import evalcontextfilter, Markup, escape
 
 from app import app
 from app.models.card import DiceFlags
@@ -41,3 +43,55 @@ def cdn_url(url):
     if not url.startswith('/'):
         url = '/' + url
     return '{}{}'.format(current_app.config['CDN_URL'], url)
+
+
+def parse_card_codes(text):
+    def parse_match(match):
+        if match.group(3):
+            return Markup(' <span class="divider"></span> ')
+        primary = match.group(1)
+        lower_primary = primary.lower().replace('\'', '')
+        secondary = match.group(2).lower() if match.group(2) else None
+        if lower_primary in ['discard', 'exhaust']:
+            return Markup(''.join(
+                ['<span class="phg-', lower_primary, '" title="', primary, '"></span>']
+            ))
+        if lower_primary in DiceFlags.__members__ and lower_primary != 'basic':
+            if not secondary:
+                secondary = 'power'
+        elif lower_primary == 'basic':
+            secondary = 'magic'
+        elif lower_primary in ['main', 'side']:
+            secondary = 'action'
+        elif secondary:
+            return Markup(''.join(
+                ['<i>', lower_primary, (' ' + secondary if secondary else ''), '</i>']
+            ))
+        else:
+            stub = re.sub(r' ', '-', lower_primary)
+            return Markup(''.join([
+                '<a href="', url_for('cards.detail', stub=stub), '" class="card" target="_blank">',
+                primary, '</a>'
+            ]))
+        return Markup(''.join([
+            '<span class="phg-', lower_primary, '-', secondary, '" title="',
+            primary, (' ' + secondary if secondary else ''), '"></span>'
+        ]))
+    return re.sub(r'\[\[([a-z\' -]+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
+
+
+_paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
+
+@app.template_filter('parse_text')
+@evalcontextfilter
+def parse_text(eval_ctx, text):
+    if not text:
+        return ''
+    result = '\n\n'.join(
+        '<p>{}</p>'.format(p.replace('\n', Markup('<br>\n')))
+        for p in _paragraph_re.split(escape(text))
+    )
+    result = parse_card_codes(result)
+    if eval_ctx.autoescape:
+        result = Markup(result)
+    return result

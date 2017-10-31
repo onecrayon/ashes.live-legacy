@@ -1,0 +1,34 @@
+{% from "macros.html" import pagination, usertag %}
+{% from "decks/macros.html" import deck_details %}
+{% extends "base.html" %}
+{% block title %}Snapshots - Deck: {{ deck.title }}{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-side-action">Snapshots for "{{ deck.title }}"</h1>
+{% endblock %}
+
+{% block content %}
+	
+	<div class="deck {{ deck.phoenixborn.stub }}">
+		{{ deck_details(deck, card_map, current_user) }}
+	</div>
+
+	{% if snapshots %}
+	<ul class="deck-list snapshots">
+	{% for snapshot in snapshots %}
+		<li class="deck {{ snapshot.phoenixborn.stub }}{% if snapshot.is_public %} public{% endif %}">
+			{{ deck_details(snapshot, card_map, current_user) }}
+		</li>
+	{% endfor %}
+	</ul>
+	{{ pagination(pages) }}
+	{% else %}
+	<p class="callout">This deck has no snapshots yet.</p>
+	{% endif %}
+{% endblock %}
+
+{% block sidebar %}
+	<p class="callout">Author: {{ usertag(deck.user) }}</p>
+
+	{{ deck.description | parse_text }}
+{% endblock %}

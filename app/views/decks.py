@@ -2,14 +2,14 @@
 
 import json
 
-from flask import Blueprint, render_template
+from flask import abort, Blueprint, render_template
 from flask_login import current_user, login_required
 
 from app import db
 from app.models.card import DiceFlags
 from app.models.deck import Deck
 from app.utils.cards import global_json
-from app.utils.decks import get_decks
+from app.utils.decks import get_decks, process_deck
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
 
@@ -20,28 +20,45 @@ def index():
     return render_template('wip.html')
 
 
-@mod.route('/<deck_stub>/')
-def view(deck_id=None, deck_stub=None):
+@mod.route('/<int:deck_id>/')
+def view(deck_id):
     """View a public deck"""
-    return render_template('wip.html')
-
-
-def render_snapshots(deck_id=None, deck_stub=None, page=None):
-    """View the snapshots for public or own deck"""
     return render_template('wip.html')
 
 
 @mod.route('/<int:deck_id>/snapshots/')
 @mod.route('/<int:deck_id>/snapshots/<int:page>/')
-@login_required
-def my_snapshots(deck_id, page=None):
-    return render_snapshots(deck_id=deck_id, page=page)
-
-
-@mod.route('/<deck_stub>/snapshots/')
-@mod.route('/<deck_stub>/snapshots/<int:page>/')
-def snapshots(deck_stub, page=None):
-    return render_snapshots(deck_stub=deck_stub, page=page)
+def snapshots(deck_id, page=None):
+    """View the snapshots for public or own deck"""
+    source = Deck.query.options(
+        db.joinedload('phoenixborn').joinedload('conjurations'),
+        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
+        db.joinedload('dice'),
+        db.joinedload('user')
+    ).get(deck_id)
+    if not source:
+        abort(404)
+    if not source.public_snapshots(limit=1) and source.user_id != current_user.id:
+        abort(404)
+    if source.user_id != current_user.id:
+        filters = db.and_(
+            Deck.is_snapshot.is_(True),
+            Deck.is_public.is_(True)
+        )
+    else:
+        filters = db.and_(
+            Deck.is_snapshot.is_(True)
+        )
+    decks, card_map, page, pagination = get_decks(filters, page, order_by='created')
+    process_deck(source, card_map)
+    return render_template(
+        'decks/snapshots.html',
+        deck=source,
+        snapshots=decks,
+        card_map=card_map,
+        page=page,
+        pages=pagination
+    )
 
 
 @mod.route('/mine/')

@@ -42,6 +42,16 @@ def process_cards(card_map, deck_id, deck_cards):
             process_cards(card_map, deck_id, card.conjurations)
 
 
+def process_deck(deck, card_map):
+    process_cards(card_map, deck.id, deck.cards)
+    if deck.phoenixborn.conjurations:
+        process_cards(card_map, deck.id, deck.phoenixborn.conjurations)
+    card_map[deck.id] = sorted(
+        sorted(card_map[deck.id], key=itemgetter('name')),
+        key=lambda x: CardTypeOrdering[x['type']]
+    )
+
+
 def get_decks(filters, page, order_by='modified'):
     """Returns a generic query for grabbing decks and related data"""
     if not page:
@@ -57,13 +67,7 @@ def get_decks(filters, page, order_by='modified'):
     decks = query.all()
     card_map = defaultdict(list)
     for deck in decks:
-        process_cards(card_map, deck.id, deck.cards)
-        if deck.phoenixborn.conjurations:
-            process_cards(card_map, deck.id, deck.phoenixborn.conjurations)
-        card_map[deck.id] = sorted(
-            sorted(card_map[deck.id], key=itemgetter('name')),
-            key=lambda x: CardTypeOrdering[x['type']]
-        )
+        process_deck(deck, card_map)
     total_pages = math.ceil(query.limit(None).offset(None).count() / per_page)
     if total_pages > 1:
         pagination = list(range(1, total_pages + 1))

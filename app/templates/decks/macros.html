@@ -1,0 +1,59 @@
+{% macro deck_details(deck, card_map, current_user) -%}
+	{% set current = {'count': 0, 'type': 'None'} -%}
+	<div class="responsive-cols no-wrap">
+		<h2 class="col-flex">
+			{% if deck.is_snapshot %}
+			{% if deck.is_public %}<i class="fa fa-eye visibility-icon"></i>{% else %}<i class="fa fa-eye-slash visibility-icon"></i>{% endif %}
+			{% endif %}
+			{% if deck.user_id == current_user.id and not deck.is_snapshot %}
+			<a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
+			{% else %}
+			{{ deck | deck_title }}
+			{% endif %}
+		</h2>
+
+		<ul class="dice col">
+		{% for dice in deck.dice -%}
+			{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
+			{% if current.update({'count': current.count + dice.count}) %}{% endif -%}
+			{% for x in range(dice.count) %}
+			<li class="die {{ dice.die_flag | die_name }}">
+				<span class="phg-{{ dice.die_flag | die_name }}-power" title="{{ dice.die_flag | die_name | capitalize }}"></span>
+			</li>
+			{% endfor %}
+		{% endfor %}
+		{% if current.count is lessthan 10 -%}
+		{% for x in range(10 - current.count) %}
+			<li class="die basic"><span class="phg-basic-magic"></span></li>
+		{% endfor %}
+		{% endif %}
+		</ul>
+	</div>
+	<hr>
+	<div class="card-listing">
+		<h3>
+			<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
+				{{ deck.phoenixborn.name }}
+			</a>
+		</h3>
+	{% if card_map[deck.id] %}
+		<div class="card-type">
+		{% for card in card_map[deck.id] %}
+			{% if current.type is not equalto(card.type) %}
+				{% if current.type is not equalto('None') %}</ul></div><div class="card-type">{% endif %}
+				<h4>{{ card.type }}</h4>
+				<ul>
+				{% if current.update({'type': card.type}) %}{% endif -%}
+			{% endif %}
+			<li>
+				{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
+					{{ card.name }}
+				</a>
+			</li>
+		{% endfor %}
+			</ul>
+		</div>
+	{% if current.update({'type': 'None'}) %}{% endif -%}
+	{% endif %}
+	</div>
+{%- endmacro %}

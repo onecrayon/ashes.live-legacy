@@ -23,3 +23,26 @@
 		{{ inline_errors(field.errors) }}
 	</div>
 {%- endmacro %}
+
+{% macro pagination(pages) -%}
+	{% if pages %}
+	{% set current = {'page': 0} -%}
+	<nav class="pagination">
+		<ul>
+			{% for page_num in pages %}
+			{% if (current.page + 1) is not equalto page_num %}
+			<li><a href="{{ url_for('decks.mine', page=page_num - 1 if current.page == 1 else current.page + 1) }}">...</a></li>
+			{% endif %}
+			{% if page_num is equalto page %}
+			<li class="active">{{ page_num }}</li>
+			{% else %}
+			<li><a href="{{ url_for('decks.mine', page=page_num if page_num > 1 else None) }}">
+				{{ page_num }}
+			</a></li>
+			{% endif %}
+			{% if current.update({'page': page_num}) %}{% endif -%}
+			{% endfor %}
+		</ul>
+	</nav>
+	{% endif %}
+{%- endmacro %}
