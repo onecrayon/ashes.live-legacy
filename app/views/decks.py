@@ -75,7 +75,8 @@ def mine(page=None):
         db.joinedload('cards').joinedload('card').joinedload('conjurations'),
         db.joinedload('dice')
     ).filter(
-        Deck.user_id == current_user.id
+        Deck.user_id == current_user.id,
+        Deck.is_snapshot.is_(False)
     ).order_by(Deck.modified.desc()).limit(per_page).offset(
         (page - 1) * per_page
     )
