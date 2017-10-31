@@ -11,19 +11,10 @@ from flask_login import current_user, login_required
 from app import db
 from app.models.card import DiceFlags
 from app.models.deck import Deck
-from app.services.cards import global_json
+from app.utils.cards import global_json
+from app.utils.decks import process_cards, CardTypeOrdering
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
-
-
-TypeOrdering = {
-    'Ready Spells': 0,
-    'Allies': 1,
-    'Alteration Spells': 2,
-    'Action Spells': 3,
-    'Reaction Spells': 4,
-    'Conjuration Deck': 5
-}
 
 
 @mod.route('/')
@@ -33,33 +24,19 @@ def index():
 
 
 @mod.route('/<int:deck_id>/')
-def view(deck_id):
+@mod.route('/<deck_stub>/')
+def view(deck_id=None, deck_stub=None):
     """View a public or own deck"""
     return render_template('wip.html')
 
 
-def plural_card_type(card_type):
-    if card_type.startswith('Conjur'):
-        return 'Conjuration Deck'
-    if card_type.endswith('y'):
-        return card_type[:-1] + 'ies'
-    return card_type + 's'
-
-
-def process_cards(card_map, deck_id, deck_cards):
-    for deck_card in deck_cards:
-        card = deck_card.card if hasattr(deck_card, 'card') else deck_card
-        card_id = card.card_id if hasattr(card, 'card_id') else card.id
-        count = deck_card.count if hasattr(deck_card, 'count') else card.copies
-        card_map[deck_id].append({
-            'id':card_id,
-            'count': count,
-            'name': card.name,
-            'stub': card.stub,
-            'type': plural_card_type(card.card_type)
-        })
-        if card.conjurations:
-            process_cards(card_map, deck_id, card.conjurations)
+@mod.route('/<int:deck_id>/snapshots/')
+@mod.route('/<int:deck_id>/snapshots/<int:page>/')
+@mod.route('/<deck_stub>/snapshots/')
+@mod.route('/<deck_stub>/snapshots/<int:page>/')
+def snapshots(deck_id=None, deck_stub=None, page=None):
+    """View the snapshots for public or own deck"""
+    return render_template('wip.html')
 
 
 @mod.route('/mine/')
@@ -67,18 +44,10 @@ def process_cards(card_map, deck_id, deck_cards):
 @login_required
 def mine(page=None):
     """View logged-in player's decks"""
-    if not page:
-        page = 1
     per_page = current_app.config['DEFAULT_PAGED_RESULTS']
-    query = Deck.query.options(
-        db.joinedload('phoenixborn').joinedload('conjurations'),
-        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
-        db.joinedload('dice')
-    ).filter(
+    query = get_deck_query(page).filter(
         Deck.user_id == current_user.id,
         Deck.is_snapshot.is_(False)
-    ).order_by(Deck.modified.desc()).limit(per_page).offset(
-        (page - 1) * per_page
     )
     decks = query.all()
     card_map = defaultdict(list)
@@ -88,7 +57,7 @@ def mine(page=None):
             process_cards(card_map, deck.id, deck.phoenixborn.conjurations)
         card_map[deck.id] = sorted(
             sorted(card_map[deck.id], key=itemgetter('name')),
-            key=lambda x: TypeOrdering[x['type']]
+            key=lambda x: CardTypeOrdering[x['type']]
         )
     total_pages = math.ceil(query.limit(None).offset(None).count() / per_page)
     if total_pages > 1:
