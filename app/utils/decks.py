@@ -1,3 +1,13 @@
+from collections import defaultdict
+import math
+from operator import itemgetter
+
+from flask import current_app
+
+from app import db
+from app.models.deck import Deck
+
+
 CardTypeOrdering = {
     'Ready Spells': 0,
     'Allies': 1,
@@ -30,3 +40,40 @@ def process_cards(card_map, deck_id, deck_cards):
         })
         if card.conjurations:
             process_cards(card_map, deck_id, card.conjurations)
+
+
+def get_decks(filters, page, order_by='modified'):
+    """Returns a generic query for grabbing decks and related data"""
+    if not page:
+        page = 1
+    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
+    query = Deck.query.filter(filters).options(
+        db.joinedload('phoenixborn').joinedload('conjurations'),
+        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
+        db.joinedload('dice')
+    ).order_by(getattr(Deck, order_by).desc()).limit(per_page).offset(
+        (page - 1) * per_page
+    )
+    decks = query.all()
+    card_map = defaultdict(list)
+    for deck in decks:
+        process_cards(card_map, deck.id, deck.cards)
+        if deck.phoenixborn.conjurations:
+            process_cards(card_map, deck.id, deck.phoenixborn.conjurations)
+        card_map[deck.id] = sorted(
+            sorted(card_map[deck.id], key=itemgetter('name')),
+            key=lambda x: CardTypeOrdering[x['type']]
+        )
+    total_pages = math.ceil(query.limit(None).offset(None).count() / per_page)
+    if total_pages > 1:
+        pagination = list(range(1, total_pages + 1))
+        spread = 2
+        extra_right = spread - page + 1 if page - 1 < spread else 0
+        extra_left = page + spread - total_pages if page + spread > total_pages else 0
+        if page + spread + extra_right < total_pages - 2:
+            del pagination[page + spread + extra_right:total_pages - 1]
+        if page - spread - extra_left > 3:
+            del pagination[1:page - spread - extra_left - 1]
+    else:
+        pagination = None
+    return decks, card_map, page, pagination
