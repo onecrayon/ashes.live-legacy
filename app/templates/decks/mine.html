@@ -1,3 +1,5 @@
+{% from "macros.html" import pagination %}
+{% from "decks/macros.html" import deck_details %}
 {% extends "base.html" %}
 {% block title %}My Decks{% endblock %}
 
@@ -8,78 +10,13 @@
 {% block content %}
 	{% if decks %}
 	<ul class="deck-list">
-	{% set current = {'count': 0, 'type': 'None', 'page': 0} -%}
 	{% for deck in decks %}
-		<li class="{{ deck.phoenixborn.stub }}">
-			<div class="responsive-cols no-wrap">
-				<h2 class="col-flex"><a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a></h2>
-
-				<ul class="dice col">
-				{% for dice in deck.dice -%}
-					{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
-					{% if current.update({'count': current.count + dice.count}) %}{% endif -%}
-					{% for x in range(dice.count) %}
-					<li class="die {{ dice.die_flag | die_name }}">
-						<span class="phg-{{ dice.die_flag | die_name }}-power" title="{{ dice.die_flag | die_name | capitalize }}"></span>
-					</li>
-					{% endfor %}
-				{% endfor %}
-				{% if current.count is lessthan 10 -%}
-				{% for x in range(10 - current.count) %}
-					<li class="die basic"><span class="phg-basic-magic"></span></li>
-				{% endfor %}
-				{% endif %}
-				</ul>
-			</div>
-			<hr>
-			<div class="card-listing">
-				<h3>
-					<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
-						{{ deck.phoenixborn.name }}
-					</a>
-				</h3>
-			{% if card_map[deck.id] %}
-				<div class="card-type">
-				{% for card in card_map[deck.id] %}
-					{% if current.type is not equalto(card.type) %}
-						{% if current.type is not equalto('None') %}</ul></div><div class="card-type">{% endif %}
-						<h4>{{ card.type }}</h4>
-						<ul>
-						{% if current.update({'type': card.type}) %}{% endif -%}
-					{% endif %}
-					<li>
-						{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
-							{{ card.name }}
-						</a>
-					</li>
-				{% endfor %}
-					</ul>
-				</div>
-			{% if current.update({'type': 'None'}) %}{% endif -%}
-			{% endif %}
-			</div>
+		<li class="deck {{ deck.phoenixborn.stub }}">
+			{{ deck_details(deck, card_map, current_user) }}
 		</li>
 	{% endfor %}
 	</ul>
-	{% if pages %}
-	<nav class="pagination">
-		<ul>
-			{% for page_num in pages %}
-			{% if (current.page + 1) is not equalto page_num %}
-			<li><a href="{{ url_for('decks.mine', page=page_num - 1 if current.page == 1 else current.page + 1) }}">...</a></li>
-			{% endif %}
-			{% if page_num is equalto page %}
-			<li class="active">{{ page_num }}</li>
-			{% else %}
-			<li><a href="{{ url_for('decks.mine', page=page_num if page_num > 1 else None) }}">
-				{{ page_num }}
-			</a></li>
-			{% endif %}
-			{% if current.update({'page': page_num}) %}{% endif -%}
-			{% endfor %}
-		</ul>
-	</nav>
-	{% endif %}
+	{{ pagination(pages) }}
 	{% else %}
 	<p class="callout">You have not created any decks yet! Let's get cracking! <i class="fa fa-arrow-right"></i></p>
 	{% endif %}
