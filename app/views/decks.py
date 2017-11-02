@@ -26,8 +26,8 @@ def view(deck_id):
     return render_template('wip.html')
 
 
-@mod.route('/<int:deck_id>/snapshots/')
-@mod.route('/<int:deck_id>/snapshots/<int:page>/')
+@mod.route('/<int:deck_id>/history/')
+@mod.route('/<int:deck_id>/history/<int:page>/')
 def snapshots(deck_id, page=None):
     """View the snapshots for public or own deck"""
     source = Deck.query.options(
@@ -52,7 +52,7 @@ def snapshots(deck_id, page=None):
     decks, card_map, page, pagination = get_decks(filters, page, order_by='created')
     process_deck(source, card_map)
     return render_template(
-        'decks/snapshots.html',
+        'decks/history.html',
         deck=source,
         snapshots=decks,
         card_map=card_map,

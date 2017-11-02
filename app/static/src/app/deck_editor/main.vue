@@ -79,8 +79,8 @@
 			<button class="btn btn-primary btn-block" :disabled="!isSaved" @click="newSnapshot(false)">
 				<i class="fa fa-camera"></i> New Snapshot
 			</button>
-			<a class="btn btn-block" :class="{disabled: !isSaved}" :href="snapshotUrl" target="_blank">
-				<i class="fa fa-eye"></i> View Snapshots
+			<a class="btn btn-block" :class="{disabled: !isSaved}" :href="historyUrl" target="_blank">
+				<i class="fa fa-eye"></i> View History
 			</a>
 
 			<p>Publishing your deck will create a public snapshot for others to view!</p>
@@ -177,9 +177,9 @@
 			deckId () {
 				return this.$store.state.deck.id
 			},
-			snapshotUrl () {
+			historyUrl () {
 				if (!this.$store.state.deck.id) return '#'
-				return ['/decks', this.$store.state.deck.id, 'snapshots'].join('/')
+				return ['/decks', this.$store.state.deck.id, 'history'].join('/')
 			}
 		},
 		methods: {
