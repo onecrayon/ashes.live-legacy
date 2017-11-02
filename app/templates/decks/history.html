@@ -24,12 +24,13 @@
 
 {% block sidebar %}
 	<p class="callout">
-		{% if deck.user_id is equalto(current_user.id) %}
+		{% if deck.user_id == current_user.id %}
 		Deck: <a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a><br>
+		{% else %}
+		Deck: <a href="{{ url_for('decks.view', deck_id=deck.id) }}">{{ deck | deck_title }}</a><br>
 		{% endif %}
 		Author: {{ usertag(deck.user) }}
 	</p>
-	{% if deck.user_id is equalto(current_user.id) %}
+
 	{{ deck.description | parse_text }}
-	{% endif %}
 {% endblock %}

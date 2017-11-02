@@ -2,8 +2,8 @@
 	{% set current = {'count': 0, 'type': 'None'} -%}
 	<div class="responsive-cols no-wrap">
 		<h2 class="col-flex">
-			{% if deck.is_snapshot %}
-			{% if deck.is_public %}<i class="fa fa-eye visibility-icon"></i>{% else %}<i class="fa fa-eye-slash visibility-icon"></i>{% endif %}
+			{% if deck.is_snapshot and deck.user_id == current_user.id %}
+			{% if deck.is_public %}<i class="fa fa-eye visibility-icon" title="Public snapshot"></i>{% else %}<i class="fa fa-eye-slash visibility-icon" title="Private snapshot"></i>{% endif %}
 			{% endif %}
 			{% if deck.user_id == current_user.id and not deck.is_snapshot %}
 			<a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a>

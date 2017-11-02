@@ -38,9 +38,10 @@ def snapshots(deck_id, page=None):
     ).get(deck_id)
     if not source:
         abort(404)
-    if not source.public_snapshots(limit=1) and source.user_id != current_user.id:
+    own_deck = source.user_id == current_user.id
+    if not source.public_snapshots(limit=1) and not own_deck:
         abort(404)
-    if source.user_id != current_user.id:
+    if not own_deck:
         filters = db.and_(
             Deck.is_snapshot.is_(True),
             Deck.is_public.is_(True)
@@ -53,7 +54,7 @@ def snapshots(deck_id, page=None):
     process_deck(source, card_map)
     return render_template(
         'decks/history.html',
-        deck=source,
+        deck=source if own_deck else decks[0],
         snapshots=decks,
         card_map=card_map,
         page=page,
