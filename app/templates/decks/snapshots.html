@@ -8,11 +8,6 @@
 {% endblock %}
 
 {% block content %}
-	
-	<div class="deck {{ deck.phoenixborn.stub }}">
-		{{ deck_details(deck, card_map, current_user) }}
-	</div>
-
 	{% if snapshots %}
 	<ul class="deck-list snapshots">
 	{% for snapshot in snapshots %}
@@ -28,7 +23,13 @@
 {% endblock %}
 
 {% block sidebar %}
-	<p class="callout">Author: {{ usertag(deck.user) }}</p>
-
+	<p class="callout">
+		{% if deck.user_id is equalto(current_user.id) %}
+		Deck: <a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a><br>
+		{% endif %}
+		Author: {{ usertag(deck.user) }}
+	</p>
+	{% if deck.user_id is equalto(current_user.id) %}
 	{{ deck.description | parse_text }}
+	{% endif %}
 {% endblock %}
