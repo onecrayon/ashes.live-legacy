@@ -1,4 +1,5 @@
 {% macro deck_details(deck, card_map, current_user) -%}
+	{% from "macros.html" import usertag %}
 	{% set current = {'count': 0, 'type': 'None'} -%}
 	<div class="responsive-cols no-wrap">
 		<h2 class="col-flex">
@@ -8,7 +9,7 @@
 			{% if deck.user_id == current_user.id and not deck.is_snapshot %}
 			<a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
 			{% else %}
-			{{ deck | deck_title }}
+			<a href="{{ url_for('decks.view', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
 			{% endif %}
 		</h2>
 
@@ -29,6 +30,12 @@
 		{% endif %}
 		</ul>
 	</div>
+	{% if deck.user_id != current_user.id -%}
+	<ul class="meta">
+		<li>Author: {{ usertag(deck.user) }}</li>
+		<li>Updated: {{ deck.modified | format_date }}</li>
+	</ul>
+	{% endif -%}
 	<hr>
 	<div class="card-listing">
 		<h3>

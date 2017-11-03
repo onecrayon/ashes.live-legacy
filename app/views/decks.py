@@ -15,20 +15,31 @@ mod = Blueprint('decks', __name__, url_prefix='/decks')
 
 
 @mod.route('/')
-def index():
+@mod.route('/<int:page>/')
+def index(page=None):
     """View list of all public decks"""
-    return render_template('wip.html')
+    decks, card_map, page, pagination = get_decks(db.and_(
+        Deck.is_snapshot.is_(True),
+        Deck.is_public.is_(True)
+    ), page, order_by='created', most_recent_public=True)
+    return render_template(
+        'decks/index.html',
+        decks=decks,
+        card_map=card_map,
+        page=page,
+        pages=pagination
+    )
 
 
-@mod.route('/<int:deck_id>/')
+@mod.route('/view/<int:deck_id>/')
 def view(deck_id):
     """View a public deck"""
     return render_template('wip.html')
 
 
-@mod.route('/<int:deck_id>/history/')
-@mod.route('/<int:deck_id>/history/<int:page>/')
-def snapshots(deck_id, page=None):
+@mod.route('/view/<int:deck_id>/history/')
+@mod.route('/view/<int:deck_id>/history/<int:page>/')
+def history(deck_id, page=None):
     """View the snapshots for public or own deck"""
     source = Deck.query.options(
         db.joinedload('phoenixborn').joinedload('conjurations'),

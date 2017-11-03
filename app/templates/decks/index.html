@@ -1,0 +1,27 @@
+{% from "macros.html" import pagination %}
+{% from "decks/macros.html" import deck_details %}
+{% extends "base.html" %}
+{% block title %}Public Decks{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-ceremonial-power">Public decks</h1>
+{% endblock %}
+
+{% block content %}
+	{% if decks %}
+	<ul class="deck-list">
+	{% for deck in decks %}
+		<li class="deck {{ deck.phoenixborn.stub }}">
+			{{ deck_details(deck, card_map, current_user) }}
+		</li>
+	{% endfor %}
+	</ul>
+	{{ pagination(pages) }}
+	{% else %}
+	<p class="callout">There are no public decks. How could this be?! Quick, go share <a href="{{ url_for('decks.mine') }}">one of yours</a>!</p>
+	{% endif %}
+{% endblock %}
+
+{% block sidebar %}
+	<p>This sidebar is a work in progress!</p>
+{% endblock %}

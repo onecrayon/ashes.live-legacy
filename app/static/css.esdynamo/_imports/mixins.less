@@ -26,6 +26,20 @@
 	&:-ms-input-placeholder      {color: @color;}
 }
 
+.divided-list(@selector: ~'li') {
+	@{selector} {
+		padding-right: 10px;
+		margin-right: 3px;
+		background: url('../images/icon-diamond-bullet.png') no-repeat right center;
+	}
+
+	@{selector}:last-of-type {
+		padding: 0;
+		margin: 0;
+		background: none;
+	}
+}
+
 .dice-classes() {
 	.dice-colors(@text, @background) {
 		color: @text;

@@ -52,7 +52,7 @@ def process_deck(deck, card_map):
     )
 
 
-def get_decks(filters, page, order_by='modified'):
+def get_decks(filters, page, order_by='modified', most_recent_public=False):
     """Returns a generic query for grabbing decks and related data"""
     if not page:
         page = 1
@@ -60,15 +60,26 @@ def get_decks(filters, page, order_by='modified'):
     query = Deck.query.filter(filters).options(
         db.joinedload('phoenixborn').joinedload('conjurations'),
         db.joinedload('cards').joinedload('card').joinedload('conjurations'),
-        db.joinedload('dice')
-    ).order_by(getattr(Deck, order_by).desc()).limit(per_page).offset(
-        (page - 1) * per_page
+        db.joinedload('dice'),
+        db.joinedload('user')
     )
-    decks = query.all()
+    # Fetch the most recent public snapshot via the LEFT JOIN trick of comparing dates and
+    # returning the only entry with a null value in the JOIN
+    if most_recent_public:
+        deck_comp = db.aliased(Deck)
+        query = query.outerjoin(deck_comp, db.and_(
+            Deck.source_id == deck_comp.source_id,
+            deck_comp.is_snapshot.is_(True),
+            deck_comp.is_public.is_(True),
+            Deck.created < deck_comp.created
+        )).filter(deck_comp.id.is_(None))
+    decks = query.order_by(getattr(Deck, order_by).desc()).limit(per_page).offset(
+        (page - 1) * per_page
+    ).all()
     card_map = defaultdict(list)
     for deck in decks:
         process_deck(deck, card_map)
-    total_pages = math.ceil(query.limit(None).offset(None).count() / per_page)
+    total_pages = math.ceil(query.count() / per_page)
     if total_pages > 1:
         pagination = list(range(1, total_pages + 1))
         spread = 2

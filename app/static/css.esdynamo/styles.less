@@ -139,17 +139,7 @@ a.card {
 }
 
 .costs {
-	.cost {
-		padding-right: 10px;
-		margin-right: 3px;
-		background: url('../images/icon-diamond-bullet.png') no-repeat right center;
-	}
-
-	.cost:last-of-type {
-		padding: 0;
-		margin: 0;
-		background: none;
-	}
+	.divided-list(~'.cost');
 }
 
 .divider {
@@ -1380,6 +1370,14 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 	hr {
 		margin-bottom: 10px;
+	}
+
+	.meta {
+		list-style-type: none;
+		padding: 0;
+		margin: 0 0 10px;
+
+		.divided-list();
 	}
 
 	.dice {
