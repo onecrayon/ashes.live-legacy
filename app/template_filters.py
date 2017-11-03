@@ -1,6 +1,7 @@
 from datetime import date
 import re
 
+import pytz
 from flask import current_app, url_for
 from jinja2 import evalcontextfilter, Markup, escape
 
@@ -11,6 +12,15 @@ from app.models.card import DiceFlags
 @app.template_filter('copyright')
 def copyright_date(value):
     return '{}-{}'.format(value, date.today().year)
+
+
+@app.template_filter('format_date')
+def format_date(value, format='%b %d, %Y %Z'):
+    result = value
+    # Convert date to UTC if it lacks a timezone
+    if not result.tzinfo:
+        result = pytz.utc.localize(date, is_dst=None)
+    return result.astimezone(pytz.timezone(current_app.config.get('LOCAL_TZ'))).strftime(format)
 
 
 @app.template_filter('die_name')
