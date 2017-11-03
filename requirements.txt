@@ -7,6 +7,7 @@ Flask-WTF==0.14.2
 premailer==3.1.1
 PyMySQL==0.7.11
 SQLAlchemy-FullText-Search==0.2.3
+pytz==2017.3
 # This pulls in Flask-Script and Alembic with it
 Flask-Migrate==2.0.3
 # Included by Flask-Migrate, but here's explicit versions
