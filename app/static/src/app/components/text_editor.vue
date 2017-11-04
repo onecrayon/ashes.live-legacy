@@ -8,7 +8,7 @@
 			<p class="help-text">
 				<code>[[Anchornaut]]</code> <i class="fa fa-arrow-right"></i> <card-codes content="[[Anchornaut]]"></card-codes><br>
 				<code>[[main]] - [[charm:class]]</code> <i class="fa fa-arrow-right"></i> <card-codes content="[[main]] - [[charm:class]]"></card-codes><br>
-				<code>*italic* &amp; **bold**</code> <i class="fa fa-arrow-right"></i> <card-codes content="*italic* & **bold**"></card-codes>
+				<code>*italic* - **bold**</code> <i class="fa fa-arrow-right"></i> <card-codes content="*italic* - **bold**"></card-codes>
 			</p>
 			<p class="help-text"><a href="#" @click.prevent="showAll = !showAll">Toggle full list</a></p>
 		</div>
