@@ -2,7 +2,12 @@
 	<transition name="modal">
 		<div class="modal-mask" @click="close" v-show="show">
 			<div class="modal-container" @click.stop>
-				<slot></slot>
+				<div class="modal-body">
+					<slot></slot>
+				</div>
+				<div class="modal-footer">
+					<slot name="footer"></slot>
+				</div>
 			</div>
 		</div>
 	</transition>

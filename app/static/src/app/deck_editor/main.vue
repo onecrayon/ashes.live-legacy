@@ -85,7 +85,7 @@
 
 			<p>Publishing your deck will create a public snapshot for others to view!</p>
 
-			<button class="btn btn-primary btn-block" :disabled="!isSaved" @click="newSnapshot(true)">
+			<button class="btn btn-success btn-block" :disabled="!isSaved" @click="newSnapshot(true)">
 				<i class="fa fa-share-square-o"></i> Publish Deck
 			</button>
 			<snapshot-modal :show="showSnapshotModal" :public="createPublicSnapshot" @close="closeSnapshotModal"></snapshot-modal>

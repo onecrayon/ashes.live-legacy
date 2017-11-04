@@ -27,7 +27,7 @@
 			<deck-listing view-only="true"></deck-listing>
 		</div>
 
-		<div class="text-right">
+		<div class="modal-controls" slot="footer">
 			<button class="btn" @click="close">Cancel</button>
 			<button class="btn btn-primary" @click="saveSnapshot">
 				<i class="fa" :class="{'fa-camera': !public, 'fa-share-square-o': public}"></i>

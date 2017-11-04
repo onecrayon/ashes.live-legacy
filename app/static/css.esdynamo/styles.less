@@ -576,12 +576,29 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 .modal-container {
 	.max-width(360px);
 	.mixin-flex(0 0 auto);
+	.mixin-display-flex;
+	.mixin-flex-direction(column);
+	max-height: 100%;
 	padding: 20px;
 	background-color: @color-white;
 	border-radius: 5px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
 	transition: all .3s ease;
 	width: 100%;
+}
+
+.modal-body {
+	.mixin-flex(1 1 auto);
+	overflow: auto;
+}
+
+.modal-footer {
+	.mixin-flex(0 0 auto);
+}
+
+.modal-controls {
+	padding-top: 10px;
+	text-align: right;
 }
 
 /*

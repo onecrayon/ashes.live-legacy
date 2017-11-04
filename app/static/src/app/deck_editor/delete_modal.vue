@@ -4,7 +4,7 @@
 
 		<p><strong>Deleting a deck is permanent!</strong> Are you sure you want to delete this deck?</p>
 
-		<div class="text-right">
+		<div class="modal-controls" slot="footer">
 			<button class="btn" @click="close">Cancel</button>
 			<button class="btn btn-danger" @click="confirmDelete"><i class="fa fa-trash"></i> Delete it!</button>
 		</div>
