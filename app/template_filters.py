@@ -75,7 +75,7 @@ def parse_card_codes(text):
             secondary = 'action'
         elif secondary:
             return Markup(''.join(
-                ['<i>', lower_primary, (' ' + secondary if secondary else ''), '</i>']
+                ['<i>', lower_primary, ' ', secondary, '</i>']
             ))
         else:
             stub = re.sub(r' ', '-', lower_primary)
@@ -87,7 +87,46 @@ def parse_card_codes(text):
             '<span class="phg-', lower_primary, '-', secondary, '" title="',
             primary, (' ' + secondary if secondary else ''), '"></span>'
         ]))
-    return re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
+    # Parse card codes
+    text = re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
+    # Parse star formatting
+    # * list item
+    def list_element(match):
+        return Markup(''.join([match.group(1), '<li>', match.group(2), '</li>']))
+    text = re.sub(r'(^|\n)\* +(.+)', list_element, text)
+    def list_wrapper(match):
+        return Markup(''.join([match.group(1), '<ul>', match.group(2), '</ul>\n']))
+    text = re.sub(r'(^|\n)((?:<li>.+?</li>(?:\n|$))+)', list_wrapper, text)
+    text = re.sub(r'(</li>)\n(<li>|</ul>)', r'\1\2', text)
+    # lone star: *
+    def lone_star(match):
+        return Markup(''.join([match.group(1), '&#42;', match.group(2)]))
+    text = re.sub(r'(^| )\*( |$)', lone_star, text, flags=re.M)
+    # ***emstrong*** or ***em*strong**
+    def em_strong(match):
+        return Markup(''.join([
+            '<b><i>', match.group(1), '</i>', match.group(2), '</b>'
+        ]))
+    text = re.sub(r'\*{3}(.+?)\*(.*?)\*{2}', em_strong, text)
+    # ***strong**em*
+    def strong_em(match):
+        return Markup(''.join([
+            '<i><b>', match.group(1), '</b>', match.group(2), '</i>'
+        ]))
+    text = re.sub(r'\*{3}(.+?)\*{2}(.*?)\*', strong_em, text)
+    # **strong**
+    def strong(match):
+        return Markup(''.join([
+            '<b>', match.group(1), '</b>'
+        ]))
+    text = re.sub(r'\*{2}(.+?)\*{2}', strong, text)
+    # *emphasis*
+    def em(match):
+        return Markup(''.join([
+            '<i>', match.group(1), '</i>'
+        ]))
+    text = re.sub(r'\*([^\*\n\r]+)\*', em, text)
+    return text
 
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
@@ -97,11 +136,14 @@ _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 def parse_text(eval_ctx, text):
     if not text:
         return ''
+    result = parse_card_codes(escape(text))
     result = '\n\n'.join(
         '<p>{}</p>'.format(p.replace('\n', Markup('<br>\n')))
-        for p in _paragraph_re.split(escape(text))
+        for p in _paragraph_re.split(result)
     )
-    result = parse_card_codes(result)
+    # Correct wrapped lists
+    result = re.sub(r'<p><ul>', r'<ul>', result)
+    result = re.sub(r'</ul></p>', r'</ul>', result)
     if eval_ctx.autoescape:
         result = Markup(result)
     return result

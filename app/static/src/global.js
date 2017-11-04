@@ -17,11 +17,13 @@ globals.releaseData = {
 	'promos': [101, 102, 103]
 }
 globals.parseCardCodes = function (input) {
-	return input.replace(/\[\[([a-z' -]+)(?::([a-z]+))?\]\]|( - )/ig, function (_, primary, secondary, dash) {
+	input = escape(input)
+	// Parse card codes
+	input = input.replace(/\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )/ig, (_, primary, secondary, dash) => {
 		if (dash) {
 			return ' <span class="divider"></span> '
 		}
-		const lowerPrimary = primary.toLowerCase().replace('\'', '')
+		const lowerPrimary = primary.toLowerCase().replace('&#39;', '')
 		secondary = secondary && secondary.toLowerCase()
 		if (['discard', 'exhaust'].indexOf(lowerPrimary) > -1) {
 			return ['<span class="phg-', lowerPrimary, '" title="', primary, '"></span>'].join('')
@@ -38,16 +40,38 @@ globals.parseCardCodes = function (input) {
 		} else if (lowerPrimary === 'side') {
 			secondary = 'action'
 		} else if (secondary) {
-			return ['<i>', escape(lowerPrimary), (secondary ? ' ' + escape(secondary) : ''), '</i>'].join('')
+			return ['<i>', lowerPrimary, ' ', secondary, '</i>'].join('')
 		} else {
-			var data = {stub: escape(lowerPrimary.replace(/ /g, '-'))}
-			return ['<a href="', globals.cardUrl(data), '" class="card" target="_blank">', escape(primary), '</a>'].join('')
+			var data = {stub: lowerPrimary.replace(/ /g, '-')}
+			return ['<a href="', globals.cardUrl(data), '" class="card" target="_blank">', primary, '</a>'].join('')
 		}
 		return [
-			'<span class="phg-', escape(lowerPrimary), '-', escape(secondary), '" title="',
-			escape(primary), (secondary ? ' ' + escape(secondary) : ''), '"></span>'
+			'<span class="phg-', lowerPrimary, '-', secondary, '" title="',
+			primary, (secondary ? ' ' + secondary : ''), '"></span>'
 		].join('')
 	})
+	// Parse star formatting
+	// lone star: *
+	input = input.replace(/(^| )\*( |$)/g, (_, leading, trailing) => {
+		return [leading, '&#42;', trailing].join('')
+	})
+	// ***emstrong*** or ***em*strong**
+	input = input.replace(/\*{3}(.+?)\*(.*?)\*{2}/g, (_, first, second) => {
+		return ['<b><i>', first, '</i>', second, '</b>'].join('')
+	})
+	// ***strong**em*
+	input = input.replace(/\*{3}(.+?)\*{2}(.*?)\*/g, (_, first, second) => {
+		return ['<i><b>', first, '</b>', second, '</i>'].join('')
+	})
+	// **strong**
+	input = input.replace(/\*{2}(.+?)\*{2}/g, (_, text) => {
+		return ['<b>', text, '</b>'].join('')
+	})
+	// *emphasis*
+	input = input.replace(/\*([^\*\n\r]+)\*/g, (_, text) => {
+		return ['<i>', text, '</i>'].join('')
+	})
+	return input
 }
 
 globals.assetPath = function (url) {

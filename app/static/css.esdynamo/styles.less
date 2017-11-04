@@ -59,6 +59,10 @@ p, ul, ol {
 	.line-height(24);
 }
 
+.no-margin {
+	margin: 0;
+}
+
 hr {
 	margin: 0 0 20px;
 	border: 0;
@@ -369,14 +373,20 @@ a.card {
 .help-text {
 	.font-size(12);
 	.line-height(16);
-	margin-bottom: 20px;
 
 	[class^="phg-"], [class*=" phg-"] {
 		.font-size(15);
 	}
 }
 
+h4.help-text {
+	.font-size(16);
+	margin-bottom: 10px;
+}
+
 table.help-text {
+	margin-bottom: 20px;
+	
 	td:first-of-type {
 		text-align: right;
 		border-right: 1px solid @color-gray;
@@ -384,6 +394,17 @@ table.help-text {
 
 	td {
 		padding: 3px 5px;
+	}
+}
+
+.boxed {
+	border: 1px solid @color-inexhaustible-dark;
+	border-radius: 3px;
+	background: @color-inexhaustible;
+	padding: 10px 10px 1px;
+
+	pre& {
+		padding: 10px;
 	}
 }
 

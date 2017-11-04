@@ -20,6 +20,7 @@
 
 			<div class="form-field">
 				<textarea ref="description" v-model="description" placeholder="Description"></textarea>
+				<p class="help-text"><em>Supports [[card codes]] and *star formatting*.</em></p>
 			</div>
 		</div>
 		<div v-else>
