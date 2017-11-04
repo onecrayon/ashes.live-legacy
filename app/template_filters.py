@@ -60,7 +60,7 @@ def parse_card_codes(text):
         if match.group(3):
             return Markup(' <span class="divider"></span> ')
         primary = match.group(1)
-        lower_primary = primary.lower().replace('\'', '')
+        lower_primary = primary.lower().replace('&#39;', '')
         secondary = match.group(2).lower() if match.group(2) else None
         if lower_primary in ['discard', 'exhaust']:
             return Markup(''.join(
@@ -87,7 +87,7 @@ def parse_card_codes(text):
             '<span class="phg-', lower_primary, '-', secondary, '" title="',
             primary, (' ' + secondary if secondary else ''), '"></span>'
         ]))
-    return re.sub(r'\[\[([a-z\' -]+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
+    return re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
 
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
