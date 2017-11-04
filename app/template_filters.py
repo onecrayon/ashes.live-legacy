@@ -19,7 +19,7 @@ def format_date(value, format='%b %d, %Y %Z'):
     result = value
     # Convert date to UTC if it lacks a timezone
     if not result.tzinfo:
-        result = pytz.utc.localize(date, is_dst=None)
+        result = pytz.utc.localize(value, is_dst=None)
     return result.astimezone(pytz.timezone(current_app.config.get('LOCAL_TZ'))).strftime(format)
 
 

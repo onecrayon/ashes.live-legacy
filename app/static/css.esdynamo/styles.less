@@ -1368,14 +1368,24 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		margin-bottom: 10px;
 	}
 
+	.visibility-icon {
+		color: @color-gray;
+	}
+
 	hr {
 		margin-bottom: 10px;
 	}
 
 	.meta {
+		.font-size(12);
+		.line-height(12);
 		list-style-type: none;
 		padding: 0;
 		margin: 0 0 10px;
+
+		li {
+			display: inline-block;
+		}
 
 		.divided-list();
 	}
@@ -1416,10 +1426,6 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 .snapshots .deck {
 	border-color: @color-gray;
 	position: relative;
-
-	.visibility-icon {
-		color: @color-gray;
-	}
 
 	&:after {
 		content: '';

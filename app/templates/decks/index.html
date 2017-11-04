@@ -4,7 +4,7 @@
 {% block title %}Public Decks{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-ceremonial-power">Public decks</h1>
+	<h1 class="phg-main-action">Public decks</h1>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
 	<ul class="deck-list">
 	{% for deck in decks %}
 		<li class="deck {{ deck.phoenixborn.stub }}">
-			{{ deck_details(deck, card_map, current_user) }}
+			{{ deck_details(deck, card_map, current_user, show_visibility=0) }}
 		</li>
 	{% endfor %}
 	</ul>

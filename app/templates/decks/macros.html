@@ -1,9 +1,9 @@
-{% macro deck_details(deck, card_map, current_user) -%}
+{% macro deck_details(deck, card_map, current_user, show_visibility=1) -%}
 	{% from "macros.html" import usertag %}
 	{% set current = {'count': 0, 'type': 'None'} -%}
 	<div class="responsive-cols no-wrap">
 		<h2 class="col-flex">
-			{% if deck.is_snapshot and deck.user_id == current_user.id %}
+			{% if deck.is_snapshot and deck.user_id == current_user.id and show_visibility %}
 			{% if deck.is_public %}<i class="fa fa-eye visibility-icon" title="Public snapshot"></i>{% else %}<i class="fa fa-eye-slash visibility-icon" title="Private snapshot"></i>{% endif %}
 			{% endif %}
 			{% if deck.user_id == current_user.id and not deck.is_snapshot %}
@@ -32,8 +32,8 @@
 	</div>
 	{% if deck.user_id != current_user.id -%}
 	<ul class="meta">
-		<li>Author: {{ usertag(deck.user) }}</li>
-		<li>Updated: {{ deck.modified | format_date }}</li>
+		<li>{{ usertag(deck.user) }}</li
+		><li>{{ deck.modified | format_date }}</li>
 	</ul>
 	{% endif -%}
 	<hr>
