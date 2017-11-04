@@ -179,7 +179,7 @@
 			},
 			historyUrl () {
 				if (!this.$store.state.deck.id) return '#'
-				return ['/decks', this.$store.state.deck.id, 'history'].join('/')
+				return ['/decks/view', this.$store.state.deck.id, 'history'].join('/')
 			}
 		},
 		methods: {
