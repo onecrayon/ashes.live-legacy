@@ -1,0 +1,60 @@
+{% from "macros.html" import usertag %}
+{% extends "base.html" %}
+{% block title %}Deck: {{ deck.title }}{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-main-action">{{ deck.title }}</h1>
+{% endblock %}
+
+{% block content %}
+
+	<p>Deck coming soon!</p>
+	
+{% endblock %}
+
+{% block sidebar %}
+	<table class="meta" cellspacing="0" cellpadding="0">
+		<tr>
+			<th>Author:</th>
+			<td>{{ usertag(deck.user) }}</td>
+		</tr>
+		<tr>
+			<th>Updated:</th>
+			<td>{{ deck.modified | format_date }}</td>
+		</tr>
+		{% if deck.is_snapshot and deck.user_id == current_user.id %}
+		<tr>
+			<th>Snapshot of:</th>
+			<td>
+				<a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
+					{{ deck.source | deck_title }}
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<th>Visibility:</th>
+			<td>
+				{% if deck.is_public %}
+				<i class="fa fa-eye"></i> Public
+				{% else %}
+				<i class="fa fa-eye-slash"></i> Private
+				{% endif %}
+			</td>
+		</tr>
+		{% endif %}
+	</table>
+
+	{% if deck.user_id == current_user.id %}
+	<a class="btn btn-block btn-primary"
+		href="{{ url_for('decks.build', deck_id=deck.source_id if deck.is_snapshot else deck.id) }}">
+		<i class="fa fa-pencil"></i> Edit Deck
+	</a>
+	{% endif %}
+	{% if deck.has_snapshots %}
+	<a class="btn btn-block"
+		href="{{ url_for('decks.history', deck_id=deck.source_id if deck.is_snapshot else deck.id) }}">
+		<i class="fa fa-history"></i> View History
+	</a>
+	{% endif %}
+	
+{% endblock %}

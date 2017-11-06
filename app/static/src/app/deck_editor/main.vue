@@ -80,7 +80,7 @@
 				<i class="fa fa-camera"></i> New Snapshot
 			</button>
 			<a class="btn btn-block" :class="{disabled: !isSaved}" :href="historyUrl" target="_blank">
-				<i class="fa fa-eye"></i> View History
+				<i class="fa fa-history"></i> View History
 			</a>
 
 			<p>Publishing your deck will create a public snapshot for others to view!</p>

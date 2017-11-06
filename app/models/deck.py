@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from flask_login import current_user
+from sqlalchemy.ext.hybrid import hybrid_property
+
 from app import db
 from app.models.card import Card
 from app.models.user import User
@@ -21,7 +24,7 @@ class Deck(db.Model):
     
     user = db.relationship(User)
     phoenixborn = db.relationship(Card)
-    source = db.relationship('Deck')
+    source = db.relationship('Deck', uselist=False, remote_side=[id])
     # `cards` and `dice` are defined via backref in the models below
 
     def public_snapshots(self, limit=None):
@@ -35,6 +38,20 @@ class Deck(db.Model):
         if limit:
             query = query.limit(limit)
         return query.all()
+
+    @hybrid_property
+    def has_snapshots(self):
+        """Returns True if the deck (or source, for snapshots) has visible snapshots."""
+        if self.is_snapshot and (self.is_public or self.user_id == current_user.id):
+            return True
+        source_id = self.id if not self.is_snapshot else self.source_id
+        query = Deck.query.filter(
+            Deck.is_snapshot.is_(True),
+            Deck.source_id == source_id
+        )
+        if deck.user_id != current_user.id:
+            query = query.filter(Deck.is_public.is_(True))
+        return query.count() > 0
 
 
 class DeckCard(db.Model):

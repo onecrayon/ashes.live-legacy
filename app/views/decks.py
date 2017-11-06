@@ -34,7 +34,20 @@ def index(page=None):
 @mod.route('/view/<int:deck_id>/')
 def view(deck_id):
     """View a public deck"""
-    return render_template('wip.html')
+    deck = Deck.query.options(
+        db.joinedload('phoenixborn').joinedload('conjurations'),
+        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
+        db.joinedload('dice'),
+        db.joinedload('user'),
+        db.joinedload('source').joinedload('phoenixborn')
+    ).get_or_404(deck_id)
+    if not deck.is_public and deck.user_id != current_user.id:
+        abort(404)
+    return render_template(
+        'decks/view.html',
+        deck=deck,
+        has_history=deck.has_snapshots
+    )
 
 
 @mod.route('/view/<int:deck_id>/history/')
@@ -46,9 +59,7 @@ def history(deck_id, page=None):
         db.joinedload('cards').joinedload('card').joinedload('conjurations'),
         db.joinedload('dice'),
         db.joinedload('user')
-    ).get(deck_id)
-    if not source:
-        abort(404)
+    ).get_or_404(deck_id)
     own_deck = source.user_id == current_user.id
     if not source.public_snapshots(limit=1) and not own_deck:
         abort(404)
