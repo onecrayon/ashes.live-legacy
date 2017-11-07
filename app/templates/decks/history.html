@@ -12,7 +12,11 @@
 	<ul class="deck-list snapshots">
 	{% for snapshot in snapshots %}
 		<li class="deck {{ snapshot.phoenixborn.stub }}{% if snapshot.is_public %} public{% endif %}">
+			{% if published_deck and published_deck.id == snapshot.id %}
+			{{ deck_details(snapshot, card_map, current_user, link_id=snapshot.source_id) }}
+			{% else %}
 			{{ deck_details(snapshot, card_map, current_user) }}
+			{% endif %}
 		</li>
 	{% endfor %}
 	</ul>

@@ -82,7 +82,8 @@ def history(deck_id, page=None):
     own_deck = (
         current_user.is_authenticated and source.user_id == current_user.id
     )
-    if not source.published_snapshot() and not own_deck:
+    published_deck = source.published_snapshot()
+    if not published_deck and not own_deck:
         abort(404)
     if not own_deck:
         filters = db.and_(
@@ -98,6 +99,7 @@ def history(deck_id, page=None):
     return render_template(
         'decks/history.html',
         deck=source if own_deck else decks[0],
+        published_deck=source if own_deck else published_deck,
         snapshots=decks,
         card_map=card_map,
         page=page,
