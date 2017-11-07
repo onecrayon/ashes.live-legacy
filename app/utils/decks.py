@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import OrderedDict
 import math
 from operator import itemgetter
 
@@ -8,18 +8,8 @@ from app import db
 from app.models.deck import Deck
 
 
-CardTypeOrdering = {
-    'Ready Spells': 0,
-    'Allies': 1,
-    'Alteration Spells': 2,
-    'Action Spells': 3,
-    'Reaction Spells': 4,
-    'Conjuration Deck': 5
-}
-
-
-def process_cards(card_map, deck_id, deck_cards):
-    """Maps multiple decks worth of cards into a single dict"""
+def process_cards(section_map, deck_cards):
+    """Maps a deck's cards into sections"""
     for deck_card in deck_cards:
         card = deck_card.card if hasattr(deck_card, 'card') else deck_card
         card_id = card.card_id if hasattr(card, 'card_id') else card.id
@@ -31,7 +21,7 @@ def process_cards(card_map, deck_id, deck_cards):
             card_type = card_type[:-1] + 'ies'
         else:
             card_type = card_type + 's'
-        card_map[deck_id].append({
+        section_map[card_type].append({
             'id':card_id,
             'count': count,
             'name': card.name,
@@ -39,17 +29,32 @@ def process_cards(card_map, deck_id, deck_cards):
             'type': card_type
         })
         if card.conjurations:
-            process_cards(card_map, deck_id, card.conjurations)
+            process_cards(section_map, card.conjurations)
 
 
-def process_deck(deck, card_map):
-    process_cards(card_map, deck.id, deck.cards)
+def process_deck(deck):
+    section_map = OrderedDict([
+        ('Ready Spells', []),
+        ('Allies', []),
+        ('Alteration Spells', []),
+        ('Action Spells', []),
+        ('Reaction Spells', []),
+        ('Conjuration Deck', [])
+    ])
+    process_cards(section_map, deck.cards)
     if deck.phoenixborn.conjurations:
-        process_cards(card_map, deck.id, deck.phoenixborn.conjurations)
-    card_map[deck.id] = sorted(
-        sorted(card_map[deck.id], key=itemgetter('name')),
-        key=lambda x: CardTypeOrdering[x['type']]
-    )
+        process_cards(section_map, deck.phoenixborn.conjurations)
+    sections = []
+    for section, cards in section_map.items():
+        if not cards:
+            continue
+        sections.append({
+            'heading': section,
+            'count': sum(x['count'] for x in cards),
+            'cards': sorted(cards, key=itemgetter('name'))
+        })
+    return sections
+
 
 
 def get_decks(filters, page, order_by='modified', most_recent_public=False):
@@ -76,9 +81,9 @@ def get_decks(filters, page, order_by='modified', most_recent_public=False):
     decks = query.order_by(getattr(Deck, order_by).desc()).limit(per_page).offset(
         (page - 1) * per_page
     ).all()
-    card_map = defaultdict(list)
+    card_map = {}
     for deck in decks:
-        process_deck(deck, card_map)
+        card_map[deck.id] = process_deck(deck)
     total_pages = math.ceil(query.count() / per_page)
     if total_pages > 1:
         pagination = list(range(1, total_pages + 1))

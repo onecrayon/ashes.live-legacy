@@ -39,7 +39,8 @@ def save(deck_id=None, is_snapshot=False):
                 db.joinedload('dice')
             )
         deck = query.get(deck_id)
-        if not deck or deck.user_id != current_user.id:
+        if (not deck or not current_user.is_authenticated or
+                deck.user_id != current_user.id):
             abort(404)
         deck.title = deck_title
         deck.description = data.get('description')
@@ -104,7 +105,8 @@ def save(deck_id=None, is_snapshot=False):
 @login_required
 def delete(deck_id):
     deck = Deck.query.options(db.joinedload('phoenixborn')).get(deck_id)
-    if not deck or deck.user_id != current_user.id:
+    if (not deck or not current_user.is_authenticated or
+            deck.user_id != current_user.id):
         abort(404)
     title = compose_deck_title(deck)
     db.session.delete(deck)

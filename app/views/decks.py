@@ -2,7 +2,7 @@
 
 import json
 
-from flask import abort, Blueprint, render_template
+from flask import abort, Blueprint, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
 from app import db
@@ -41,13 +41,26 @@ def view(deck_id):
         db.joinedload('user'),
         db.joinedload('source').joinedload('phoenixborn')
     ).get_or_404(deck_id)
-    if not deck.is_public and deck.user_id != current_user.id:
+    if not deck.is_public and (not current_user.is_authenticated or
+            deck.user_id != current_user.id):
         abort(404)
     return render_template(
         'decks/view.html',
         deck=deck,
+        sections=process_deck(deck),
         has_history=deck.has_snapshots
     )
+
+
+@mod.route('/edit/<int:deck_id>/', methods=['GET', 'POST'])
+def edit(deck_id):
+    """Edit a deck snapshot (redirects for actual decks)"""
+    deck = Deck.query.get_or_404(deck_id)
+    if not current_user.is_authenticated or deck.user_id != current_user.id:
+        abort(404)
+    if not deck.is_snapshot:
+        redirect(url_for('deck.build', deck_id=deck_id))
+    return render_template('wip.html')
 
 
 @mod.route('/view/<int:deck_id>/history/')
@@ -60,7 +73,9 @@ def history(deck_id, page=None):
         db.joinedload('dice'),
         db.joinedload('user')
     ).get_or_404(deck_id)
-    own_deck = source.user_id == current_user.id
+    own_deck = (
+        current_user.is_authenticated and source.user_id == current_user.id
+    )
     if not source.public_snapshots(limit=1) and not own_deck:
         abort(404)
     if not own_deck:
@@ -73,7 +88,7 @@ def history(deck_id, page=None):
             Deck.is_snapshot.is_(True)
         )
     decks, card_map, page, pagination = get_decks(filters, page, order_by='created')
-    process_deck(source, card_map)
+    card_map[source.id] = process_deck(source)
     return render_template(
         'decks/history.html',
         deck=source if own_deck else decks[0],
@@ -115,7 +130,7 @@ def build(deck_id=None):
         abort(404)
     deck_json = None
     if deck:
-        if deck.user_id != current_user.id:
+        if not current_user.is_authenticated or deck.user_id != current_user.id:
             abort(404)
         deck_json = json.dumps({
             'id': deck.id,

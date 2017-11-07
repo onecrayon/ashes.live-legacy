@@ -72,8 +72,8 @@
 	}
 }
 
-.mixin-phoenixborn-slice(@stub) {
+.mixin-phoenixborn-slice(@stub, @suffix: slice) {
 	&.@{stub} {
-		background-image: url('../images/cards/@{stub}-slice.jpg');
+		background-image: url('../images/cards/@{stub}-@{suffix}.jpg');
 	}
 }

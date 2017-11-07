@@ -414,6 +414,11 @@ table.meta {
 	}
 }
 
+.medium-card {
+	width: 228px;
+	height: 310px;
+}
+
 .boxed {
 	border: 1px solid @color-inexhaustible-dark;
 	border-radius: 3px;
@@ -543,6 +548,17 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 	.basic {
 		color: @color-mid-gray;
 		background: @color-gray;
+	}
+
+	&.large {
+		.die {
+			.font-size(24);
+			.line-height(36);
+			border-radius: 5px;
+			height: 36px;
+			width: 36px;
+			margin: 0 5px 20px;
+		}
 	}
 }
 
@@ -906,10 +922,9 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		padding: 0;
 		
 		li {
+			.medium-card;
 			float: left;
 			position: relative;
-			width: 228px;
-			height: 310px;
 
 			&.no-results {
 				float: none;
@@ -1396,6 +1411,28 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 	text-align: center;
 }
 
+.card-listing {
+	h3 {
+		.font-size(18);
+		.line-height(24);
+		margin-bottom: 10px;
+	}
+
+	h4 {
+		.font-size(16);
+		.line-height(24);
+		margin-bottom: 10px;
+		font-weight: normal;
+	}
+
+	ul {
+		.font-size(16);
+		.line-height(24);
+		list-style-type: disc;
+		padding-left: 20px;
+	}
+}
+
 .deck {
 	border: 1px solid @color-border-gray;
 	margin-bottom: 20px;
@@ -1453,21 +1490,17 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		h3 {
 			.font-size(15);
 			.line-height(15);
-			margin-bottom: 10px;
 		}
 
 		h4 {
 			.font-size(12);
 			.line-height(15);
 			margin-bottom: 5px;
-			font-weight: normal;
 		}
 
 		ul {
 			.font-size(12);
 			.line-height(15);
-			list-style-type: disc;
-			padding-left: 20px;
 		}
 	}
 
@@ -1518,6 +1551,29 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 .deck-list {
 	list-style-type: none;
 	padding: 0;
+}
+
+.deck-view {
+	background-repeat: no-repeat;
+	background-position: left top;
+	padding-left: 180px;
+	padding-bottom: 1px;
+
+	.mixin-phoenixborn-slice(aradel-summergaard, large);
+	.mixin-phoenixborn-slice(brennen-blackcloud, large);
+	.mixin-phoenixborn-slice(coal-roarkwin, large);
+	.mixin-phoenixborn-slice(dimona-odinstar, large);
+	.mixin-phoenixborn-slice(jessa-na-ni, large);
+	.mixin-phoenixborn-slice(leo-sunshadow, large);
+	.mixin-phoenixborn-slice(lulu-firststone, large);
+	.mixin-phoenixborn-slice(maeoni-viper, large);
+	.mixin-phoenixborn-slice(namine-hymntide, large);
+	.mixin-phoenixborn-slice(noah-redmoon, large);
+	.mixin-phoenixborn-slice(odette-diamondcrest, large);
+	.mixin-phoenixborn-slice(orrick-gilstream, large);
+	.mixin-phoenixborn-slice(rin-northfell, large);
+	.mixin-phoenixborn-slice(saria-guideman, large);
+	.mixin-phoenixborn-slice(victoria-glassfire, large);
 }
 
 /* @end */

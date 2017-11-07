@@ -23,14 +23,42 @@
 {% endblock %}
 
 {% block sidebar %}
-	<p class="callout">
-		{% if deck.user_id == current_user.id %}
-		Deck: <a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a><br>
+	<table class="meta" cellspacing="0" cellpadding="0">
+		{% if current_user.is_authenticated and deck.user_id == current_user.id %}
+		{% if deck.is_snapshot %}
+		<tr>
+			<th>Source deck:</th>
+			<td>
+				<a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
+					{{ deck.source | deck_title }}
+				</a>
+			</td>
+		</tr>
 		{% else %}
-		Deck: <a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">{{ deck | deck_title }}</a><br>
+		<tr>
+			<th>Deck:</th>
+			<td>
+				<a href="{{ url_for('decks.view', deck_id=deck.id) }}">
+					{{ deck | deck_title }}
+				</a>
+			</td>
+		</tr>
 		{% endif %}
-		Author: {{ usertag(deck.user) }}
-	</p>
+		{% endif %}
+		<tr>
+			<th>Author:</th>
+			<td>{{ usertag(deck.user) }}</td>
+		</tr>
+		<tr>
+			<th>Updated:</th>
+			<td>{{ deck.modified | format_date }}</td>
+		</tr>
+	</table>
 
-	{{ deck.description | parse_text }}
+	{% if current_user.is_authenticated and deck.user_id == current_user.id %}
+	<a class="btn btn-block btn-primary"
+		href="{{ url_for('decks.build', deck_id=deck.source_id if deck.is_snapshot else deck.id) }}">
+		<i class="fa fa-pencil"></i> Edit {% if deck.is_snapshot %}Source {% endif %}Deck
+	</a>
+	{% endif %}
 {% endblock %}

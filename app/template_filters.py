@@ -55,6 +55,13 @@ def cdn_url(url):
     return '{}{}'.format(current_app.config['CDN_URL'], url)
 
 
+@app.template_filter('card_img')
+def card_img(card, extension='jpg'):
+    if extension not in ('jpg', 'png'):
+        return ''
+    return cdn_url('/images/cards/{}.{}'.format(card.stub, extension))
+
+
 def parse_card_codes(text):
     def parse_match(match):
         if match.group(3):

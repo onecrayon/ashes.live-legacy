@@ -1,12 +1,11 @@
 {% macro deck_details(deck, card_map, current_user, show_visibility=1) -%}
 	{% from "macros.html" import usertag %}
-	{% set current = {'count': 0, 'type': 'None'} -%}
 	<div class="responsive-cols no-wrap">
 		<h2 class="col-flex">
-			{% if deck.is_snapshot and deck.user_id == current_user.id and show_visibility %}
+			{% if deck.is_snapshot and current_user.is_authenticated and deck.user_id == current_user.id and show_visibility %}
 			{% if deck.is_public %}<i class="fa fa-eye visibility-icon" title="Public snapshot"></i>{% else %}<i class="fa fa-eye-slash visibility-icon" title="Private snapshot"></i>{% endif %}
 			{% endif %}
-			{% if deck.user_id == current_user.id and not deck.is_snapshot %}
+			{% if current_user.is_authenticated and deck.user_id == current_user.id and not deck.is_snapshot %}
 			<a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
 			{% else %}
 			<a href="{{ url_for('decks.view', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
@@ -14,6 +13,7 @@
 		</h2>
 
 		<ul class="dice col">
+		{% set current = {'count': 0} -%}
 		{% for dice in deck.dice -%}
 			{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
 			{% if current.update({'count': current.count + dice.count}) %}{% endif -%}
@@ -30,7 +30,7 @@
 		{% endif %}
 		</ul>
 	</div>
-	{% if deck.user_id != current_user.id -%}
+	{% if current_user.is_authenticated and deck.user_id != current_user.id -%}
 	<ul class="meta">
 		<li>{{ usertag(deck.user) }}</li
 		><li>{{ deck.modified | format_date }}</li>
@@ -42,25 +42,23 @@
 			<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
 				{{ deck.phoenixborn.name }}
 			</a>
+			<span class="card-count float-right">{{ deck.cards | sum(attribute='count') }} / 30</span>
 		</h3>
 	{% if card_map[deck.id] %}
+		{% for section in card_map[deck.id] %}
 		<div class="card-type">
-		{% for card in card_map[deck.id] %}
-			{% if current.type is not equalto(card.type) %}
-				{% if current.type is not equalto('None') %}</ul></div><div class="card-type">{% endif %}
-				<h4>{{ card.type }}</h4>
-				<ul>
-				{% if current.update({'type': card.type}) %}{% endif -%}
-			{% endif %}
-			<li>
-				{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
-					{{ card.name }}
-				</a>
-			</li>
-		{% endfor %}
+			<h4>{{ section.heading }} <span class="card-count">({{ section.count }})</span></h4>
+			<ul>
+			{% for card in section.cards %}
+				<li>
+					{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
+						{{ card.name }}
+					</a>
+				</li>
+			{% endfor %}
 			</ul>
 		</div>
-	{% if current.update({'type': 'None'}) %}{% endif -%}
+		{% endfor %}
 	{% endif %}
 	</div>
 {%- endmacro %}

@@ -42,14 +42,16 @@ class Deck(db.Model):
     @hybrid_property
     def has_snapshots(self):
         """Returns True if the deck (or source, for snapshots) has visible snapshots."""
-        if self.is_snapshot and (self.is_public or self.user_id == current_user.id):
+        if self.is_snapshot and (self.is_public or (
+                current_user.is_authenticated and
+                self.user_id == current_user.id)):
             return True
         source_id = self.id if not self.is_snapshot else self.source_id
         query = Deck.query.filter(
             Deck.is_snapshot.is_(True),
             Deck.source_id == source_id
         )
-        if deck.user_id != current_user.id:
+        if not current_user.is_authenticated or self.user_id != current_user.id:
             query = query.filter(Deck.is_public.is_(True))
         return query.count() > 0
 
