@@ -41,9 +41,15 @@ def view(deck_id):
         db.joinedload('user'),
         db.joinedload('source').joinedload('phoenixborn')
     ).get_or_404(deck_id)
-    if not deck.is_public and (not current_user.is_authenticated or
+    if deck.is_snapshot and not deck.is_public and (not current_user.is_authenticated or
             deck.user_id != current_user.id):
         abort(404)
+    # Re-route to the latest public snapshot, if user can't view the deck
+    if not deck.is_snapshot and (not current_user.is_authenticated or
+            deck.user_id != current_user.id):
+        deck = deck.published_snapshot(full=True)
+        if not deck:
+            abort(404)
     return render_template(
         'decks/view.html',
         deck=deck,
@@ -76,7 +82,7 @@ def history(deck_id, page=None):
     own_deck = (
         current_user.is_authenticated and source.user_id == current_user.id
     )
-    if not source.public_snapshots(limit=1) and not own_deck:
+    if not source.published_snapshot() and not own_deck:
         abort(404)
     if not own_deck:
         filters = db.and_(

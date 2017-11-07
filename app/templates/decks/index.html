@@ -12,7 +12,7 @@
 	<ul class="deck-list">
 	{% for deck in decks %}
 		<li class="deck {{ deck.phoenixborn.stub }}">
-			{{ deck_details(deck, card_map, current_user, show_visibility=0) }}
+			{{ deck_details(deck, card_map, current_user, history_view=0) }}
 		</li>
 	{% endfor %}
 	</ul>

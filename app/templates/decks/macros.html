@@ -1,12 +1,14 @@
-{% macro deck_details(deck, card_map, current_user, show_visibility=1) -%}
+{% macro deck_details(deck, card_map, current_user, history_view=1) -%}
 	{% from "macros.html" import usertag %}
 	<div class="responsive-cols no-wrap">
 		<h2 class="col-flex">
-			{% if deck.is_snapshot and current_user.is_authenticated and deck.user_id == current_user.id and show_visibility %}
+			{% if deck.is_snapshot and current_user.is_authenticated and deck.user_id == current_user.id and history_view %}
 			{% if deck.is_public %}<i class="fa fa-eye visibility-icon" title="Public snapshot"></i>{% else %}<i class="fa fa-eye-slash visibility-icon" title="Private snapshot"></i>{% endif %}
 			{% endif %}
 			{% if current_user.is_authenticated and deck.user_id == current_user.id and not deck.is_snapshot %}
 			<a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
+			{% elif deck.is_snapshot and not history_view %}
+			<a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">{{ deck | deck_title }}</a>
 			{% else %}
 			<a href="{{ url_for('decks.view', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
 			{% endif %}

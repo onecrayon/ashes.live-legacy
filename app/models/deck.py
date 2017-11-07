@@ -27,17 +27,24 @@ class Deck(db.Model):
     source = db.relationship('Deck', uselist=False, remote_side=[id])
     # `cards` and `dice` are defined via backref in the models below
 
-    def public_snapshots(self, limit=None):
+    def published_snapshot(self, full=False):
+        """Returns the ID or None for the most recent published snapshot"""
         if self.is_snapshot:
             return None
-        query = Deck.query.filter(
+        query = db.session.query(Deck).filter(
             Deck.source_id == self.id,
             Deck.is_snapshot.is_(True),
             Deck.is_public.is_(True)
         ).order_by(Deck.created.desc())
-        if limit:
-            query = query.limit(limit)
-        return query.all()
+        if full:
+            query = query.options(
+                db.joinedload('phoenixborn').joinedload('conjurations'),
+                db.joinedload('cards').joinedload('card').joinedload('conjurations'),
+                db.joinedload('dice'),
+                db.joinedload('user'),
+                db.joinedload('source').joinedload('phoenixborn')
+            )
+        return query.first()
 
     @hybrid_property
     def has_snapshots(self):
