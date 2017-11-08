@@ -130,7 +130,7 @@ Created with https://ashes.live</textarea>
 	{% endif %}
 	<a href="#deck-text-export" class="btn btn-block inline-modal-trigger">
 		<i class="fa fa-share-square-o"></i> Export As Text
-	</button>
+	</a>
 	{% if deck.has_snapshots %}
 	<a class="btn btn-block"
 		href="{{ url_for('decks.history', deck_id=deck.source_id if deck.is_snapshot else deck.id) }}">
