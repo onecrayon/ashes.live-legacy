@@ -33,6 +33,11 @@ def deck_title(deck):
     return deck.title if deck.title else 'Untitled {}'.format(deck.phoenixborn.name)
 
 
+@app.template_filter('first_name')
+def first_name(name):
+    return name.split()[0]
+
+
 @app.template_filter('production_url')
 def production_url(url):
     if current_app.config['ENVIRONMENT'] == 'development':

@@ -46,3 +46,9 @@
 	</nav>
 	{% endif %}
 {%- endmacro %}
+
+{% macro hide_on_load(id) -%}
+	<script type="text/javascript">
+		document.getElementById('{{ id }}').style.display = 'none'
+	</script>
+{%- endmacro %}

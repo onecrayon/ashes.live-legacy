@@ -1,9 +1,9 @@
-{% from "macros.html" import usertag %}
+{% from "macros.html" import usertag, hide_on_load %}
 {% extends "base.html" %}
-{% block title %}Deck: {{ deck.title }}{% endblock %}
+{% block title %}Deck: {{ deck | deck_title }}{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-main-action">{{ deck.title }}</h1>
+	<h1 class="phg-main-action">{{ deck | deck_title }}</h1>
 {% endblock %}
 
 {% block content %}
@@ -42,7 +42,7 @@
 					<li>
 						{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
 							{{ card.name }}
-						</a>
+						</a>{% if card.phoenixborn %} <span class="phoenixborn" title="{{ card.phoenixborn }}">({{ card.phoenixborn | first_name }})</span>{% endif %}
 					</li>
 				{% endfor %}
 				</ul>
@@ -54,6 +54,34 @@
 	<div class="deck-description">
 		{{ deck.description | parse_text }}
 	</div>
+	<div id="deck-text-export" class="inline-modal">
+		<h2>Export As Text</h2>
+
+		<div class="form-field deck-export">
+			<textarea onclick="this.focus(); this.select(); this.scrollTop = 0" readonly>{{ deck | deck_title }}
+
+Phoenixborn: {{ deck.phoenixborn.name }}
+
+{% if deck.dice -%}
+Dice:
+{% for dice in deck.dice -%}
+{{ dice.count }}x {{ dice.die_flag | die_name | capitalize }}
+{% endfor %}
+{% endif -%}
+
+Cards ({{ deck.cards | sum(attribute='count') }}/30)
+
+{% for section in sections -%}
+{{ section.heading }} ({{ section.count }}):
+{% for card in section.cards -%}
+{{ card.count }}x {{ card.name }}{% if card.phoenixborn %} ({{ card.phoenixborn }}){% endif %}
+{% endfor %}
+{% endfor -%}
+
+Created with https://ashes.live</textarea>
+		</div>
+	</div>
+	{{ hide_on_load('deck-text-export') }}
 {% endblock %}
 
 {% block sidebar %}
@@ -94,13 +122,15 @@
 		href="{{ url_for('decks.edit', deck_id=deck.id) }}">
 		<i class="fa fa-pencil"></i> Edit Snapshot
 	</a>
-	{% else %}
-	<a class="btn btn-block btn-primary"
+	{% endif %}
+	<a class="btn btn-block btn-{% if deck.is_snapshot %}success{% else %}primary{% endif %}"
 		href="{{ url_for('decks.build', deck_id=deck.id) }}">
-		<i class="fa fa-pencil"></i> Edit Deck
+		<i class="fa fa-pencil"></i> Edit{% if deck.is_snapshot %} Source{% endif %} Deck
 	</a>
 	{% endif %}
-	{% endif %}
+	<a href="#deck-text-export" class="btn btn-block inline-modal-trigger">
+		<i class="fa fa-share-square-o"></i> Export As Text
+	</button>
 	{% if deck.has_snapshots %}
 	<a class="btn btn-block"
 		href="{{ url_for('decks.history', deck_id=deck.source_id if deck.is_snapshot else deck.id) }}">
