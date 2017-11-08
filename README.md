@@ -70,5 +70,4 @@ TODO:
 
 * Figure out how to handle Salamander Monk Spirit better (currently only disappears on click)
 * Implement responsive behaviors for filters (collapse to icons, flow nicely)
-* Add animated transitions for things like alerts
 * Figure out why dice icons on Windows are rendered screwy
