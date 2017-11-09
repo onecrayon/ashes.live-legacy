@@ -17,3 +17,4 @@ node_modules/
 /app/static/js/app.js
 /app/static/js/global.js
 /app/static/css/styles.css
+/npm-debug.log
