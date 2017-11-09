@@ -123,7 +123,7 @@ Created with https://ashes.live</textarea>
 		<i class="fa fa-pencil"></i> Edit Snapshot
 	</a>
 	{% endif %}
-	<a class="btn btn-block btn-{% if deck.is_snapshot %}success{% else %}primary{% endif %}"
+	<a class="btn btn-block btn-success"
 		href="{{ url_for('decks.build', deck_id=deck.id) }}">
 		<i class="fa fa-pencil"></i> Edit{% if deck.is_snapshot %} Source{% endif %} Deck
 	</a>

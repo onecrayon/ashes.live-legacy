@@ -60,9 +60,9 @@
 	</table>
 
 	{% if current_user.is_authenticated and deck.user_id == current_user.id %}
-	<a class="btn btn-block btn-primary"
+	<a class="btn btn-block btn-success"
 		href="{{ url_for('decks.build', deck_id=deck.source_id if deck.is_snapshot else deck.id) }}">
-		<i class="fa fa-pencil"></i> Edit {% if deck.is_snapshot %}Source {% endif %}Deck
+		<i class="fa fa-pencil"></i> Edit Source Deck
 	</a>
 	{% endif %}
 {% endblock %}
