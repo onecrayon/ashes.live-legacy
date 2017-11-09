@@ -2,11 +2,12 @@
 {% block page_class %}homepage{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-charm-class">Ashes.live, beta v1</h1>
+	<h1 class="phg-charm-class">Ashes.live, beta v2</h1>
 {% endblock %}
 
 {% block content %}
-	<p class="callout">Welcome! This is a limited <strong>beta release</strong>, so not all features are implemented yet. If you would like to build decks or be notified when new features are implemented, please <a href="{{ url_for('player.new') }}">create an account</a>!</p>
+	<p class="callout">Welcome! This is a limited <strong>beta release</strong>, so not all features are implemented yet. If you would like to {% if not current_user.is_authenticated %}build and share decks or {% endif %}be notified when new features are implemented, please {% if current_user.is_authenticated %}<a href=
+		{{ url_for('player.account') }}>modify your account settings</a>{% else %}<a href="{{ url_for('player.new') }}">create an account</a>{% endif %}!</p>
 
 	<p>Please <a href="{{ url_for('home.feedback') }}"><i class="fa fa-envelope"></i> contact me</a> if you run into problems or have any suggestions or requests! You can find the link to the contact form at the upper right of every page.</p>
 	
