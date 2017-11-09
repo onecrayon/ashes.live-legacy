@@ -4,10 +4,11 @@ import json
 
 from flask import abort, Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
+from sqlalchemy.orm.session import make_transient
 
 from app import db
 from app.models.card import DiceFlags
-from app.models.deck import Deck
+from app.models.deck import Deck, DeckCard, DeckDie
 from app.utils.cards import global_json
 from app.utils.decks import get_decks, process_deck
 from app.views.forms.deck import SnapshotForm
@@ -70,7 +71,7 @@ def edit(deck_id):
     if not current_user.is_authenticated or deck.user_id != current_user.id:
         abort(404)
     if not deck.is_snapshot:
-        redirect(url_for('deck.build', deck_id=deck_id))
+        return redirect(url_for('deck.build', deck_id=deck_id))
     form = SnapshotForm(obj=deck)
     if form.validate_on_submit():
         # Save changes to snapshot
@@ -102,13 +103,16 @@ def history(deck_id, page=None):
     published_deck = source.published_snapshot()
     if not published_deck and not own_deck:
         abort(404)
+    shared_id = source.source_id if source.is_snapshot else source.id
     if not own_deck:
         filters = db.and_(
+            Deck.source_id == shared_id,
             Deck.is_snapshot.is_(True),
             Deck.is_public.is_(True)
         )
     else:
         filters = db.and_(
+            Deck.source_id == shared_id,
             Deck.is_snapshot.is_(True)
         )
     decks, card_map, page, pagination = get_decks(filters, page, order_by='created')
@@ -166,3 +170,41 @@ def build(deck_id=None):
             'cards': {x.card_id: x.count for x in deck.cards}
         })
     return render_template('decks/build.html', deck_json=deck_json, **global_json())
+
+
+@mod.route('/clone/<int:deck_id>/')
+@login_required
+def clone(deck_id):
+    deck = Deck.query.options(
+        db.joinedload('cards'),
+        db.joinedload('dice')
+    ).filter(
+        Deck.is_snapshot.is_(True),
+        Deck.id == deck_id
+    ).first()
+    if not deck:
+        abort(404)
+    # Reset our deck object in order to clone it
+    make_transient(deck)
+    deck.id = None
+    deck.title = 'Copy of {}'.format(deck.title)
+    deck.user_id = current_user.id
+    deck.is_snapshot = False
+    deck.is_public = False
+    deck.source_id = deck_id
+    deck.created = None
+    dice = []
+    for die in deck.dice:
+        make_transient(die)
+        die.deck_id = None
+        dice.append(die)
+    deck.dice = dice
+    cards = []
+    for card in deck.cards:
+        make_transient(card)
+        card.deck_id = None
+        cards.append(card)
+    deck.cards = cards
+    db.session.add(deck)
+    db.session.commit()
+    return redirect(url_for('decks.build', deck_id=deck.id), code=303)

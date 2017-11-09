@@ -116,7 +116,8 @@ Created with https://ashes.live</textarea>
 		{% endif %}
 	</table>
 
-	{% if current_user.is_authenticated and deck.user_id == current_user.id %}
+	{% if current_user.is_authenticated %}
+	{% if deck.user_id == current_user.id %}
 	{% if deck.is_snapshot %}
 	<a class="btn btn-block btn-primary"
 		href="{{ url_for('decks.edit', deck_id=deck.id) }}">
@@ -126,6 +127,11 @@ Created with https://ashes.live</textarea>
 	<a class="btn btn-block btn-success"
 		href="{{ url_for('decks.build', deck_id=deck.id) }}">
 		<i class="fa fa-pencil"></i> Edit{% if deck.is_snapshot %} Source{% endif %} Deck
+	</a>
+	{% endif %}
+	<a class="btn btn-block btn-success"
+		href="{{ url_for('decks.clone', deck_id=deck.id) }}">
+		<i class="fa fa-files-o"></i> Copy &amp; Edit
 	</a>
 	{% endif %}
 	<a href="#deck-text-export" class="btn btn-block inline-modal-trigger">
