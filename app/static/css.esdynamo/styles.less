@@ -59,6 +59,10 @@ p, ul, ol {
 	.line-height(24);
 }
 
+form {
+	margin-bottom: 20px;
+}
+
 .no-margin {
 	margin: 0;
 }
@@ -1512,6 +1516,18 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 		vertical-align: top;
 		padding: 0 10px 10px 0;
 	}
+
+	&.public {
+		border-color: @color-inexhaustible-dark;
+		
+		h2 {
+			font-weight: bold;
+		}
+
+		.visibility-icon {
+			color: @color-inexhaustible-dark;
+		}
+	}
 }
 
 .snapshots .deck {
@@ -1539,14 +1555,6 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 
 		&:after {
 			border-color: @color-inexhaustible-dark;
-		}
-
-		h2 {
-			font-weight: bold;
-		}
-
-		.visibility-icon {
-			color: @color-inexhaustible-dark;
 		}
 	}
 }

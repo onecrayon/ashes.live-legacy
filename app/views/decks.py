@@ -2,7 +2,7 @@
 
 import json
 
-from flask import abort, Blueprint, redirect, render_template, url_for
+from flask import abort, Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
 from app import db
@@ -10,6 +10,7 @@ from app.models.card import DiceFlags
 from app.models.deck import Deck
 from app.utils.cards import global_json
 from app.utils.decks import get_decks, process_deck
+from app.views.forms.deck import SnapshotForm
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
 
@@ -61,12 +62,28 @@ def view(deck_id):
 @mod.route('/edit/<int:deck_id>/', methods=['GET', 'POST'])
 def edit(deck_id):
     """Edit a deck snapshot (redirects for actual decks)"""
-    deck = Deck.query.get_or_404(deck_id)
+    deck = Deck.query.options(
+        db.joinedload('phoenixborn').joinedload('conjurations'),
+        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
+        db.joinedload('dice')
+    ).get_or_404(deck_id)
     if not current_user.is_authenticated or deck.user_id != current_user.id:
         abort(404)
     if not deck.is_snapshot:
         redirect(url_for('deck.build', deck_id=deck_id))
-    return render_template('wip.html')
+    form = SnapshotForm(obj=deck)
+    if form.validate_on_submit():
+        # Save changes to snapshot
+        deck.title = form.title.data
+        deck.description = form.description.data
+        db.session.commit()
+        flash('Snapshot updated!', 'success')
+    return render_template(
+        'decks/edit.html',
+        deck=deck,
+        card_map={deck.id: process_deck(deck)},
+        form=form
+    )
 
 
 @mod.route('/view/<int:deck_id>/history/')

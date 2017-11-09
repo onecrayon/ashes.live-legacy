@@ -1,0 +1,29 @@
+{% from "macros.html" import with_errors %}
+{% from "decks/macros.html" import deck_details %}
+{% extends "base.html" %}
+{% block title %}Edit Snapshot: {{ deck | deck_title }}{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-ceremonial-class">Edit Snapshot: <em>{{ deck | deck_title }}</em></h1>
+{% endblock %}
+
+{% block content %}
+	<div class="deck {{ deck.phoenixborn.stub }}{% if deck.is_public %} public{% endif %}">
+		{{ deck_details(deck, card_map, current_user) }}
+	</div>
+
+	<form method="POST" action="./">
+		{{ form.hidden_tag() }}
+		{{ with_errors(form.title) }}
+		{{ with_errors(form.description) }}
+		<input class="btn btn-primary" type="submit" value="Save">
+	</form>
+{% endblock %}
+
+{% block sidebar %}
+	<p class="callout"><i class="fa fa-hand-o-left"></i> Editing title and description for this snapshot.</p>
+
+	<p><em>Description supports [[card codes]] and *star formatting*:</em></p>
+
+	{% include "fragments/formatting_help.html" %}
+{% endblock %}

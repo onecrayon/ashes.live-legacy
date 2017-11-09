@@ -145,13 +145,17 @@ _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
 @app.template_filter('parse_text')
 @evalcontextfilter
-def parse_text(eval_ctx, text):
+def parse_text(eval_ctx, text, format_paragraphs=True):
     if not text:
         return ''
     result = parse_card_codes(escape(text))
+    if not format_paragraphs:
+        if eval_ctx.autoescape:
+            result = Markup(result)
+        return result
     result = '\n\n'.join(
         '<p>{}</p>'.format(p.replace('\n', Markup('<br>\n')))
-        for p in _paragraph_re.split(result)
+        for p in _paragraph_re.split(result.strip())
     )
     # Correct wrapped lists
     result = re.sub(r'<p><ul>', r'<ul>', result)
