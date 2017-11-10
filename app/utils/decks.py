@@ -57,18 +57,12 @@ def process_deck(deck):
     return sections
 
 
-
-def get_decks(filters, page, order_by='modified', most_recent_public=False):
-    """Returns a generic query for grabbing decks and related data"""
-    if not page:
-        page = 1
-    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
-    query = Deck.query.filter(filters).options(
-        db.joinedload('phoenixborn').joinedload('conjurations'),
-        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
-        db.joinedload('dice'),
-        db.joinedload('user')
-    )
+def get_decks_query(filters=None, options=None, most_recent_public=False):
+    query = Deck.query
+    if options:
+        query = query.options(*options)
+    if filters:
+        query = query.filter(*filters)
     # Fetch the most recent public snapshot via the LEFT JOIN trick of comparing dates and
     # returning the only entry with a null value in the JOIN
     if most_recent_public:
@@ -78,7 +72,25 @@ def get_decks(filters, page, order_by='modified', most_recent_public=False):
             deck_comp.is_snapshot.is_(True),
             deck_comp.is_public.is_(True),
             Deck.created < deck_comp.created
-        )).filter(deck_comp.id.is_(None))
+        )).filter(
+            deck_comp.id.is_(None),
+            Deck.is_snapshot.is_(True),
+            Deck.is_public.is_(True)
+        )
+    return query
+
+
+def get_decks(page, filters=None, order_by='modified', most_recent_public=False):
+    """Returns a generic query for grabbing decks and related data"""
+    if not page:
+        page = 1
+    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
+    query = get_decks_query(filters=filters, options=[
+        db.joinedload('phoenixborn').joinedload('conjurations'),
+        db.joinedload('cards').joinedload('card').joinedload('conjurations'),
+        db.joinedload('dice'),
+        db.joinedload('user')
+    ], most_recent_public=most_recent_public).filter(*filters)
     decks = query.order_by(getattr(Deck, order_by).desc()).limit(per_page).offset(
         (page - 1) * per_page
     ).all()

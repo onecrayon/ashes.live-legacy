@@ -1,6 +1,9 @@
 """Index/landing page for the site"""
 
 from flask import Blueprint, current_app, flash, redirect, render_template, url_for
+
+from app import db
+from app.utils.decks import get_decks_query
 from app.views.forms.feedback import FeedbackForm
 from app.utils import send_message
 
@@ -9,7 +12,11 @@ mod = Blueprint('home', __name__)
 
 @mod.route('/')
 def index():
-    return render_template('index.html')
+    decks = get_decks_query(options=[
+        db.joinedload('phoenixborn'),
+        db.joinedload('user')
+    ], most_recent_public=True).limit(10)
+    return render_template('index.html', recent_decks=decks)
 
 
 @mod.route('/feedback/', methods=['GET', 'POST'])

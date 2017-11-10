@@ -20,10 +20,9 @@ mod = Blueprint('decks', __name__, url_prefix='/decks')
 @mod.route('/<int:page>/')
 def index(page=None):
     """View list of all public decks"""
-    decks, card_map, page, pagination = get_decks(db.and_(
-        Deck.is_snapshot.is_(True),
-        Deck.is_public.is_(True)
-    ), page, order_by='created', most_recent_public=True)
+    decks, card_map, page, pagination = get_decks(
+        page, order_by='created', most_recent_public=True
+    )
     return render_template(
         'decks/index.html',
         decks=decks,
@@ -104,18 +103,17 @@ def history(deck_id, page=None):
     if not published_deck and not own_deck:
         abort(404)
     shared_id = source.source_id if source.is_snapshot else source.id
+    filters = [
+        Deck.is_snapshot.is_(True)
+    ]
     if not own_deck:
-        filters = db.and_(
-            Deck.source_id == shared_id,
-            Deck.is_snapshot.is_(True),
-            Deck.is_public.is_(True)
-        )
+        filters.append(Deck.source_id == shared_id)
+        filters.append(Deck.is_public.is_(True))
     else:
-        filters = db.and_(
-            Deck.source_id == shared_id,
-            Deck.is_snapshot.is_(True)
-        )
-    decks, card_map, page, pagination = get_decks(filters, page, order_by='created')
+        filters.append(Deck.source_id == shared_id)
+    decks, card_map, page, pagination = get_decks(
+        page, filters=filters, order_by='created'
+    )
     card_map[source.id] = process_deck(source)
     return render_template(
         'decks/history.html',
@@ -133,10 +131,10 @@ def history(deck_id, page=None):
 @login_required
 def mine(page=None):
     """View logged-in player's decks"""
-    decks, card_map, page, pagination = get_decks(db.and_(
+    decks, card_map, page, pagination = get_decks(page, filters=[
         Deck.user_id == current_user.id,
         Deck.is_snapshot.is_(False)
-    ), page)
+    ])
     return render_template(
         'decks/mine.html',
         decks=decks,

@@ -1,3 +1,4 @@
+{% from "macros.html" import usertag %}
 {% extends "base.html" %}
 {% block page_class %}homepage{% endblock %}
 
@@ -25,4 +26,27 @@
 
 {% block sidebar %}
 	<p class="callout"><strong>Ashes.live</strong> offers <strong>deckbuilding</strong> for the card game Ashes: Rise of the Phoenixborn by <a href="https://www.plaidhatgames.com/games/ashes">Plaid Hat Games</a>.</p>
+
+	{% if recent_decks %}
+	<hr>
+	
+	<h3>Recent Activity</h3>
+
+	<ul class="activity">
+		{% for deck in recent_decks %}
+		<li>
+			<span class="timestamp">{{ deck.created | format_date }}</span>
+			{{ usertag(deck.user) }} published <a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
+				{{ deck.title }}
+			</a> <span class="phoenixborn" title="{{ deck.phoenixborn.name }}">
+				({{ deck.phoenixborn.name | first_name }})
+			</span>
+		</li>
+		{% endfor %}
+	</ul>
+
+	<p class="text-right"><a href="{{ url_for('decks.index') }}">
+		<i class="fa fa-eye"></i> View all published decks
+	</a></p>
+	{% endif %}
 {% endblock %}
