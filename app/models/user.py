@@ -14,6 +14,8 @@ class User(db.Model, UserMixin):
     # Usernames are not unique, but the randomly-generated badge is; e.g. "Skaak#4eh?"
     badge = db.Column(db.String(8), unique=True, nullable=False, index=True)
     username = db.Column(db.String(42), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String(255), nullable=False)
     reset_uuid = db.Column(db.String(36), nullable=True, default=None, index=True, unique=True)
     newsletter_opt_in = db.Column(db.Boolean, nullable=False, default=False)

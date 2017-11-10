@@ -14,6 +14,7 @@ class Deck(db.Model):
     description = db.Column(db.Text)
     is_public = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_snapshot = db.Column(db.Boolean, nullable=False, default=False, index=True)
+    is_preconstructed = db.Column(db.Boolean, nullable=False, default=False, index=True)
     created = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, index=True)
     # Snapshots will always have a deck as their source; decks can be sourced from a private
