@@ -10,7 +10,7 @@ from app import db
 from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.utils.cards import global_json
-from app.utils.decks import get_decks, process_deck
+from app.utils.decks import get_decks, get_decks_query, process_deck
 from app.views.forms.deck import SnapshotForm
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
@@ -23,12 +23,18 @@ def index(page=None):
     decks, card_map, page, pagination = get_decks(
         page, order_by='created', most_recent_public=True
     )
+    precon_decks = get_decks_query(filters=[
+        Deck.is_preconstructed.is_(True)
+    ], options=[
+        db.joinedload('phoenixborn')
+    ], most_recent_public=True).order_by(Deck.created.asc()).all()
     return render_template(
         'decks/index.html',
         decks=decks,
         card_map=card_map,
         page=page,
-        pages=pagination
+        pages=pagination,
+        precon_decks=precon_decks
     )
 
 

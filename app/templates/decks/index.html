@@ -24,4 +24,23 @@
 
 {% block sidebar %}
 	<p class="muted">Filters coming soon!</p>
+
+	{% if precon_decks %}
+	<hr>
+
+	<h2>Preconstructed Decks</h2>
+
+	<ul>
+		{% for deck in precon_decks %}
+		{% if not loop.last and (loop.index > 6 and loop.index % 2) %}</ul><hr><ul>{% endif %}
+		<li>
+			<span class="phoenixborn" title="{{ deck.phoenixborn.name }}">
+				{{ deck.phoenixborn.name | first_name }}
+			</span>: <a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
+				{{ deck.title }}
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 {% endblock %}
