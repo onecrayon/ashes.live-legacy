@@ -2,7 +2,7 @@ from urllib.parse import urljoin, urlparse
 
 from flask import redirect, request, url_for
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, HiddenField, PasswordField, RadioField, StringField
+from wtforms import BooleanField, HiddenField, PasswordField, RadioField, StringField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 
@@ -71,13 +71,11 @@ class EditForm(FlaskForm):
     password_confirm = PasswordField('Confirm Password', validators=[
         EqualTo('password', message='Must match password.')
     ])
+    description = TextAreaField('Description')
     newsletter_opt_in = newsletterField
 
 
-class CreateForm(FlaskForm):
-    email = StringField('Email', render_kw={'readonly': True})
-    username = usernameField
+class CreateForm(EditForm):
     badge = RadioField('Badge', validators=[DataRequired()])
     password = passwordField
     password_confirm = passwordConfirmField
-    newsletter_opt_in = newsletterField

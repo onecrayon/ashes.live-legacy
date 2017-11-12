@@ -7,11 +7,13 @@ from flask_login import (
 from flask_mail import Message
 
 from app import db, login_manager
+from app.models.deck import Deck
 from app.models.invite import Invite
 from app.models.user import User
 from app.views.forms.player import (
     CreateForm, EditForm, EmailForm, LoginForm, ReauthorizeForm, ResetForm
 )
+from app.utils.decks import get_decks
 from app.utils import send_message
 from app.wrappers import guest_required
 
@@ -38,6 +40,7 @@ def account():
         # Save changes to account
         current_user.username = form.username.data
         current_user.newsletter_opt_in = form.newsletter_opt_in.data
+        current_user.description = form.description.data
         if form.password.data:
             # Setting the password commits the changes
             current_user.set_password(form.password.data)
@@ -48,13 +51,24 @@ def account():
 
 
 @mod.route('/<badge>/')
-def view(badge):
+@mod.route('/<badge>/<int:page>')
+def view(badge, page=None):
     """View a player's public profile"""
     badge = badge.lower()
     user = User.query.filter(User.badge == badge).first()
     if not user:
         return abort(404)
-    return render_template('player/view.html', user=user)
+    decks, card_map, page, pagination = get_decks(
+        page, filters=[Deck.user_id == user.id], order_by='created', most_recent_public=True
+    )
+    return render_template(
+        'player/view.html',
+        user=user,
+        decks=decks,
+        card_map=card_map,
+        page=page,
+        pages=pagination
+    )
 
 
 @mod.route('/login/', methods=['GET', 'POST'])
@@ -138,6 +152,7 @@ def create_account(uuid):
             password=form.password.data,
             badge=form.badge.data,
             username=form.username.data,
+            description=form.description.data,
             newsletter_opt_in=form.newsletter_opt_in.data
         )
         db.session.add(user)

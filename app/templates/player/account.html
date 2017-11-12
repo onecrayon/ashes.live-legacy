@@ -15,6 +15,7 @@
 		{{ with_errors(form.username) }}
 		{{ with_errors(form.password) }}
 		{{ with_errors(form.password_confirm) }}
+		{{ with_errors(form.description) }}
 		<div class="form-field">
 			{{ form.newsletter_opt_in }} {{ form.newsletter_opt_in.label }}
 		</div>
@@ -26,4 +27,8 @@
 	<p>To update your email address, please contact <a href="mailto:hello@ashes.live?subject=Update email request">hello@ashes.live</a>.</p>
 
 	<p>New site feature notification emails are rare, and only focused on major new features or improvements.</p>
+
+	<p><em>Description supports [[card codes]] and *star formatting*:</em></p>
+
+	{% include "fragments/formatting_help.html" %}
 {% endblock %}
