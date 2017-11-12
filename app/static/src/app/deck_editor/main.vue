@@ -63,15 +63,6 @@
 			<text-editor state-path="deck.description" field-name="Description"></text-editor>
 		</div>
 		<div v-else-if="activeTab == 'actions' && phoenixborn">
-			<button class="btn btn-block btn-primary" @click="showExportModal = true">
-				<i class="fa fa-share-square-o"></i> Export As Text
-			</button>
-			<export-modal :show="showExportModal" @close="showExportModal = false"></export-modal>
-			<button class="btn btn-block btn-danger" :disabled="!isSaved" @click="showDeleteModal = true">
-				<i class="fa fa-trash"></i> Delete Deck
-			</button>
-			<delete-modal :show="showDeleteModal" @close="showDeleteModal = false"></delete-modal>
-			<hr>
 			<h3>Snapshots</h3>
 
 			<p>Save snapshots of your deck to track changes over time. <span v-if="!isSaved" class="muted">(Save your deck to enable.)</span></p>
@@ -89,6 +80,15 @@
 				<i class="fa fa-share-square-o"></i> Publish Deck
 			</button>
 			<snapshot-modal :show="showSnapshotModal" :public="createPublicSnapshot" @close="closeSnapshotModal"></snapshot-modal>
+			<hr>
+			<button class="btn btn-block" @click="showExportModal = true">
+				<i class="fa fa-share-square-o"></i> Export As Text
+			</button>
+			<export-modal :show="showExportModal" @close="showExportModal = false"></export-modal>
+			<button class="btn btn-block btn-danger" :disabled="!isSaved" @click="showDeleteModal = true">
+				<i class="fa fa-trash"></i> Delete Deck
+			</button>
+			<delete-modal :show="showDeleteModal" @close="showDeleteModal = false"></delete-modal>
 		</div>
 	</div>
 </template>
