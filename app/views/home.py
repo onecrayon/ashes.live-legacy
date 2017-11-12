@@ -15,7 +15,7 @@ def index():
     decks = get_decks_query(options=[
         db.joinedload('phoenixborn'),
         db.joinedload('user')
-    ], most_recent_public=True).limit(10)
+    ], most_recent_public=True).limit(10).all()
     return render_template('index.html', recent_decks=decks)
 
 
