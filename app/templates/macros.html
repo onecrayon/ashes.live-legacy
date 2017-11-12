@@ -24,7 +24,7 @@
 	</div>
 {%- endmacro %}
 
-{% macro pagination(pages) -%}
+{% macro pagination(pages, page=1) -%}
 	{% if pages %}
 	{% set current = {'page': 0} -%}
 	<nav class="pagination">
