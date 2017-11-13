@@ -80,6 +80,19 @@
 				}
 			}
 		},
+		watch: {
+			show (value) {
+				if (value) {
+					// Reset everything
+					this.activeTab = 'meta'
+					this._title = null
+					this._description = null
+					this.$nextTick(() => {
+						this.$refs.title.focus()
+					})
+				}
+			}
+		},
 		methods: {
 			saveSnapshot () {
 				let title = this._title
@@ -118,10 +131,6 @@
 			},
 			close () {
 				this.$emit('close')
-				// Reset everything
-				this.activeTab = 'meta'
-				this._title = null
-				this._description = null
 			}
 		}
 	}

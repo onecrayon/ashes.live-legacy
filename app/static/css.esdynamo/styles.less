@@ -101,6 +101,15 @@ a.card {
 	color: @color-white;
 }
 
+a.error {
+	color: @color-error;
+	font-weight: bold;
+}
+
+.noty_type__error a.error {
+	color: #ffb2b2;
+}
+
 .callout {
 	font-size: 112.5%; // 16px => 18px
 }
@@ -178,6 +187,11 @@ a.card {
 
 	.error {
 		.alert(@color-error);
+
+		a {
+			color: @color-error;
+			font-weight: bold;
+		}
 	}
 
 	.btn-close {

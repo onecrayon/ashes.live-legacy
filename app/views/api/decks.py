@@ -1,4 +1,4 @@
-from flask import abort, current_app, Blueprint, flash, jsonify, request
+from flask import abort, Blueprint, flash, jsonify, request, url_for
 from flask_login import current_user, login_required
 
 from app import db
@@ -32,13 +32,10 @@ def save(deck_id=None, is_snapshot=False):
     # Update or save deck data
     is_public = data.get('is_public', False)
     if deck_id:
-        query = Deck.query
-        if not is_snapshot:
-           query = query.options(
-                db.joinedload('cards'),
-                db.joinedload('dice')
-            )
-        deck = query.get(deck_id)
+        deck = Deck.query.options(
+            db.joinedload('cards'),
+            db.joinedload('dice')
+        ).get(deck_id)
         if (not deck or not current_user.is_authenticated or
                 deck.user_id != current_user.id):
             abort(404)
@@ -71,7 +68,33 @@ def save(deck_id=None, is_snapshot=False):
             is_public=is_public,
             source_id=source_id
         )
-    
+
+    # We only save a new snapshot if it differs from the previous one,
+    # so grab the necessary data to compare the two
+    has_changes = False
+    previous = None
+    previous_cards = {}
+    previous_dice = {}
+    if deck.is_snapshot:
+        # Ensure that something differs from the previous snapshot
+        previous_query = Deck.query.options(
+            db.joinedload('cards'), db.joinedload('dice')
+        ).filter(
+            Deck.source_id == deck.source_id,
+            Deck.is_snapshot.is_(True),
+            Deck.user_id == current_user.id
+        )
+        if deck.is_public:
+            previous_query = previous_query.filter(Deck.is_public.is_(True))
+        previous = previous_query.order_by(Deck.created.desc()).first()
+        if previous and previous.phoenixborn_id == deck.phoenixborn_id:
+            previous_cards = {x.card_id: x.count for x in previous.cards}
+            previous_dice = {
+                DiceFlags(x.die_flag).name: x.count for x in previous.dice
+            }
+        else:
+            has_changes = True
+
     # Update the dice listing
     dice = []
     total_dice = 0
@@ -86,12 +109,32 @@ def save(deck_id=None, is_snapshot=False):
                 die_flag=DiceFlags[die].value,
                 count=count
             ))
+            prior = previous_dice.get(die)
+            if not prior or prior != count:
+                has_changes = True
     deck.dice = dice
     # And then the card listing
-    deck.cards = [DeckCard(
-        card_id=int(card_id),
-        count=count if count <= 3 else 3
-    ) for card_id, count in data.get('cards', {}).items()]
+    cards = []
+    for card_id, count in data.get('cards', {}).items():
+        count = count if count <= 3 else 3
+        card_id = int(card_id)
+        cards.append(DeckCard(
+            card_id=card_id,
+            count=count
+        ))
+        prior = previous_cards.get(card_id)
+        if not prior or prior != count:
+            has_changes = True
+    deck.cards = cards
+    if previous and not has_changes:
+        return jsonify({
+            'error': (
+                'Decklist and dice have not changed since your last snapshot. '
+                '<a href="{}" class="error" target="_blank">Edit your previous '
+                'snapshot\'s title &amp; description</a>.'
+            ).format(url_for('decks.edit', deck_id=previous.id))
+        })
+
     # Finally save everything up!
     db.session.add(deck)
     db.session.commit()
