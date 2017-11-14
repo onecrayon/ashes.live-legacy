@@ -90,7 +90,7 @@ def get_decks(page, filters=None, order_by='modified', most_recent_public=False)
         db.joinedload('cards').joinedload('card').joinedload('conjurations'),
         db.joinedload('dice'),
         db.joinedload('user')
-    ], most_recent_public=most_recent_public).filter(*filters)
+    ], most_recent_public=most_recent_public)
     decks = query.order_by(getattr(Deck, order_by).desc()).limit(per_page).offset(
         (page - 1) * per_page
     ).all()
