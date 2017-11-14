@@ -16,7 +16,7 @@
 		</li>
 	{% endfor %}
 	</ul>
-	{{ pagination(pages, page=page) }}
+	{{ pagination('decks.index', pages, page=page) }}
 	{% else %}
 	<p class="callout">There are no public decks. How could this be?! Quick, go share <a href="{{ url_for('decks.mine') }}">one of yours</a>!</p>
 	{% endif %}

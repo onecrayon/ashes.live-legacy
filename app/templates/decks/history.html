@@ -20,7 +20,7 @@
 		</li>
 	{% endfor %}
 	</ul>
-	{{ pagination(pages, page=page) }}
+	{{ pagination('decks.history', pages, page=page, deck_id=deck.id) }}
 	{% else %}
 	<p class="callout">This deck has no snapshots yet.</p>
 	{% endif %}

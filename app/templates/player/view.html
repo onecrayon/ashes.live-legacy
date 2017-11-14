@@ -22,7 +22,7 @@
 		</li>
 	{% endfor %}
 	</ul>
-	{{ pagination(pages, page=page) }}
+	{{ pagination('player.view', pages, page=page, badge=user.badge) }}
 	{% else %}
 	<p>No published decks yet!</p>
 	{% endif %}

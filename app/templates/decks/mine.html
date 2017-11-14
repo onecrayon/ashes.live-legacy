@@ -16,7 +16,7 @@
 		</li>
 	{% endfor %}
 	</ul>
-	{{ pagination(pages, page=page) }}
+	{{ pagination('decks.mine', pages, page=page) }}
 	{% else %}
 	<p class="callout">You have not created any decks yet! Let's get cracking! <i class="fa fa-arrow-right"></i></p>
 	{% endif %}
