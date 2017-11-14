@@ -125,7 +125,7 @@ Created with https://ashes.live</textarea>
 	</a>
 	{% endif %}
 	<a class="btn btn-block btn-success"
-		href="{{ url_for('decks.build', deck_id=deck.id) }}">
+		href="{{ url_for('decks.build', deck_id=deck.source_id if deck.is_snapshot else deck.id) }}">
 		<i class="fa fa-pencil"></i> Edit{% if deck.is_snapshot %} Source{% endif %} Deck
 	</a>
 	{% endif %}
