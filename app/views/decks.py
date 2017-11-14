@@ -40,7 +40,10 @@ def index(page=None):
 
 @mod.route('/view/<int:deck_id>/')
 def view(deck_id):
-    """View a public deck"""
+    """View a snapshot.
+    
+    If deck_id points to a deck, shows first public snapshot.
+    """
     deck = Deck.query.options(
         db.joinedload('phoenixborn').joinedload('conjurations'),
         db.joinedload('cards').joinedload('card').joinedload('conjurations'),
@@ -51,9 +54,8 @@ def view(deck_id):
     if deck.is_snapshot and not deck.is_public and (not current_user.is_authenticated or
             deck.user_id != current_user.id):
         abort(404)
-    # Re-route to the latest public snapshot, if user can't view the deck
-    if not deck.is_snapshot and (not current_user.is_authenticated or
-            deck.user_id != current_user.id):
+    # Re-route to the latest public snapshot, if viewing a deck
+    if not deck.is_snapshot:
         deck = deck.published_snapshot(full=True)
         if not deck:
             abort(404)
@@ -76,7 +78,7 @@ def edit(deck_id):
     if not current_user.is_authenticated or deck.user_id != current_user.id:
         abort(404)
     if not deck.is_snapshot:
-        return redirect(url_for('deck.build', deck_id=deck_id))
+        return redirect(url_for('decks.build', deck_id=deck_id))
     form = SnapshotForm(obj=deck)
     if form.validate_on_submit():
         # Save changes to snapshot
@@ -161,6 +163,8 @@ def build(deck_id=None):
     ).get(deck_id)
     if deck_id and not deck:
         abort(404)
+    if deck_id and deck.is_snapshot:
+        return redirect(url_for('decks.build', deck_id=deck.source_id))
     deck_json = None
     if deck:
         if not current_user.is_authenticated or deck.user_id != current_user.id:
