@@ -110,15 +110,16 @@ def history(deck_id, page=None):
     published_deck = source.published_snapshot()
     if not published_deck and not own_deck:
         abort(404)
-    shared_id = source.source_id if source.is_snapshot else source.id
+    if source.is_snapshot:
+        return redirect(url_for('decks.history', deck_id=source.source_id))
     filters = [
         Deck.is_snapshot.is_(True)
     ]
     if not own_deck:
-        filters.append(Deck.source_id == shared_id)
+        filters.append(Deck.source_id == source.id)
         filters.append(Deck.is_public.is_(True))
     else:
-        filters.append(Deck.source_id == shared_id)
+        filters.append(Deck.source_id == source.id)
     decks, card_map, page, pagination = get_decks(
         page, filters=filters, order_by='created'
     )
