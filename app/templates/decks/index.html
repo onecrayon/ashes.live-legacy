@@ -1,7 +1,7 @@
 {% from "macros.html" import pagination %}
 {% from "decks/macros.html" import deck_details %}
 {% extends "base.html" %}
-{% block title %}Public Decks{% endblock %}
+{% block title %}{{ 'Public Decks' | paged_title(page) }}{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-main-action">Public decks</h1>
@@ -34,9 +34,8 @@
 		{% for deck in precon_decks %}
 		{% if not loop.last and (loop.index > 6 and loop.index % 2) %}</ul><hr><ul>{% endif %}
 		<li>
-			<span class="phoenixborn" title="{{ deck.phoenixborn.name }}">
-				{{ deck.phoenixborn.name | first_name }}
-			</span>: <a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
+			<span class="phoenixborn" title="{{ deck.phoenixborn.name }}">{{ deck.phoenixborn.name | first_name }}</span>: 
+			<a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
 				{{ deck.title }}
 			</a>
 		</li>

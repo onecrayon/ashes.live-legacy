@@ -1,7 +1,7 @@
 {% from "macros.html" import usertag, pagination %}
 {% from "decks/macros.html" import deck_details %}
 {% extends "base.html" %}
-{% block title %}{{ user.username }}#{{ user.badge }}{% endblock %}
+{% block title %}{{ user.username + '#' + user.badge | paged_title(page) }}{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-illusion-power">

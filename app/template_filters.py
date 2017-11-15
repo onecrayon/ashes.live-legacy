@@ -9,6 +9,13 @@ from app import app
 from app.models.card import DiceFlags
 
 
+@app.template_filter('paged_title')
+def paged_title(value, page=None):
+    if not page or page == 1:
+        return value
+    return '[p. {}] {}'.format(page, value)
+
+
 @app.template_filter('copyright')
 def copyright_date(value):
     return '{}-{}'.format(value, date.today().year)
