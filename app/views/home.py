@@ -3,6 +3,7 @@
 from flask import Blueprint, current_app, flash, redirect, render_template, url_for
 
 from app import db
+from app.models.deck import Deck
 from app.utils.decks import get_decks_query
 from app.views.forms.feedback import FeedbackForm
 from app.utils import send_message
@@ -15,7 +16,7 @@ def index():
     decks = get_decks_query(options=[
         db.joinedload('phoenixborn'),
         db.joinedload('user')
-    ], most_recent_public=True).limit(10).all()
+    ], most_recent_public=True).order_by(Deck.created.desc()).limit(10).all()
     return render_template('index.html', recent_decks=decks)
 
 
