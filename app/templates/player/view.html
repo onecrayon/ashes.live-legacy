@@ -30,6 +30,8 @@
 
 {% block sidebar %}
 	{% if user.description %}
+	<h2>Description</h2>
+	
 	{{ user.description | parse_text }}
 	{% endif %}
 {% endblock %}

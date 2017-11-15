@@ -52,7 +52,11 @@
 	</div>
 	<hr>
 	<div class="deck-description">
+		{% if deck.description %}
+		<h2>Description</h2>
+
 		{{ deck.description | parse_text }}
+		{% endif %}
 	</div>
 	<div id="deck-text-export" class="inline-modal">
 		<h2>Export As Text</h2>
