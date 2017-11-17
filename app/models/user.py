@@ -22,7 +22,8 @@ class User(db.Model, UserMixin):
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __init__(self, email, password, badge=None, username=None, newsletter_opt_in=False):
+    def __init__(self, email, password, badge=None, username=None, description=None,
+                 newsletter_opt_in=False):
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
         if badge and re.search(r'^[0-9][a-z0-9*&+=-]+[a-z0-9*%!?]$', badge):
@@ -37,6 +38,7 @@ class User(db.Model, UserMixin):
             'Rin Northfell', 'Saria Guideman', 'Victoria Glassfire',
             'Echo Greystorm', 'Jericho Kill'
         ])
+        self.description = description
         self.newsletter_opt_in = newsletter_opt_in
 
     def generate_reset_uuid(self):
