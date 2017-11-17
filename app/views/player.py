@@ -107,6 +107,7 @@ def reauthorize():
 def logout():
     """Log a player out"""
     logout_user()
+    flash('You are now logged out.', 'success')
     return redirect(url_for('home.index'))
 
 
