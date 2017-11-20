@@ -244,7 +244,6 @@ if (files) {
 			if (diceTypes.length) {
 				card.dice = Array.from(new Set(diceTypes))
 			}
-			console.log(card.name, 'splitTypes:', splitTypes)
 			if (splitTypes.length) {
 				card.splitDice = Array.from(new Set(splitTypes))
 			}
