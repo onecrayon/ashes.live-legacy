@@ -1,0 +1,116 @@
+Battle Mage
+Ally - Battlefield
+[[main]] - 3 [[basic]]
+Attack 2 - Life 3 - Recover 1
+
+Magic Potential 1: When this unit attacks or counters, select 1 die in your exhausted pool and place it into your active pool on its basic side.
+
+=====
+
+Double Edge (Jericho Kill)
+Action Spell - Discard
+[[side]]
+
+Draw 2 cards. You may discard up to 2 cards from your hand. For each card you discard, place 1 wound token on a target unit or a target Phoenixborn.
+
+=====
+
+Elephant Rider
+Ally - Battlefield
+[[main]] - 7 [[basic]]
+Attack 6 - Life 6 - Recover 3
+
+Overkill 2: When this unit destroys a unit an opponent controls by attacking, deal 2 damage to that opponent's Phoenixborn.
+
+* Unbreakable 2: If this unit has 2 or fewer wound tokens on it, it cannot be affected by spells, abilities, or dice powers that would place exhaustion tokens on it, destroy it, or return it to its owner's hand.
+
+=====
+
+Hand Tricks
+Action Spell - Discard
+[[side]] - 1 [[basic]]
+
+Select 1 die in your exhausted pool and place it into your active pool on its basic side. Draw 1 card.
+
+~ Return 1: When your turn begins, if this card is in your discard pile, you may spend 1 [[basic]] and discard 1 card off the top of your draw pile to place this card into your hand.
+
+=====
+
+Jericho Kill
+Battlefield 9 - Life 15 - Spellboard 4
+
+Build Magic: At the beginning of each prepare phase you may place 1 card from your hand face down under this card.
+
+Re-Tool Magic: [[side]]: Discard 1 face down card from under this card to deal 1 damage to a target unit or remove 1 wound token from this card.
+
+=====
+
+Lucky Rabbit
+Conjuration - Battlefield
+Attack 1 - Life 2 - Recover 0 - Copies 4
+
+Luck Stream: When placing 3 or more dice in your exhausted poool, re-roll them. If you roll 1 or more power symbols, you may return 1 of those dice to your active pool on its basic side. Luck Stream cannot be used to return more than 1 die each turn.
+
+=====
+
+Magic Purity
+Ready Spell - Spellboard
+[[main]]
+
+After you pay a cost that includes 3 or more basic symbols, you may place 1 exhaustion token on this spell to select 1 die in your exhausted pool and place it into your active pool on its basic side.
+
+=====
+
+Prepare
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]]: Place 1 card from your hand or from the top of your draw pile face down under your Phoenixborn, or choose a face down card under your Phoenixborn and place it into your hand.
+
+Focus 1: You may change the activation cost of this spell to [[side]] - [[exhaust]].
+
+=====
+
+Spear Master
+Ally - Battlefield
+[[main]] - 3 [[basic]] - 1 [[discard]]
+Attack 3 - Life 3 - Recover 2
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+=====
+
+Squire
+Ally - Battlefield
+[[main]] - 1 [[basic]]
+Attack 1 - Life 1 - Recover 1
+
+Assist 1: When this unit comes into play, you may change 1 die in your active pool that is on its power side to its basic side. If you do, draw 1 card.
+
+=====
+
+Summon Lucky Rabbit
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 2 [[basic]]: Place a [[Lucky Rabbit]] conjuration onto your battlefield.
+
+Focus 1: You may select 1 die in your exhausted pool and place it into your active pool on its basic side.
+
+=====
+
+Summon Turtle Guard
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[basic]]: Place a [[Turtle Guard]] conjuration onto your battlefield.
+
+=====
+
+Turtle Guard
+Conjuration - Battlefield
+Attack 1 - Life 5 - Recover 2 - Copies 4
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+Cumbersome: After this unit receives damage in battle, place 1 exhaustion token on it.

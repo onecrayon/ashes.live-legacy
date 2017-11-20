@@ -14,6 +14,8 @@
  *     
  *     * Inexhaustible ability text.
  *     
+ *     ~ Between Realms ability text.
+ *     
  *     =====
  *     
  *     Card Title 2 (Phoenixborn name)
@@ -29,6 +31,10 @@
  * 
  * A space-delimited hyphen character ( - ) is used to separate costs,
  * or anywhere the "diamond" separator is used on a card.
+ * 
+ * A slash is used to separate Parallel Costs; e.g.:
+ * 
+ *     [[main]] - 1 [[divine:class]] / 1 [[sympathy:class]]
  * 
  * Phoenixborn do not have a Type or Cost line, but do have Stats
  * (with battlefield/life/spellboard values).
@@ -50,23 +56,63 @@ var fs = require('fs'),
 	// Delimiter string for costs, etc.
 	sep = ' - ',
 	// Function for parsing costs into a diceTypes array in place
-	parseCostsToDiceTypes = function (costsOrText, diceTypes) {
-		var diceTypeRE = /\[\[[a-z]+:(?:power|class)\]\]/g,
-			diceMatches = []
+	parseCostsToDiceTypes = function (costsOrText, diceTypes, splitTypes) {
+		var splitTypeRE = /(\[\[[a-z]+:(?:power|class)\]\])\s*(?:or|\/)\s*\d*\s*(\[\[[a-z]+:(?:power|class)\]\])/,
+			diceTypeRE = /\[\[[a-z]+:(?:power|class)\]\]/g,
+			diceMatches = [],
+			splitDiceMatches = []
 		if (Array.isArray(costsOrText)) {
 			costsOrText.forEach(function (cost) {
-				var matches = cost.match(diceTypeRE)
-				if (matches) {
+				var splitMatches = cost.match(splitTypeRE),
+					matches = cost.match(diceTypeRE)
+				if (splitMatches) {
+					splitDiceMatches = splitDiceMatches.concat([splitMatches[1], splitMatches[2]])
+				} else if (matches) {
 					diceMatches = diceMatches.concat(matches)
 				}
 			})
 		} else {
-			diceMatches = costsOrText.match(diceTypeRE)
+			var splitMatches = costsOrText.match(splitTypeRE)
+			if (splitMatches) {
+				splitDiceMatches = [splitMatches[1], splitMatches[2]]
+			} else {
+				diceMatches = costsOrText.match(diceTypeRE)
+			}
 		}
-		if (diceMatches) {
+		if (diceMatches && diceMatches.length) {
 			diceMatches.forEach(function (match) {
 				diceTypes.push(match.replace(/^\[\[([a-z]+):[a-z]+\]\]$/, '$1'))
 			})
+		}
+		if (splitDiceMatches && splitDiceMatches.length) {
+			splitDiceMatches.forEach(function (match) {
+				splitTypes.push(match.replace(/^\[\[([a-z]+):[a-z]+\]\]$/, '$1'))
+			})
+		}
+	},
+	possibleDice = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy'],
+	parseCostToWeight = function (costCount, costText) {
+		if (!costCount && !costText) {
+			return null
+		}
+		var costNumber = costCount ? parseInt(costCount) : null,
+			costTypeArray = costText.split(':'),
+			costType = costTypeArray[0],
+			costSubtype = costTypeArray.length > 1 ? costTypeArray[1] : null
+		if (possibleDice.indexOf(costType) >= 0 && costNumber) {
+			var weight = costNumber * 100
+			if (costSubtype == 'class') {
+				weight += costNumber * 1
+			} else if (costSubtype == 'power') {
+				weight += costNumber * 2
+			}
+			return weight
+		} else if (costType == 'discard' && costNumber) {
+			return costNumber * 3
+		} else if (costType == 'side') {
+			return 4
+		} else if (costType == 'main') {
+			return 5
 		}
 	}
 
@@ -99,7 +145,8 @@ if (files) {
 				},
 				stats = null,
 				conjurations = [],
-				diceTypes = []
+				diceTypes = [],
+				splitTypes = []
 			
 			// Track longest name (for setting up database)
 			if (card.name.length > longestName.length) {
@@ -124,32 +171,24 @@ if (files) {
 					stats = meta[2].split(sep)
 				} else {
 					card.cost = meta[2].split(sep)
-					parseCostsToDiceTypes(card.cost, diceTypes)
+					parseCostsToDiceTypes(card.cost, diceTypes, splitTypes)
 					// Calculate cost weighting
-					var cardWeight = 0,
-						possibleDice = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy']
+					var cardWeight = 0
 					card.cost.forEach(function (cost) {
-						var costMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]$/)
-						if (!costMatch) {
+						var costMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]$/),
+							splitCostMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]\s*\/\s*$/)
+						if (!costMatch && !splitCostMatch) {
 							return
 						}
-						var costNumber = costMatch[1] ? parseInt(costMatch[1]) : null,
-							costTypeArray = costMatch[2].split(':'),
-							costType = costTypeArray[0],
-							costSubtype = costTypeArray.length > 1 ? costTypeArray[1] : null
-						if (possibleDice.indexOf(costType) >= 0 && costNumber) {
-							cardWeight += costNumber * 100
-							if (costSubtype == 'class') {
-								cardWeight += costNumber * 1
-							} else if (costSubtype == 'power') {
-								cardWeight += costNumber * 2
-							}
-						} else if (costType == 'discard' && costNumber) {
-							cardWeight += costNumber * 3
-						} else if (costType == 'side') {
-							cardWeight += 4
-						} else if (costType == 'main') {
-							cardWeight += 5
+						// For Parallel Costs (split costs, here), we only count the cheaper weight
+						// since presumably that's what people will be using most of the time
+						var match = costMatch ? costMatch : splitCostMatch,
+							weight = parseCostToWeight(match[1], match[2]),
+							weight2 = parseCostToWeight(match[3], match[4])
+						if (weight2) {
+							cardWeight += (weight < weight2 ? weight : weight2)
+						} else {
+							cardWeight += weight
 						}
 					})
 					card.weight = cardWeight
@@ -183,10 +222,10 @@ if (files) {
 				}
 				if (parts[3]) {
 					effect.cost = parts[3].split(sep)
-					parseCostsToDiceTypes(effect.cost, diceTypes)
+					parseCostsToDiceTypes(effect.cost, diceTypes, splitTypes)
 				}
 				effect.text = parts[4]
-				parseCostsToDiceTypes(effect.text, diceTypes)
+				parseCostsToDiceTypes(effect.text, diceTypes, splitTypes)
 				card.text.push(effect)
 				// Lastly, check for any conjurations
 				if (conjurationMatches) {
@@ -204,6 +243,10 @@ if (files) {
 			}
 			if (diceTypes.length) {
 				card.dice = Array.from(new Set(diceTypes))
+			}
+			console.log(card.name, 'splitTypes:', splitTypes)
+			if (splitTypes.length) {
+				card.splitDice = Array.from(new Set(splitTypes))
 			}
 			// And finally append our card and continue
 			data.push(card)

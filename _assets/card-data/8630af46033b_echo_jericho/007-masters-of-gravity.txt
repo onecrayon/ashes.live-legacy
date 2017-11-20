@@ -1,0 +1,124 @@
+Changing Winds
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]] - 1 [[basic]]
+
+When this spell comes into play, you may draw 2 cards. If you do, choose 2 cards in your hand and place each one on the top or bottom of your draw pile.
+
+[[side]] - [[exhaust]]: Draw 1 card. Change 1 die in your active pool to a side of your choice.
+
+=====
+
+Chaos Gravity (Echo Greystorm)
+Action Spell - Discard
+[[main]] - 1 [[divine:class]] / 1 [[sympathy:class]] - 1 [[basic]]
+
+Place 1 exhaustion token on a target unit. Move 1 exhaustion token from a target unit to another unit controlled by the same player. Remove 1 exhaustion token from a target unit.
+
+=====
+
+Echo Greystorm
+Battlefield 6 - Life 17 - Spellboard 4
+
+Increase Gravity: When 1 or more exhaustion tokens are placed on a target unit, you may spend 1 [[basic]] and place 1 exhaustion token on this card to place 1 exhaustion token on that target unit.
+
+=====
+
+Enhanced Strength
+Conjured Alteration Spell - Unit
+Attack +1 - Life +1 - Copies 3
+
+* This unit now has the following ability:
+
+* Endurance: Remove all exhaustion tokens from this unit at the end of each round.
+
+=====
+
+Enlightenment
+Action Spell - Discard
+[[main]] - 1 [[divine:class]] - 1 [[basic]]
+
+Remove 1 exhaustion token from a target card.
+
+=====
+
+Gravity Training
+Ready Spell - Spellboard
+[[main]]
+
+After 1 or more exhaustion tokens are placed on a unit you control, you may spend 1 [[divine:class]] or 1 [[sympathy:class]] and place 1 exhaustion token on this spell to attach an [[Enhanced Strength]] conjured alteration spell to that unit.
+
+=====
+
+Holy Relics
+Alteration Spell - Unit
+[[main]] - 2 [[divine:class]]
+Attack +2 - Life +2
+
+=====
+
+Law Of Fear
+Ready Spell - Spellboard
+[[side]] - 1 [[divine:class]]
+
+When this spell comes into play, choose up to 3 target units. Those units add 1 to their attack value for the remainder of this turn.
+
+Players must spend 1 [[basic]] or place 2 wound tokens on their Phoenixborn to declare blockers or declare a guard.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Light Swordsman
+Ally - Battlefield
+[[main]] / [[side]] - 1 [[sympathy:class]] - 1 [[divine:class]]
+Attack 1 - Life 2 - Recover 2
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+Opportunist 1: When you draw 1 or more cards during a player's turn, add 1 to this unit's attack value for the remainder of that turn.
+
+=====
+
+Mirror Spirit
+Conjuration - Battlefield
+Attack X - Life 2 - Recover 0 - Copies 3
+
+Reflect Sorrow: When this unit comes into play, place 1 status token on this unit for each exhaustion token on units a target player controls.
+
+* X = the number of status tokens on this unit.
+
+=====
+
+Polarity Mage
+Ally - Battlefield
+[[main]] - 1 [[divine:class]] / 1 [[sympathy:class]]
+Attack X - Life 2 - Recover X
+
+Take: [[side]] - 1 [[basic]]: Remove 1 alteration spell from a target unit you control and place that alteration spell face down under this unit.
+
+* Give: When a unit comes into play onto your battlefield, you may choose 1 face down alteration spell under this unit and attach it face up to that unit.
+
+* X = the number of face down cards under this unit.
+
+=====
+
+Sonic Swordsman
+Ally - Battlefield
+[[main]] - 1 [[divine:power]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 2 - Life 3 - Recover 1
+
+Aftershock : When this unit deals damage by attacking or countering, you may pace  wound tokens on a target unit.
+
+* Rhythmic Healing 1: When you draw 1 or more cards, you may remove 1 wound token from this unit.
+
+=====
+
+Summon Mirror Spirit
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[sympathy:class]] - 1 [[basic]]: Place a [[Mirror Spirit]] conjuration onto your battlefield.
+
+Focus 1: You may remove all status tokens from a Mirror Spirit you control. If you remove at least 1 status token, place 1 exhaustion token on a target unit.
