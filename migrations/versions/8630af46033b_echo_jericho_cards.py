@@ -23,6 +23,8 @@ depends_on = None
 
 
 def upgrade():
+    op.add_column('card', sa.Column('split_dice_flags', sa.Integer(), nullable=False, server_default='0'))
+    op.create_index(op.f('ix_card_split_dice_flags'), 'card', ['split_dice_flags'], unique=False)
     my_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(my_dir, '../data/8630af46033b_echo_jericho.json'), 'r') as f:
         data = json.load(f)
@@ -41,11 +43,14 @@ def upgrade():
             'card_type': card['type'],
             'cost_weight': card.get('weight', 0),
             'text': ' '.join(card_text),
-            'copies': card.get('copies', None)
+            'copies': card.get('copies', None),
+            'dice_flags': Card.dice_to_flags(card.get('dice')),
+            'split_dice_flags': Card.dice_to_flags(card.get('splitDice')),
+            'phoenixborn': card.get('phoenixborn')
         })
         stubs.append(card['stub'])
     op.bulk_insert(Card.__table__, inserts)
-    # Gather all new cards and update JSON, dice types, and conjurations
+    # Gather all conjurations, and add image paths and IDs
     cards = Card.query.filter(
         Card.stub.in_(stubs)
     ).order_by(Card.id.asc()).all()
@@ -65,11 +70,10 @@ def upgrade():
                 card.stub if not card.is_summon_spell else card.conjurations[0].stub
             )
         }
-        card.dice_flags = Card.dice_to_flags(json_data.get('dice'))
-        card.phoenixborn = json_data.get('phoenixborn')
         card.json = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
     db.session.commit()
 
 
 def downgrade():
-    pass
+    op.drop_index('ix_card_split_dice_flags', 'card')
+    op.drop_column('card', 'split_dice_flags')

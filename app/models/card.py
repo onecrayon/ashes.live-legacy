@@ -25,6 +25,7 @@ class Card(db.Model):
     is_summon_spell = db.Column(db.Boolean, nullable=False, default=False)
     cost_weight = db.Column(db.Integer, nullable=False, index=True, default=0)
     dice_flags = db.Column(db.Integer, nullable=False, index=True, default=0)
+    split_dice_flags = db.Column(db.Integer, nullable=False, index=True, default=0)
     copies = db.Column(db.SmallInteger, nullable=True, default=None)
     json = db.Column(db.Text)
     text = db.Column(db.Text)
