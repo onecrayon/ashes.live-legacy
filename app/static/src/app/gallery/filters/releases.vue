@@ -20,17 +20,15 @@
 	export default {
 		methods: {
 			toggleReleases (releasesKey) {
-				this.$store.commit('toggleReleases', globals.releaseData[releasesKey])
+				this.$store.commit('toggleReleases', releasesKey)
 				this.$store.commit('filterCards')
 			},
 			hasReleases (releasesKey) {
 				if (releasesKey === null || this.$store.state.options.releases === null) {
 					return releasesKey === null && this.$store.state.options.releases === null
 				}
-				for (let release of globals.releaseData[releasesKey]) {
-					if (!includes(this.$store.state.options.releases, release)) {
-						return false
-					}
+				if (!includes(this.$store.state.options.releases, releasesKey)) {
+					return false
 				}
 				return true
 			}

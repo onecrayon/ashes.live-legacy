@@ -45,14 +45,12 @@
 				return includes(this.$store.state.options.dice || [], die)
 			},
 			isShowingRelease (dieType) {
-				let releaseNumber = null
-				if (dieType === 'divine') {
-					releaseNumber = 5
-				} else if (dieType === 'sympathy') {
-					releaseNumber = 6
+				let releasesKey = null
+				if (dieType === 'divine' || dieType === 'sympathy') {
+					releasesKey = 'expansions'
 				}
-				if (!releaseNumber) return true
-				return includes(this.$store.state.options.releases, releaseNumber)
+				if (!releasesKey) return true
+				return includes(this.$store.state.options.releases, releasesKey)
 			}
 		}
 	}

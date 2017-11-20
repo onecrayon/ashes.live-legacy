@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import CardManager from './card_manager'
-import {concat, merge, reduce} from 'lodash'
+import {isInteger, merge, reduce} from 'lodash'
 import {globals} from './utils'
 
 /* eslint-disable no-new */
@@ -11,13 +11,13 @@ Vue.use(Vuex)
 const cardManager = new CardManager()
 
 function disableReleaseDice (state) {
-	if ((!state.options.releases || state.options.releases.indexOf(5) === -1) &&
-			state.options.dice && state.options.dice.indexOf('divine') > -1) {
-		state.options.dice.splice(state.options.dice.indexOf('divine'), 1)
-	}
-	if ((!state.options.releases || state.options.releases.indexOf(6) === -1) &&
-			state.options.dice && state.options.dice.indexOf('sympathy') > -1) {
-		state.options.dice.splice(state.options.dice.indexOf('sympathy'), 1)
+	if (!state.options.releases || state.options.releases.indexOf('expansions') === -1) {
+		if (state.options.dice && state.options.dice.indexOf('divine') > -1) {
+			state.options.dice.splice(state.options.dice.indexOf('divine'), 1)
+		}
+		if (state.options.dice && state.options.dice.indexOf('sympathy') > -1) {
+			state.options.dice.splice(state.options.dice.indexOf('sympathy'), 1)
+		}
 	}
 }
 
@@ -44,21 +44,14 @@ const cardTypeOrder = [
 	'Ready Spell', 'Ally', 'Alteration Spell', 'Action Spell', 'Reaction Spell'
 ]
 
-let defaultReleases = globals.releaseData['core']
+let defaultReleases = ['core']
 let deckPhoenixborn = null
 if (globals.deck) {
 	deckPhoenixborn = cardManager.cardById(globals.deck.phoenixborn)
 	if (deckPhoenixborn.release > 100) {
-		defaultReleases = concat(
-			defaultReleases,
-			globals.releaseData['expansions'],
-			globals.releaseData['promos']
-		)
+		defaultReleases = ['core', 'expansions', 'promos']
 	} else if (deckPhoenixborn.release > 0) {
-		defaultReleases = concat(
-			defaultReleases,
-			globals.releaseData['expansions']
-		)
+		defaultReleases = ['core', 'expansions']
 	}
 }
 
@@ -80,6 +73,23 @@ function storeGetAll () {
 	const stashed = window.localStorage.getItem(storageOptionsKey)
 	const options = stashed ? JSON.parse(stashed) : {}
 	return options
+}
+
+// Upgrade our stored releases (if any); we used to store the numeric IDs, but this destroys the
+// ability to see new expansions when they are added to the site
+const oldReleases = storeGet('releases')
+if (oldReleases && isInteger(oldReleases[0])) {
+	let releases = []
+	if (oldReleases.indexOf(0) > -1) {
+		releases.push('core')
+	}
+	if (oldReleases.indexOf(1) > -1) {
+		releases.push('expansions')
+	}
+	if (oldReleases.indexOf(101) > -1) {
+		releases.push('promos')
+	}
+	storeSet('releases', releases)
 }
 
 export default new Vuex.Store({
@@ -312,33 +322,18 @@ export default new Vuex.Store({
 		setTypes (state, types) {
 			state.options.types = types
 		},
-		toggleRelease (state, releaseNumber) {
+		toggleReleases (state, releasesKey) {
 			if (state.options.releases === null) {
-				state.options.releases = [releaseNumber]
-			} else if (state.options.releases.indexOf(releaseNumber) > -1) {
-				state.options.releases.splice(state.options.releases.indexOf(releaseNumber), 1)
-				disableReleaseDice(state)
-			} else {
-				state.options.releases.push(releaseNumber)
-			}
-			storeSet('releases', state.options.releases)
-		},
-		toggleReleases (state, releases) {
-			if (state.options.releases === null) {
-				state.options.releases = releases
-			} else {
-				for (let release of releases) {
-					if (state.options.releases.indexOf(release) > -1) {
-						state.options.releases.splice(state.options.releases.indexOf(release), 1)
-					} else {
-						state.options.releases.push(release)
-					}
-				}
+				state.options.releases = [releasesKey]
+			} else if (state.options.releases.indexOf(releasesKey) > -1) {
+				state.options.releases.splice(state.options.releases.indexOf(releasesKey), 1)
 				disableReleaseDice(state)
 				// Disallow a completely empty list by defaulting to showing the core set
 				if (!state.options.releases.length) {
-					state.options.releases = [0]
+					state.options.releases = ['core']
 				}
+			} else {
+				state.options.releases.push(releasesKey)
 			}
 			storeSet('releases', state.options.releases)
 		},

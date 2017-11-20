@@ -42,6 +42,14 @@ function attributeSort (a, b, primarySort, primaryOrder, secondarySort, secondar
 	return b[primarySort] < a[primarySort] ? primaryOrder : -primaryOrder
 }
 
+function releasesToIds (releases) {
+	let ids = []
+	for (let releasesKey of releases) {
+		ids = ids.concat(globals.releaseData[releasesKey])
+	}
+	return ids
+}
+
 /**
  * Offers interface for sorting, filtering, and selecting
  * card JSON.
@@ -72,7 +80,7 @@ export default class {
 	cardListing (callback, {
 		search = null,
 		types = null,
-		releases = [0],
+		releases = ['core'],
 		dice = null,
 		diceLogic = 'or',
 		phoenixborn = null,
@@ -81,11 +89,13 @@ export default class {
 		secondarySort = null,
 		secondaryOrder = 1
 	} = {}) {
+		const releaseIds = releasesToIds(releases)
 		if (search) {
 			qwest.post('/api/cards/search', {
 				search: search,
 				types: types,
-				releases: releases,
+				releases: releaseIds,
+				// TODO: this will not work until I implement split dice on Python side
 				dice: dice,
 				diceLogic: diceLogic,
 				phoenixborn: phoenixborn
@@ -119,7 +129,7 @@ export default class {
 					(!includes(types, 'summon') || !startsWith(card.name, 'Summon'))) {
 				return false
 			}
-			if (releases && releases.length && !releases.includes(card.release)) {
+			if (releaseIds && releaseIds.length && !releaseIds.includes(card.release)) {
 				return false
 			}
 			if (dice && dice.length) {
