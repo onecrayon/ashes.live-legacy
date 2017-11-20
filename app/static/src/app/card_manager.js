@@ -95,7 +95,6 @@ export default class {
 				search: search,
 				types: types,
 				releases: releaseIds,
-				// TODO: this will not work until I implement split dice on Python side
 				dice: dice,
 				diceLogic: diceLogic,
 				phoenixborn: phoenixborn
@@ -135,7 +134,7 @@ export default class {
 			if (dice && dice.length) {
 				if (diceLogic === 'and') {
 					for (const die of dice) {
-						if (!includes(card.dice, die)) {
+						if (!includes(card.dice, die) && !includes(card.splitDice, die)) {
 							return false
 						}
 					}
@@ -144,6 +143,16 @@ export default class {
 						if (!includes(dice, die)) {
 							return false
 						}
+					}
+				} else if (card.splitDice && card.splitDice.length) {
+					let oneSplitMatch = false
+					for (const die of card.splitDice) {
+						if (includes(dice, die)) {
+							oneSplitMatch = true
+						}
+					}
+					if (!oneSplitMatch) {
+						return false
 					}
 				} else if (!includes(dice, 'basic')) {
 					// Card doesn't have any dice associated with it,
