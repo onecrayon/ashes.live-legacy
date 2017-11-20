@@ -174,9 +174,9 @@ if (files) {
 					parseCostsToDiceTypes(card.cost, diceTypes, splitTypes)
 					// Calculate cost weighting
 					var cardWeight = 0
-					card.cost.forEach(function (cost) {
+					card.cost.forEach(function (cost, index) {
 						var costMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]$/),
-							splitCostMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]\s*\/\s*$/)
+							splitCostMatch = cost.match(/^(\d*)\s*\[\[([a-z:]+)\]\]\s*\/\s*(\d*)\s*\[\[([a-z:]+)\]\]$/)
 						if (!costMatch && !splitCostMatch) {
 							return
 						}
@@ -189,6 +189,9 @@ if (files) {
 							cardWeight += (weight < weight2 ? weight : weight2)
 						} else {
 							cardWeight += weight
+						}
+						if (splitCostMatch) {
+							card.cost[index] = cost.split(' / ')
 						}
 					})
 					card.weight = cardWeight
