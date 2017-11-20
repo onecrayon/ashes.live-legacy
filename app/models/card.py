@@ -51,15 +51,22 @@ class Card(db.Model):
     def has_any_dice_filter(dice):
         if not dice:
             dice = ['basic']
-        return db.or_(
-            *[Card.dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice]
-        )
+        filters = [
+            Card.dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice
+        ] + [
+            Card.split_dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice
+        ]
+        return db.or_(*filters)
     
     @staticmethod
     def has_all_dice_filter(dice):
         flags = Card.dice_to_flags(dice)
+        filters = [db.or_(
+            Card.dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value,
+            Card.split_dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value
+        ) for die in dice]
         return db.and_(
-            Card.dice_flags.op('&')(flags) == flags
+            *filters
         )
 
 
