@@ -16,7 +16,7 @@
 				></ul
 			></div>
 		</li>
-		<li v-else v-for="(effect, effect_index) of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '']"
+		<li v-else v-for="(effect, effect_index) of card.text" :class="[effect.inexhaustible ? 'inexhaustible' : '', effect.betweenRealms ? 'between-realms' : '']"
 				:key="card.id + '-effect-' + effect_index">
 			<strong v-if="effect.name" :title="effectTextTooltip(effect)" :class="{tooltip: !!effectTextTooltip(effect)}">
 				{{ effect.name }}</strong

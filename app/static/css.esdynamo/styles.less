@@ -17,6 +17,8 @@
 @color-white: #fff;
 @color-inexhaustible: #f7f5e8;
 @color-inexhaustible-dark: #8d7b53;
+@color-between-realms: #ecf1f4;
+@color-between-realms-dark: #a3c4d3;
 @color-link: #2770c1;
 @color-error: #b00000;
 @color-warning: #b05000;
@@ -564,6 +566,45 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 }
 
 .inexhaustible + .inexhaustible:before {
+	background: none;
+	width: 0;
+	height: 0;
+}
+
+.between-realms {
+	background: @color-between-realms;
+	border: 1px solid @color-between-realms-dark;
+	padding: 5px;
+	position: relative;
+
+	& + li {
+		margin-top: 5px;
+	}
+
+	& + .between-realms {
+		border-top: none;
+		margin-top: 0;
+		top: -6px;
+		margin-bottom: -6px;
+	}
+
+	&:last-of-type {
+		margin-bottom: 5px;
+	}
+}
+
+li + .between-realms:before, .between-realms:first-of-type:before {
+	content: '';
+	background: url('../images/icon-between.png') no-repeat left top;
+	width: 19px;
+	height: 11px;
+	position: absolute;
+	top: -6px;
+	left: 50%;
+	margin-left: -10px;
+}
+
+.between-realms + .between-realms:before {
 	background: none;
 	width: 0;
 	height: 0;
