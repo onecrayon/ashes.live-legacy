@@ -157,6 +157,27 @@ a.error {
 
 .costs {
 	.divided-list(~'.cost');
+
+	.parallel-costs .cost {
+		background: none;
+		position: relative;
+
+		&:after {
+			content: '';
+			height: 2px;
+			width: 7px;
+			border-top: 2px solid @color-mid-gray;
+			border-bottom: 2px solid @color-mid-gray;
+			position: absolute;
+			right: -1px;
+			top: 50%;
+			margin-top: -2px;
+		}
+
+		&:last-of-type:after {
+			display: none;
+		}
+	}
 }
 
 .divider {
@@ -1223,6 +1244,32 @@ li + .inexhaustible:before, .inexhaustible:first-of-type:before {
 				padding: 0;
 				margin: 0;
 				background: none;
+			}
+
+			.parallel-costs .cost {
+				display: block;
+				padding: 0 0 7px;
+
+				&:after {
+					content: '';
+					height: 7px;
+					width: 2px;
+					border: none;
+					border-left: 2px solid @color-mid-gray;
+					border-right: 2px solid @color-mid-gray;
+					top: auto;
+					right: 7px;
+					bottom: 0px;
+					margin-left: -3px;
+				}
+		
+				&:last-of-type {
+					padding: 0;
+
+					&:after {
+						display: none;
+					}
+				}
 			}
 		}
 	}

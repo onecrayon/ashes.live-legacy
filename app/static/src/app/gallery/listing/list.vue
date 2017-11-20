@@ -24,7 +24,12 @@
 			</div>
 			<ol class="costs">
 				<li v-for="cost of card.cost" class="cost">
-					<card-codes :content="cost"></card-codes>
+					<span v-if="isArray(cost)" class="parallel-costs">
+						<span v-for="splitCost of cost" class="cost">
+							<card-codes :content="splitCost"></card-codes>
+						</span>
+					</span>
+					<card-codes v-else :content="cost"></card-codes>
 				</li>
 			</ol>
 		</li>
@@ -32,7 +37,7 @@
 </template>
 
 <script>
-	import {startsWith} from 'lodash'
+	import {isArray, startsWith} from 'lodash'
 	import {assetPath, typeToFontAwesome} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
@@ -54,6 +59,7 @@
 			}
 		},
 		methods: {
+			isArray,
 			startsWith,
 			assetPath,
 			typeToFontAwesome,
