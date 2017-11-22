@@ -284,10 +284,11 @@ export default new Vuex.Store({
 		diceToFilters (state) {
 			state.options.diceLogic = 'or'
 			let activeDice = ['basic']
+			const showingExpansions = state.options.releases.indexOf('expansions') > -1
 			for (let dieType of Object.keys(state.deck.dice)) {
 				if (state.deck.dice[dieType] &&
-						(dieType !== 'divine' || state.options.releases.indexOf(5) > -1) &&
-						(dieType !== 'sympathy' || state.options.releases.indexOf(6) > -1)) {
+						(dieType !== 'divine' || showingExpansions) &&
+						(dieType !== 'sympathy' || showingExpansions)) {
 					activeDice.push(dieType)
 				}
 			}
