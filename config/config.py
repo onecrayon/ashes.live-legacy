@@ -9,7 +9,7 @@ LOCAL_TZ = 'America/Los_Angeles'
 ### Environment-specific ###
 
 # Site root URL; no trailing slash
-SITE_URL = 'http://ashes.live'
+SITE_URL = 'https://ashes.live'
 # Root CDN URL; no trailing slash (leave empty for locally-hosted resources)
 CDN_URL = ''
 
