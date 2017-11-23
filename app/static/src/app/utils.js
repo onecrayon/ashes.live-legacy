@@ -39,13 +39,26 @@ function typeToFontAwesome (cardType) {
 	return 'fa-question-circle'
 }
 
-// Lodash `get` fails for some reason in production builds, so...
+// Lodash `get` fails in production builds due to removing extraneous lodash methods, so...
 function getFromObject (obj, path) {
 	for (let i = 0, parts = path.split('.'), len = parts.length; i < len; i++) {
 		obj = obj[parts[i]]
 		if (obj === undefined) break
 	}
 	return obj
+}
+
+function objectValues (obj) {
+	if (Object.values) {
+		return Object.values(obj)
+	}
+	let values = []
+	for (var key in obj) {
+		if (obj.propertyIsEnumerable(key)) {
+			values.push(obj[key]);
+		}
+	}
+	return vals;
 }
 
 export {
@@ -58,5 +71,6 @@ export {
 	assetPath,
 	typeToFontAwesome,
 	getFromObject,
+	objectValues,
 	notify
 }
