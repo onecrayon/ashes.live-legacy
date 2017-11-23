@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import CardManager from './card_manager'
-import {isInteger, merge, reduce} from 'lodash'
+import {isInteger, merge, reduce, values} from 'lodash'
 import {globals} from './utils'
 
 /* eslint-disable no-new */
@@ -133,7 +133,7 @@ export default new Vuex.Store({
 		},
 		totalDice (state) {
 			let totalDice = 0
-			const values = Object.values(state.deck.dice)
+			const values = values(state.deck.dice)
 			for (let value of values) {
 				totalDice += value
 			}
@@ -141,7 +141,7 @@ export default new Vuex.Store({
 		},
 		totalCards (state) {
 			let totalCards = 0
-			const values = Object.values(state.deck.cards)
+			const values = values(state.deck.cards)
 			for (let value of values) {
 				totalCards += value
 			}
