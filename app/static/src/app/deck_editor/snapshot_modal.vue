@@ -24,6 +24,13 @@
 			</div>
 		</div>
 		<div v-else>
+			<h3><card-link :card="phoenixborn"></card-link></h3>
+			<ul class="dice">
+				<li v-for="(die, index) of diceList" :key="index"
+						class="die" :class="[die ? die : 'basic']">
+					<span :class="'phg-' + (die ? die + '-power' : 'basic-magic')"></span>
+				</li>
+			</ul>
 			<deck-listing view-only="true"></deck-listing>
 		</div>
 
@@ -40,12 +47,14 @@
 
 <script>
 	import qwest from 'qwest'
+	import CardLink from 'app/components/card_link.vue'
 	import DeckListing from 'app/components/deck_listing.vue'
 	import Modal from 'app/components/modal.vue'
 	import {notify} from 'app/utils'
 
 	export default {
 		components: {
+			'card-link': CardLink,
 			'deck-listing': DeckListing,
 			'modal': Modal,
 		},
@@ -53,31 +62,33 @@
 		data () {
 			return {
 				'activeTab': 'meta',
-				'_title': null,
-				'_description': null
+				'title': null,
+				'description': null
 			}
 		},
 		computed: {
-			title: {
-				get () {
-					if (this._title || this._title === '') return this._title
-					return this.$store.state.deck.title
-				},
-				set (value) {
-					this._title = value
-				}
-			},
 			untitledText () {
 				return this.$store.getters.untitledText
 			},
-			description: {
-				get () {
-					if (this._description || this._description === '') return this._description
-					return this.$store.state.deck.description
-				},
-				set (value) {
-					this._description = value
+			diceList () {
+				let diceArray = new Array(10)
+				let nextIndex = 0
+				for (let dieType of Object.keys(this.$store.state.deck.dice)) {
+					const numDice = this.$store.state.deck.dice[dieType]
+					const maxIndex = nextIndex + numDice
+					while (nextIndex < maxIndex && nextIndex < 10) {
+						diceArray[nextIndex] = dieType
+						nextIndex++
+					}
 				}
+				while (nextIndex < 10) {
+					diceArray[nextIndex] = null
+					nextIndex++
+				}
+				return diceArray
+			},
+			phoenixborn () {
+				return this.$store.getters.phoenixborn
 			}
 		},
 		watch: {
@@ -85,8 +96,8 @@
 				if (value) {
 					// Reset everything
 					this.activeTab = 'meta'
-					this._title = null
-					this._description = null
+					this.title = this.$store.state.deck.title
+					this.description = this.$store.state.deck.description
 					this.$nextTick(() => {
 						this.$refs.title.focus()
 					})
@@ -95,16 +106,8 @@
 		},
 		methods: {
 			saveSnapshot () {
-				let title = this._title
-				if (title === '') {
-					title = this.untitledText
-				} else if (!title) {
-					title = this.$store.state.deck.title
-				}
-				let description = this._description
-				if (!description && description !== '') {
-					description = this.$store.state.deck.description
-				}
+				const title = this.title || this.untitledText
+				const description = this.description || ''
 				qwest.post(
 					'/api/decks/snapshot',
 					{
