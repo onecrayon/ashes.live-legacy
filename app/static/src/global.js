@@ -1,6 +1,7 @@
 import Noty from 'noty'
 import tippy from 'tippy.js'
 import {escape} from 'lodash'
+import * as POLYFILLS from './polyfills'
 
 var globals = window.globals || {}
 
