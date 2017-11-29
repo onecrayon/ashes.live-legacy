@@ -1,7 +1,5 @@
 // Polyfills
-import 'core-js/es6/symbol'
-import 'core-js/fn/array/from'
-import 'core-js/fn/object/values'
+import 'babel-polyfill'
 // Normal imports
 import Noty from 'noty'
 import tippy from 'tippy.js'
