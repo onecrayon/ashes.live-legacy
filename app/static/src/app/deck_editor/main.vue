@@ -1,11 +1,19 @@
 <template>
-	<div id="editor-meta">
-		<div class="deck-header">
-			<div class="input-group">
-				<div class="form-field">
-					<input v-model="title" :disabled="!phoenixborn" type="text" :placeholder="untitledText">
+	<div id="editor-meta" :class="{active: editorOpen}">
+		<div class="deck-header responsive-cols">
+			<div class="col mobile-only">
+				<button @click="editorOpen = !editorOpen" class="btn btn-default">
+					<i class="fa" :class="'fa-angle-double-' + (editorOpen ? 'down' : 'up')"
+						title="Expand deck listing"></i>
+				</button>
+			</div>
+			<div class="col-flex">
+				<div class="input-group">
+					<div class="form-field">
+						<input v-model="title" :disabled="!phoenixborn" type="text" :placeholder="untitledText">
+					</div>
+					<button @click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 				</div>
-				<button @click="save" :disabled="!phoenixborn" class="btn btn-primary">Save</button>
 			</div>
 		</div>
 		<div v-if="!phoenixborn">
@@ -52,7 +60,7 @@
 				</div>
 				<div class="col">
 					<button class="btn btn-small" @click="setDiceFilters" :disabled="diceEmpty">
-						Set Dice Filter <i class="fa fa-arrow-right"></i>
+						Set Dice Filter <i class="fa fa-arrow-right desktop-only"></i>
 					</button>
 				</div>
 			</div>
@@ -122,7 +130,8 @@
 				showDeleteModal: false,
 				showExportModal: false,
 				showSnapshotModal: false,
-				createPublicSnapshot: false
+				createPublicSnapshot: false,
+				editorOpen: false
 			}
 		},
 		computed: {
@@ -198,6 +207,7 @@
 			setDiceFilters () {
 				this.$store.commit('diceToFilters')
 				this.$store.commit('filterCards')
+				this.editorOpen = false
 			},
 			save () {
 				qwest.post(

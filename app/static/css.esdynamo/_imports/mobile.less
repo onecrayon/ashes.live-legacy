@@ -1,0 +1,45 @@
+// Deck builder filters and sidebar start to break at 900px
+@media only screen and (max-width : 900px) {
+	.mobile-only {
+		display: block;
+	}
+
+	.desktop-only {
+		display: none;
+	}
+
+	.form-field {
+		max-width: 100%;
+	}
+
+	#editor-meta {
+		background: @color-white;
+		box-shadow: 0 0 3px @color-black;
+		box-sizing: border-box;
+		height: 54px;
+		width: 100%;
+		padding: 10px 20px;
+		position: fixed;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		overflow: hidden;
+		z-index: 200;
+
+		transition: height .3s ease;
+
+		&.active {
+			height: 100%;
+			overflow: auto;
+		}
+
+		.mobile-only .btn {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+	}
+
+	.deckbuilder #footer {
+		padding-bottom: 74px;
+	}
+}

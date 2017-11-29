@@ -140,6 +140,10 @@ a.error {
 	float: left;
 }
 
+.mobile-only {
+	display: none;
+}
+
 .username {
 	border: 1px solid @color-mid-gray;
 	background: tint(@color-mid-gray, 80%);
@@ -1069,8 +1073,12 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
-.deck-header .input-group {
+.deck-header {
 	margin-bottom: 10px;
+	
+	.input-group {
+		margin-bottom: 0;
+	}
 }
 
 .phoenixborn-header {
@@ -1733,3 +1741,5 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 }
 
 /* @end */
+
+@import "_imports/mobile";
