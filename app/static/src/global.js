@@ -1,7 +1,11 @@
+// Polyfills
+import 'core-js/es6/symbol'
+import 'core-js/fn/array/from'
+import 'core-js/fn/object/values'
+// Normal imports
 import Noty from 'noty'
 import tippy from 'tippy.js'
 import {escape} from 'lodash'
-import * as POLYFILLS from './polyfills'
 
 var globals = window.globals || {}
 
