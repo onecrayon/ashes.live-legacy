@@ -48,19 +48,6 @@ function getFromObject (obj, path) {
 	return obj
 }
 
-function objectValues (obj) {
-	if (Object.values) {
-		return Object.values(obj)
-	}
-	let values = []
-	for (var key in obj) {
-		if (obj.propertyIsEnumerable(key)) {
-			values.push(obj[key]);
-		}
-	}
-	return vals;
-}
-
 export {
 	globals,
 	cardUrl,
@@ -71,6 +58,5 @@ export {
 	assetPath,
 	typeToFontAwesome,
 	getFromObject,
-	objectValues,
 	notify
 }

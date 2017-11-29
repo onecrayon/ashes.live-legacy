@@ -1,3 +1,6 @@
+// Polyfills
+import 'babel-polyfill'
+// Normal imports
 import Noty from 'noty'
 import tippy from 'tippy.js'
 import {escape} from 'lodash'
