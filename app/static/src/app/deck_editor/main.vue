@@ -196,6 +196,7 @@
 				this.$store.commit('setTypes', ['Phoenixborn'])
 				this.$store.commit('setPhoenixborn', null)
 				this.$store.commit('filterCards')
+				this.editorOpen = false
 			},
 			clearDie (die) {
 				if (!die) return
