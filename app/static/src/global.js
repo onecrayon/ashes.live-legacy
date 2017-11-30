@@ -114,7 +114,7 @@ globals.initCardPopups = function (target) {
 	const tip = tippy(target, {
 		delay: 250,
 		html: '#card-detail-popup',
-		onShow: function () {
+		onShow () {
 			// `this` inside callbacks refers to the popper element
 			const reference = tip.getReferenceElement(this)
 			const imgUrl = reference.href.replace(/^(?:.*?)(\/cards\/.+?)\/?$/i, (_, url) => {
@@ -122,6 +122,14 @@ globals.initCardPopups = function (target) {
 			})
 			const content = this.querySelector('.card-holder')
 			content.innerHTML = '<img src="' + imgUrl + '" alt="' + reference.textContent + '" />'
+		},
+		onShown () {
+			const reference = tip.getReferenceElement(this)
+			reference.setAttribute('data-touch-active', '1')
+		},
+		onHidden () {
+			const reference = tip.getReferenceElement(this)
+			reference.removeAttribute('data-touch-active')
 		}
 	})
 	return tip
