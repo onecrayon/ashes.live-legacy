@@ -2,7 +2,7 @@
 	<div id="editor-meta" :class="{active: editorOpen}">
 		<div class="deck-header responsive-cols">
 			<div class="col mobile-only">
-				<button @click="editorOpen = !editorOpen" class="btn btn-default">
+				<button @click="toggleEditorPane()" class="btn btn-default">
 					<i class="fa" :class="'fa-angle-double-' + (editorOpen ? 'down' : 'up')"
 						title="Expand deck listing"></i>
 				</button>
@@ -196,7 +196,7 @@
 				this.$store.commit('setTypes', ['Phoenixborn'])
 				this.$store.commit('setPhoenixborn', null)
 				this.$store.commit('filterCards')
-				this.editorOpen = false
+				this.toggleEditorPane(false)
 			},
 			clearDie (die) {
 				if (!die) return
@@ -208,7 +208,7 @@
 			setDiceFilters () {
 				this.$store.commit('diceToFilters')
 				this.$store.commit('filterCards')
-				this.editorOpen = false
+				this.toggleEditorPane(false)
 			},
 			save () {
 				qwest.post(
@@ -239,6 +239,10 @@
 			closeSnapshotModal () {
 				this.showSnapshotModal = false
 				this.createPublicSnapshot = false
+			},
+			toggleEditorPane (isOpen) {
+				this.editorOpen = (isOpen === undefined ? !this.editorOpen : isOpen)
+				document.body.style.overflow = (this.editorOpen ? 'hidden' : 'auto')
 			}
 		}
 	}
