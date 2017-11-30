@@ -113,6 +113,7 @@ globals.initCardPopups = function (target) {
 	// Setup card hover tooltips
 	const tip = tippy(target, {
 		delay: 250,
+		position: 'left',
 		html: '#card-detail-popup',
 		onShow () {
 			// `this` inside callbacks refers to the popper element
