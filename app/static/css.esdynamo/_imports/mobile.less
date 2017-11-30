@@ -1,4 +1,24 @@
-// Deck builder filters and sidebar start to break at 900px
+// Help/feedback badge starts overlapping stuff at 1470px
+@media only screen and (max-width : 1470px) {
+	.help-badge {
+		right: 0px;
+		border-right: none;
+		border-radius: 0 0 0 5px;
+
+		.full-display-only {
+			display: none;
+		}
+	}
+}
+
+// Help/feedback starts overlapping again around 1160px
+@media only screen and (max-width : 1160px) {
+	#header .trailing-link {
+		padding-right: 20px;
+	}
+}
+
+// Deck builder sidebar starts to break at 900px
 @media only screen and (max-width : 900px) {
 	.mobile-only {
 		display: block;
@@ -37,9 +57,59 @@
 			padding-top: 5px;
 			padding-bottom: 5px;
 		}
+
+		.dice .die {
+			.font-size(24);
+			.line-height(36);
+			border-radius: 5px;
+			height: 36px;
+			width: 36px;
+		}
 	}
 
 	.deckbuilder #footer {
 		padding-bottom: 74px;
+	}
+}
+
+// Card type filters start to break at 720px
+@media only screen and (max-width : 720px) {
+	.secondary-filters .full-display-only {
+		display: none;
+	}
+}
+
+// Header starts to break at 660px
+@media only screen and (max-width : 660px) {
+	#header {
+		ul {
+			.mixin-flex-wrap(wrap);
+		}
+
+		.home-link {
+			order: 1;
+			width: 100%;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		.leading-link {
+			order: 2;
+			padding-right: 0;
+		}
+	}
+}
+
+// Filters and header start to break at 560px
+@media only screen and (max-width : 560px) {
+	.tabular-listing .stats-col {
+		display: none;
+	}
+}
+
+// Header links start breaking around 510px
+@media only screen and (max-width : 510px) {
+	.secondary-nav .full-display-only {
+		display: none;
 	}
 }
