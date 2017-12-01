@@ -103,6 +103,7 @@
 
 <script>
 	import qwest from 'qwest'
+	import Nanobar from 'app/nanobar'
 	import TextEditor from 'app/components/text_editor.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import DeckListing from 'app/components/deck_listing.vue'
@@ -211,6 +212,7 @@
 				this.toggleEditorPane(false)
 			},
 			save () {
+				const nano = new Nanobar({ autoRun: true })
 				qwest.post(
 					'/api/decks/' + (this.$store.state.deck.id || ''),
 					this.$store.state.deck,
@@ -227,6 +229,8 @@
 						this.$store.commit('setId', response.data.id)
 						history.pushState(null, 'Deck saved!', '/decks/build/' + response.data.id + '/')
 					}
+				}).complete(() => {
+					nano.go(100)
 				})
 			},
 			newSnapshot (isPublic) {

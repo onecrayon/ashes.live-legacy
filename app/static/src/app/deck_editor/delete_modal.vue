@@ -14,6 +14,7 @@
 <script>
 	import qwest from 'qwest'
 	import Modal from 'app/components/modal.vue'
+	import Nanobar from 'app/nanobar'
 
 	export default {
 		components: {
@@ -25,8 +26,11 @@
 				this.$emit('close')
 			},
 			confirmDelete () {
+				const nano = new Nanobar({ autoRun: true })
 				qwest.delete('/api/decks/' + this.$store.state.deck.id).then(() => {
 					window.location.href = '/decks/mine/'
+				}).complete(() => {
+					nano.go(100)
 				})
 			}
 		}

@@ -47,6 +47,7 @@
 
 <script>
 	import qwest from 'qwest'
+	import Nanobar from 'app/nanobar'
 	import CardLink from 'app/components/card_link.vue'
 	import DeckListing from 'app/components/deck_listing.vue'
 	import Modal from 'app/components/modal.vue'
@@ -108,6 +109,7 @@
 			saveSnapshot () {
 				const title = this.title || this.untitledText
 				const description = this.description || ''
+				const nano = new Nanobar({ autoRun: true })
 				qwest.post(
 					'/api/decks/snapshot',
 					{
@@ -130,6 +132,8 @@
 						notify(response.success, 'success')
 					}
 					this.close()
+				}).complete(() => {
+					nano.go(100)
 				})
 			},
 			close () {
