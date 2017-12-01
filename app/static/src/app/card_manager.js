@@ -1,4 +1,5 @@
 import qwest from 'qwest'
+import Nanobar from 'app/nanobar'
 import {globals} from './utils'
 import {filter, includes, isEqual, reduce, startsWith} from 'lodash'
 
@@ -91,6 +92,7 @@ export default class {
 	} = {}) {
 		const releaseIds = releasesToIds(releases)
 		if (search) {
+			const nano = new Nanobar({ autoRun: true })
 			qwest.post('/api/cards/search', {
 				search: search,
 				types: types,
@@ -106,6 +108,8 @@ export default class {
 			}).catch(function (error, xhr, response) {
 				console.log('Failure!', response)
 				callback(null)
+			}).complete(() => {
+				nano.go(100)
 			})
 			return
 		}
