@@ -11,9 +11,6 @@ import os.path
 from alembic import op
 import sqlalchemy as sa
 
-from app import db
-from app.models.card import Card
-
 
 # revision identifiers, used by Alembic.
 revision = 'c0b05d2841bf'
@@ -34,36 +31,47 @@ def upgrade():
             if 'name' in effect:
                 card_text.append(effect['name'])
             card_text.append(effect['text'].replace('[[', '').replace(']]', ''))
-        update_map[card['name']] = {
+        update_map[card['stub']] = {
             'cost_weight': card.get('weight', 0),
             'text': ' '.join(card_text),
             'json_data': card
         }
     # Gather all cards and update image paths, is_summon_spell, and errata (if any)
-    cards = Card.query.options(db.joinedload('conjurations')).all()
+    connection = op.get_bind()
+    cards = connection.execute(
+        'SELECT card.*, COUNT(conj.id) AS conjuration_count, '
+        'GROUP_CONCAT(conj.stub SEPARATOR \',\') AS conjuration_stubs '
+        'FROM card AS card '
+        'LEFT OUTER JOIN card AS conj ON conj.summon_id = card.id '
+        'GROUP BY card.id'
+    ).fetchall()
     for card in cards:
-        json_data = json.loads(card.json)
-        if card.name in update_map:
-            card_update = update_map[card.name]
-            card.cost_weight = card_update['cost_weight']
-            card.text = card_update['text']
+        json_data = json.loads(card['json'])
+        updates = {}
+        if card['stub'] in update_map:
+            card_update = update_map[card['stub']]
+            updates['cost_weight'] = card_update['cost_weight']
+            updates['text'] = card_update['text']
             json_data.update(card_update['json_data'])
-        # NOTE: if reusing this logic, only check for the conjurations and startswith('Summon')!
-        # Otherwise we miss things like Summon Sleeping Widows
-        if card.card_type == 'Ready Spell' and len(card.conjurations) and card.name.startswith('Summon'):
-            card.is_summon_spell = True
+        if card['conjuration_count'] and card['name'].startswith('Summon'):
+            updates['is_summon_spell'] = True
         json_data['images'] = {
-            'full': '/images/cards/{}.png'.format(card.stub),
-            'compressed': '/images/cards/{}.jpg'.format(card.stub)
+            'full': '/images/cards/{}.png'.format(card['stub']),
+            'compressed': '/images/cards/{}.jpg'.format(card['stub'])
         }
-        thumbnail_path = '/images/cards/{}-slice.jpg'.format(
-            card.stub if not card.is_summon_spell else card.conjurations[0].stub
+        if updates.get('is_summon_spell') and card['conjuration_stubs']:
+            stubs = card['conjuration_stubs'].split(',')
+            thumbnail_path = '/images/cards/{}-slice.jpg'.format(stubs[0])
+        else:
+            thumbnail_path = '/images/cards/{}-slice.jpg'.format(card['stub'])
+        json_data['images']['thumbnail'] = thumbnail_path
+        updates['json'] = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
+        set_clause = ', '.join(['{key} = :{key}'.format(key=key) for key in iter(updates)])
+        updates['id'] = card['id']
+        connection.execute(
+            sa.text('UPDATE card SET {} WHERE id = :id'.format(set_clause)),
+            **updates
         )
-        real_image = os.path.realpath(os.path.join(my_dir, '../../app/static/', thumbnail_path.lstrip('/')))
-        if os.path.exists(real_image):
-            json_data['images']['thumbnail'] = thumbnail_path
-        card.json = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
-    db.session.commit()
 
 
 def downgrade():

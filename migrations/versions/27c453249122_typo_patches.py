@@ -11,9 +11,6 @@ import os.path
 from alembic import op
 import sqlalchemy as sa
 
-from app import db
-from app.models.card import Card
-
 
 # revision identifiers, used by Alembic.
 revision = '27c453249122'
@@ -23,41 +20,67 @@ depends_on = None
 
 
 def upgrade():
+    connection = op.get_bind()
     # "Change of Revenge", eh?
-    chant = Card.query.filter(Card.stub == 'change-of-revenge').first()
+    chant = connection.execute(
+        sa.text('SELECT id, json FROM card WHERE stub = :stub'),
+        stub='change-of-revenge'
+    ).fetchone()
     if chant:
-        chant_json = json.loads(chant.json)
-        chant.name = 'Chant of Revenge'
-        chant.stub = 'chant-of-revenge'
-        chant_json['name'] = chant.name
-        chant_json['stub'] = chant.stub
+        chant_json = json.loads(chant['json'])
+        chant_json['name'] = 'Chant of Revenge'
+        chant_json['stub'] = 'chant-of-revenge'
         chant_json['images']['full'] = '/images/cards/chant-of-revenge.png'
         chant_json['images']['compressed'] = '/images/cards/chant-of-revenge.jpg'
         chant_json['images']['thumbnail'] = '/images/cards/chant-of-revenge-slice.jpg'
-        chant.json = json.dumps(chant_json)
+        connection.execute(
+            sa.text('UPDATE card SET name = :name, stub = :stub, json = :json WHERE id = :id'),
+            name=chant_json['name'],
+            stub=chant_json['stub'],
+            json=json.dumps(chant_json, separators=(',', ':'), sort_keys=True),
+            id=chant['id']
+        )
     
-    # I forgot when I wrote my `is_summon_spell` logic that I considered this a summon spell
-    widows = Card.query.filter(
-        Card.stub == 'summon-sleeping-widows',
-        Card.is_summon_spell.is_(False)
-    ).first()
+    # I forgot when I wrote my original `is_summon_spell` logic that I considered this a summon
+    widows = connection.execute(
+        sa.text(
+            'SELECT id, json FROM card WHERE stub = :stub AND is_summon_spell = :is_summon_spell'
+        ),
+        stub='summon-sleeping-widows',
+        is_summon_spell=False
+    ).fetchone()
     if widows:
-        widows.is_summon_spell = True
-        widows_json = json.loads(widows.json)
+        widows_json = json.loads(widows['json'])
         widows_json['images']['thumbnail'] = '/images/cards/sleeping-widow-slice.jpg'
-        widows.json = json.dumps(widows_json)
+        connection.execute(
+            sa.text(
+                'UPDATE card SET is_summon_spell = :is_summon_spell, json = :json WHERE id = :id'
+            ),
+            is_summon_spell=True,
+            json=json.dumps(widows_json, separators=(',', ':'), sort_keys=True),
+            id=widows['id']
+        )
     
     # For some reason Summon Three-Eyed Owl is missing its thumbnail
-    owls = Card.query.filter(
-        Card.stub == 'summon-three-eyed-owl',
-        Card.is_summon_spell.is_(False)
-    ).first()
+    owls = connection.execute(
+        sa.text(
+            'SELECT id, json FROM card WHERE stub = :stub AND is_summon_spell = :is_summon_spell'
+        ),
+        stub='summon-three-eyed-owl',
+        is_summon_spell=False
+    ).fetchone()
     if owls:
-        owls.is_summon_spell = True
-        owls_json = json.loads(owls.json)
+        owls_json = json.loads(owls['json'])
         owls_json['images']['thumbnail'] = '/images/cards/three-eyed-owl-slice.jpg'
         owls_json['conjurations'] = ['Three-Eyed Owl']
-        owls.json = json.dumps(owls_json)
+        connection.execute(
+            sa.text(
+                'UPDATE card SET is_summon_spell = :is_summon_spell, json = :json WHERE id = :id'
+            ),
+            is_summon_spell=True,
+            json=json.dumps(owls_json, separators=(',', ':'), sort_keys=True),
+            id=owls['id']
+        )
     
     # Simple typos
     my_dir = os.path.dirname(os.path.realpath(__file__))
@@ -74,18 +97,20 @@ def upgrade():
             'text': ' '.join(card_text),
             'json_data': card
         }
-    cards = Card.query.filter(
-        Card.stub.in_(list(update_map.keys()))
-    ).all()
+    cards = connection.execute(
+        sa.text('SELECT id, stub, json FROM card WHERE stub IN :stubs'),
+        stubs=list(update_map.keys())
+    ).fetchall()
     for card in cards:
-        json_data = json.loads(card.json)
-        card_update = update_map[card.stub]
-        card.text = card_update['text']
+        json_data = json.loads(card['json'])
+        card_update = update_map[card['stub']]
         json_data.update(card_update['json_data'])
-        card.json = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
-
-    # And commit our fixes
-    db.session.commit()
+        connection.execute(
+            sa.text('UPDATE card SET text = :text, json = :json WHERE id = :id'),
+            text=card_update['text'],
+            json=json.dumps(json_data, separators=(',', ':'), sort_keys=True),
+            id=card['id']
+        )
 
 
 def downgrade():

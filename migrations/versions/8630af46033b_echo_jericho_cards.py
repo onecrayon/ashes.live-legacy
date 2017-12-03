@@ -11,7 +11,6 @@ import os.path
 from alembic import op
 import sqlalchemy as sa
 
-from app import db
 from app.models.card import Card
 
 
@@ -30,6 +29,24 @@ def upgrade():
         data = json.load(f)
     inserts = []
     stubs = []
+    # Create table stub so we can bulk_insert
+    card_table = sa.table(
+        'card',
+        sa.Column('id', sa.Integer, nullable=False, primary_key=True, autoincrement=True),
+        sa.Column('name', sa.String(length=25), nullable=False),
+        sa.Column('stub', sa.String(length=25), nullable=False),
+        sa.Column('release', sa.Integer, nullable=False),
+        sa.Column('card_type', sa.String(length=25), nullable=False),
+        sa.Column('cost_weight', sa.Integer, nullable=False),
+        sa.Column('text', sa.Text),
+        sa.Column('copies', sa.SmallInteger, nullable=True),
+        sa.Column('dice_flags', sa.Integer, nullable=False, server_default='0'),
+        sa.Column('split_dice_flags', sa.Integer, nullable=False, server_default='0'),
+        sa.Column('phoenixborn', sa.String(length=25), nullable=True),
+        # sa.Column('json', sa.Text),
+        # sa.Column('summon_id', sa.Integer, nullable=True),
+        # sa.Column('is_summon_spell', sa.Boolean, nullable=False, server_default='0'),
+    )
     for card in data:
         card_text = []
         for effect in card.get('text', []):
@@ -49,29 +66,47 @@ def upgrade():
             'phoenixborn': card.get('phoenixborn')
         })
         stubs.append(card['stub'])
-    op.bulk_insert(Card.__table__, inserts)
+    op.bulk_insert(card_table, inserts)
     # Gather all conjurations, and add image paths and IDs
-    cards = Card.query.filter(
-        Card.stub.in_(stubs)
-    ).order_by(Card.id.asc()).all()
+    connection = op.get_bind()
+    cards = connection.execute(
+        sa.text('SELECT id, name, stub, json FROM card WHERE stub IN :stubs ORDER BY id ASC'),
+        stubs=stubs
+    ).fetchall()
     card_data = iter(data)
     for card in cards:
         json_data = next(card_data)
-        json_data['id'] = card.id
-        for conjuration_name in json_data.get('conjurations', []):
-            conjuration = Card.query.filter(Card.name == conjuration_name).first()
-            card.conjurations.append(conjuration)
-        if len(card.conjurations) and card.name.startswith('Summon'):
-            card.is_summon_spell = True
+        json_data['id'] = card['id']
+        conjurations = json_data.get('conjurations', [])
+        first_conjuration_stub = None
+        for conjuration_name in conjurations:
+            conjuration = connection.execute(
+                sa.text('SELECT id, stub FROM card WHERE name = :name'),
+                name=conjuration_name
+            ).fetchone()
+            connection.execute(
+                sa.text('UPDATE card SET summon_id = :summon_id WHERE id = :id'),
+                summon_id=card['id'],
+                id=conjuration['id']
+            )
+            if not first_conjuration_stub:
+                first_conjuration_stub = conjuration['stub']
+        is_summon_spell = len(conjurations) and card['name'].startswith('Summon')
         json_data['images'] = {
-            'full': '/images/cards/{}.png'.format(card.stub),
-            'compressed': '/images/cards/{}.jpg'.format(card.stub),
+            'full': '/images/cards/{}.png'.format(card['stub']),
+            'compressed': '/images/cards/{}.jpg'.format(card['stub']),
             'thumbnail': '/images/cards/{}-slice.jpg'.format(
-                card.stub if not card.is_summon_spell else card.conjurations[0].stub
+                card['stub'] if not is_summon_spell else first_conjuration_stub
             )
         }
-        card.json = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
-    db.session.commit()
+        connection.execute(
+            sa.text(
+                'UPDATE card SET is_summon_spell = :is_summon_spell, json = :json WHERE id = :id'
+            ),
+            is_summon_spell=is_summon_spell,
+            json=json.dumps(json_data, separators=(',', ':'), sort_keys=True),
+            id=card['id']
+        )
 
 
 def downgrade():

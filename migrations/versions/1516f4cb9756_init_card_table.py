@@ -11,9 +11,6 @@ import os.path
 from alembic import op
 import sqlalchemy as sa
 
-from app import db
-from app.models.card import Card
-
 
 # revision identifiers, used by Alembic.
 revision = '1516f4cb9756'
@@ -92,20 +89,31 @@ def upgrade():
         })
     op.bulk_insert(card_table, inserts)
     # Gather all cards and update JSON, dice types, and conjurations
-    cards = Card.query.all()
+    connection = op.get_bind()
+    cards = connection.execute('SELECT id FROM card ORDER BY id ASC').fetchall()
     card_data = iter(data)
     for card in cards:
         json_data = next(card_data)
-        json_data['id'] = card.id
-        card.json = json.dumps(json_data, separators=(',', ':'), sort_keys=True)
-        # DISABLED: downstream update to Card model discards the usage of the Die model
-        # for die_stub in json_data.get('dice', []):
-        #     die = Die.query.filter(Die.stub == die_stub).first()
-        #     card.dice.append(die)
+        json_data['id'] = card['id']
+        connection.execute(
+            sa.text('UPDATE card SET json = :json_string WHERE id = :id'),
+            json_string=json.dumps(json_data, separators=(',', ':'), sort_keys=True),
+            id=card['id']
+        )
+        # DISABLED: downstream update to Card model discards the usage of the Die model,
+        # so I removed the code completely when I refactored migrations to decouple them from
+        # model definitions (otherwise this would be impossible to rebuild from scratch, which
+        # would prevent me from open sourcing it ever)
         for conjuration_name in json_data.get('conjurations', []):
-            conjuration = Card.query.filter(Card.name == conjuration_name).first()
-            card.conjurations.append(conjuration)
-    db.session.commit()
+            conjuration = connection.execute(
+                sa.text('SELECT id FROM card WHERE name = :name'),
+                name=conjuration_name
+            ).fetchone()
+            connection.execute(
+                sa.text('UPDATE card SET summon_id = :summon_id WHERE id = :id'),
+                summon_id=card['id'],
+                id=conjuration['id']
+            )
 
 
 def downgrade():

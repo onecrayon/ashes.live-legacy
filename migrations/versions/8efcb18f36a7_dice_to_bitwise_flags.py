@@ -10,7 +10,6 @@ import json
 from alembic import op
 import sqlalchemy as sa
 
-from app import db
 from app.models.card import Card
 
 # revision identifiers, used by Alembic.
@@ -42,12 +41,18 @@ def upgrade():
     op.drop_table('die')
 
     # Go through all cards and set their dice flags appropriately
-    cards = Card.query.all()
+    connection = op.get_bind()
+    cards = connection.execute('SELECT id, json FROM card').fetchall()
     for card in cards:
-        card_json = json.loads(card.json)
-        card.dice_flags = Card.dice_to_flags(card_json.get('dice'))
-        card.phoenixborn = card_json.get('phoenixborn')
-    db.session.commit()
+        card_json = json.loads(card['json'])
+        connection.execute(
+            sa.text(
+                'UPDATE card SET dice_flags = :dice_flags, phoenixborn = :phoenixborn WHERE id = :id'
+            ),
+            dice_flags=Card.dice_to_flags(card_json.get('dice')),
+            phoenixborn=card_json.get('phoenixborn'),
+            id=card['id']
+        )
 
 
 def downgrade():

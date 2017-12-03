@@ -10,9 +10,6 @@ import json
 from alembic import op
 import sqlalchemy as sa
 
-from app import db
-from app.models.card import Card
-
 
 # revision identifiers, used by Alembic.
 revision = '96ed10c9a962'
@@ -22,21 +19,27 @@ depends_on = None
 
 
 def upgrade():
-    cards = Card.query.filter(
-        Card.card_type.in_(['Conjuration', 'Conjured Alteration Spell'])
-    ).all()
+    connection = op.get_bind()
+    cards = connection.execute(
+        sa.text('SELECT id, stub, json FROM card WHERE card_type IN :card_types'),
+        card_types=['Conjuration', 'Conjured Alteration Spell']
+    ).fetchall()
     for card in cards:
-        card_json = json.loads(card.json)
-        if card.stub == 'masked-wolf':
+        card_json = json.loads(card['json'])
+        json_update = None
+        if card['stub'] == 'masked-wolf':
             # Masked Wolf is missing card copies (oversight from original import)
             card_json['copies'] = '5'
-            card.json = json.dumps(card_json)
         elif card.stub == 'winged-lioness':
             # And so is Winged Lioness...
             card_json['copies'] = '4'
-            card.json = json.dumps(card_json)
-        card.copies = int(card_json['copies'])
-    db.session.commit()
+        json_update = json.dumps(card_json, separators=(',', ':'), sort_keys=True)
+        connection.execute(
+            sa.text('UPDATE card SET copies = :copies, json = :json WHERE id = :id'),
+            copies=int(card_json['copies']),
+            json=json_update,
+            id=card['id']
+        )
 
 
 def downgrade():
