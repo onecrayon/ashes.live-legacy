@@ -109,12 +109,13 @@ globals.initTooltips = function (el) {
 	}
 }
 
-globals.initCardPopups = function (target) {
+globals.initCardPopups = function (els) {
 	// Setup card hover tooltips
-	const tip = tippy(target, {
+	const tip = tippy(els, {
 		delay: 250,
+		position: 'left',
 		html: '#card-detail-popup',
-		onShow: function () {
+		onShow () {
 			// `this` inside callbacks refers to the popper element
 			const reference = tip.getReferenceElement(this)
 			const imgUrl = reference.href.replace(/^(?:.*?)(\/cards\/.+?)\/?$/i, (_, url) => {
@@ -122,12 +123,36 @@ globals.initCardPopups = function (target) {
 			})
 			const content = this.querySelector('.card-holder')
 			content.innerHTML = '<img src="' + imgUrl + '" alt="' + reference.textContent + '" />'
+		},
+		onShown () {
+			const reference = tip.getReferenceElement(this)
+			reference.setAttribute('data-tooltip-active', '1')
+		},
+		onHidden () {
+			const reference = tip.getReferenceElement(this)
+			reference.removeAttribute('data-tooltip-active')
 		}
 	})
+	// Setup card link click events
+	for (const el of els) {
+		el.addEventListener('click', function (event) {
+			if (!this.getAttribute('data-tooltip-active')) {
+				event.preventDefault()
+				event.stopPropagation()
+				// Simulate a click event on the document to auto-close all other tooltips
+				document.dispatchEvent(new MouseEvent('click'))
+				// And show the current tooltip
+				tip.show(tip.getPopperElement(this))
+			}
+		})
+	}
 	return tip
 }
 // Init popups for statically-rendered content
-globals.initCardPopups('.card')
+const preExistingCards = Array.from(document.querySelectorAll('.card'))
+if (preExistingCards && preExistingCards.length) {
+	globals.initCardPopups(preExistingCards)
+}
 
 globals.notify = function(message, category) {
 	new Noty({

@@ -33,6 +33,10 @@ html {
 	font-family: "Open Sans", Helvetica, sans-serif;
 }
 
+body {
+	min-width: 480px;
+}
+
 h1, h2, h3, h4, h5, h6,
 p, ul, ol {
 	margin-top: 0;
@@ -138,6 +142,10 @@ a.error {
 
 .float-left {
 	float: left;
+}
+
+.mobile-only {
+	display: none;
 }
 
 .username {
@@ -1073,8 +1081,12 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
-.deck-header .input-group {
+.deck-header {
 	margin-bottom: 10px;
+	
+	.input-group {
+		margin-bottom: 0;
+	}
 }
 
 .phoenixborn-header {
@@ -1475,6 +1487,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 	td {
 		padding: 2px 5px;
+		vertical-align: top;
 
 		&.no-results {
 			padding: 40px 20px 20px;
@@ -1488,6 +1501,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 	.type-col {
 		text-align: center;
+		padding-top: 8px;
 	}
 
 	.qty-col, .type-col, .stats-col, .costs-col {
@@ -1501,12 +1515,14 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	.name-col {
 		text-align: left;
 		padding-left: 0;
+		vertical-align: middle;
 		// This forces this column to fill the available space
 		width: 99%;
 	}
 
 	.costs-col {
 		border-left: 1px solid @color-gray;
+		padding-top: 5px;
 	}
 
 	.qty-col {
@@ -1737,3 +1753,5 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 }
 
 /* @end */
+
+@import "_imports/mobile";

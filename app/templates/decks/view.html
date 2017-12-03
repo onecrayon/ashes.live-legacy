@@ -1,6 +1,7 @@
 {% from "macros.html" import usertag, hide_on_load %}
 {% extends "base.html" %}
 {% block title %}Deck: {{ deck | deck_title }}{% endblock %}
+{% block page_class %}sidebar-first{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-main-action">{{ deck | deck_title }}</h1>

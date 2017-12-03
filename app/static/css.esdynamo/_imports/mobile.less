@@ -1,0 +1,198 @@
+.mixin-mobile-content() {
+	#main {
+		.mixin-flex-wrap(wrap);
+	}
+
+	#content {
+		.mixin-flex(0 0 auto);
+		padding-right: 0;
+		width: 100%;
+	}
+	
+	#sidebar {
+		.mixin-flex(0 0 auto);
+		width: 100%;
+	}
+}
+
+.mixin-mobile-body-classes() {
+	&.sidebar-first {
+		#content {
+			.mixin-order(2);
+		}
+	
+		#sidebar {
+			.mixin-order(1);
+			padding-bottom: 10px;
+		}
+	}
+}
+
+// Help/feedback badge starts overlapping stuff at 1470px
+@media only screen and (max-width : 1470px) {
+	.help-badge {
+		right: 0px;
+		border-right: none;
+		border-radius: 0 0 0 5px;
+
+		.full-display-only {
+			display: none;
+		}
+	}
+}
+
+// Help/feedback starts overlapping again around 1160px
+@media only screen and (max-width : 1160px) {
+	#header .trailing-link {
+		padding-right: 20px;
+	}
+}
+
+// Deck builder and deck listing sidebars starts to break at 900px
+@media only screen and (max-width : 900px) {
+	.mobile-only {
+		display: block;
+	}
+
+	.desktop-only {
+		display: none;
+	}
+
+	.form-field {
+		max-width: 100%;
+	}
+
+	#editor-meta {
+		background: @color-white;
+		box-shadow: 0 0 3px @color-black;
+		box-sizing: border-box;
+		height: 54px;
+		width: 100%;
+		padding: 10px 20px;
+		position: fixed;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		overflow: hidden;
+		z-index: 200;
+
+		transition: height .3s ease;
+
+		&.active {
+			height: 100%;
+			overflow: auto;
+		}
+
+		.mobile-only .btn {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+
+		.dice .die {
+			.font-size(24);
+			.line-height(36);
+			border-radius: 5px;
+			height: 36px;
+			width: 36px;
+		}
+	}
+
+	.deck-listing {
+		.mixin-mobile-content();
+		.mixin-mobile-body-classes();
+	}
+
+	.deckbuilder #footer {
+		padding-bottom: 74px;
+	}
+}
+
+// Card type filters and homepage header start to break at 720px
+@media only screen and (max-width : 720px) {
+	.secondary-filters .full-display-only {
+		display: none;
+	}
+
+	.homepage #header {
+		.primary-nav {
+			.max-width();
+			padding: 10px 20px;
+
+			a {
+				padding: 0;
+			}
+			
+			a:before {
+				.font-size(29);
+				display: inline;
+				margin-right: 10px;
+				vertical-align: bottom;
+			}
+		}
+
+		.leading-link {
+			padding-right: 20px;
+			text-align: left;
+		}
+
+		.home-link {
+			a {
+				background: url('../images/ashes-live-small.png') left top no-repeat;
+				display: inline-block;
+				height: 0px;
+				width: 266px;
+				padding-top: 30px;
+				overflow: hidden;
+			}
+		}
+
+		.trailing-link {
+			padding-left: 20px;
+			text-align: right;
+		}
+	}
+}
+
+// Header and site sidebars starts to break at 660px
+@media only screen and (max-width : 660px) {
+	.homepage #header, #header {
+		ul {
+			.mixin-flex-wrap(wrap);
+		}
+
+		.home-link {
+			order: 1;
+			width: 100%;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		.leading-link {
+			order: 2;
+			padding-right: 0;
+		}
+
+		.trailing-link {
+			padding-right: 0;
+		}
+	}
+
+	.mixin-mobile-content();
+	body {
+		.mixin-mobile-body-classes();
+	}
+}
+
+// Filters and header start to break at 560px
+@media only screen and (max-width : 560px) {
+	.tabular-listing .stats-col {
+		display: none;
+	}
+}
+
+// Header links start breaking around 510px
+@media only screen and (max-width : 510px) {
+	.secondary-nav .full-display-only {
+		display: none;
+	}
+}

@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>{% block title %}Welcome{% endblock %} - Ashes.live</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=480, initial-scale=1">
 	<!-- Favicons and related settings courtesy of http://realfavicongenerator.net -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
 	<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
@@ -18,7 +18,9 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') | production_url }}" />
 </head>
 <body class="{% block page_class %}static{% endblock %}">
-	<a href="{{ url_for('home.feedback') }}" class="help-badge" target="_blank"><i class="fa fa-envelope"></i> Help / feedback</a>
+	<a href="{{ url_for('home.feedback') }}" class="help-badge" target="_blank">
+		<i class="fa fa-envelope"></i> <span class="full-display-only">Help / feedback</span>
+	</a>
 	<header id="header">
 		<nav>
 			<div class="navbar-wrapper">
@@ -38,18 +40,18 @@
 			<ul class="secondary-nav">
 				<li>
 					<a class="decks-link" href="{{ url_for('decks.index') }}">
-						<i class="fa fa-eye" aria-hidden="true"></i> All Decks
+						<i class="fa fa-eye" aria-hidden="true"></i> <span class="full-display-only">All</span> Decks
 					</a>
 				</li>
 				<li class="mid-link">
 					{# {{ url_for('gallery.index') }} #}
 					<a class="gallery-link disabled" href="#">
-						<i class="fa fa-th" aria-hidden="true"></i> Card Gallery
+						<i class="fa fa-th" aria-hidden="true"></i> <span class="full-display-only">Card</span> Gallery
 					</a>
 				</li>
 				{# <li>
 					<a class="stats-link disabled" href="{{ url_for('stats.view') }}">
-						<i class="fa fa-bar-chart" aria-hidden="true"></i> Statistics
+						<i class="fa fa-bar-chart" aria-hidden="true"></i> <span class="full-display-only">Statistics</span>
 					</a>
 				</li> #}
 				<li>
