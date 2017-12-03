@@ -1,3 +1,33 @@
+.mixin-mobile-content() {
+	#main {
+		.mixin-flex-wrap(wrap);
+	}
+
+	#content {
+		.mixin-flex(0 0 auto);
+		padding-right: 0;
+		width: 100%;
+	}
+	
+	#sidebar {
+		.mixin-flex(0 0 auto);
+		width: 100%;
+	}
+}
+
+.mixin-mobile-body-classes() {
+	&.sidebar-first {
+		#content {
+			.mixin-order(2);
+		}
+	
+		#sidebar {
+			.mixin-order(1);
+			padding-bottom: 10px;
+		}
+	}
+}
+
 // Help/feedback badge starts overlapping stuff at 1470px
 @media only screen and (max-width : 1470px) {
 	.help-badge {
@@ -18,7 +48,7 @@
 	}
 }
 
-// Deck builder sidebar starts to break at 900px
+// Deck builder and deck listing sidebars starts to break at 900px
 @media only screen and (max-width : 900px) {
 	.mobile-only {
 		display: block;
@@ -65,6 +95,11 @@
 			height: 36px;
 			width: 36px;
 		}
+	}
+
+	.deck-listing {
+		.mixin-mobile-content();
+		.mixin-mobile-body-classes();
 	}
 
 	.deckbuilder #footer {
@@ -118,7 +153,7 @@
 	}
 }
 
-// Header starts to break at 660px
+// Header and site sidebars starts to break at 660px
 @media only screen and (max-width : 660px) {
 	.homepage #header, #header {
 		ul {
@@ -136,6 +171,11 @@
 			order: 2;
 			padding-right: 0;
 		}
+	}
+
+	.mixin-mobile-content();
+	body {
+		.mixin-mobile-body-classes();
 	}
 }
 

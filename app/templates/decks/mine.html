@@ -2,6 +2,7 @@
 {% from "decks/macros.html" import deck_details %}
 {% extends "base.html" %}
 {% block title %}{{ 'My Decks' | paged_title(page) }}{% endblock %}
+{% block page_class %}sidebar-first deck-listing{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-basic-magic">My decks</h1>
