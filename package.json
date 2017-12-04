@@ -1,6 +1,6 @@
 {
   "name": "ashes-live",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "scripts": {
     "build": "webpack && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.css",
     "build-production": "export ENVIRONMENT='production' && export NODE_ENV='production' && webpack && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
