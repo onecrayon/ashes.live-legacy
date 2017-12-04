@@ -7,15 +7,28 @@
 	<title>{% block title %}Welcome{% endblock %} - Ashes.live</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="text/javascript">
-		if (screen.width < 480){
-			var viewport = document.querySelector("meta[name=viewport]")
-			viewport.parentNode.removeChild(viewport)
-		
-			var newViewport = document.createElement("meta")
-			newViewport.setAttribute("name", "viewport")
-			newViewport.setAttribute("content", "width=480")
-			document.head.appendChild(newViewport)
-		}
+		(function () {
+			var screenSize = 481, // Our default setting is the >480 size
+				setViewportTag = function () {
+					if ((screenSize <= 480 && screen.width > 480) || (screen.width <= 480 && screenSize > 480)) {
+						screenSize = screen.width
+						var viewport = document.querySelector('meta[name=viewport]')
+						viewport.parentNode.removeChild(viewport)
+						var newViewport = document.createElement('meta')
+						newViewport.setAttribute('name', 'viewport')
+						if (screenSize <= 480) {
+							newViewport.setAttribute('content', 'width=480')
+						} else {
+							newViewport.setAttribute('content', 'width=device-width, initial-scale=1')
+						}
+						document.head.appendChild(newViewport)
+					}
+				}
+			// Run an initial check
+			setViewportTag()
+			// And update viewport tag on resize to catch orientation changes
+			window.addEventListener('resize', setViewportTag)
+		})()
 	</script>
 	<!-- Favicons and related settings courtesy of http://realfavicongenerator.net -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
