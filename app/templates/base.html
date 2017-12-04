@@ -5,7 +5,18 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>{% block title %}Welcome{% endblock %} - Ashes.live</title>
-	<meta name="viewport" content="width=480, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript">
+		if (screen.width < 480){
+			var viewport = document.querySelector("meta[name=viewport]")
+			viewport.parentNode.removeChild(viewport)
+		
+			var newViewport = document.createElement("meta")
+			newViewport.setAttribute("name", "viewport")
+			newViewport.setAttribute("content", "width=480")
+			document.head.appendChild(newViewport)
+		}
+	</script>
 	<!-- Favicons and related settings courtesy of http://realfavicongenerator.net -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
 	<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
