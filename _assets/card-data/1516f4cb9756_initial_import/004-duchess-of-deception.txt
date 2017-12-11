@@ -108,6 +108,6 @@ You may play this spell when an opponent would use a spell, ability, or dice pow
 =====
 
 Victoria Glassfire
-Battlefield 5 - Life 18 - Spellboard 5
+Battlefield 5 - Life 18 - Spellboard 4
 
 Shadow Spring: [[side]] - [[exhaust]] - 1 [[illusion:power]]: Select 2 dice in your exhausted pool and place them into your active pool on a side of your choice.
