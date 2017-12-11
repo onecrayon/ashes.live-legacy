@@ -27,7 +27,8 @@ def process_cards(section_map, deck_cards):
             'name': card.name,
             'stub': card.stub,
             'type': card_type,
-            'phoenixborn': card.phoenixborn
+            'phoenixborn': card.phoenixborn,
+            'release': card.release
         })
         if card.conjurations:
             process_cards(section_map, card.conjurations)

@@ -99,6 +99,16 @@ Created with https://ashes.live</textarea>
 			<th>Updated:</th>
 			<td>{{ deck.modified | format_date }}</td>
 		</tr>
+		<tr>
+			<th>Requires:</th>
+			<td>
+				<ul class="comma-separated">
+					{% for release in releases %}
+					<li>{{ release }}</li>
+					{% endfor %}
+				</ul>
+			</td>
+		</tr>
 		{% if deck.is_snapshot and current_user.is_authenticated and deck.user_id == current_user.id %}
 		<tr>
 			<th>Source deck:</th>

@@ -6,6 +6,22 @@ DEFAULT_PAGED_RESULTS = 10
 # Timezone to output datetimes in
 LOCAL_TZ = 'America/Los_Angeles'
 
+### Global configuration options ###
+RELEASE_NAMES = {
+    0: 'Core Set',
+    1: 'The Frostdale Giants',
+    2: 'The Children of Blackcloud',
+    3: 'The Roaring Rose',
+    4: 'The Duchess of Deception',
+    5: 'The Laws of Lions',
+    6: 'The Song of Soaksend',
+    7: 'The Masters of Gravity',
+    8: 'The Path of Assassins',
+    101: 'Dimona Odinstar (promo)',
+    102: 'Lulu Firststone (promo)',
+    103: 'Orrick Gilstream (promo)'
+}
+
 ### Environment-specific ###
 
 # Site root URL; no trailing slash

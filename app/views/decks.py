@@ -2,7 +2,7 @@
 
 import json
 
-from flask import abort, Blueprint, flash, redirect, render_template, url_for
+from flask import abort, Blueprint, current_app, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from sqlalchemy.orm.session import make_transient
 
@@ -59,10 +59,32 @@ def view(deck_id):
         deck = deck.published_snapshot(full=True)
         if not deck:
             abort(404)
+    sections = process_deck(deck)
+    # Gather the releases required by this deck
+    releases = set()
+    for section in sections:
+        for card in section['cards']:
+            releases.add(card['release'])
+    releases.add(deck.phoenixborn.release)
+    # Even if cards don't require a particular set, check for dice
+    dice_to_release = {
+        'ceremonial': 0,
+        'charm': 0,
+        'illusion': 0,
+        'natural': 0,
+        'divine': 5,
+        'sympathy': 6
+    }
+    for die in deck.dice:
+        releases.add(dice_to_release[DiceFlags(die.die_flag).name])
+    releases = list(releases)
+    releases.sort()
+    release_names = [current_app.config['RELEASE_NAMES'][release] for release in releases]
     return render_template(
         'decks/view.html',
         deck=deck,
-        sections=process_deck(deck),
+        sections=sections,
+        releases=release_names,
         has_history=deck.has_snapshots
     )
 

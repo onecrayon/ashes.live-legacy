@@ -148,6 +148,26 @@ a.error {
 	display: none;
 }
 
+ul.comma-separated {
+	display: inline;
+	margin: 0;
+	padding: 0;
+
+	li {
+		display: inline;
+		margin: 0;
+		padding: 0;
+	}
+
+	li:after {
+		content: ', ';
+	}
+
+	li:last-child:after {
+		content: '';
+	}
+}
+
 .username {
 	border: 1px solid @color-mid-gray;
 	background: tint(@color-mid-gray, 80%);
@@ -456,10 +476,16 @@ table.meta {
 	th {
 		color: @color-mid-gray;
 		text-align: left;
+		vertical-align: top;
 	}
 
 	td {
 		padding-left: 5px;
+	}
+
+	.comma-separated {
+		.font-size(14);
+		.line-height(16);
 	}
 }
 
