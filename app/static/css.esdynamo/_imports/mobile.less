@@ -157,7 +157,7 @@
 	}
 }
 
-// Header and site sidebars starts to break at 660px
+// Header and site sidebars starts to break at 660px; inline conjurations break around 650px
 @media only screen and (max-width : 660px) {
 	.homepage #header, #header {
 		ul {
@@ -185,11 +185,19 @@
 	body {
 		.mixin-mobile-body-classes();
 	}
+
+	.listing .conjuration .effect {
+		display: none;
+	}
 }
 
 // Filters and header start to break at 560px
 @media only screen and (max-width : 560px) {
 	.tabular-listing .stats-col {
+		display: none;
+	}
+
+	.listing .conjuration .statline {
 		display: none;
 	}
 }
