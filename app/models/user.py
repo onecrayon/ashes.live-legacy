@@ -36,7 +36,7 @@ class User(db.Model, UserMixin):
             'Lulu Firststone', 'Maeoni Viper', 'Namine Hymntide',
             'Noah Redmoon', 'Odette Diamondcrest', 'Orrick Gilstream',
             'Rin Northfell', 'Saria Guideman', 'Victoria Glassfire',
-            'Echo Greystorm', 'Jericho Kill'
+            'Echo Greystorm', 'Jericho Kill', 'Astrea', 'Koji Wolfcub'
         ])
         self.description = description
         self.newsletter_opt_in = newsletter_opt_in

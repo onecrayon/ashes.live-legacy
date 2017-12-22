@@ -17,6 +17,8 @@ RELEASE_NAMES = {
     6: 'The Song of Soaksend',
     7: 'The Masters of Gravity',
     8: 'The Path of Assassins',
+    9: 'The Goddess of Ishra',
+    10: 'The Boy Among Wolves',
     101: 'Dimona Odinstar (promo)',
     102: 'Lulu Firststone (promo)',
     103: 'Orrick Gilstream (promo)'
