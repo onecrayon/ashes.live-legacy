@@ -1,7 +1,7 @@
 <template>
 	<ol class="card-effects">
 		<li v-if="isReadySummon(card)" class="summon-effect">
-			<div class="costs">
+			<div class="costs" v-if="card.text[0].cost">
 				<card-codes v-for="(cost, cost_index) of card.text[0].cost" :key="card.id + '-effect-0-cost-' + cost_index" class="cost" :content="cost"></card-codes>: 
 			</div>
 			<div class="conjuration"
