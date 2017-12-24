@@ -1,0 +1,151 @@
+Biter
+Conjuration - Battlefield
+Attack 3 - Life 2 - Recover 0 - Copies 4
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+Rooted: This unit cannot attack.
+
+=====
+
+Brilliant Thorn
+Conjuration - Battlefield
+Attack 3 - Life 2 - Recover 0 - Copies 6
+
+* Inheritance 1: When this unit is destroyed, you may place 1 status token on a target unit.
+
+* Fade: Destroy this unit at the end of this round.
+
+=====
+
+Explosive Growth
+Alteration Spell - Unit
+[[side]] - 1 [[sympathy:class]] - 1 [[natural:class]]
+Attack +X
+
+When attaching this spell, place 2 status tokens on this unit. Discard all other copies of Explosive Growth attached to this unit.
+
+X = the number of status tokens on this unit.
+
+=====
+
+Hunt Master
+Ally - Battlefield
+[[main]] - 1 [[natural:power]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 2 - Life 3 - Recover 1
+
+Call the Hunt: When this unit would be declared as an attacker, you may place a [[Panther Spirit]] conjuration onto your battlefield. That Panther Spirit may be declared as an attacker.
+
+=====
+
+Indiglow Creeper
+Conjuration - Battlefield
+Attack 2 - Life 1 - Recover 0 - Copies 3
+
+* Germinate: When this unit is destroyed, place a [[Luminous Seedling]] conjuration onto your battlefield.
+
+* Fade: Destroy this unit at the end of this round.
+
+=====
+
+Join The Hunt
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]]
+
+After you declare attackers, you may place 1 exhaustion token on this spell to place 1 exhaustion token on an unexhausted unit you control that is not attacking. If you do, add 2 to the attack value of a unit you control for the remainder of the turn.
+
+=====
+
+Jungle Warrior
+Ally - Battlefield
+[[main]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 2 - Life 2 - Recover 1
+
+* Last Orders 1: When this unit is destroyed, you may spend 1 [[basic]] to remove 1 exhaustion token from a target unit.
+
+* Inheritance 1: When this unit is destroyed, you may place 1 status token on a target unit.
+
+=====
+
+Lick Wounds (Koji Wolfcub)
+Action Spell - Discard
+[[main]] / [[side]] - 2 [[basic]]
+
+Remove 2 wound tokens and 1 exhaustion token from a target unit or Phoenixborn.
+
+=====
+
+Koji Wolfcub
+Battlefield 10 - Life 16 - Spellboard 3
+
+Accelerate Growth: [[side]] - [[exhaust]]: Place 1 status token on a target card.
+
+=====
+
+Luminous Seedling
+Conjuration - Battlefield
+Attack 0 - Life 2 - Recover 0 - Copies 3
+
+Blossom: [[main]]: Remove 2 status tokens from this unit and destroy this unit. If you do, place up to 2 [[Brilliant Thorn]] conjurations onto your battlefield.
+
+* Growth: Add 1 to this unit's life value for each status token on this unit.
+
+=====
+
+Mark Of The Red Flower
+Alteration Spell - Unit
+[[main]] / [[side]]
+
+Growing Flames: [[side]] - 1 [[natural:class]] / 1 [[sympathy:class]]: Place 1 status token on the attached unit.
+
+This unit now has the following ability:
+
+Fire Mastery: [[exhaust]]: Remove 2 status tokens from this unit. If you do, deal 3 damage to a target unit. You may only activate this ability during your turn.
+
+=====
+
+Panther Spirit
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 3
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Sleeping Bear
+Ally - Battlefield
+[[main]] - 2 [[natural:class]]
+Attack 4 - Life 4 - Recover 2
+
+Slumbering 1: When this unit comes into play, place 1 exhaustion token on it.
+
+=====
+
+Summon Biter
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]] - 1 [[basic]]: Place a [[Biter]] conjuration onto your battlefield.
+
+=====
+
+Summon Indiglow Creeper
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[natural:class]] - 1 [[sympathy:class]]: Place an [[Indiglow Creeper]] conjuration onto your battlefield.
+
+Focus 1: You may place 1 status token on a target unit you control.
+
+Focus 2: You may place a [[Luminous Seedling]] conjuration onto your battlefield.
+
+=====
+
+Temple Elder
+Ally - Battlefield
+[[main]] - 2 [[basic]]
+Attack 2 - Life 2 - Recover 1
+
+* Resourceful 1: When this unit comes into play, place 1 status token on this unit. At the beginning of the player turns phase, place 1 status token on this unit.
+
+Wisdom 1: [[side]] - 1 [[sympathy: class]]: Remove 1 status token from this unit. If you do, draw 1 card.
