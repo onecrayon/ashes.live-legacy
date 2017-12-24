@@ -115,7 +115,7 @@ export default new Vuex.Store({
 			diceLogic: 'or',
 			phoenixborn: deckPhoenixborn ? deckPhoenixborn.name : null,
 			// These options affect listing display
-			listType: 'list',
+			listType: 'table',
 			primarySort: 'name',
 			primaryOrder: 1,
 			secondarySort: null,
