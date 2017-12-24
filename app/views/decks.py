@@ -224,6 +224,7 @@ def clone(deck_id):
     deck.is_public = False
     deck.source_id = deck_id
     deck.created = None
+    deck.is_preconstructed = False
     dice = []
     for die in deck.dice:
         make_transient(die)
