@@ -21,14 +21,21 @@ function disableReleaseDice (state) {
 	}
 }
 
-function gatherConjurations (card, conjurationList) {
+function gatherConjurations (card, conjurationList, currentStubs) {
 	if (card && card.conjurations) {
+		currentStubs = currentStubs || reduce(conjurationList, (stubs, conj) => {
+			stubs.push(conj.data.stub)
+			return stubs
+		}, [])
 		for (let conjuration of card.conjurations) {
-			conjurationList.push({
-				'count': conjuration.copies,
-				'data': conjuration
-			})
-			gatherConjurations(conjuration, conjurationList)
+			if (currentStubs.indexOf(conjuration.stub) === -1) {
+				conjurationList.push({
+					'count': conjuration.copies,
+					'data': conjuration
+				})
+				currentStubs.push(conjuration.stub)
+				gatherConjurations(conjuration, conjurationList, currentStubs)
+			}
 		}
 	}
 }
