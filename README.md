@@ -6,7 +6,9 @@ The project has the following dependencies:
 * virtualenv
 * Node.js / npm
 
-## Install project dependencies (macOS)
+## Install project dependencies
+
+### macOS
 
 1. Install [Homebrew](https://brew.sh/) then Python 3:
 
@@ -21,6 +23,22 @@ The project has the following dependencies:
         sudo pip install virtualenv
 
 4. Install [NodeJS](https://nodejs.org/) (and npm)
+
+### Linux subsystem on Windows running Ubuntu
+
+1. Install pip (Python 3 is installed by default as `python3`):
+    
+        sudo apt-get install python3-pip
+
+2. Install virtualenv:
+    
+        sudo pip3 install virtualenv
+
+3. Install NodeJS:
+    
+        sudo apt-get update
+        curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+        sudo apt-get install nodejs
 
 ## Install site dependencies
 
