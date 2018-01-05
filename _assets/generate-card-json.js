@@ -204,8 +204,10 @@ if (files) {
 			// If there is a stat line, parse it
 			if (stats) {
 				stats.forEach(function (stat) {
-					var regexMatch = stat.match(/^([a-z]+)[ ]([0-9X+-]+)$/i)
-					card[regexMatch[1].toLowerCase()] = regexMatch[2]
+					var regexMatch = stat.match(/^([a-z]+)[ ]([0-9X+-]+)$/i),
+						// Store numeric stats as pure numbers
+						value = /^\d+$/.test(regexMatch[2]) ? parseInt(regexMatch[2]) : regexMatch[2]
+					card[regexMatch[1].toLowerCase()] = value
 				})
 			}
 			// Parse through our effect text
