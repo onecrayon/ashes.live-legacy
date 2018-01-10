@@ -16,10 +16,16 @@ def get_redirect_target():
     return request.args.get('next') if is_safe_url(request.args.get('next')) else None
 
 
+def strip_filter(value):
+    if isinstance(value, str):
+        return value.strip()
+    return value
+
+
 # Shared fields
 emailField = StringField('Email', validators=[
     Email(message='Invalid email.')
-])
+], filters=(strip_filter,))
 usernameField = StringField('Username', validators=[DataRequired()])
 passwordField = PasswordField('Password', validators=[
     DataRequired(message='Password is required.')
