@@ -177,7 +177,6 @@ def mine(page=None):
 
 @mod.route('/build/')
 @mod.route('/build/<int:deck_id>/')
-@login_required
 def build(deck_id=None):
     """Edit a deck"""
     deck = None if not deck_id else Deck.query.options(
@@ -186,8 +185,20 @@ def build(deck_id=None):
     ).get(deck_id)
     if deck_id and not deck:
         abort(404)
-    if deck_id and deck.is_snapshot:
-        return redirect(url_for('decks.build', deck_id=deck.source_id))
+    if not deck_id and not current_user.is_authenticated:
+        return current_app.login_manager.unauthorized()
+    if deck_id:
+        if not current_user.is_authenticated or deck.user_id != current_user.id:
+            # User doesn't own this deck; redirect if we have a public snapshot
+            # because this was probably an accidentally shared build link
+            if deck.has_snapshots:
+                return redirect(url_for('decks.view', deck_id=(
+                    deck.id if not deck.is_snapshot else deck.source_id
+                )))
+            else:
+                abort(404)
+        elif deck.is_snapshot:
+            return redirect(url_for('decks.build', deck_id=deck.source_id))
     deck_json = None
     if deck:
         if not current_user.is_authenticated or deck.user_id != current_user.id:
