@@ -21,6 +21,11 @@ def search():
     query = db.session.query(Card.id)
     # Setup our filters
     types = data.get('types')
+    if types and 'summon' in types:
+        query = query.filter(
+            Card.name.like('Summon%')
+        )
+        types.remove('summon')
     if types:
         query = query.filter(
             Card.card_type.in_(types)
