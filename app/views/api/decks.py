@@ -2,6 +2,7 @@ from flask import abort, Blueprint, flash, jsonify, request, url_for
 from flask_login import current_user, login_required
 
 from app import db
+from app.exceptions import ApiError
 from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.template_filters import deck_title as compose_deck_title
@@ -148,9 +149,22 @@ def save(deck_id=None, is_snapshot=False):
 @login_required
 def delete(deck_id):
     deck = Deck.query.options(db.joinedload('phoenixborn')).get(deck_id)
-    if (not deck or not current_user.is_authenticated or
-            deck.user_id != current_user.id):
+    if not deck or deck.user_id != current_user.id:
         abort(404)
+    # Check for public snapshots (public decks cannot be deleted)
+    if deck.published_snapshot():
+        raise ApiError('This deck has been published, and cannot be deleted.')
+    snapshots = db.session.query(Deck).filter(
+        Deck.is_snapshot.is_(True),
+        Deck.source_id == deck_id
+    ).all()
+    for snapshot in snapshots:
+        has_derivatives = db.session.query(Deck.id).filter(
+            Deck.source_id == snapshot.id
+        ).count() > 0
+        if has_derivatives:
+            raise ApiError('This deck has been cloned, and cannot be deleted.')
+        db.session.delete(snapshot)
     title = compose_deck_title(deck)
     db.session.delete(deck)
     db.session.commit()

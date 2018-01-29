@@ -15,6 +15,7 @@
 	import qwest from 'qwest'
 	import Modal from 'app/components/modal.vue'
 	import Nanobar from 'app/nanobar'
+	import {notify} from 'app/utils'
 
 	export default {
 		components: {
@@ -29,6 +30,13 @@
 				const nano = new Nanobar({ autoRun: true })
 				qwest.delete('/api/decks/' + this.$store.state.deck.id).then(() => {
 					window.location.href = '/decks/mine/'
+				}).catch((error, xhr, response) => {
+					if (response.error) {
+						notify(response.error, 'error')
+					} else {
+						notify('Server error: ' + error, 'error')
+					}
+					this.close()
 				}).complete(() => {
 					nano.go(100)
 				})
