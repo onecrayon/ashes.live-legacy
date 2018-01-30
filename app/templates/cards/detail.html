@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Card: {{ card.name }}{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-main-action">{{ card.name }}</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="card-page">
+		<div class="card-image"><img src="{{ card.images.full | cdn_url }}" alt="{{ card.name }}"></div>
+	
+		<div class="card-detail">
+			<h2>Card text</h2>
+
+			<h3>{{ card.name }}{% if card.phoenixborn %} <span class="phoenixborn" title="{{ card.phoenixborn }}">({{ card.phoenixborn | first_name }})</span>{% endif %}</h3>
+			
+			{% if card.type == 'Phoenixborn' %}
+			<p class="meta">{{ card.type }}</p>
+			<ul class="statline">
+				<li class="battlefield">Battlefield {{ card.battlefield }}</li>
+				<li class="life">Life {{ card.life }}</li>
+				<li class="spellboard">Spellboard {{ card.spellboard }}</li>
+			</ul>
+			{% else %}
+			<p class="meta">{{ card.type }} <span class="divider"></span> {{ card.placement }}</p>
+			{% endif %}
+	
+			{% if card.cost %}
+			<ol class="costs">
+				{%- for cost in card.cost -%}
+				<li class="cost">
+					{%- if cost is string -%}
+					{{ cost | parse_text(format_paragraphs=False) }}
+					{%- else -%}
+					<span class="parallel-costs">
+						{%- for split_cost in cost -%}
+						<span class="cost">{{ split_cost | parse_text(format_paragraphs=False) }}</span>
+						{%- endfor -%}
+					</span>
+					{%- endif -%}
+				</li>
+				{%- endfor -%}
+			</ol>
+			{% endif %}
+
+			<hr>
+	
+			{% if card.text %}
+			<ol class="card-effects">
+			{% for effect in card.text %}
+				<li{% if effect.inexhaustible %} class="inexhaustible"{% elif effect.betweenRealms %} class="between-realms"{% endif %}>
+					{% if effect.name %}<strong>{{ effect.name }}</strong>: {% endif %}{% if effect.cost -%}
+					<span class="costs">
+						{%- for cost in effect.cost -%}
+						<span class="cost">{{ cost | parse_text(format_paragraphs=False) }}</span>
+						{%- endfor -%}
+					</span>: {% endif %}{{ effect.text | parse_text(format_paragraphs=False) }}
+				</li>
+			{% endfor %}
+			</ol>
+			{% endif %}
+
+			{% if card.type != 'Phoenixborn' and (card.attack is defined or card.life is defined or card.recover is defined or card.copies is defined) %}
+			<ul class="statline">
+				{% if card.attack is defined %}<li class="attack">Attack {{ card.attack }}</li>{% endif %}
+				{% if card.life is defined %}<li class="life">Life {{ card.life }}</li>{% endif %}
+				{% if card.recover is defined %}<li class="recover">Recover {{ card.recover }}</li>{% endif %}
+				{% if card.copies is defined %}<li class="copies">{{ card.copies }}</li>{% endif %}
+			</ul>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block sidebar %}
+	<table class="meta" cellspacing="0" cellpadding="0">
+		{% if dice %}
+		<tr>
+			<th>Needs:</th>
+			<td>
+				<ul class="divider-separated">
+					{%- for die in dice -%}
+					<li><span class="phg-{{ die }}-power" title="{{ die | capitalize }}"></span></li>
+					{%- endfor -%}
+				</ul>
+			</td>
+		</tr>
+		{% endif %}
+		<tr>
+			<th>Decks:</th>
+			<td>
+				<strong>{{ users_count }} user{% if users_count != 1 %}s{% endif %}</strong> have this card in <strong>{{ decks_count }} deck{% if decks_count != 1 %}s{% endif %}</strong>
+			</td>
+		</tr>
+		<tr>
+			<th>Release:</th>
+			<td>{{ release }}</td>
+		</tr>
+	</table>
+
+	{% if conjurations %}
+	<hr>
+	<div class="card-meta">
+		<h2>Related cards</h2>
+
+		<ul>
+			<li>
+				{% if root_card.id == card.id %}
+				<em>{{ root_card.name }}</em>
+				{% else %}
+				<a href="{{ url_for('cards.detail', stub=root_card.stub) }}" class="card">{{ root_card.name }}</a>
+				{% endif %}
+				<ul>
+					{% for conjuration in conjurations %}
+					<li>
+						{% if conjuration.id == card.id %}
+						<em>{{ conjuration.name }}</em>
+						{% else %}
+						<a href="{{ url_for('cards.detail', stub=conjuration.stub) }}" class="card">{{ conjuration.name }}</a>
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</li>
+		</ul>
+	</div>
+	{% endif %}
+{% endblock %}
