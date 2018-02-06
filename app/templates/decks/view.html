@@ -1,7 +1,7 @@
 {% from "macros.html" import usertag, hide_on_load %}
 {% extends "base.html" %}
 {% block title %}Deck: {{ deck | deck_title }}{% endblock %}
-{% block page_class %}sidebar-first{% endblock %}
+{% block page_class %}sidebar-first deck-view-page{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-main-action">{{ deck | deck_title }}</h1>
@@ -110,7 +110,7 @@ Created with https://ashes.live</textarea>
 			</td>
 		</tr>
 		{% if deck.is_snapshot and current_user.is_authenticated and deck.user_id == current_user.id %}
-		<tr>
+		<tr class="no-print">
 			<th>Source deck:</th>
 			<td>
 				<a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
@@ -118,7 +118,7 @@ Created with https://ashes.live</textarea>
 				</a>
 			</td>
 		</tr>
-		<tr>
+		<tr class="no-print">
 			<th>Visibility:</th>
 			<td>
 				{% if deck.is_public %}
