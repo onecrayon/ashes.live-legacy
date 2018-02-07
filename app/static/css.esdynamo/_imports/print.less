@@ -12,12 +12,16 @@
 	}
 	.mixin-mobile-content();
 
-	#header, .help-badge, #footer {
+	#header, .help-badge, .pagination, #footer {
 		display: none;
 	}
 
 	#sidebar .btn {
 		display: none;
+	}
+
+	h1 {
+		margin-bottom: 15px;
 	}
 
 	hr {
@@ -34,27 +38,61 @@
 		color: @color-black;
 	}
 
-	.deck-view-page {
-		h1 {
-			margin-bottom: 15px;
+	.deck-listing #sidebar {
+		display: none;
+	}
+
+	.deck {
+		background-image: none !important;
+		padding-left: 10px;
+		border-color: @color-gray;
+		page-break-inside: avoid;
+
+		h2 a {
+			color: @color-black;
 		}
 
+		.meta li {
+			padding-right: 0;
+
+			&:after {
+				content: '◇';
+				color: @color-mid-gray;
+			}
+		}
+
+		.meta li:last-child:after {
+			content: '';
+		}
+
+		.card-listing h3:before {
+			content: 'Phoenixborn: ';
+			font-weight: normal;
+		}
+	}
+
+	.die {
+		background: transparent !important;
+		color: @color-black !important;
+		border: 1px solid @color-gray;
+		font-size: 16px !important;
+		line-height: 24px !important;
+	}
+
+	.dice.large .die {
+		font-size: 24px !important;
+		line-height: 36px !important;
+	}
+
+	.deck-view-page {
 		table.meta {
 			margin-bottom: 5px;
 		}
 	}
 
 	.deck-view {
-		padding-left: 0;
 		background-image: none !important;
-
-		.die {
-			background: transparent !important;
-			color: @color-black !important;
-			font-size: 24px !important;
-			line-height: 36px !important;
-			border: 1px solid @color-gray;
-		}
+		padding-left: 0;
 
 		h2:before {
 			content: 'Phoenixborn: ';
@@ -63,11 +101,11 @@
 		h3 .card-count {
 			float: none;
 			margin: 0;
-
+	
 			&:before {
 				content: '(';
 			}
-
+	
 			&:after {
 				content: ')';
 			}
@@ -82,6 +120,20 @@
 			&:nth-of-type(3n+4) {
 				clear: left;
 			}
+		}
+	}
+
+	.snapshots {
+		.deck.public {
+			border-color: @color-dark-gray;
+		}
+
+		.deck.public .visibility-icon {
+			color: @color-dark-gray;
+		}
+
+		.deck:after {
+			display: none;
 		}
 	}
 }
