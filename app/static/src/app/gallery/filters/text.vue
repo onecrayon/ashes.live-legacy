@@ -1,5 +1,5 @@
 <template>
-	<div class="input-group">
+	<div class="input-group right-align">
 		<div class="form-field">
 			<input v-model="search" type="text" placeholder="Filter by name or text...">
 		</div>

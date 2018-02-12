@@ -7,6 +7,7 @@ from flask import abort, current_app, Blueprint, render_template
 from app import db
 from app.models.card import Card
 from app.models.deck import Deck, DeckCard
+from app.utils.cards import global_json
 
 mod = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -21,7 +22,7 @@ def gather_conjurations(card):
 @mod.route('/')
 def index():
     """Card gallery"""
-    return render_template('wip.html')
+    return render_template('cards/index.html', **global_json())
 
 
 @mod.route('/<stub>/')

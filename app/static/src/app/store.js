@@ -127,9 +127,10 @@ export default new Vuex.Store({
 			primaryOrder: 1,
 			secondarySort: null,
 			secondaryOrder: 1,
+			includeConjurations: false,
 			// These options affect the deck listing display
 			showDetails: true
-		}, storeGetAll(), !globals.deck || !globals.deck.phoenixborn ? {
+		}, storeGetAll(), !globals.galleryOnly && (!globals.deck || !globals.deck.phoenixborn) ? {
 			'primarySort': 'name',
 			'secondarySort': null
 		} : {})
@@ -317,6 +318,11 @@ export default new Vuex.Store({
 			} else {
 				state.options.dice.push(die)
 			}
+			// Disallow filtering by conjuration types when we have a dice type selected
+			if (state.options.dice && state.options.dice.length > 0 && state.options.types &&
+					state.options.types.indexOf('conjurations') > -1) {
+				state.options.types.splice(state.options.types.indexOf('conjurations'), 1)
+			}
 		},
 		toggleTypeFilter (state, typeName) {
 			if (!state.options.types || !state.options.types.length) {
@@ -364,6 +370,9 @@ export default new Vuex.Store({
 					state.options.releases = [0]
 				}
 			}
+		},
+		setincludeConjurations (state, includeConjurations) {
+			state.options.includeConjurations = includeConjurations
 		},
 		// Sorting methods
 		toggleSortOrder (state) {

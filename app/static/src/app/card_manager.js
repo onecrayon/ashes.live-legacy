@@ -85,6 +85,7 @@ export default class {
 		dice = null,
 		diceLogic = 'or',
 		phoenixborn = null,
+		includeConjurations = false,
 		primarySort = 'name',
 		primaryOrder = 1,
 		secondarySort = null,
@@ -99,7 +100,8 @@ export default class {
 				releases: releaseIds,
 				dice: dice,
 				diceLogic: diceLogic,
-				phoenixborn: phoenixborn
+				phoenixborn: phoenixborn,
+				includeConjurations: includeConjurations
 			}, {dataType: 'json'}).then((xhr, response) => {
 				let cards = this.idsToListing(response)
 				callback(this.sortListing(cards, {
@@ -114,7 +116,7 @@ export default class {
 			return
 		}
 		// Only include conjurations if they are specifically called for
-		const excludeConjurations = !types || !includes(types, 'Conjuration')
+		const excludeConjurations = (!types || !includes(types, 'conjurations')) && !includeConjurations
 		const excludePhoenixborn = !types || !includes(types, 'Phoenixborn')
 		let subset = filter(globals.cardData, (card) => {
 			if (excludeConjurations &&
@@ -129,7 +131,9 @@ export default class {
 			}
 			if (types && types.length &&
 					!includes(types, card.type) &&
-					(!includes(types, 'summon') || !startsWith(card.name, 'Summon'))) {
+					(!includes(types, 'summon') || !startsWith(card.name, 'Summon')) &&
+					(!includes(types, 'conjurations') ||
+					!includes(['Conjuration', 'Conjured Alteration Spell'], card.type))) {
 				return false
 			}
 			if (releaseIds && releaseIds.length && !releaseIds.includes(card.release)) {

@@ -5,7 +5,7 @@
 			<div class="thumbnail">
 				<i class="fa fa-4x" :class="typeToFontAwesome(card.type)" aria-hidden="true"></i>
 				<img :src="assetPath(card.images.thumbnail)" :alt="card.name">
-				<qty-buttons :card="card"></qty-buttons>
+				<qty-buttons v-if="!isCardGallery" :card="card"></qty-buttons>
 			</div>
 			<div class="details" :class="{'with-statline': hasStatline(card)} ">
 				<h3>
@@ -38,7 +38,7 @@
 
 <script>
 	import {isArray, startsWith} from 'lodash'
-	import {assetPath, typeToFontAwesome} from 'app/utils'
+	import {assetPath, globals, typeToFontAwesome} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import CardEffects from './card_effects.vue'
@@ -56,6 +56,9 @@
 		computed: {
 			listing () {
 				return this.$store.state.listing
+			},
+			isCardGallery () {
+				return globals.galleryOnly
 			}
 		},
 		methods: {

@@ -24,6 +24,10 @@
 				><button @click="toggleCardType('summon')"
 					class="btn btn-small" :class="{active: isTypeActive('summon')}"
 					><i class="fa" :class="typeToFontAwesome('summon')"></i> <span class="full-display-only">Summon</span></button
+				><button v-if="isCardGallery" @click="toggleCardType('conjurations')"
+					class="btn btn-small" :class="{active: isTypeActive('conjurations')}"
+					:disabled="hasDiceFilter"
+					><i class="fa" :class="typeToFontAwesome('Conjuration')"></i> <span class="full-display-only">Conjuration</span></button
 				>
 			</div>
 			<release-filter class="col"></release-filter>
@@ -52,7 +56,7 @@
 	import SortFilter from './sort.vue'
 	import TextFilter from './text.vue'
 	import {includes} from 'lodash'
-	import {typeToFontAwesome} from 'app/utils'
+	import {globals, typeToFontAwesome} from 'app/utils'
 
 	export default {
 		components: {
@@ -60,6 +64,14 @@
 			'release-filter': ReleaseFilter,
 			'sort-filter': SortFilter,
 			'text-filter': TextFilter
+		},
+		computed: {
+			isCardGallery () {
+				return globals.galleryOnly
+			},
+			hasDiceFilter () {
+				return this.$store.state.options.dice && this.$store.state.options.dice.length > 0
+			}
 		},
 		methods: {
 			typeToFontAwesome,

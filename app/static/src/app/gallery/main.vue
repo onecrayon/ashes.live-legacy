@@ -1,6 +1,6 @@
 <template>
 	<div id="editor-gallery">
-		<div v-if="phoenixborn" class="gallery">
+		<div v-if="isCardGallery || phoenixborn" class="gallery">
 			<card-filters></card-filters>
 			<card-listing></card-listing>
 		</div>
@@ -39,7 +39,7 @@
 	import SortFilter from './filters/sort.vue'
 	import TextFilter from './filters/text.vue'
 	import NoResults from './listing/no_results.vue'
-	import {assetPath, cardUrl} from 'app/utils'
+	import {assetPath, cardUrl, globals} from 'app/utils'
 	
 	export default {
 		components: {
@@ -52,7 +52,9 @@
 			'no-results': NoResults
 		},
 		created () {
-			if (!this.$store.state.deck.phoenixborn) {
+			if (this.isCardGallery) {
+				this.$store.commit('setincludeConjurations', true)
+			} else if (!this.$store.state.deck.phoenixborn) {
 				this.$store.commit('setTypes', ['Phoenixborn'])
 			}
 			this.$store.commit('filterCards')
@@ -70,6 +72,9 @@
 			},
 			listing () {
 				return this.$store.state.listing
+			},
+			isCardGallery () {
+				return globals.galleryOnly
 			}
 		},
 		methods: {

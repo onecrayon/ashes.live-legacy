@@ -2,13 +2,13 @@
 	<table class="tabular-listing" cellspacing="0" cellpadding="0">
 		<tbody>
 			<tr v-if="!listing.length">
-				<td colspan="5" class="no-results">
+				<td :colspan="numColumns" class="no-results">
 					<h2>No cards found</h2>
 					<p><button @click="resetFilters" class="btn btn-primary">Clear filters</button></p>
 				</td>
 			</tr>
 			<tr v-for="card of listing" :key="card.id">
-				<td class="qty-col">
+				<td v-if="numColumns === 5" class="qty-col">
 					<qty-buttons :card="card" classes="btn-small"></qty-buttons>
 				</td>
 				<td class="type-col" :title="card.type">
@@ -34,7 +34,7 @@
 					</card-link>
 				</td>
 				<td class="costs-col">
-					<ol class="costs">
+					<ol v-if="card.cost" class="costs">
 						<li v-for="cost of card.cost" class="cost">
 							<span v-if="isArray(cost)" class="parallel-costs">
 								<span v-for="splitCost of cost" class="cost">
@@ -44,6 +44,7 @@
 							<card-codes v-else :content="cost"></card-codes>
 						</li>
 					</ol>
+					<span v-else-if="card.copies" class="muted">--</span>
 				</td>
 			</tr>
 		</tbody>
@@ -52,7 +53,7 @@
 
 <script>
 	import {isArray, startsWith} from 'lodash'
-	import {typeToFontAwesome} from 'app/utils'
+	import {globals, typeToFontAwesome} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import QtyButtons from './qty_buttons.vue'
@@ -66,6 +67,9 @@
 		computed: {
 			listing () {
 				return this.$store.state.listing
+			},
+			numColumns () {
+				return globals.galleryOnly ? 4 : 5
 			}
 		},
 		methods: {

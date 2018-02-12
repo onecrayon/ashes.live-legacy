@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Browse Cards{% endblock %}
+{% block page_class %}gallery{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-charm-class">Browse cards</h1>
+{% endblock %}
+
+{% block content %}
+	<noscript>
+		<ul class="alerts">
+			<li class="error">The Ashes.live card gallery requires Javascript.</li>
+		</ul>
+	</noscript>
+{% endblock %}
+
+{% block app %}
+	<script type="text/javascript">
+		globals.galleryOnly = true
+	</script>
+	<script src="{{ url_for('static', filename='js/app.js') | production_url }}" type="text/javascript"></script>
+{% endblock %}

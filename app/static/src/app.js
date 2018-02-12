@@ -13,9 +13,11 @@ new Vue({
 			domProps: {
 				id: 'main'
 			}
-		}, [
+		}, (globals.galleryOnly ? [
+			createElement(CardGallery)
+		] : [
 			createElement(DeckEditor),
 			createElement(CardGallery)
-		])
+		]))
 	}
 })
