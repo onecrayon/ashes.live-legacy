@@ -1,5 +1,5 @@
 <template>
-	<div id="editor-gallery">
+	<div :id="isCardGallery ? 'gallery' : 'editor-gallery'">
 		<div v-if="isCardGallery || phoenixborn" class="gallery">
 			<card-filters></card-filters>
 			<card-listing></card-listing>
@@ -53,7 +53,8 @@
 		},
 		created () {
 			if (this.isCardGallery) {
-				this.$store.commit('setincludeConjurations', true)
+				this.$store.commit('setincludeAllCards', true)
+				this.$store.commit('setTempListType', 'table')
 			} else if (!this.$store.state.deck.phoenixborn) {
 				this.$store.commit('setTypes', ['Phoenixborn'])
 			}

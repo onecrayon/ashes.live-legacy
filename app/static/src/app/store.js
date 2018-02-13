@@ -127,7 +127,7 @@ export default new Vuex.Store({
 			primaryOrder: 1,
 			secondarySort: null,
 			secondaryOrder: 1,
-			includeConjurations: false,
+			includeAllCards: false,
 			// These options affect the deck listing display
 			showDetails: true
 		}, storeGetAll(), !globals.galleryOnly && (!globals.deck || !globals.deck.phoenixborn) ? {
@@ -371,8 +371,8 @@ export default new Vuex.Store({
 				}
 			}
 		},
-		setincludeConjurations (state, includeConjurations) {
-			state.options.includeConjurations = includeConjurations
+		setincludeAllCards (state, includeAllCards) {
+			state.options.includeAllCards = includeAllCards
 		},
 		// Sorting methods
 		toggleSortOrder (state) {
@@ -403,6 +403,9 @@ export default new Vuex.Store({
 		setListType (state, listType) {
 			state.options.listType = listType
 			storeSet('listType', listType)
+		},
+		setTempListType (state, listType) {
+			state.options.listType = listType
 		},
 		filterCards (state, options) {
 			options = options || state.options

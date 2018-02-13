@@ -34,6 +34,8 @@ function typeToFontAwesome (cardType) {
 		return 'fa-share-square'
 	} else if (cardType == 'Conjuration' || cardType == 'Conjured Alteration Spell') {
 		return 'fa-recycle'
+	} else if (cardType === 'Phoenixborn') {
+		return 'fa-shield'
 	} else if (cardType === 'summon') {
 		// Special instance; only really used by filters
 		return 'fa-plus-square'

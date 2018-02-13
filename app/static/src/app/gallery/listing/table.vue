@@ -11,9 +11,7 @@
 				<td v-if="numColumns === 5" class="qty-col">
 					<qty-buttons :card="card" classes="btn-small"></qty-buttons>
 				</td>
-				<td class="type-col" :title="card.type">
-					<i class="fa" :class="typeToFontAwesome(card.type)" aria-hidden="true"></i>
-				</td>
+				<td class="type-col" :title="card.type"><i class="fa" :class="typeToFontAwesome(card.type)" aria-hidden="true"></i></td>
 				<td class="name-col">
 					<card-link :card="card"></card-link>
 					<span v-if="card.phoenixborn" class="phoenixborn" :title="card.phoenixborn">
@@ -22,11 +20,13 @@
 				</td>
 				<td class="stats-col">
 					<span v-if="hasStatline(card)" class="muted">
-						<span v-if="card.attack !== undefined" class="attack">{{ card.attack }}</span>
+						<span v-if="card.attack !== undefined || card.battlefield !== undefined"
+							class="attack">{{ card.battlefield || card.attack }}</span>
 						<span v-else>&ndash;</span> /
 						<span v-if="card.life !== undefined" class="life">{{ card.life }}</span>
 						<span v-else>&ndash;</span> /
-						<span v-if="card.recover !== undefined" class="recover">{{ card.recover }}</span>
+						<span v-if="card.recover !== undefined || card.spellboard !== undefined"
+							class="recover">{{ card.spellboard || card.recover }}</span>
 						<span v-else>&ndash;</span>
 					</span>
 					<card-link v-else-if="card.conjurations" :card="card.conjurations[0]">
@@ -44,7 +44,7 @@
 							<card-codes v-else :content="cost"></card-codes>
 						</li>
 					</ol>
-					<span v-else-if="card.copies" class="muted">--</span>
+					<span v-else class="muted">--</span>
 				</td>
 			</tr>
 		</tbody>

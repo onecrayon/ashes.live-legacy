@@ -1536,7 +1536,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	width: 100%;
 
 	td {
-		padding: 2px 5px;
+		padding: 5px 5px;
 		vertical-align: top;
 
 		&.no-results {
@@ -1551,7 +1551,6 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 	.type-col {
 		text-align: center;
-		padding-top: 8px;
 	}
 
 	.qty-col, .type-col, .stats-col, .costs-col {
@@ -1565,14 +1564,14 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	.name-col {
 		text-align: left;
 		padding-left: 0;
-		vertical-align: middle;
 		// This forces this column to fill the available space
 		width: 99%;
 	}
 
 	.costs-col {
 		border-left: 1px solid @color-gray;
-		padding-top: 5px;
+		padding-top: 2px;
+		padding-bottom: 2px;
 	}
 
 	.qty-col {
@@ -1615,6 +1614,21 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 	.recover {
 		color: @color-recover;
+	}
+}
+
+#editor-gallery .tabular-listing {
+	td {
+		padding-top: 8px;
+	}
+	
+	.costs-col {
+		padding-top: 4px;
+	}
+
+	.qty-col {
+		padding-top: 2px;
+		padding-bottom: 2px;
 	}
 }
 

@@ -24,6 +24,9 @@
 				><button @click="toggleCardType('summon')"
 					class="btn btn-small" :class="{active: isTypeActive('summon')}"
 					><i class="fa" :class="typeToFontAwesome('summon')"></i> <span class="full-display-only">Summon</span></button
+				><button v-if="isCardGallery" @click="toggleCardType('Phoenixborn')"
+					class="btn btn-small" :class="{active: isTypeActive('Phoenixborn')}"
+					><i class="fa" :class="typeToFontAwesome('Phoenixborn')"></i> <span class="full-display-only">Phoenixborn</span></button
 				><button v-if="isCardGallery" @click="toggleCardType('conjurations')"
 					class="btn btn-small" :class="{active: isTypeActive('conjurations')}"
 					:disabled="hasDiceFilter"
@@ -34,7 +37,7 @@
 		</div>
 		<div class="responsive-cols listing-controls">
 			<sort-filter class="col"></sort-filter>
-			<div class="btn-group col">
+			<div v-if="!isCardGallery" class="btn-group col">
 				<!--<button @click="setListType('grid')"
 					class="btn btn-small" :class="{active: isListType('grid')}" disabled
 					><i class="fa fa-th" title="Grid"></i></button
