@@ -94,9 +94,15 @@
 		</tr>
 		<tr>
 			<th>Release:</th>
-			<td>{{ release }}</td>
+			<td>
+				{% if preconstructed and release == preconstructed.title %}
+				<a href="{{ preconstructed.url }}">{{ release }}</a>
+				{% else %}
+				{{ release }}
+				{% endif %}
+			</td>
 		</tr>
-		{% if preconstructed %}
+		{% if preconstructed and preconstructed.title != release %}
 		<tr>
 			<th>Deck:</th>
 			<td><a href="{{ preconstructed.url }}">{{ preconstructed.title }}</a></td>
@@ -104,12 +110,13 @@
 		{% endif %}
 	</table>
 
-	{% if conjurations %}
+	{% if conjurations or phoenixborn_card %}
 	<hr>
 	<div class="card-meta">
 		<h2>Related cards</h2>
 
 		<ul>
+			{% if conjurations %}
 			<li>
 				{% if root_card.id == card.id %}
 				<em>{{ root_card.name }}</em>
@@ -128,6 +135,12 @@
 					{% endfor %}
 				</ul>
 			</li>
+			{% endif %}
+			{% if phoenixborn_card %}
+			<li>
+				<a href="{{ url_for('cards.detail', stub=phoenixborn_card.stub) }}" class="card">{{ phoenixborn_card.name }}</a>
+			</li>
+			{% endif %}
 		</ul>
 	</div>
 	{% endif %}

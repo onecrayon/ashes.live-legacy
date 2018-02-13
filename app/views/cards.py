@@ -72,6 +72,18 @@ def detail(stub):
         Deck.is_public.is_(True),
         Deck.is_preconstructed.is_(True)
     ).first()
+    # Grab Phoenixborn related card, if available
+    phoenixborn_card = None
+    if card.phoenixborn and card.card_type not in ('Conjuration', 'Conjured Alteration Spell'):
+        phoenixborn_card = db.session.query(Card.stub, Card.name).filter(
+            Card.name == card.phoenixborn,
+            Card.card_type == 'Phoenixborn'
+        ).first()
+    elif card.card_type == 'Phoenixborn':
+        phoenixborn_card = db.session.query(Card.stub, Card.name).filter(
+            Card.phoenixborn == card.name,
+            Card.card_type.notin_(('Conjuration', 'Conjured Alteration Spell'))
+        ).first()
     return render_template(
         'cards/detail.html',
         card=json.loads(card.json),
@@ -84,5 +96,6 @@ def detail(stub):
         preconstructed={
             'url': url_for('decks.view', deck_id=preconstructed.source_id),
             'title': preconstructed.title
-        } if preconstructed else None
+        } if preconstructed else None,
+        phoenixborn_card=phoenixborn_card
     )
