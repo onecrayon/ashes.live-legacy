@@ -96,6 +96,12 @@
 			<th>Release:</th>
 			<td>{{ release }}</td>
 		</tr>
+		{% if preconstructed %}
+		<tr>
+			<th>Deck:</th>
+			<td><a href="{{ preconstructed.url }}">{{ preconstructed.title }}</a></td>
+		</tr>
+		{% endif %}
 	</table>
 
 	{% if conjurations %}

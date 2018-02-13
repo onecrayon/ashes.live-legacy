@@ -2,7 +2,7 @@
 
 import json
 
-from flask import abort, current_app, Blueprint, render_template
+from flask import abort, current_app, Blueprint, url_for, render_template
 
 from app import db
 from app.models.card import Card
@@ -65,6 +65,13 @@ def detail(stub):
     ).first()
     dice = Card.flags_to_dice(card.dice_flags)
     dice.remove('basic')
+    # Grab preconstructed deck, if available
+    preconstructed = db.session.query(Deck.source_id, Deck.title).filter(
+        Deck.phoenixborn_id == card.id,
+        Deck.is_snapshot.is_(True),
+        Deck.is_public.is_(True),
+        Deck.is_preconstructed.is_(True)
+    ).first()
     return render_template(
         'cards/detail.html',
         card=json.loads(card.json),
@@ -73,5 +80,9 @@ def detail(stub):
         dice=dice,
         release=current_app.config['RELEASE_NAMES'][card.release],
         decks_count=counts.decks,
-        users_count=counts.users
+        users_count=counts.users,
+        preconstructed={
+            'url': url_for('decks.view', deck_id=preconstructed.source_id),
+            'title': preconstructed.title
+        } if preconstructed else None
     )
