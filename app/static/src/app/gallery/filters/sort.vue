@@ -21,10 +21,12 @@
 </template>
 
 <script>
+	import {globals} from 'app/utils'
+
 	export default {
 		computed: {
 			normalListing () {
-				return !!this.$store.state.deck.phoenixborn
+				return !!this.$store.state.deck.phoenixborn || globals.galleryOnly
 			},
 			orderIconClass () {
 				return 'fa-chevron-' + (this.$store.state.options.primaryOrder === 1 ? 'up' : 'down')
