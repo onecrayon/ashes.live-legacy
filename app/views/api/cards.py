@@ -20,19 +20,27 @@ def search():
     data = request.get_json()
     query = db.session.query(Card.id)
     # Setup our filters
+    include_conjurations = data.get('includeConjurations', False)
     types = data.get('types')
     if types and 'summon' in types:
         query = query.filter(
             Card.name.like('Summon%')
         )
         types.remove('summon')
+    if types and 'conjurations' in types:
+        types.remove('conjurations')
+        types = types + ['Conjuration', 'Conjured Alteration Spell']
     if types:
         query = query.filter(
             Card.card_type.in_(types)
         )
-    else:
+    elif not include_conjurations:
         query = query.filter(
             Card.card_type.notin_(['Phoenixborn', 'Conjuration', 'Conjured Alteration Spell'])
+        )
+    else:
+        query = query.filter(
+            Card.card_type != 'Phoenixborn'
         )
     releases = data.get('releases')
     if releases:
