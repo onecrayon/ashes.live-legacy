@@ -40,6 +40,9 @@ function attributeSort (a, b, primarySort, primaryOrder, secondarySort, secondar
 			)
 		}
 	}
+	if (a[primarySort] === undefined || b[primarySort] === undefined) {
+		return b[primarySort] === undefined ? primaryOrder : -primaryOrder
+	}
 	return b[primarySort] < a[primarySort] ? primaryOrder : -primaryOrder
 }
 
@@ -184,8 +187,22 @@ export default class {
 			// Sorting by dice requires special weighting
 			if (primarySort === 'dice') {
 				// Grab sorted versions of our dice arrays
-				let aDice = a.dice && a.dice.length ? a.dice : []
-				let bDice = b.dice && b.dice.length ? b.dice : []
+				let aDice = a.dice && a.dice.length ? a.dice : null
+				let bDice = b.dice && b.dice.length ? b.dice : null
+				if (a.splitDice && a.splitDice.length) {
+					aDice = aDice ? Array.from(new Set(aDice + a.splitDice)) : a.splitDice
+				}
+				if (b.splitDice && b.splitDice.length) {
+					bDice = bDice ? Array.from(new Set(bDice + b.splitDice)) : b.splitDice
+				}
+				if (aDice === null || bDice === null) {
+					if (aDice === bDice) {
+						return attributeSort(
+							a, b, secondarySort, secondaryOrder, null, secondaryOrder
+						)
+					}
+					return bDice === null ? primaryOrder : -primaryOrder
+				}
 				aDice.sort()
 				bDice.sort()
 				// If the arrays are equal, check secondarySort
