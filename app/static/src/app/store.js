@@ -360,14 +360,14 @@ export default new Vuex.Store({
 			// phoenixborn is not a promo
 			let onlyPromos = true
 			for (let release of state.options.releases) {
-				if (release < 100) {
+				if (release !== 'promos') {
 					onlyPromos = false
 				}
 			}
 			if (onlyPromos) {
 				const phoenixborn = cardManager.cardById(state.deck.phoenixborn)
 				if (phoenixborn.release < 100) {
-					state.options.releases = [0]
+					state.options.releases = ['core']
 				}
 			}
 		},
