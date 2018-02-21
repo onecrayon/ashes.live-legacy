@@ -64,7 +64,11 @@ def production_url(url):
 def cdn_url(url):
     if not url.startswith('/'):
         url = '/' + url
-    return '{}{}'.format(current_app.config['CDN_URL'], url)
+    return '{}{}'.format(
+        current_app.config['CDN_URL'] if current_app.config['CDN_URL']
+        else current_app.config['SITE_URL'],
+        url
+    )
 
 
 @app.template_filter('card_img')
