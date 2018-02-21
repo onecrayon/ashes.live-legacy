@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 {% block title %}Card: {{ card.name }}{% endblock %}
+{% block meta %}
+	<meta property="og:image" content="{{ card.images.compressed | cdn_url }}">
+	<meta property="og:description" content="{%- if card.type == 'Phoenixborn' -%}
+		{{ card.type }}: Battlefield {{ card.battlefield }} &bull; Life {{ card.life }} &bull; Spellboard {{ card.spellboard }}
+	{%- else -%}
+		{{ card.type }}{% if card.cost %}: {% for cost in card.cost -%}
+			{%- if cost is string %}{{ cost }}{% else %}{% for split_cost in cost %}{{ split_cost }}{% if not loop.last %} / {% endif %}{% endfor %}{% endif -%}
+			{%- if not loop.last %} &bull; {% endif -%}
+		{%- endfor %}{% endif -%}
+		{%- if card.attack is defined or card.life is defined or card.recover is defined or card.copies is defined -%}
+			{%- if card.copies is defined %} ({{ card.copies }}){% endif %}:
+			{%- if card.attack is defined %} Attack {{ card.attack }}{% endif -%}
+			{%- if card.life is defined %}{% if card.attack is defined %} &bull;{% endif %} Life {{ card.life }}{% endif -%}
+			{%- if card.recover is defined %}{% if card.attack is defined or card.life is defined %} &bull;{% endif %} Recover {{ card.recover }}{% endif -%}
+		{%- endif -%}
+	{%- endif -%}">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image:alt" content="{{ card.name }}">
+{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-charm-class">{{ card.name }}</h1>

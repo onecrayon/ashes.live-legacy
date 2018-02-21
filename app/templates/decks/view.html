@@ -1,6 +1,14 @@
 {% from "macros.html" import usertag, hide_on_load %}
 {% extends "base.html" %}
 {% block title %}Deck: {{ deck | deck_title }}{% endblock %}
+{% block meta %}
+	<meta property="og:image" content="{{ ('/images/cards/' + deck.phoenixborn.stub + '.jpg') | cdn_url }}">
+	<meta property="og:description" content="{% for dice in deck.dice -%}
+	{{ dice.count }}x {{ dice.die_flag | die_name | capitalize }}{% if not loop.last %} &bull; {% endif %}
+	{%- endfor %}">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image:alt" content="{{ deck.phoenixborn.name }}">
+{% endblock %}
 {% block page_class %}sidebar-first deck-view-page{% endblock %}
 
 {% block heading %}

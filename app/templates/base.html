@@ -39,7 +39,11 @@
 	<meta name="apple-mobile-web-app-title" content="Ashes.live">
 	<meta name="application-name" content="Ashes.live">
 	<meta name="theme-color" content="#f3f1e7">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') | production_url }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') | production_url }}">
+	<meta property="og:url" content="{{ request.base_url }}">
+	<meta property="og:title" content="{{ self.title() }}">
+	<meta property="og:site_name" content="Ashes.live">
+	{% block meta %}{% endblock %}
 </head>
 <body class="{% block page_class %}static{% endblock %}">
 	<a href="{{ url_for('home.feedback') }}" class="help-badge" target="_blank">
