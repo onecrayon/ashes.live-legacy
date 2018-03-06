@@ -220,30 +220,37 @@ if (triggers) {
 }
 
 // Setup "almost AJAX" auto-submitting form behavior
+function isActiveInput (input) {
+	if (input.type === 'checkbox' || input.type === 'radio') {
+		return input.checked
+	}
+	return input.name && input.value
+}
 globals.formToQueryString = function (formEl) {
 	const submittables = formEl.querySelectorAll('input, select, textarea')
 	if (!submittables) return ''
 	// Stash values into an object
 	let values = {}
 	for (const input of Array.from(submittables)) {
-		if (input.name && input.value) {
-			if (values[input.name]) {
-				if (!Array.isArray(values[input.name])) {
-					values[input.name] = [values[input.name]]
+		const name = input.name
+		if (isActiveInput(input)) {
+			if (values[name]) {
+				if (!Array.isArray(values[name])) {
+					values[name] = [values[name]]
 				}
-				values[input.name].push(input.value)
+				values[name].push(input.value)
 			} else {
-				values[input.name] = input.value
+				values[name] = input.value
 			}
 		}
 	}
 	// Convert object into a query string
 	return Object.keys(values).map(key => {
+		const divider = encodeURIComponent(key) + '='
 		if (Array.isArray(values[key])) {
-			const divider = encodeURIComponent(key) + '[]='
 			return divider + values[key].join('&' + divider)
 		}
-		return encodeURIComponent(key) + "=" + encodeURIComponent(values[key])
+		return divider + encodeURIComponent(values[key])
 	}).join("&")
 }
 const autoSubmitForms = document.querySelectorAll('form.auto-submit')
