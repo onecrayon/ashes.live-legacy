@@ -265,23 +265,7 @@ if (autoSubmitForms) {
 			}
 			window.location.search = '?' + query
 		}
-		// Submit on enter (otherwise clear buttons can hijack the enter key)
-		form.addEventListener('keydown', function (event) {
-			if (event.keyCode == 13) {
-				submitForm(event)
-			}
-		})
 		form.addEventListener('submit', submitForm)
 		form.addEventListener('change', submitForm)
-		// Setup logic for "clear" buttons
-		const clearButtons = form.querySelectorAll('.clear-control')
-		if (clearButtons) {
-			for (const button of Array.from(clearButtons)) {
-				button.addEventListener('click', function (event) {
-					document.getElementById(button.getAttribute('data-target-input')).value = ''
-					submitForm(event)
-				})
-			}
-		}
 	}
 }

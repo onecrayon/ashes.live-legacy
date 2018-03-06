@@ -15,7 +15,7 @@
 				<div class="form-field">
 					<input type="text" placeholder="Filter by title..." id="searchbox" name="s" value="{{ filters.s | default('') }}">
 				</div>
-				<button class="btn clear-control" title="Clear Search" data-target-input="searchbox" id="clear-search-button"><i class="fa fa-times"></i></button>
+				<button class="btn" title="Filter"><i class="fa fa-search"></i></button>
 			</div>
 			<div class="form-field col-flex">
 				<select name="phoenixborn">
@@ -24,6 +24,9 @@
 					<option value="{{ card.stub }}"{% if filters.phoenixborn == card.stub %} selected{% endif %}>{{ card.name }}</option>
 					{% endfor %}
 				</select>
+			</div>
+			<div class="btn-group col">
+				<a href="{{ url_for('decks.index') }}" class="btn" title="Clear filters"><i class="fa fa-times"></i></a>
 			</div>
 		</div>
 		<noscript>
