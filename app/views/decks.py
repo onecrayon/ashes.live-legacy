@@ -54,7 +54,7 @@ def index(page=None):
         page=page,
         pages=pagination,
         precon_decks=precon_decks,
-        filters=filters,
+        filters={k: v for k, v in filters.items() if v},
         phoenixborn=phoenixborn
     )
 

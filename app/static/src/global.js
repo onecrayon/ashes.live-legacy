@@ -218,3 +218,63 @@ if (triggers) {
 		})
 	}
 }
+
+// Setup "almost AJAX" auto-submitting form behavior
+globals.formToQueryString = function (formEl) {
+	const submittables = formEl.querySelectorAll('input, select, textarea')
+	if (!submittables) return ''
+	// Stash values into an object
+	let values = {}
+	for (const input of Array.from(submittables)) {
+		if (input.name && input.value) {
+			if (values[input.name]) {
+				if (!Array.isArray(values[input.name])) {
+					values[input.name] = [values[input.name]]
+				}
+				values[input.name].push(input.value)
+			} else {
+				values[input.name] = input.value
+			}
+		}
+	}
+	// Convert object into a query string
+	return Object.keys(values).map(key => {
+		if (Array.isArray(values[key])) {
+			const divider = encodeURIComponent(key) + '[]='
+			return divider + values[key].join('&' + divider)
+		}
+		return encodeURIComponent(key) + "=" + encodeURIComponent(values[key])
+	}).join("&")
+}
+const autoSubmitForms = document.querySelectorAll('form.auto-submit')
+if (autoSubmitForms) {
+	for (const form of Array.from(autoSubmitForms)) {
+		function submitForm (event) {
+			event.preventDefault()
+			let query = globals.formToQueryString(form)
+			if (!query) {
+				window.location.href = window.location.origin + window.location.pathname
+				return
+			}
+			window.location.search = '?' + query
+		}
+		// Submit on enter (otherwise clear buttons can hijack the enter key)
+		form.addEventListener('keydown', function (event) {
+			if (event.keyCode == 13) {
+				submitForm(event)
+			}
+		})
+		form.addEventListener('submit', submitForm)
+		form.addEventListener('change', submitForm)
+		// Setup logic for "clear" buttons
+		const clearButtons = form.querySelectorAll('.clear-control')
+		if (clearButtons) {
+			for (const button of Array.from(clearButtons)) {
+				button.addEventListener('click', function (event) {
+					document.getElementById(button.getAttribute('data-target-input')).value = ''
+					submitForm(event)
+				})
+			}
+		}
+	}
+}
