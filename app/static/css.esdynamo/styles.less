@@ -152,7 +152,7 @@ a.error {
 	clear: both;
 }
 
-.mobile-only {
+.mobile-only, .hidden {
 	display: none;
 }
 
@@ -336,6 +336,18 @@ ul.divider-separated {
 		}
 	}
 
+	select {
+		.font-size(18);
+		.line-height(34);
+		.alert(@color-dark-gray);
+		border-radius: 5px;
+		box-sizing: border-box;
+		margin: 0;
+		padding: 5px;
+		height: 34px;
+		width: 100%;
+	}
+
 	.alerts li {
 		margin: 10px 0 0;
 	}
@@ -447,6 +459,11 @@ ul.divider-separated {
 	.btn:first-child {
 		border-radius: 5px 0 0 5px;
 		border-right-width: 1px;
+	}
+
+	.btn:only-child {
+		border-radius: 5px;
+		border-right-width: 2px;
 	}
 	
 	.btn + .btn {

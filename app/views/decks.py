@@ -2,12 +2,12 @@
 
 import json
 
-from flask import abort, Blueprint, current_app, flash, redirect, render_template, url_for
+from flask import abort, Blueprint, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from sqlalchemy.orm.session import make_transient
 
 from app import db
-from app.models.card import DiceFlags
+from app.models.card import Card, DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.utils.cards import global_json
 from app.utils.decks import get_decks, get_decks_query, process_deck
@@ -20,8 +20,27 @@ mod = Blueprint('decks', __name__, url_prefix='/decks')
 @mod.route('/<int:page>/')
 def index(page=None):
     """View list of all public decks"""
+    phoenixborn = db.session.query(Card.name, Card.stub, Card.id).filter(
+        Card.card_type == 'Phoenixborn'
+    ).order_by(Card.release.asc(), Card.name.asc()).all()
+    filters = {
+        's': request.args.get('s'),
+        'phoenixborn': request.args.get('phoenixborn')
+    }
+    active_filters = []
+    if filters['s']:
+        active_filters.append(Deck.title.like('%' + filters['s'].replace('%', r'\%') + '%'))
+    if filters['phoenixborn']:
+        phoenixborn_id = next(
+            (x.id for x in phoenixborn if x.stub == filters['phoenixborn']), None
+        )
+        if phoenixborn_id:
+            active_filters.append(Deck.phoenixborn_id == phoenixborn_id)
+        else:
+            flash('Unable to find Phoenixborn; showing all cards.', 'error')
     decks, card_map, page, pagination = get_decks(
-        page, order_by='created', most_recent_public=True
+        page, order_by='created', most_recent_public=True,
+        filters=(active_filters or None)
     )
     precon_decks = get_decks_query(filters=[
         Deck.is_preconstructed.is_(True)
@@ -34,7 +53,9 @@ def index(page=None):
         card_map=card_map,
         page=page,
         pages=pagination,
-        precon_decks=precon_decks
+        precon_decks=precon_decks,
+        filters={k: v for k, v in filters.items() if v},
+        phoenixborn=phoenixborn
     )
 
 

@@ -52,3 +52,9 @@
 		document.getElementById('{{ id }}').style.display = 'none'
 	</script>
 {%- endmacro %}
+
+{% macro show_on_load(id) -%}
+	<script type="text/javascript">
+		document.getElementById('{{ id }}').className.replace(/\s*\bhidden\b/i, '')
+	</script>
+{%- endmacro %}
