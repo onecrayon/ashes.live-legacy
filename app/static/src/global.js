@@ -259,11 +259,15 @@ if (autoSubmitForms) {
 		function submitForm (event) {
 			event.preventDefault()
 			let query = globals.formToQueryString(form)
+			const baseUrl = (
+				window.location.origin
+				+ window.location.pathname.replace(/\/\d+\/?$/, '')
+			)
 			if (!query) {
-				window.location.href = window.location.origin + window.location.pathname
-				return
+				window.location.href = baseUrl
+			} else {
+				window.location.href = [baseUrl, '?', query].join('')
 			}
-			window.location.search = '?' + query
 		}
 		form.addEventListener('submit', submitForm)
 		form.addEventListener('change', submitForm)
