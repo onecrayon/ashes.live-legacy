@@ -318,8 +318,9 @@ export default new Vuex.Store({
 			} else {
 				state.options.dice.push(die)
 			}
-			// Disallow filtering by conjuration types when we have a dice type selected
-			if (state.options.dice && state.options.dice.length > 0 && state.options.types &&
+			// Disallow filtering by conjuration types when we have a non-basic dice type selected
+			if (state.options.dice && state.options.dice.length > 0 &&
+					state.options.dice.indexOf('basic') == -1 && state.options.types &&
 					state.options.types.indexOf('conjurations') > -1) {
 				state.options.types.splice(state.options.types.indexOf('conjurations'), 1)
 			}

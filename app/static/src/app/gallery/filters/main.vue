@@ -29,7 +29,7 @@
 					><i class="fa" :class="typeToFontAwesome('Phoenixborn')"></i> <span class="full-display-only">Phoenixborn</span></button
 				><button v-if="isCardGallery" @click="toggleCardType('conjurations')"
 					class="btn btn-small" :class="{active: isTypeActive('conjurations')}"
-					:disabled="hasDiceFilter"
+					:disabled="diceFilterExcludesConjurations"
 					><i class="fa" :class="typeToFontAwesome('Conjuration')"></i> <span class="full-display-only">Conjuration</span></button
 				>
 			</div>
@@ -74,6 +74,10 @@
 			},
 			hasDiceFilter () {
 				return this.$store.state.options.dice && this.$store.state.options.dice.length > 0
+			},
+			diceFilterExcludesConjurations () {
+				return this.$store.state.options.dice && this.$store.state.options.dice.length > 0
+					&& !includes(this.$store.state.options.dice, 'basic')
 			}
 		},
 		methods: {
