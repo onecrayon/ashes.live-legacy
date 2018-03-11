@@ -51,7 +51,14 @@ class Card(db.Model):
     def has_any_dice_filter(dice):
         if not dice:
             dice = ['basic']
-        filters = [
+        filters = []
+        if 'basic' in dice:
+            filters.append(db.and_(
+                Card.dice_flags == 0,
+                Card.split_dice_flags == 0
+            ))
+            dice.remove('basic')
+        filters = filters + [
             Card.dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice
         ] + [
             Card.split_dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice
