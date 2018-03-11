@@ -1,5 +1,3 @@
-import re
-
 from flask import Blueprint, jsonify, request
 from sqlalchemy_fulltext import FullTextSearch
 import sqlalchemy_fulltext.modes as FullTextMode
@@ -62,11 +60,8 @@ def search():
     search = data.get('search')
     if search:
         # Setup prefix search so that we can get partial word matches
-        terms = re.compile('[ ]+').split(search)
-        terms = '* '.join(terms)
-        terms = terms + '*'
-        query = query.filter(db.or_(
-            FullTextSearch(search, NameTextSearch, FullTextMode.NATURAL),
+        terms = ''.join((search, '*')) if ' ' not in search else ''.join(('"', search, '"'))
+        query = query.filter(
             FullTextSearch(terms, NameTextSearch, FullTextMode.BOOLEAN)
-        ))
+        )
     return jsonify(query.all())
