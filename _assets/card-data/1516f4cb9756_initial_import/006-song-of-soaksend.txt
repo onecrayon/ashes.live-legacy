@@ -49,7 +49,7 @@ Calming Melody: [[side]] - [[exhaust]] - 1 [[sympathy:class]]: Draw 1 card. You 
 River Skald
 Ally - Battlefield
 [[main]] - 1 [[sympathy:power]] - 1 [[sympathy:class]] - 1 [[basic]]
-Attack 3 - Life 2 - Recover 2
+Attack 3 - Life 3 - Recover 2
 
 Harsh Melody: When you draw 1 or more cards during your turn, you may place 1 exhaustion token on this unit to place a number of wound tokens equal to this unit's attack value on a target unit.
 

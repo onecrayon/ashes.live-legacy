@@ -120,6 +120,6 @@ Destroy a target unit or remove all wound tokens from a target unit.
 
 Winged Lioness
 Conjuration - Battlefield
-Attack 2 - Life 2 - Recover 1
+Attack 2 - Life 2 - Recover 1 - Copies 4
 
 Stalk: This unit cannot be guarded against.

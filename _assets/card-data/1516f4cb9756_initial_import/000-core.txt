@@ -102,7 +102,7 @@ Change 3 dice in your active pool to a side of your choice.
 
 =====
 
-Change Of Revenge
+Chant Of Revenge
 Ready Spell - Spellboard
 [[main]] - 1 [[ceremonial:class]]
 
@@ -131,7 +131,7 @@ Ready Spell - Spellboard
 
 After a player has declared attackers, you may spend 1 [[basic]] and place 1 exhaustion token on this spell. If you do, add 1 to a target unit's attack value for the remainder of this turn.
 
-In additionn, you may draw 1 card. If you do, discard 1 card.
+In addition, you may draw 1 card. If you do, discard 1 card.
 
 Focus 1: In addition, you may select 1 die in your exhausted pool, re-roll it, and place it into your active pool.
 
@@ -286,7 +286,7 @@ Strike: After a player has declared attackers, you may spend 1 [[basic]] and pla
 
 Masked Wolf (Noah Redmoon)
 Conjuration - Battlefield
-Attack 2 - Life 1 - Recover 0
+Attack 2 - Life 1 - Recover 0 - Copies 5
 
 =====
 
@@ -382,7 +382,7 @@ Redirect
 Reaction Spell - Discard
 1 [[charm:class]]
 
-You may play this spell when your Phoenixborn would take damage and you have at least 1 unit that you control in play. Do not deal that damage to your Phoenixborn. Instead deal that damage to a target unit you control.
+You may play this spell when your Phoenixborn would be dealt damage and you have at least one unit in play. Do not deal that damage to your Phoenixborn. Instead deal that damage to a target unit you control.
 
 =====
 
@@ -504,7 +504,7 @@ Life +2
 
 * This unit now has the following ability:
 
-* Spiked Skin 2: When this unit is damaged by one or more attacking or countering units, simultaneously deal 2 damage to each unit that is attacking or countering this unit.
+* Spiked Skin 2: When this unit is dealt damage by one or more attacking or countering units, deal 2 damage to each unit that is attacking or countering this unit.
 
 =====
 
@@ -657,7 +657,7 @@ Sympathy Pain
 Reaction Spell - Discard
 2 [[charm:class]]
 
-Play this spell after your Phoenixborn has received damage. Deal 3 damage to a target unit or Phoenixborn.
+You may play this spell after your Phoenixborn has received damage. Deal 3 damage to a target unit or Phoenixborn.
 
 =====
 

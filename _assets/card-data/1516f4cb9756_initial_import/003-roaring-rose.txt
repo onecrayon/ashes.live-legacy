@@ -83,7 +83,7 @@ Nightshade Swallow
 Conjuration - Battlefield
 Attack 1 - Life 2 - Recover 1 - Copies 5
 
-Deathstrike: When this unit deals 1 or more damage to a unit it is attacking or countering, destroy the unit that received damage.
+Deathstrike: When this unit deals 1 or more damage to a unit it is attacking or countering, destroy that unit.
 
 =====
 
