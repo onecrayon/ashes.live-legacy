@@ -10,6 +10,9 @@ var globals = window.globals || {}
 globals.cardUrl = function (data) {
 	return '/cards/' + data.stub
 }
+globals.playerUrl = function (badge) {
+	return '/player/' + badge
+}
 globals.diceData = [
 	'ceremonial', 'charm', 'illusion', 'natural',
 	'divine', 'sympathy'
@@ -21,6 +24,36 @@ globals.releaseData = {
 }
 globals.parseCardCodes = function (input) {
 	input = escape(input)
+	// Parse links
+	input = input.replace(
+		/\[\[([^\]]*?)((?:https?:\/\/|\b)[^\s\/$.?#]+\.[^\s*]+?)\]\]|((?:https?:\/\/|\b)[^\s\/$.?#]+\.[^\s*]+?(?=[.?!]|\s|$))/ig,
+		(_, text, url, standalone) => {
+			let internalLink = false
+			const textUrl = url ? url : standalone
+			const parsedUrl = textUrl.replace(/^(https?:\/\/)?(.+)$/i, (_, prefix, url) => {
+				if (/^ashes\.live(?:\/.*)?$/i.test(url)) {
+					internalLink = true
+					return 'https://' + url
+				} else if (!prefix) {
+					return 'http://' + url
+				} else {
+					return url
+				}
+			})
+			text = text ? text.trim() : null
+			return [
+				'<a href="', parsedUrl, '"', !internalLink ? ' rel="nofollow"' : '', '>',
+				text ? text : textUrl, '</a>'
+			].join('')
+	})
+	// Parse player links
+	input = input.replace(/\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]/ig, (_, text, badge) => {
+		text = text ? text.trim() : null
+		return [
+			'<a class="username" href="', globals.playerUrl(badge), '">',
+			text ? text : '', '<span class="badge">', badge, '</span></a>'
+		].join('')
+	})
 	// Parse card codes
 	input = input.replace(/\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )/ig, (_, primary, secondary, dash) => {
 		if (dash) {

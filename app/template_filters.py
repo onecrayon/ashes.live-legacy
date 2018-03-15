@@ -1,5 +1,6 @@
 from datetime import date
 import re
+from urllib.parse import unquote
 
 import pytz
 from flask import current_app, url_for
@@ -71,6 +72,13 @@ def cdn_url(url):
     )
 
 
+@app.template_filter('badge_link')
+def badge_link(url):
+    def parse_badge(match):
+        return unquote(match.group(0))
+    return re.sub(r'/[0-9](?:[a-z0-9-]|%2[ab16]|%3d)+(?:[a-z0-9]|%2[a1])(?:/|$)', parse_badge, url, count=1, flags=re.I)
+
+
 @app.template_filter('card_img')
 def card_img(card, extension='jpg'):
     if extension not in ('jpg', 'png'):
@@ -79,6 +87,45 @@ def card_img(card, extension='jpg'):
 
 
 def parse_card_codes(text):
+    # Normalize linebreaks to Unix; for some reason I was getting CRLF from the database
+    text = re.sub(r'\r\n|\r', r'\n', text)
+    # Parse arbitrary links; e.g. [[My deck ashes.live/decks/123]] or ashes.live/decks/123
+    def parse_url(match):
+        text_url = match.group(2) if match.group(2) else match.group(3)
+        internal_link = re.match(r'(https?://)?ashes\.live', text_url, flags=re.I) is not None
+        def parse_url_prefix(match):
+            if internal_link:
+                return 'https://' + match.group(2)
+            elif not match.group(1):
+                return 'http://' + match.group(2)
+            else:
+                return match.group(0)
+        parsed_url = re.sub(r'^(https?://)?(.+)$', parse_url_prefix, text_url)
+        text = match.group(1).strip() if match.group(1) else None
+        return ''.join([
+             '<a href="', parsed_url, '"', ' rel="nofollow"' if not internal_link else '', '>',
+            text if text else text_url, '</a>'
+        ])
+    text = re.sub(
+        r'\[\[([^\]]*?)((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?)\]\]|((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?(?=[.?!]|\s|$))',
+        parse_url, text, flags=re.I
+    )
+    # Parse player links; e.g. [[Username#1234]] or [[#1234]]
+    def parse_badges(match):
+        """
+        const text = text ? text.trim() : null
+		return [
+			'<a class="username" href="', globals.playerUrl(badge), '">',
+			text ? text : '', '<span class="badge">', badge, '</span></a>'
+		].join('')
+        """
+        text = match.group(1).strip() if match.group(1) else None
+        badge = match.group(2)
+        return ''.join([
+            '<a class="username" href="', badge_link(url_for('player.view', badge=badge)), '">',
+			text if text else '', '<span class="badge">', badge, '</span></a>'
+        ])
+    text = re.sub(r'\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]', parse_badges, text, flags=re.I)
     def parse_match(match):
         if match.group(3):
             return Markup(' <span class="divider"></span> ')
@@ -112,15 +159,26 @@ def parse_card_codes(text):
         ]))
     # Parse card codes
     text = re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
+    # Parse blockquotes
+    def parse_blockquotes(match):
+        return Markup(''.join([
+            '<blockquote>',
+            re.sub(r'^&gt;[ \t]*', r'', match.group(0), flags=re.M),
+            '</blockquote>'
+        ]))
+    text = re.sub(r'(^&gt; ?.+?)(?=(\n\n[\w\[*])|\Z)', parse_blockquotes, text, flags=re.M|re.S)
+    text = text.replace('\n</blockquote>', '</blockquote>\n')
     # Parse star formatting
     # * list item
     def list_element(match):
         return Markup(''.join([match.group(1), '<li>', match.group(2), '</li>']))
-    text = re.sub(r'(^|\n)\* +(.+)', list_element, text)
+    text = re.sub(r'(^|\n|<blockquote>)\* +(.+)', list_element, text)
+    text = text.replace('</blockquote></li>', '</li></blockquote>')
     def list_wrapper(match):
-        return Markup(''.join([match.group(1), '<ul>', match.group(2), '</ul>\n']))
-    text = re.sub(r'(^|\n)((?:<li>.+?</li>(?:\n|$))+)', list_wrapper, text)
-    text = re.sub(r'(</li>)\n(<li>|</ul>)', r'\1\2', text)
+        return Markup(''.join([match.group(1), '<ul>', match.group(2), '</ul>', match.group(3)]))
+    text = re.sub(r'(^|\n|<blockquote>)((?:<li>.+?</li>\n?)+)(</blockquote>|\n|$)', list_wrapper, text)
+    text = text.replace('</li>\n<li>', '</li><li>')
+    text = text.replace('</li>\n</ul>', '</li></ul>\n')
     # lone star: *
     def lone_star(match):
         return Markup(''.join([match.group(1), '&#42;', match.group(2)]))
@@ -168,9 +226,11 @@ def parse_text(eval_ctx, text, format_paragraphs=True):
         '<p>{}</p>'.format(p.replace('\n', Markup('<br>\n')))
         for p in _paragraph_re.split(result.strip())
     )
-    # Correct wrapped lists
-    result = re.sub(r'<p><ul>', r'<ul>', result)
-    result = re.sub(r'</ul></p>', r'</ul>', result)
+    # Correct wrapped lists and blockquotes
+    result = re.sub(r'<p>((?:<blockquote>)?<ul>)', r'\1', result)
+    result = re.sub(r'(</ul>(?:</blockquote>)?)</p>', r'\1', result)
+    result = result.replace('<p><blockquote>', '<blockquote><p>')
+    result = result.replace('</blockquote></p>', '</p></blockquote>')
     if eval_ctx.autoescape:
         result = Markup(result)
     return result

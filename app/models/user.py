@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
                  newsletter_opt_in=False):
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
-        if badge and re.search(r'^[0-9][a-z0-9*&+=-]+[a-z0-9*%!?]$', badge):
+        if badge and re.search(r'^[0-9][a-z0-9*&+=-]+[a-z0-9*!]$', badge):
             self.badge = badge
         else:
             self.badge = User.fetch_badges(True)
@@ -107,7 +107,7 @@ def generate_badges(number=8, length=4):
         # Next characters are alphanumeric or middle punctuation
         ''.join(choice(string.ascii_lowercase + string.digits + '*&-+=') for _ in range(length-2)),
         # Final character alphanumeric or ending punctuation
-        choice(string.ascii_lowercase + string.digits + '*%!?')
+        choice(string.ascii_lowercase + string.digits + '*!')
     ]) for _ in range(number)]
 
 
