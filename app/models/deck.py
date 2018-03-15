@@ -10,6 +10,7 @@ from app.models.user import User
 
 class Deck(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    entity_id = db.Column(db.Integer, nullable=False, index=True, unique=True)
     title = db.Column(db.String(255), index=True)
     description = db.Column(db.Text)
     is_public = db.Column(db.Boolean, nullable=False, default=False, index=True)

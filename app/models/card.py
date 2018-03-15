@@ -17,6 +17,7 @@ class DiceFlags(Enum):
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    entity_id = db.Column(db.Integer, nullable=False, index=True, unique=True)
     name = db.Column(db.String(25), nullable=False, index=True, unique=True)
     stub = db.Column(db.String(25), nullable=False, index=True, unique=True)
     phoenixborn = db.Column(db.String(25), nullable=True, index=True)
