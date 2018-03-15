@@ -87,6 +87,8 @@ def card_img(card, extension='jpg'):
 
 
 def parse_card_codes(text):
+    # Normalize linebreaks to Unix; for some reason I was getting CRLF from the database
+    text = re.sub(r'\r\n|\r', r'\n', text)
     # Parse arbitrary links; e.g. [[My deck ashes.live/decks/123]] or ashes.live/decks/123
     def parse_url(match):
         text_url = match.group(2) if match.group(2) else match.group(3)
@@ -157,15 +159,26 @@ def parse_card_codes(text):
         ]))
     # Parse card codes
     text = re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
+    # Parse blockquotes
+    def parse_blockquotes(match):
+        return Markup(''.join([
+            '<blockquote>',
+            re.sub(r'^&gt;[ \t]*', r'', match.group(0), flags=re.M),
+            '</blockquote>'
+        ]))
+    text = re.sub(r'(^&gt; ?.+?)(?=(\n\n[\w\[*])|\Z)', parse_blockquotes, text, flags=re.M|re.S)
+    text = text.replace('\n</blockquote>', '</blockquote>\n')
     # Parse star formatting
     # * list item
     def list_element(match):
         return Markup(''.join([match.group(1), '<li>', match.group(2), '</li>']))
-    text = re.sub(r'(^|\n)\* +(.+)', list_element, text)
+    text = re.sub(r'(^|\n|<blockquote>)\* +(.+)', list_element, text)
+    text = text.replace('</blockquote></li>', '</li></blockquote>')
     def list_wrapper(match):
-        return Markup(''.join([match.group(1), '<ul>', match.group(2), '</ul>\n']))
-    text = re.sub(r'(^|\n)((?:<li>.+?</li>(?:\n|$))+)', list_wrapper, text)
-    text = re.sub(r'(</li>)\n(<li>|</ul>)', r'\1\2', text)
+        return Markup(''.join([match.group(1), '<ul>', match.group(2), '</ul>', match.group(3)]))
+    text = re.sub(r'(^|\n|<blockquote>)((?:<li>.+?</li>\n?)+)(</blockquote>|\n|$)', list_wrapper, text)
+    text = text.replace('</li>\n<li>', '</li><li>')
+    text = text.replace('</li>\n</ul>', '</li></ul>\n')
     # lone star: *
     def lone_star(match):
         return Markup(''.join([match.group(1), '&#42;', match.group(2)]))
@@ -213,9 +226,11 @@ def parse_text(eval_ctx, text, format_paragraphs=True):
         '<p>{}</p>'.format(p.replace('\n', Markup('<br>\n')))
         for p in _paragraph_re.split(result.strip())
     )
-    # Correct wrapped lists
-    result = re.sub(r'<p><ul>', r'<ul>', result)
-    result = re.sub(r'</ul></p>', r'</ul>', result)
+    # Correct wrapped lists and blockquotes
+    result = re.sub(r'<p>((?:<blockquote>)?<ul>)', r'\1', result)
+    result = re.sub(r'(</ul>(?:</blockquote>)?)</p>', r'\1', result)
+    result = result.replace('<p><blockquote>', '<blockquote><p>')
+    result = result.replace('</blockquote></p>', '</p></blockquote>')
     if eval_ctx.autoescape:
         result = Markup(result)
     return result
