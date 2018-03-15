@@ -1,5 +1,6 @@
 from datetime import date
 import re
+from urllib.parse import unquote
 
 import pytz
 from flask import current_app, url_for
@@ -71,6 +72,13 @@ def cdn_url(url):
     )
 
 
+@app.template_filter('badge_link')
+def badge_link(url):
+    def parse_badge(match):
+        return unquote(match.group(0))
+    return re.sub(r'/[0-9](?:[a-z0-9-]|%2[ab16]|%3d)+(?:[a-z0-9]|%2[a1])(?:/|$)', parse_badge, url, count=1, flags=re.I)
+
+
 @app.template_filter('card_img')
 def card_img(card, extension='jpg'):
     if extension not in ('jpg', 'png'):
@@ -112,7 +120,7 @@ def parse_card_codes(text):
         text = match.group(1).strip() if match.group(1) else None
         badge = match.group(2)
         return ''.join([
-            '<a class="username" href="', url_for('player.view', badge=badge), '">',
+            '<a class="username" href="', badge_link(url_for('player.view', badge=badge)), '">',
 			text if text else '', '<span class="badge">', badge, '</span></a>'
         ])
     text = re.sub(r'\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]', parse_badges, text, flags=re.I)

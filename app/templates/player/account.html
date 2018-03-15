@@ -4,7 +4,7 @@
 
 {% block heading %}
 	<h1 class="phg-illusion-class">
-		{{ usertag(user, False) }} <small><a href="{{ url_for('player.view', badge=user.badge) }}">(view)</a></small>
+		{{ usertag(user, False) }} <small><a href="{{ url_for('player.view', badge=user.badge) | badge_link }}">(view)</a></small>
 	</h1>
 {% endblock %}
 
