@@ -79,6 +79,43 @@ def card_img(card, extension='jpg'):
 
 
 def parse_card_codes(text):
+    # Parse arbitrary links; e.g. [[My deck ashes.live/decks/123]] or ashes.live/decks/123
+    def parse_url(match):
+        text_url = match.group(2) if match.group(2) else match.group(3)
+        internal_link = re.match(r'(https?://)?ashes\.live', text_url, flags=re.I) is not None
+        def parse_url_prefix(match):
+            if internal_link:
+                return 'https://' + match.group(2)
+            elif not match.group(1):
+                return 'http://' + match.group(2)
+            else:
+                return match.group(0)
+        parsed_url = re.sub(r'^(https?://)?(.+)$', parse_url_prefix, text_url)
+        text = match.group(1).strip() if match.group(1) else None
+        return ''.join([
+             '<a href="', parsed_url, '"', ' rel="nofollow"' if not internal_link else '', '>',
+            text if text else text_url, '</a>'
+        ])
+    text = re.sub(
+        r'\[\[([^\]]*?)((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?)\]\]|((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?(?=[.?!]|\s|$))',
+        parse_url, text, flags=re.I
+    )
+    # Parse player links; e.g. [[Username#1234]] or [[#1234]]
+    def parse_badges(match):
+        """
+        const text = text ? text.trim() : null
+		return [
+			'<a class="username" href="', globals.playerUrl(badge), '">',
+			text ? text : '', '<span class="badge">', badge, '</span></a>'
+		].join('')
+        """
+        text = match.group(1).strip() if match.group(1) else None
+        badge = match.group(2)
+        return ''.join([
+            '<a class="username" href="', url_for('player.view', badge=badge), '">',
+			text if text else '', '<span class="badge">', badge, '</span></a>'
+        ])
+    text = re.sub(r'\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]', parse_badges, text, flags=re.I)
     def parse_match(match):
         if match.group(3):
             return Markup(' <span class="divider"></span> ')

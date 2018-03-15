@@ -61,6 +61,8 @@
 					return result
 				}, [
 					'[[Hammer Knight]]',
+					'[[Skaak#1st!]]',
+					'[[Link Text ashes.live]]',
 					'[[main]]',
 					'[[side]]',
 					'[[exhaust]]',
