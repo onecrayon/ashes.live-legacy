@@ -2,7 +2,15 @@ from flask import current_app, render_template
 from flask_mail import Message
 from premailer import transform as inline_css
 
-from app import mail
+from app import db, mail
+from app.models.stream import Streamable
+
+def new_entity():
+    """Creates a new Streamable entity and returns the ID"""
+    entity = Streamable()
+    db.session.add(entity)
+    db.session.commit()
+    return entity.entity_id
 
 
 def send_message(recipient, subject, template_name, sender=None, **kwargs):

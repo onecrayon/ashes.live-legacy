@@ -5,7 +5,9 @@ from app import db
 from app.exceptions import ApiError
 from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
+from app.models.stream import Streamable
 from app.template_filters import deck_title as compose_deck_title
+from app.utils import new_entity
 
 mod = Blueprint('api_decks', __name__, url_prefix='/api/decks')
 
@@ -61,6 +63,7 @@ def save(deck_id=None, is_snapshot=False):
             if not source:
                 abort(404)
         deck = Deck(
+            entity_id=new_entity(),
             title=deck_title,
             description=data.get('description'),
             user_id=current_user.id,
@@ -154,6 +157,7 @@ def delete(deck_id):
     # Check for public snapshots (public decks cannot be deleted)
     if deck.published_snapshot():
         raise ApiError('This deck has been published, and cannot be deleted.')
+    entity_ids = []
     snapshots = db.session.query(Deck).filter(
         Deck.is_snapshot.is_(True),
         Deck.source_id == deck_id
@@ -164,8 +168,13 @@ def delete(deck_id):
         ).count() > 0
         if has_derivatives:
             raise ApiError('This deck has been cloned, and cannot be deleted.')
+        entity_ids.append(snapshot.entity_id)
         db.session.delete(snapshot)
     title = compose_deck_title(deck)
+    entity_ids.append(deck.entity_id)
+    db.session.query(Streamable).filter(
+        Streamable.entity_id.in_(entity_ids)
+    ).delete(synchronize_session=False)
     db.session.delete(deck)
     db.session.commit()
     success_message = 'Your deck "{}" has been deleted!'.format(title)
