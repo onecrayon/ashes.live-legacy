@@ -29,6 +29,7 @@ def upgrade():
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_stream_entity_id'), 'stream', ['entity_id'], unique=True)
+    op.create_index(op.f('ix_stream_posted'), 'stream', ['posted'], unique=False)
     op.create_table('comment',
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('entity_id', sa.Integer(), nullable=False),
@@ -37,7 +38,9 @@ def upgrade():
         sa.Column('source_type', sa.String(length=16), nullable=True),
         sa.Column('text', sa.Text(), nullable=True),
         sa.Column('created', sa.DateTime(), nullable=True),
-        sa.Column('modified', sa.DateTime(), nullable=True),
+        sa.Column('modified', sa.DateTime(), nullable=True, server_default=sa.text(
+            'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        )),
         sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
         sa.PrimaryKeyConstraint('id')
     )
@@ -78,6 +81,22 @@ def upgrade():
         ), id=deck['id'])
     op.create_index(op.f('ix_card_entity_id'), 'card', ['entity_id'], unique=True)
     op.create_index(op.f('ix_deck_entity_id'), 'deck', ['entity_id'], unique=True)
+    # Create our initial stream (initially just a listing of all published decks)
+    connection.execute(
+        "INSERT INTO stream (entity_id, entity_type, posted) "
+        "SELECT source.entity_id, 'deck' AS entity_type, MAX(deck.created) AS posted FROM deck "
+        "INNER JOIN deck AS source ON source.id = deck.source_id "
+        "WHERE deck.is_snapshot = 1 AND deck.is_public = 1 "
+        "GROUP BY deck.source_id"
+    )
+    # Subscribe users to their public decks
+    connection.execute(
+        'INSERT INTO subscription (user_id, entity_id, created) '
+        'SELECT deck.user_id, deck.entity_id, NOW() AS created FROM deck '
+        'INNER JOIN deck AS snapshots ON snapshots.source_id = deck.id '
+        'WHERE deck.is_snapshot = 0 AND snapshots.is_snapshot = 1 AND snapshots.is_public = 1 '
+        'GROUP BY deck.id'
+    )
 
 
 def downgrade():
