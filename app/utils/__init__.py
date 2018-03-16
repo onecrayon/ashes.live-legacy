@@ -1,16 +1,25 @@
+import math
+
 from flask import current_app, render_template
 from flask_mail import Message
 from premailer import transform as inline_css
 
-from app import db, mail
-from app.models.stream import Streamable
+from app import mail
 
-def new_entity():
-    """Creates a new Streamable entity and returns the ID"""
-    entity = Streamable()
-    db.session.add(entity)
-    db.session.commit()
-    return entity.entity_id
+
+def get_pagination(results_count, page, per_page, spread=2):
+    """Returns a list of page numbers for rendering pagination, or None"""
+    total_pages = math.ceil(results_count / per_page)
+    if total_pages <= 1:
+        return None
+    pagination = list(range(1, total_pages + 1))
+    extra_right = spread - page + 1 if page - 1 < spread else 0
+    extra_left = page + spread - total_pages if page + spread > total_pages else 0
+    if page + spread + extra_right < total_pages - spread:
+        del pagination[page + spread + extra_right:total_pages - 1]
+    if page - spread - extra_left > spread + 1:
+        del pagination[1:page - spread - extra_left - 1]
+    return pagination
 
 
 def send_message(recipient, subject, template_name, sender=None, **kwargs):

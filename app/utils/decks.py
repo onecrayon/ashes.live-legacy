@@ -1,11 +1,11 @@
 from collections import OrderedDict
-import math
 from operator import itemgetter
 
 from flask import current_app
 
 from app import db
 from app.models.deck import Deck
+from app.utils import get_pagination
 
 
 def process_cards(section_map, deck_cards):
@@ -59,6 +59,7 @@ def process_deck(deck):
 
 
 def get_decks_query(filters=None, options=None, most_recent_public=False):
+    """Returns a generic query for grabbing decks and related data"""
     query = Deck.query
     if options:
         query = query.options(*options)
@@ -82,7 +83,7 @@ def get_decks_query(filters=None, options=None, most_recent_public=False):
 
 
 def get_decks(page, filters=None, order_by='modified', most_recent_public=False):
-    """Returns a generic query for grabbing decks and related data"""
+    """Returns a list of decks, their card mapping, and pagination info"""
     if not page:
         page = 1
     per_page = current_app.config['DEFAULT_PAGED_RESULTS']
@@ -98,16 +99,5 @@ def get_decks(page, filters=None, order_by='modified', most_recent_public=False)
     card_map = {}
     for deck in decks:
         card_map[deck.id] = process_deck(deck)
-    total_pages = math.ceil(query.count() / per_page)
-    if total_pages > 1:
-        pagination = list(range(1, total_pages + 1))
-        spread = 2
-        extra_right = spread - page + 1 if page - 1 < spread else 0
-        extra_left = page + spread - total_pages if page + spread > total_pages else 0
-        if page + spread + extra_right < total_pages - 2:
-            del pagination[page + spread + extra_right:total_pages - 1]
-        if page - spread - extra_left > 3:
-            del pagination[1:page - spread - extra_left - 1]
-    else:
-        pagination = None
+    pagination = get_pagination(query.count(), page, per_page)
     return decks, card_map, page, pagination

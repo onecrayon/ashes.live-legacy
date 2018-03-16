@@ -7,7 +7,7 @@ from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.models.stream import Streamable
 from app.template_filters import deck_title as compose_deck_title
-from app.utils import new_entity
+from app.utils.stream import new_entity
 
 mod = Blueprint('api_decks', __name__, url_prefix='/api/decks')
 

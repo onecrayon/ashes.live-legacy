@@ -38,7 +38,10 @@ def die_name(flag):
 
 @app.template_filter('deck_title')
 def deck_title(deck):
-    return deck.title if deck.title else 'Untitled {}'.format(deck.phoenixborn.name)
+    is_dict = isinstance(deck, dict)
+    title = deck.title if not is_dict else deck.get('title')
+    phoenixborn = deck.phoenixborn.name if not is_dict else deck['phoenixborn']['name']
+    return title if title else 'Untitled {}'.format(phoenixborn)
 
 
 @app.template_filter('first_name')

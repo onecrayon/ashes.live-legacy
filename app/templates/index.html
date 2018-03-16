@@ -1,43 +1,49 @@
-{% from "macros.html" import usertag %}
+{% from "macros.html" import usertag, pagination %}
+{% from "decks/macros.html" import dice_list %}
 {% extends "base.html" %}
+{% block title %}{{ 'Recent Activity' | paged_title(page) }}{% endblock %}
 {% block page_class %}homepage sidebar-first{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-divine-power">Welcome to Ashes.live!</h1>
+	<h1 class="phg-divine-power">{{ 'Recent Activity' | paged_title(page) }}</h1>
 {% endblock %}
 
 {% block content %}
-	<p class="callout">Ashes.live is a fan-made site for Plaid Hat Games' <a href="https://www.plaidhatgames.com/games/ashes">Ashes: Rise of the Phoenixborn</a>, offering <a href="{{ url_for('cards.index') }}">card browsing</a> and <a href="{{ url_for('decks.build') }}">deckbuilding</a> in a beautiful interface that highlights the gorgeous card art.</p>
+	{% if stream %}
+	<ul class="activity">
+	{% for entity in stream %}
+		<li class="{{ entity.entity_type }}{% if entity.entity_type == 'deck' %} {{ entity.phoenixborn.stub }}{% endif %}">
+			<div class="responsive-cols no-wrap">
+				<p class="col-flex">{{ usertag(entity.user) }} published a deck!</p>
+				<p class="timestamp col">{{ entity.created | format_date }}</p>
+			</div>
+			<h2>
+				<a href="{{ url_for('decks.view', deck_id=entity.source_id) }}">{{ entity | deck_title }}</a>
+			</h2>
+			{{ dice_list(entity.dice) }}
+		</li>
+	{% endfor %}
+	</ul>
+	{{ pagination('home.index', pages, page=page) }}
+	{% else %}
+	<div class="no-results">
+		<h2>No recent activity</h2>
+		<p>Publish a deck or leave a comment, and let's get this ball rolling!</p>
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block sidebar %}
+	<h2>Welcome to Ashes.live!</h2>
+
+	<p class="callout">Ashes.live is a fan site for <a href="https://www.plaidhatgames.com/games/ashes">Ashes: Rise of the Phoenixborn</a> by Plaid Hat Games, offering <a href="{{ url_for('cards.index') }}">card browsing</a> and <a href="{{ url_for('decks.build') }}">deckbuilding</a> in a beautiful interface that highlights the gorgeous card art.</p>
 
 	<p>The site is under continuous development, so please <a href="{{ url_for('home.feedback') }}"><i class="fa fa-envelope"></i> contact me</a> if you run into problems or have any suggestions or requests! You can find the link to the contact form at the upper right of every page.</p>
 
 	<p>If you would like to {% if not current_user.is_authenticated %}build and share decks or {% endif %}be notified when new features are implemented, please {% if current_user.is_authenticated %}<a href=
 		{{ url_for('player.account') }}>modify your account settings</a>{% else %}<a href="{{ url_for('player.new') }}">create an account</a>{% endif %}!</p>
-	
+
 	<h2>Features</h2>
-	
+
 	{% include "fragments/upcoming_list.html" %}
-{% endblock %}
-
-{% block sidebar %}
-	{% if recent_decks %}
-	<h2>Recent Activity</h2>
-
-	<ul class="activity">
-		{% for deck in recent_decks %}
-		<li>
-			<span class="timestamp">{{ deck.created | format_date }}</span>
-			{{ usertag(deck.user) }} published <a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
-				{{ deck.title }}
-			</a> <span class="phoenixborn" title="{{ deck.phoenixborn.name }}">
-				({{ deck.phoenixborn.name | first_name }})
-			</span>
-		</li>
-		{% endfor %}
-	</ul>
-
-	<p class="text-right"><a href="{{ url_for('decks.index') }}">
-		<i class="fa fa-eye"></i> View all published decks
-	</a></p>
-	{% endif %}
 {% endblock %}

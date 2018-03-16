@@ -1,3 +1,23 @@
+{% macro dice_list(dice, classes="") -%}
+	<ul class="dice {{ classes }}">
+	{% set current = {'count': 0} -%}
+	{% for die in dice -%}
+		{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
+		{% if current.update({'count': current.count + die.count}) %}{% endif -%}
+		{% for x in range(die.count) %}
+		<li class="die {{ die.die_flag | die_name }}">
+			<span class="phg-{{ die.die_flag | die_name }}-power" title="{{ die.die_flag | die_name | capitalize }}"></span>
+		</li>
+		{% endfor %}
+	{% endfor %}
+	{% if current.count is lessthan 10 -%}
+	{% for x in range(10 - current.count) %}
+		<li class="die basic"><span class="phg-basic-magic"></span></li>
+	{% endfor %}
+	{% endif %}
+	</ul>
+{%- endmacro %}
+
 {% macro deck_details(deck, card_map, current_user, history_view=1, link_id=0) -%}
 	{% from "macros.html" import usertag %}
 	<div class="responsive-cols no-wrap">
@@ -16,23 +36,7 @@
 			{% endif %}
 		</h2>
 
-		<ul class="dice col">
-		{% set current = {'count': 0} -%}
-		{% for dice in deck.dice -%}
-			{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
-			{% if current.update({'count': current.count + dice.count}) %}{% endif -%}
-			{% for x in range(dice.count) %}
-			<li class="die {{ dice.die_flag | die_name }}">
-				<span class="phg-{{ dice.die_flag | die_name }}-power" title="{{ dice.die_flag | die_name | capitalize }}"></span>
-			</li>
-			{% endfor %}
-		{% endfor %}
-		{% if current.count is lessthan 10 -%}
-		{% for x in range(10 - current.count) %}
-			<li class="die basic"><span class="phg-basic-magic"></span></li>
-		{% endfor %}
-		{% endif %}
-		</ul>
+		{{ dice_list(deck.dice, classes="col") }}
 	</div>
 	{% if not current_user.is_authenticated or deck.user_id != current_user.id -%}
 	<ul class="meta">
