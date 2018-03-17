@@ -22,7 +22,7 @@ def get_stream(page=None):
     if not page:
         page = 1
     per_page = current_app.config['DEFAULT_PAGED_RESULTS']
-    user_id = current_user.id if current_user else None
+    user_id = current_user.id if current_user.is_authenticated else None
     stream_query = db.session.query(
         Stream,
         Subscription.created.label('subscription_start'),
