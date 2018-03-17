@@ -7,7 +7,7 @@ from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.models.stream import Streamable
 from app.template_filters import deck_title as compose_deck_title
-from app.utils.stream import new_entity
+from app.utils.stream import new_entity, refresh_entity
 
 mod = Blueprint('api_decks', __name__, url_prefix='/api/decks')
 
@@ -34,6 +34,7 @@ def save(deck_id=None, is_snapshot=False):
 
     # Update or save deck data
     is_public = data.get('is_public', False)
+    source_entity_id = None
     if deck_id:
         deck = Deck.query.options(
             db.joinedload('cards'),
@@ -52,7 +53,7 @@ def save(deck_id=None, is_snapshot=False):
         source_id = data.get('source_id')
         # Verify that the source_id is a legal source
         if source_id:
-            source = db.session.query(Deck.id).filter(
+            source = db.session.query(Deck.entity_id).filter(
                 Deck.id == source_id,
                 Deck.is_snapshot.is_(not is_snapshot),
                 db.or_(
@@ -62,6 +63,7 @@ def save(deck_id=None, is_snapshot=False):
             ).first()
             if not source:
                 abort(404)
+            source_entity_id = source.entity_id
         deck = Deck(
             entity_id=new_entity(),
             title=deck_title,
@@ -140,6 +142,8 @@ def save(deck_id=None, is_snapshot=False):
         })
 
     # Finally save everything up!
+    if deck.is_public and deck.is_snapshot and source_entity_id:
+        refresh_entity(source_entity_id)
     db.session.add(deck)
     db.session.commit()
 

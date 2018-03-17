@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 
 from flask import current_app
 from flask_login import current_user
@@ -15,6 +16,19 @@ def new_entity():
     db.session.add(entity)
     db.session.commit()
     return entity.entity_id
+
+
+def refresh_entity(entity_id):
+    entity = db.session.query(Stream).filter(Stream.entity_id == entity_id).first()
+    if not entity:
+        entity = Stream(entity_id=entity_id, entity_type='deck')
+    else:
+        entity.posted = datetime.utcnow()
+        db.session.query(UserStream).filter(
+            UserStream.entity_id == entity_id
+        ).update({'is_delivered': False}, synchronize_session=False)
+    db.session.add(entity)
+    db.session.commit()
 
 
 def get_stream(page=None):
