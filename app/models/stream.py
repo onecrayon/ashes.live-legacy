@@ -27,5 +27,5 @@ class Subscription(db.Model):
 class UserStream(db.Model):
     """This table tracks whether a given user has seen a notification yet"""
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), primary_key=True, nullable=False)
-    stream_id = db.Column(db.Integer, db.ForeignKey(Stream.id), primary_key=True, nullable=False)
-    is_delivered = db.Column(db.Boolean, default=False, nullable=False)
+    entity_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    is_delivered = db.Column(db.Boolean, default=False, nullable=False, index=True)

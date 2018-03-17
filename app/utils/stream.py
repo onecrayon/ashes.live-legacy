@@ -25,6 +25,7 @@ def refresh_entity(entity_id):
     else:
         entity.posted = datetime.utcnow()
         db.session.query(UserStream).filter(
+            UserStream.is_delivered.is_(True),
             UserStream.entity_id == entity_id
         ).update({'is_delivered': False}, synchronize_session=False)
     db.session.add(entity)
@@ -48,7 +49,7 @@ def get_stream(page=None):
         )
     ).outerjoin(
         UserStream, db.and_(
-            UserStream.stream_id == Stream.id,
+            UserStream.entity_id == Stream.entity_id,
             UserStream.user_id == user_id
         )
     )

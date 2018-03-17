@@ -57,12 +57,12 @@ def upgrade():
     )
     op.create_table('user_stream',
         sa.Column('user_id', sa.Integer(), nullable=False),
-        sa.Column('stream_id', sa.Integer(), nullable=False),
+        sa.Column('entity_id', sa.Integer(), nullable=False),
         sa.Column('is_delivered', sa.Boolean(), nullable=False),
-        sa.ForeignKeyConstraint(['stream_id'], ['stream.id'], ),
         sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-        sa.PrimaryKeyConstraint('user_id', 'stream_id')
+        sa.PrimaryKeyConstraint('user_id', 'entity_id')
     )
+    op.create_index(op.f('ix_user_stream_is_delivered'), 'user_stream', ['is_delivered'], unique=False)
     op.add_column('card', sa.Column('entity_id', sa.Integer(), nullable=False))
     op.add_column('deck', sa.Column('entity_id', sa.Integer(), nullable=False))
     # Go through Card and Deck and generate initial entity_ids
