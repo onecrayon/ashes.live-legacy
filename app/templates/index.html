@@ -36,12 +36,13 @@
 {% block sidebar %}
 	<h2>Welcome to Ashes.live!</h2>
 
-	<p class="callout">Ashes.live is a fan site for <a href="https://www.plaidhatgames.com/games/ashes">Ashes: Rise of the Phoenixborn</a> by Plaid Hat Games, offering <a href="{{ url_for('cards.index') }}">card browsing</a> and <a href="{{ url_for('decks.build') }}">deckbuilding</a> in a beautiful interface that highlights the gorgeous card art.</p>
+	<p class="callout">Ashes.live is a fan site for <a href="https://www.plaidhatgames.com/games/ashes">Ashes: Rise of the Phoenixborn</a> by Plaid Hat Games, offering a <a href="{{ url_for('cards.index') }}"><strong>card browser</strong></a>, <a href="{{ url_for('decks.build') }}"><strong>deck builder</strong></a>, and <strong>social features</strong> in an interface that highlights the gorgeous card art.</p>
 
-	<p>The site is under continuous development, so please <a href="{{ url_for('home.feedback') }}"><i class="fa fa-envelope"></i> contact me</a> if you run into problems or have any suggestions or requests! You can find the link to the contact form at the upper right of every page.</p>
+	<p>The site is under continuous development, so please <a href="{{ url_for('home.feedback') }}"><i class="fa fa-envelope"></i> contact me</a> if you run into problems or have any suggestions or requests!</p>
 
-	<p>If you would like to {% if not current_user.is_authenticated %}build and share decks or {% endif %}be notified when new features are implemented, please {% if current_user.is_authenticated %}<a href=
-		{{ url_for('player.account') }}>modify your account settings</a>{% else %}<a href="{{ url_for('player.new') }}">create an account</a>{% endif %}!</p>
+	{% if not current_user.is_authenticated %}
+	<p><a href="{{ url_for('player.new') }}">Create an account</a> to build and share your own decks or join the discussion about everything Ashes!</p>
+	{% endif %}
 
 	<h2>Features</h2>
 
