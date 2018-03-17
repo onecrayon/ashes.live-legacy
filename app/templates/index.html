@@ -14,7 +14,7 @@
 	{% for entity in stream %}
 		<li class="{{ entity.entity_type }}{% if entity.entity_type == 'deck' %} {{ entity.phoenixborn.stub }}{% endif %}">
 			<div class="responsive-cols no-wrap">
-				<p class="col-flex">{{ usertag(entity.user) }} published a deck!</p>
+				<p class="col-flex"><strong>{{ usertag(entity.user) }} published a deck!</strong></p>
 				<p class="timestamp col">{{ entity.created | format_date }}</p>
 			</div>
 			<h2>
