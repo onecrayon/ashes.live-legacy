@@ -15,3 +15,5 @@ class Comment(db.Model):
     order = db.Column(db.Integer, index=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user = db.relationship(User)

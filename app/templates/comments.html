@@ -1,23 +1,68 @@
-{% from "macros.html" import hide_one_load, inline_errors %}
+{% from "macros.html" import hide_one_load, inline_errors, pagination, usertag %}
 
 <div id="comments">
 	<hr>
+	{% if comments %}
+	<ul class="comments">
+		{% for comment in comments %}
+		<li id="comment-{{ comment.id }}">
+			<div class="author">
+				{{  usertag(comment.user) }}
+			</div>
+			<div class="comment">
+				{{ comment.text | parse_text }}
+			</div>
+			<div class="meta">
+				{{ comment.modified | format_date }}
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+	{{ pagination(_anchor='comments', **pagination_options) }}
+	{% else %}
+	<div class="no-results">
+		<h2>No comments yet</h2>
+	</div>
+	{% endif %}
+	<hr>
 	<form action="./" id="respond" method="POST">
 		{{ comment_form.hidden_tag() }}
-		{# TODO: add formatting helpers here #}
+		{% if comment_form.preview.data %}
+		<h3 id="comment-preview">Preview</h3>
+		<div class="boxed">
+			{{ comment_form.text.data | parse_text }}
+		</div>
+		{% endif %}
 		<div class="form-field">
-			{{ comment_form.text.label }}
+			{# TODO: hook up form-helpers so that they actually do something #}
+			<div class="form-helpers responsive-cols">
+				<div class="btn-group col">
+					<button class="btn btn-small" type="button" title="Bold"><i class="fa fa-bold"></i></button
+					><button class="btn btn-small" type="button" title="Italic"><i class="fa fa-italic"></i></button>
+				</div>
+				<div class="btn-group col">
+					<button class="btn btn-small" type="button" title="List"><i class="fa fa-list-ul"></i></button
+					><button class="btn btn-small" type="button" title="Quote"><i class="fa fa-quote-left"></i></button>
+				</div>
+				<div class="col-flex">
+					<button class="btn btn-small" type="button" title="Wrap with [[ ]]"><strong>[[&hellip;]]</strong></button>
+				</div>
+			</div>
 			{{ comment_form.text(rows='10') }}
 			{{ inline_errors(comment_form.text.errors) }}
 			<p class="help-text"><a href="#formatting-help" class="inline-modal-trigger">
 				<em>Supports [[card codes]] and *star formatting*</em>
 			</a></p>
 		</div>
-		<input class="btn btn-primary" type="submit" value="Publish Comment">
+		<input class="btn btn-primary" type="submit" value="Publish">
+		{{ comment_form.preview() }}
 	</form>
 	<div id="formatting-help" class="inline-modal">
 		<h2>Formatting Help</h2>
-		{% include "fragments/formatting_help.html" %}
+
+		<div class="modal-scroll">
+			{% include "fragments/formatting_help.html" %}
+		</div>
 	</div>
 	{{ hide_on_load('formatting-help') }}
 </div>

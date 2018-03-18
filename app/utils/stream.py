@@ -18,10 +18,10 @@ def new_entity():
     return entity.entity_id
 
 
-def refresh_entity(entity_id):
+def refresh_entity(entity_id, entity_type='deck'):
     entity = db.session.query(Stream).filter(Stream.entity_id == entity_id).first()
     if not entity:
-        entity = Stream(entity_id=entity_id, entity_type='deck')
+        entity = Stream(entity_id=entity_id, entity_type=entity_type)
     else:
         entity.posted = datetime.utcnow()
         db.session.query(UserStream).filter(

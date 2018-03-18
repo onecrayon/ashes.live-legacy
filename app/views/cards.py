@@ -2,13 +2,14 @@
 
 import json
 
-from flask import abort, current_app, Blueprint, url_for, render_template
+from flask import abort, current_app, Blueprint, url_for, redirect, render_template
 
 from app import db
+from app.exceptions import Redirect
 from app.models.card import Card
 from app.models.deck import Deck, DeckCard
 from app.utils.cards import global_json
-from app.utils.comments import get_comments
+from app.utils.comments import process_comments
 
 mod = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -26,8 +27,8 @@ def index():
     return render_template('cards/index.html', **global_json())
 
 
-@mod.route('/<stub>/')
-@mod.route('/<stub>/<int:page>/')
+@mod.route('/<stub>/', methods=['GET', 'POST'])
+@mod.route('/<stub>/<int:page>/', methods=['GET', 'POST'])
 def detail(stub, page=None):
     """Card details"""
     card = Card.query.options(
@@ -87,7 +88,12 @@ def detail(stub, page=None):
             Card.card_type.notin_(('Conjuration', 'Conjured Alteration Spell'))
         ).first()
     # Gather comments
-    comments, comment_form = get_comments(card.entity_id, source_type='card', page=page)
+    try:
+        comments, pagination, comment_form = process_comments(
+            card.entity_id, source_type='card', page=page
+        )
+    except Redirect as error:
+        return redirect(error.url, code=error.status_code)
     return render_template(
         'cards/detail.html',
         card=json.loads(card.json),
@@ -103,5 +109,11 @@ def detail(stub, page=None):
         } if preconstructed else None,
         phoenixborn_card=phoenixborn_card,
         comments=comments,
+        pagination_options={
+            'view_path': 'cards.detail',
+            'pages': pagination,
+            'stub': stub,
+            'page': page
+        },
         comment_form=comment_form
     )

@@ -13,6 +13,7 @@
 	<ul class="activity">
 	{% for entity in stream %}
 		<li class="{{ entity.entity_type }}{% if entity.entity_type == 'deck' %} {{ entity.phoenixborn.stub }}{% endif %}">
+			{% if entity.entity_type == 'deck' %}
 			<div class="responsive-cols no-wrap">
 				<p class="col-flex"><strong>{{ usertag(entity.user) }} published a deck!</strong></p>
 				<p class="timestamp col">{{ entity.created | format_date }}</p>
@@ -21,6 +22,9 @@
 				<a href="{{ url_for('decks.view', deck_id=entity.source_id) }}">{{ entity | deck_title }}</a>
 			</h2>
 			{{ dice_list(entity.dice) }}
+			{% elif entity.entity_type == 'comment' %}
+			COMMENT
+			{% endif %}
 		</li>
 	{% endfor %}
 	</ul>

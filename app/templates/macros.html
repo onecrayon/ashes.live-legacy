@@ -24,19 +24,19 @@
 	</div>
 {%- endmacro %}
 
-{% macro pagination(viewPath, pages, page=1) -%}
+{% macro pagination(view_path=None, pages=None, page=1) -%}
 	{% if pages %}
 	{% set current = {'page': 0} -%}
 	<nav class="pagination">
 		<ul>
 			{% for page_num in pages %}
 			{% if (current.page + 1) is not equalto page_num %}
-			<li><a href="{{ url_for(viewPath, page=page_num - 1 if current.page == 1 else current.page + 1, **kwargs) }}">...</a></li>
+			<li><a href="{{ url_for(view_path, page=page_num - 1 if current.page == 1 else current.page + 1, **kwargs) }}">...</a></li>
 			{% endif %}
 			{% if page_num is equalto page %}
 			<li class="active">{{ page_num }}</li>
 			{% else %}
-			<li><a href="{{ url_for(viewPath, page=page_num if page_num > 1 else None, **kwargs) }}">
+			<li><a href="{{ url_for(view_path, page=page_num if page_num > 1 else None, **kwargs) }}">
 				{{ page_num }}
 			</a></li>
 			{% endif %}
