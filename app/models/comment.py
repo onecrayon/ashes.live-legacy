@@ -12,5 +12,6 @@ class Comment(db.Model):
     source_entry_id = db.Column(db.Integer, nullable=False, index=True)
     source_type = db.Column(db.String(16))
     text = db.Column(db.Text)
-    created = db.Column(db.DateTime, default=datetime.utcnow, index=True)
-    modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, index=True)
+    order = db.Column(db.Integer, index=True)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+    modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
