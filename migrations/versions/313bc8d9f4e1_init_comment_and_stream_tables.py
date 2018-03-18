@@ -34,7 +34,7 @@ def upgrade():
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('entity_id', sa.Integer(), nullable=False),
         sa.Column('user_id', sa.Integer(), nullable=False),
-        sa.Column('source_entry_id', sa.Integer(), nullable=False),
+        sa.Column('source_entity_id', sa.Integer(), nullable=False),
         sa.Column('source_type', sa.String(length=16), nullable=True),
         sa.Column('text', sa.Text(), nullable=True),
         sa.Column('order', sa.Integer(), nullable=True),
@@ -46,7 +46,8 @@ def upgrade():
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_comment_entity_id'), 'comment', ['entity_id'], unique=True)
-    op.create_index(op.f('ix_comment_source_entry_id'), 'comment', ['source_entry_id'], unique=False)
+    op.create_index(op.f('ix_comment_source_entity_id'), 'comment', ['source_entity_id'], unique=False)
+    op.create_index(op.f('ix_comment_created'), 'comment', ['created'], unique=False)
     op.create_index(op.f('ix_comment_order'), 'comment', ['order'], unique=False)
     op.create_table('subscription',
         sa.Column('user_id', sa.Integer(), nullable=False),
