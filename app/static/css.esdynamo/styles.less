@@ -1101,6 +1101,10 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 .comment-fadeout {
 	padding: 10px;
+	position: relative;
+	max-height: 100px;
+	box-sizing: border-box;
+	overflow: hidden;
 
 	p, ul {
 		.font-size(12);
@@ -1112,7 +1116,16 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		margin-bottom: 0;
 	}
 
-	// TODO: add fadeout and a max height similar to the card listings
+	&:after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 15px;
+		width: 100%;
+		background-image: linear-gradient(to top, #fff, #fff 5px, rgba(255, 255, 255, 0));
+		z-index: 1;
+	}
 }
 
 /* @end */
