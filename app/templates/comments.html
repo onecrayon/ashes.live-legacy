@@ -1,0 +1,23 @@
+{% from "macros.html" import hide_one_load, inline_errors %}
+
+<div id="comments">
+	<hr>
+	<form action="./" id="respond" method="POST">
+		{{ comment_form.hidden_tag() }}
+		{# TODO: add formatting helpers here #}
+		<div class="form-field">
+			{{ comment_form.text.label }}
+			{{ comment_form.text(rows='10') }}
+			{{ inline_errors(comment_form.text.errors) }}
+			<p class="help-text"><a href="#formatting-help" class="inline-modal-trigger">
+				<em>Supports [[card codes]] and *star formatting*</em>
+			</a></p>
+		</div>
+		<input class="btn btn-primary" type="submit" value="Publish Comment">
+	</form>
+	<div id="formatting-help" class="inline-modal">
+		<h2>Formatting Help</h2>
+		{% include "fragments/formatting_help.html" %}
+	</div>
+	{{ hide_on_load('formatting-help') }}
+</div>

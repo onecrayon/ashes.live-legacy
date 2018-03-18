@@ -8,6 +8,7 @@ from app import db
 from app.models.card import Card
 from app.models.deck import Deck, DeckCard
 from app.utils.cards import global_json
+from app.utils.comments import get_comments
 
 mod = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -26,7 +27,8 @@ def index():
 
 
 @mod.route('/<stub>/')
-def detail(stub):
+@mod.route('/<stub>/<int:page>/')
+def detail(stub, page=None):
     """Card details"""
     card = Card.query.options(
         db.joinedload('conjurations')
@@ -84,6 +86,8 @@ def detail(stub):
             Card.phoenixborn == card.name,
             Card.card_type.notin_(('Conjuration', 'Conjured Alteration Spell'))
         ).first()
+    # Gather comments
+    comments, comment_form = get_comments(card.entity_id, source_type='card', page=page)
     return render_template(
         'cards/detail.html',
         card=json.loads(card.json),
@@ -97,5 +101,7 @@ def detail(stub):
             'url': url_for('decks.view', deck_id=preconstructed.source_id),
             'title': preconstructed.title
         } if preconstructed else None,
-        phoenixborn_card=phoenixborn_card
+        phoenixborn_card=phoenixborn_card,
+        comments=comments,
+        comment_form=comment_form
     )
