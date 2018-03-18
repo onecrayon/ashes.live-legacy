@@ -2,19 +2,24 @@
 
 <div id="comments">
 	<hr>
+	<h2 class="phg-sympathy-class">Comments</h2>
+
 	{% if comments %}
 	<ul class="comments">
 		{% for comment in comments %}
-		<li id="comment-{{ comment.id }}">
-			<div class="author">
-				{{  usertag(comment.user) }}
+		<li id="comment-{{ comment.id }}" class="comment">
+			<div class="comment-header responsive-cols no-wrap">
+				<p class="col-flex">{{  usertag(comment.user) }} says:</p>
+				<p class="timestamp col"><a href="{{ comment.url }}"><i class="fa fa-link"></i> {{ comment.created | format_date }}</a></p>
 			</div>
-			<div class="comment">
+			<div class="comment-body">
 				{{ comment.text | parse_text }}
 			</div>
-			<div class="meta">
-				{{ comment.modified | format_date }}
+			{% if comment.created != comment.modified %}
+			<div class="comment-footer">
+				<p class="timestamp text-right">Last edited {{ comment.modified | format_date }}</p>
 			</div>
+			{% endif %}
 		</li>
 		{% endfor %}
 	</ul>
@@ -22,9 +27,9 @@
 	{% else %}
 	<div class="no-results">
 		<h2>No comments yet</h2>
+		<p>Post one below and get this party started!</p>
 	</div>
 	{% endif %}
-	<hr>
 	<form action="./" id="respond" method="POST">
 		{{ comment_form.hidden_tag() }}
 		{% if comment_form.preview.data %}
@@ -44,15 +49,17 @@
 					<button class="btn btn-small" type="button" title="List"><i class="fa fa-list-ul"></i></button
 					><button class="btn btn-small" type="button" title="Quote"><i class="fa fa-quote-left"></i></button>
 				</div>
-				<div class="col-flex">
+				<div class="col">
 					<button class="btn btn-small" type="button" title="Wrap with [[ ]]"><strong>[[&hellip;]]</strong></button>
+				</div>
+				<div class="col-flex text-right">
+					<a href="#formatting-help" class="btn btn-small inline-modal-trigger" title="Formatting Help">
+						<i class="fa fa-question"></i>
+					</a>
 				</div>
 			</div>
 			{{ comment_form.text(rows='10') }}
 			{{ inline_errors(comment_form.text.errors) }}
-			<p class="help-text"><a href="#formatting-help" class="inline-modal-trigger">
-				<em>Supports [[card codes]] and *star formatting*</em>
-			</a></p>
 		</div>
 		<input class="btn btn-primary" type="submit" value="Publish">
 		{{ comment_form.preview() }}

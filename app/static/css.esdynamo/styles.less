@@ -55,6 +55,11 @@ h1 {
 
 h2 {
 	font-weight: normal;
+
+	&[class^="phg-"]:before, &[class*=" phg-"]:before {
+		vertical-align: middle;
+		margin-right: 10px;
+	}
 }
 
 h3 {
@@ -133,6 +138,14 @@ a.error {
 
 .muted {
 	color: @color-gray;
+}
+
+.timestamp {
+	color: @color-mid-gray;
+
+	& a {
+		color: @color-mid-gray;
+	}
 }
 
 .text-left {
@@ -1094,6 +1107,12 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 /* @group Comments */
 
+.comments {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
 .comment {
 	border: 1px solid @color-border-gray;
 	margin-bottom: 20px;
@@ -1138,6 +1157,25 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
+.comment-body {
+	padding: 10px;
+
+	:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.comment-footer {
+	border-top: 1px solid @color-gray;
+	padding: 5px 10px;
+
+	p {
+		.font-size(12);
+		.line-height(12);
+		margin-bottom: 0;
+	}
+}
+
 /* @end */
 
 /* @group Homepage */
@@ -1145,10 +1183,6 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 .activity {
 	list-style-type: none;
 	padding: 0;
-
-	.timestamp {
-		color: @color-mid-gray;
-	}
 
 	.deck {
 		p {
@@ -1732,6 +1766,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	background: @color-inexhaustible;
 	border: 1px solid @color-gray;
 	padding: 40px 20px 20px;
+	margin-bottom: 20px;
 	text-align: center;
 }
 
