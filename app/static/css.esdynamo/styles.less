@@ -407,6 +407,16 @@ ul.divider-separated {
 		text-align: center;
 		width: 100%;
 	}
+
+	&.btn-vertical {
+		// This flex hack causes the text to vertically center; see:
+		// https://stackoverflow.com/a/33049392
+		.mixin-display-flex();
+		.mixin-justify-content(center);
+		.mixin-align-items(center);
+		box-sizing: border-box;
+		height: 100%;
+	}
 	
 	&[readonly], &[disabled] {
 		opacity: .4;
@@ -1147,6 +1157,15 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		
 		.dice .die {
 			margin-bottom: 0;
+		}
+	}
+
+	.comment-button {
+		position: relative;
+
+		.btn-vertical {
+			border: none;
+			border-radius: 0;
 		}
 	}
 }

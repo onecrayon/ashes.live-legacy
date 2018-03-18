@@ -27,8 +27,13 @@
 				<p class="col-flex"><strong>{{ usertag(entity.user) }} commented on the {{ entity.source_type }} <a href="{{ entity.url }}">{{ entity.source_title }}</a>:</strong></p>
 				<p class="timestamp col">{{ entity.created | format_date }}</p>
 			</div>
-			<div class="comment-fadeout">
-				{{ entity.text | parse_text }}
+			<div class="responsive-cols no-wrap">
+				<div class="comment-fadeout col-flex">
+					{{ entity.text | parse_text }}
+				</div>
+				<div class="col comment-button">
+					<a href="{{ entity.url }}" class="btn btn-vertical" title="View comment"><i class="fa fa-chevron-right"></i></a>
+				</div>
 			</div>
 			{% endif %}
 		</li>
