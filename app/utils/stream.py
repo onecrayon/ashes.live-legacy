@@ -5,6 +5,7 @@ from flask import current_app
 from flask_login import current_user
 
 from app import db
+from app.models.comment import Comment
 from app.models.deck import Deck
 from app.models.stream import Stream, Streamable, Subscription, UserStream
 from app.utils import get_pagination
@@ -101,8 +102,30 @@ def get_stream(page=None):
                 },
                 'dice': deck.dice
             })
-    # TODO: gather comments
+    # Gather comments
     if 'comment' in entity_ids:
-        pass
+        comments = db.session.query(Comment).options(
+            db.joinedload('user')
+        ).filter(
+            Comment.entity_id.in_(entity_ids['comment'])
+        ).all()
+        for comment in comments:
+            source_title = None
+            if comment.source_type == 'card':
+                source_title = comment.source.name
+            elif comment.source_type == 'deck':
+                snapshot = comment.source.published_snapshot()
+                source_title = snapshot.title if snapshot else None
+            entity_map[comment.entity_id].update({
+                'user': {
+                    'badge': comment.user.badge,
+                    'username': comment.user.username
+                },
+                'created': comment.created,
+                'text': comment.text,
+                'source_title': source_title,
+                'source_type': comment.source_type,
+                'url': comment.url
+            })
     pagination = get_pagination(stream_query.count(), page, per_page)
     return [entity_map[x.Stream.entity_id] for x in stream], page, pagination

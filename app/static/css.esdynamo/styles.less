@@ -1082,6 +1082,41 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 /* @end */
 
+/* @group Comments */
+
+.comment {
+	border: 1px solid @color-border-gray;
+	margin-bottom: 20px;
+}
+
+.comment-header {
+	background: @color-between-realms;
+	border-bottom: 3px solid @color-between-realms-dark;
+	padding: 10px;
+
+	p {
+		margin-bottom: 0;
+	}
+}
+
+.comment-fadeout {
+	padding: 10px;
+
+	p, ul {
+		.font-size(12);
+		.line-height(16);
+		margin-bottom: 12px;
+	}
+
+	:last-child {
+		margin-bottom: 0;
+	}
+
+	// TODO: add fadeout and a max height similar to the card listings
+}
+
+/* @end */
+
 /* @group Homepage */
 
 .activity {

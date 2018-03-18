@@ -5,31 +5,10 @@ from flask_login import current_user
 
 from app import db
 from app.exceptions import Redirect
-from app.models.card import Card
 from app.models.comment import Comment
-from app.models.deck import Deck
 from app.utils import get_pagination
 from app.utils.stream import new_entity, refresh_entity
 from app.views.forms.comment import CommentForm
-
-
-def url_for_comment(comment):
-    """Returns the site URL for the given comment"""
-    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
-    page = math.ceil(comment.order / per_page)
-    anchor = 'comment-{}'.format(comment.id)
-    if page == 1:
-        page = None
-    if comment.source_type == 'card':
-        stub = db.session.query(Card.stub).filter(
-            Card.entity_id == comment.source_entity_id
-        ).scalar()
-        return url_for('cards.detail', stub=stub, page=page, _anchor=anchor)
-    elif comment.source_type == 'deck':
-        deck_id = db.session.query(Deck.id).filter(
-            Deck.entity_id == comment.source_entity_id
-        ).scalar()
-        return url_for('decks.view', deck_id=deck_id, page=page, _anchor=anchor)
 
 
 def get_comments(entity_id, page=None):
@@ -71,6 +50,6 @@ def process_comments(entity_id, source_type='deck', page=None):
         db.session.add(comment)
         db.session.commit()
         refresh_entity(comment.entity_id, entity_type='comment')
-        raise Redirect(url_for_comment(comment), status_code=303)
+        raise Redirect(comment.url, status_code=303)
     comments, pagination = get_comments(entity_id, page=page)
     return comments, pagination, comment_form

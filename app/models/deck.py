@@ -30,7 +30,7 @@ class Deck(db.Model):
     # `cards` and `dice` are defined via backref in the models below
 
     def published_snapshot(self, full=False):
-        """Returns the ID or None for the most recent published snapshot"""
+        """Returns the Deck object or None for the most recent published snapshot"""
         if self.is_snapshot:
             return None
         query = db.session.query(Deck).filter(
