@@ -90,7 +90,7 @@ def detail(stub, page=None):
     # Gather comments
     try:
         comments, pagination, comment_form = process_comments(
-            card.entity_id, source_type='card', page=page
+            card.entity_id, source_type='card', source_version=card.version, page=page
         )
     except Redirect as error:
         return redirect(error.url, code=error.status_code)
@@ -108,6 +108,8 @@ def detail(stub, page=None):
             'title': preconstructed.title
         } if preconstructed else None,
         phoenixborn_card=phoenixborn_card,
+        # Standard comment properties
+        comment_version=card.version,
         comments=comments,
         pagination_options={
             'view_path': 'cards.detail',

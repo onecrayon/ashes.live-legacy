@@ -17,6 +17,7 @@ class Comment(db.Model):
     # This points to the entity_id being commented on
     source_entity_id = db.Column(db.Integer, nullable=False, index=True)
     source_type = db.Column(db.String(16))
+    source_version = db.Column(db.Integer)
     text = db.Column(db.Text)
     order = db.Column(db.Integer, index=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)

@@ -7,9 +7,11 @@ from flask_login import current_user, login_required
 from sqlalchemy.orm.session import make_transient
 
 from app import db
+from app.exceptions import Redirect
 from app.models.card import Card, DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.utils.cards import global_json
+from app.utils.comments import process_comments
 from app.utils.decks import get_decks, get_decks_query, process_deck
 from app.views.forms.deck import SnapshotForm
 
@@ -59,8 +61,9 @@ def index(page=None):
     )
 
 
-@mod.route('/view/<int:deck_id>/')
-def view(deck_id):
+@mod.route('/view/<int:deck_id>/', methods=['GET', 'POST'])
+@mod.route('/view/<int:deck_id>/<int:page>/', methods=['GET', 'POST'])
+def view(deck_id, page=None):
     """View a snapshot.
     
     If deck_id points to a deck, shows first public snapshot.
@@ -101,12 +104,30 @@ def view(deck_id):
     releases = list(releases)
     releases.sort()
     release_names = [current_app.config['RELEASE_NAMES'][release] for release in releases]
+    # Gather comments
+    try:
+        comments, pagination, comment_form = process_comments(
+            deck.source.entity_id, source_type='deck', source_version=deck.id, page=page,
+            allow_commenting=deck.is_public
+        )
+    except Redirect as error:
+        return redirect(error.url, code=error.status_code)
     return render_template(
         'decks/view.html',
         deck=deck,
         sections=sections,
         releases=release_names,
-        has_history=deck.has_snapshots
+        has_history=deck.has_snapshots,
+        # Standard comment properties
+        comment_version=deck.id,
+        comments=comments,
+        pagination_options={
+            'view_path': 'decks.view',
+            'pages': pagination,
+            'deck_id': deck_id,
+            'page': page
+        },
+        comment_form=comment_form
     )
 
 

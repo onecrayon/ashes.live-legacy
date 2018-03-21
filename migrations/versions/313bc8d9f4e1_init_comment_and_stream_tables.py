@@ -36,6 +36,7 @@ def upgrade():
         sa.Column('user_id', sa.Integer(), nullable=False),
         sa.Column('source_entity_id', sa.Integer(), nullable=False),
         sa.Column('source_type', sa.String(length=16), nullable=True),
+        sa.Column('source_version', sa.Integer(), nullable=True),
         sa.Column('text', sa.Text(), nullable=True),
         sa.Column('order', sa.Integer(), nullable=True),
         sa.Column('created', sa.DateTime(), nullable=True),
@@ -65,6 +66,7 @@ def upgrade():
     )
     op.create_index(op.f('ix_user_stream_is_delivered'), 'user_stream', ['is_delivered'], unique=False)
     op.add_column('card', sa.Column('entity_id', sa.Integer(), nullable=False))
+    op.add_column('card', sa.Column('version', sa.Integer(), nullable=False, server_default='1'))
     op.add_column('deck', sa.Column('entity_id', sa.Integer(), nullable=False))
     # Go through Card and Deck and generate initial entity_ids
     connection = op.get_bind()
@@ -102,6 +104,7 @@ def upgrade():
 
 def downgrade():
     op.drop_column('deck', 'entity_id')
+    op.drop_column('card', 'version')
     op.drop_column('card', 'entity_id')
     op.drop_table('user_stream')
     op.drop_table('subscription')

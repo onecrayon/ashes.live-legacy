@@ -12,6 +12,16 @@
 				<p class="col-flex">{{  usertag(comment.user) }} says:</p>
 				<p class="timestamp col"><a href="{{ comment.url }}"><i class="fa fa-link"></i> {{ comment.created | format_date }}</a></p>
 			</div>
+			{% if comment.source_version < comment_version %}
+			<p class="comment-outdated">
+				<i class="fa fa-history"></i> This comment was posted on a 
+				{% if comment.source_type == 'deck' %}
+				<a href="{{ url_for('decks.view', deck_id=comment.source_version) }}">previous snapshot</a>
+				{% else %}
+				previous version
+				{% endif %} of this {{ comment.source_type }}.
+			</p>
+			{% endif %}
 			<div class="comment-body">
 				{{ comment.text | parse_text }}
 			</div>
@@ -27,6 +37,7 @@
 	{% else %}
 	<div class="no-results">
 		<h2>No comments yet</h2>
+		{% if not current_user.is_authenticated or comment_form %}
 		<p>
 			{% if not current_user.is_authenticated %}
 			<a href="{{ url_for('player.login', next=request.base_url + '#comment') }}">Sign in</a> to post one 
@@ -35,9 +46,10 @@
 			{% endif %}
 			and get this party started!
 		</p>
+		{% endif %}
 	</div>
 	{% endif %}
-	{% if current_user.is_authenticated %}
+	{% if current_user.is_authenticated and comment_form %}
 	<form action="./" id="comment" method="POST">
 		{{ comment_form.hidden_tag() }}
 		{% if comment_form.preview.data %}

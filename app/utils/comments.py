@@ -28,19 +28,21 @@ def get_comments(entity_id, page=None):
     return comments, pagination
 
 
-def process_comments(entity_id, source_type='deck', page=None):
+def process_comments(entity_id, source_type='deck', source_version=None, page=None,
+                     allow_commenting=True):
     # Only authenticated users may submit comments
-    if not current_user.is_authenticated:
+    if not current_user.is_authenticated or not allow_commenting:
         comments, pagination = get_comments(entity_id, page=page)
         return comments, pagination, None
-    comment_form = CommentForm(source_entity_id=entity_id, source_type=source_type)
+    comment_form = CommentForm()
     if not comment_form.preview.data and comment_form.validate_on_submit():
         # Save the comment!
         comment = Comment(
             entity_id=new_entity(),
             user_id=current_user.id,
-            source_entity_id=comment_form.source_entity_id.data,
-            source_type=comment_form.source_type.data,
+            source_entity_id=entity_id,
+            source_type=source_type,
+            source_version=source_version,
             text=comment_form.text.data,
         )
         order = db.session.query(Comment.order).filter(
