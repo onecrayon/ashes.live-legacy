@@ -26,7 +26,7 @@ globals.parseCardCodes = function (input) {
 	input = escape(input)
 	// Parse links
 	input = input.replace(
-		/\[\[([^\]]*?)((?:https?:\/\/|\b)[^\s\/$.?#]+\.[^\s*]+?)\]\]|((?:https?:\/\/|\b)[^\s\/$.?#]+\.[^\s*]+?(?=[.?!]|\s|$))/ig,
+		/\[\[([^\]]*?)((?:https?:\/\/|\b)[^\s\/$.?#]+\.[^\s*]+?)\]\]|(https?:\/\/[^\s\/$.?#]+\.[^\s*]+?(?=[.?!]|\s|$))/ig,
 		(_, text, url, standalone) => {
 			let internalLink = false
 			const textUrl = url ? url : standalone
