@@ -27,10 +27,18 @@
 	{% else %}
 	<div class="no-results">
 		<h2>No comments yet</h2>
-		<p>Post one below and get this party started!</p>
+		<p>
+			{% if not current_user.is_authenticated %}
+			<a href="{{ url_for('player.login', next=request.base_url + '#comment') }}">Sign in</a> to post one 
+			{% else %}
+			Post one below 
+			{% endif %}
+			and get this party started!
+		</p>
 	</div>
 	{% endif %}
-	<form action="./" id="respond" method="POST">
+	{% if current_user.is_authenticated %}
+	<form action="./" id="comment" method="POST">
 		{{ comment_form.hidden_tag() }}
 		{% if comment_form.preview.data %}
 		<h3 id="comment-preview">Preview</h3>
@@ -72,4 +80,5 @@
 		</div>
 	</div>
 	{{ hide_on_load('formatting-help') }}
+	{% endif %}
 </div>
