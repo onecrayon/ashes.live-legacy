@@ -30,3 +30,9 @@ def feedback():
         flash('Thank you for your feedback! If you included your email, I will respond soon.', 'success')
         return redirect(url_for('home.index'))
     return render_template('feedback.html', form=form)
+
+
+@mod.route('/content-policies/')
+def policies():
+    """Static page: content policies"""
+    return render_template('content-policies.html')

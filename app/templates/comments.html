@@ -80,6 +80,7 @@
 			</div>
 			{{ comment_form.text(rows='10') }}
 			{{ inline_errors(comment_form.text.errors) }}
+			<p class="help-text">Please remember the <a href="{{ url_for('home.policies') }}" target="_blank">Ashes.live Content Policies</a>.</p>
 		</div>
 		<input class="btn btn-primary" type="submit" value="Publish">
 		{{ comment_form.preview() }}
