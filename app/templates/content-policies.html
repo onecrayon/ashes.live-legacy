@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Content Policies{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-class">Content Policies</h1>
+{% endblock %}
+
+{% block content %}
+	<p class="callout">Ashes.live is a site for fans of Ashes: Rise of the Phoenixborn to share their love of the game.</p>
+
+	<p>To ensure that Ashes.live is useful and fun for all of its users, I ask that you abide by four simple rules when submitting content to the site:</p>
+
+	<ul>
+		<li>No politics or religion</li>
+		<li>No hate speech</li>
+		<li>No personal attacks</li>
+		<li>No spam</li>
+	</ul>
+
+	<p>Additionally, keeping your language kid-friendly is strongly encouraged.</p>
+
+	<p>For everything but spam, comments violating the rules above may be deleted or edited without warning. Repeated offenses will lead to a verbal warning, and if that is ignored your account may ultimately be blocked.</p>
+
+	<p>I have zero tolerance for spam; comments containing spam will be deleted and the associated user account blocked without warning. If this happens to you and you wish to have your account reinstated, please <a href="{{ url_for('home.feedback') }}">contact me</a>.</p>
+
+	<h2>No politics or religion</h2>
+
+	<p>You are welcome and encouraged to believe whatever you like when it comes to politics and religion. However, if you feel the need to share those beliefs, please do it somewhere other than Ashes.live. While I believe it's important to talk about both politics and religion, they are divisive topics that have nothing to do with power-crazed demigods attempting to murder one another in order to absorb the magic of their fellows. Which is what we all should really be talking about, given this is a site about Ashes.</p>
+
+	<h2>No hate speech</h2>
+
+	<p>Hate speech is speech that attacks or disparages a group of people based on attributes such as race, religion, ethnic origin, sexual orientation, disability, gender, etc. Whether hate speech is used hatefully or not is irrelevant; a good example is the term "gyped" which is a slur against the Romani people meaning "ripped off" but is widely used in some areas without any negative intent (or even knowledge of the history behind the term).</p>
+
+	<p>You do not need to strictly police every little thing you say on Ashes.live; I have no desire to swing over into the ridiculous land of "political correctness". However, please be willing to change your language if you are informed that a term or phrase is hurtful to a group of people.</p>
+
+	<h2>No personal attacks</h2>
+
+	<p>A personal attack is a statement attacking or denigrating an individual. Arguments and disagreements are welcome on Ashes.live, but personal attacks are not.</p>
+
+	<h2>No spam</h2>
+
+	<p>If you can't answer "yes" to both of the following questions, you are getting into spammy territory:</p>
+
+	<ul>
+		<li>Is this product or topic directly related to the board game Ashes: Rise of the Phoenixborn?</li>
+		<li>Is this product something that you personally use when playing Ashes?</li>
+	</ul>
+{% endblock %}
