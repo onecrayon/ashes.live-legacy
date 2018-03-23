@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import {initCardTooltips, teardownTooltips, parseCardCodes} from 'app/utils'
+	import {initCardTooltips, teardownTooltips, parseText} from 'app/utils'
 
 	export default {
 		props: ['content'],
@@ -15,7 +15,7 @@
 		beforeDestroy: teardownTooltips,
 		computed: {
 			parsedContent () {
-				return parseCardCodes(this.content)
+				return parseText(this.content)
 			}
 		}
 	}

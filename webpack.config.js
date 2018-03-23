@@ -27,7 +27,8 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
-			'app': path.resolve(__dirname, 'app/static/src/app')
+			'app': path.resolve(__dirname, 'app/static/src/app'),
+			'base': path.resolve(__dirname, 'app/static/src/base')
 		}
 	},
 	plugins: debug ? [] : [

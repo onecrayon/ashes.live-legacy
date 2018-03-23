@@ -1,7 +1,7 @@
 // Alias global functions
 const globals = window.globals || {}
 const cardUrl = globals.cardUrl
-const parseCardCodes = globals.parseCardCodes
+const parseText = globals.parseText
 const initTooltips = globals.initTooltips
 const initCardPopups = globals.initCardPopups
 const assetPath = globals.assetPath
@@ -55,7 +55,7 @@ function getFromObject (obj, path) {
 export {
 	globals,
 	cardUrl,
-	parseCardCodes,
+	parseText,
 	initTooltips,
 	initCardTooltips,
 	teardownTooltips,
