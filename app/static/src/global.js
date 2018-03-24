@@ -7,6 +7,7 @@ import {assetPath, initCardPopups, initTooltips} from 'base/tooltips'
 // Import things that should execute on page load
 import 'base/onload/auto_submit_forms'
 import 'base/onload/static_modals'
+import 'base/onload/textarea_helpers'
 
 const globals = window.globals || {}
 

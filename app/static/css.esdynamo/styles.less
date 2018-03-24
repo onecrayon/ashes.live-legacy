@@ -123,13 +123,20 @@ a.card {
 	color: @color-white;
 }
 
-a.error {
+.error {
 	color: @color-error;
+}
+
+a.error {
 	font-weight: bold;
 }
 
 .noty_type__error a.error {
 	color: #ffb2b2;
+}
+
+.warning {
+	color: @color-warning;
 }
 
 .callout {
@@ -439,6 +446,16 @@ ul.divider-separated {
 		background: @color-dark-gray;
 		color: @color-white;
 	}
+}
+
+.btn-align {
+	.line-height(20);
+	padding: 12px 0;
+}
+
+.btn-small-align {
+	.line-height(16);
+	padding: 7px 0;
 }
 
 .dice-classes();
@@ -1352,7 +1369,6 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 	.error {
 		font-weight: bold;
-		color: @color-error;
 	}
 }
 

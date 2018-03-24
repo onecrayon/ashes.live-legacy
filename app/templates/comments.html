@@ -60,17 +60,28 @@
 		{% endif %}
 		<div class="form-field">
 			{# TODO: hook up form-helpers so that they actually do something #}
-			<div class="form-helpers responsive-cols">
+			<div class="textarea-helpers responsive-cols">
 				<div class="btn-group col">
-					<button class="btn btn-small" type="button" title="Bold"><i class="fa fa-bold"></i></button
-					><button class="btn btn-small" type="button" title="Italic"><i class="fa fa-italic"></i></button>
+					<button class="btn btn-small" type="button" title="Bold"
+						data-cursor-prefix="**" data-cursor-suffix="**"
+					><i class="fa fa-bold"></i></button
+					><button class="btn btn-small" type="button" title="Italic"
+						data-cursor-prefix="*" data-cursor-suffix="*"
+					><i class="fa fa-italic"></i></button>
 				</div>
 				<div class="btn-group col">
-					<button class="btn btn-small" type="button" title="List"><i class="fa fa-list-ul"></i></button
-					><button class="btn btn-small" type="button" title="Quote"><i class="fa fa-quote-left"></i></button>
+					<button class="btn btn-small" type="button" title="List"
+						data-line-prefix="* "><i class="fa fa-list-ul"></i></button
+					><button class="btn btn-small" type="button" title="Quote"
+						data-line-prefix="> "><i class="fa fa-quote-left"></i></button>
 				</div>
 				<div class="col">
-					<button class="btn btn-small" type="button" title="Wrap with [[ ]]"><strong>[[&hellip;]]</strong></button>
+					<button class="btn btn-small" type="button" title="Wrap with [[ ]]"
+						data-cursor-prefix="[[" data-cursor-suffix="]]"
+					><strong>[[&hellip;]]</strong></button>
+				</div>
+				<div class="col">
+					<p class="help-text warning btn-small-align"><i class="fa fa-exclamation-triangle"></i> Buttons prevent "undo"</p>
 				</div>
 				<div class="col-flex text-right">
 					<a href="#formatting-help" class="btn btn-small inline-modal-trigger" title="Formatting Help">
