@@ -3,11 +3,11 @@ import 'babel-polyfill'
 // Normal imports
 import Noty from 'noty'
 import parseText from 'base/parse_text'
+import initTextareaHelpers from 'base/textarea_helpers'
 import {assetPath, initCardPopups, initTooltips} from 'base/tooltips'
 // Import things that should execute on page load
 import 'base/onload/auto_submit_forms'
 import 'base/onload/static_modals'
-import 'base/onload/textarea_helpers'
 
 const globals = window.globals || {}
 
@@ -36,6 +36,9 @@ globals.assetPath = assetPath
 globals.initCardPopups = initCardPopups
 globals.initTooltips = initTooltips
 
+//* Setup textarea helpers handling
+globals.initTextareaHelpers = initTextareaHelpers
+
 //* Setup global alert handling
 globals.notify = function (message, category) {
 	new Noty({
@@ -59,4 +62,10 @@ if (alerts) {
 		if (!alert.tagName || alert.tagName.toLowerCase() !== 'li') continue
 		globals.notify(alert.innerHTML, alert.className)
 	}
+}
+
+//* Init in-page textarea helpers
+const textareaHelpers = document.querySelectorAll('.textarea-helpers')
+if (textareaHelpers) {
+	initTextareaHelpers(Array.from(textareaHelpers))
 }

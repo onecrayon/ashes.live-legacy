@@ -4,6 +4,7 @@ const cardUrl = globals.cardUrl
 const parseText = globals.parseText
 const initTooltips = globals.initTooltips
 const initCardPopups = globals.initCardPopups
+const initTextareaHelpers = globals.initTextareaHelpers
 const assetPath = globals.assetPath
 const notify = globals.notify
 
@@ -59,6 +60,7 @@ export {
 	initTooltips,
 	initCardTooltips,
 	teardownTooltips,
+	initTextareaHelpers,
 	assetPath,
 	typeToFontAwesome,
 	getFromObject,

@@ -19,6 +19,7 @@
 			</div>
 
 			<div class="form-field">
+				<textarea-helpers></textarea-helpers>
 				<textarea ref="description" v-model="description" placeholder="Description"></textarea>
 				<p class="help-text"><em>Supports [[card codes]] and *star formatting*.</em></p>
 			</div>
@@ -51,6 +52,7 @@
 	import CardLink from 'app/components/card_link.vue'
 	import DeckListing from 'app/components/deck_listing.vue'
 	import Modal from 'app/components/modal.vue'
+	import TextareaHelpers from 'app/components/textarea_helpers.vue'
 	import {notify} from 'app/utils'
 
 	export default {
@@ -58,6 +60,7 @@
 			'card-link': CardLink,
 			'deck-listing': DeckListing,
 			'modal': Modal,
+			'textarea-helpers': TextareaHelpers,
 		},
 		props: ['show', 'public'],
 		data () {

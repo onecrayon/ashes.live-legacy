@@ -1,6 +1,5 @@
-const textareaHelpers = document.querySelectorAll('.textarea-helpers')
-if (textareaHelpers) {
-	for (const parentDiv of Array.from(textareaHelpers)) {
+export default function initTextareaHelpers (els) {
+	for (const parentDiv of els) {
 		const textarea = parentDiv.nextElementSibling
 		if (!textarea) continue
 		const buttons = parentDiv.querySelectorAll('button')
@@ -65,6 +64,5 @@ if (textareaHelpers) {
 				textarea.setSelectionRange(start, end)
 			})
 		}
-		// TODO: Add automatic parsing of the enter/return keys to add new list elements and terminate open inline tags
 	}
 }

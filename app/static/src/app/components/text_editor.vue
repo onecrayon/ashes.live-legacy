@@ -1,8 +1,8 @@
 <template>
 	<div class="editor">
 		<div class="form-field full-width">
-			<label :for="fieldName.toLowerCase() + '-editor-field'">{{ fieldName }}</label>
-			<textarea v-model="content" :id="fieldName.toLowerCase() + '-editor-field'"></textarea>
+			<textarea-helpers></textarea-helpers>
+			<textarea v-model="content" :id="fieldName.toLowerCase() + '-editor-field'" :placeholder="fieldName"></textarea>
 
 			<p class="help-text"><em>Supports [[card codes]] and *star formatting*:</em></p>
 			<p class="help-text">
@@ -15,42 +15,54 @@
 
 		<div v-if="showAll">
 			<hr>
-			<h4 class="help-text">Card codes</h4>
+			<pre class="help-text boxed no-margin"><code>**First five:**
+
+* [[Root Armor]]
+* [[side]] - 1 [[natural:class]]
+* [[Love this site! ashes.live]]
+* *etc.*
+
+> [[Skaak#1st!]] said:
+> Quote text like this!</code></pre>
+			<p class="text-center no-margin"><i class="fa fa-arrow-down"></i></p>
+			<div class="boxed no-margin">
+				<p class="help-text"><card-codes content="**First five:**"></card-codes></p>
+				<ul class="help-text">
+					<li><card-codes content="[[Root Armor]]"></card-codes></li>
+					<li><card-codes content="[[side]] - 1 [[natural:class]]"></card-codes></li>
+					<li><card-codes content="[[Love this site! ashes.live]]"></card-codes></li>
+					<li><card-codes content="*etc.*"></card-codes></li>
+				</ul>
+				<blockquote>
+					<p class="help-text">
+						<card-codes content="[[Skaak#1st!]] said:"></card-codes><br>
+						Quote text like this!
+					</p>
+				</blockquote>
+			</div>
+			<hr>
+			<h4 class="help-text">All card codes</h4>
 			<table class="help-text" cellpadding="0" cellspacing="0"><tbody>
 				<tr v-for="code of exampleCardCodes" :key="code">
 					<td><code>{{ code }}</code></td>
 					<td><card-codes :content="code"></card-codes></td>
 				</tr>
 			</tbody></table>
-			<hr>
-			<h4 class="help-text">Star formatting</h4>
-			<pre class="help-text boxed no-margin"><code>First **five:**
-
-* [[Root Armor]]
-* [[Shifting Mist]]
-* *etc.*</code></pre>
-			<p class="text-center no-margin"><i class="fa fa-arrow-down"></i></p>
-			<div class="boxed no-margin">
-				<p class="help-text"><card-codes content="First **five:**"></card-codes></p>
-				<ul class="help-text">
-					<li><card-codes content="[[Root Armor]]"></card-codes></li>
-					<li><card-codes content="[[Shifting Mist]]"></card-codes></li>
-					<li><card-codes content="*etc.*"></card-codes></li>
-				</ul>
-			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 	import CardCodes from 'app/components/card_codes.vue'
+	import TextareaHelpers from 'app/components/textarea_helpers.vue'
 	import {globals, getFromObject} from 'app/utils'
 	import {reduce} from 'lodash'
 
 	export default {
 		props: ['statePath', 'fieldName'],
 		components: {
-			'card-codes': CardCodes
+			'card-codes': CardCodes,
+			'textarea-helpers': TextareaHelpers
 		},
 		data: function () {
 			return {
