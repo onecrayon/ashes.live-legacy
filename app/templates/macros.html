@@ -24,6 +24,43 @@
 	</div>
 {%- endmacro %}
 
+{% macro parsed_text_field(field) -%}
+	<div class="form-field full-width">
+		<div class="textarea-helpers responsive-cols">
+			<div class="btn-group col">
+				<button class="btn btn-small" type="button" title="Bold"
+					data-cursor-prefix="**" data-cursor-suffix="**"
+				><i class="fa fa-bold"></i></button
+				><button class="btn btn-small" type="button" title="Italic"
+					data-cursor-prefix="*" data-cursor-suffix="*"
+				><i class="fa fa-italic"></i></button>
+			</div>
+			<div class="btn-group col">
+				<button class="btn btn-small" type="button" title="List"
+					data-line-prefix="* "><i class="fa fa-list-ul"></i></button
+				><button class="btn btn-small" type="button" title="Quote"
+					data-line-prefix="> "><i class="fa fa-quote-left"></i></button>
+			</div>
+			<div class="col">
+				<button class="btn btn-small" type="button" title="Wrap with [[ ]]"
+					data-cursor-prefix="[[" data-cursor-suffix="]]"
+				><strong>[[&hellip;]]</strong></button>
+			</div>
+			<div class="col">
+				<p class="help-text warning btn-small-align"><i class="fa fa-exclamation-triangle"></i> Buttons prevent "undo"</p>
+			</div>
+			<div class="col-flex text-right">
+				<a href="#formatting-help" class="btn btn-small inline-modal-trigger" title="Formatting Help">
+					<i class="fa fa-question"></i>
+				</a>
+			</div>
+		</div>
+		{{ field(**kwargs) }}
+		{{ inline_errors(field.errors) }}
+		<p class="help-text">Please remember the <a href="{{ url_for('home.policies') }}" target="_blank">Ashes.live Content Policies</a>.</p>
+	</div>
+{%- endmacro %}
+
 {% macro pagination(view_path=None, pages=None, page=1) -%}
 	{% if pages %}
 	{% set current = {'page': 0} -%}

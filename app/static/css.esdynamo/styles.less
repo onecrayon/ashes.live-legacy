@@ -329,6 +329,10 @@ ul.divider-separated {
 .form-field {
 	margin: 0 0 20px;
 	max-width: 320px;
+
+	&.full-width {
+		max-width: none;
+	}
 	
 	label, .label {
 		display: block;
@@ -1403,10 +1407,6 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
-.editor .form-field {
-	max-width: none;
-}
-
 .export-options {
 	list-style-type: none;
 	padding: 0;
@@ -2050,10 +2050,6 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 #comments {
 	clear: both;
-
-	.form-field {
-		max-width: none;
-	}
 }
 
 /* @end */

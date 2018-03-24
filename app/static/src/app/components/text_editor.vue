@@ -1,6 +1,6 @@
 <template>
 	<div class="editor">
-		<div class="form-field">
+		<div class="form-field full-width">
 			<label :for="fieldName.toLowerCase() + '-editor-field'">{{ fieldName }}</label>
 			<textarea v-model="content" :id="fieldName.toLowerCase() + '-editor-field'"></textarea>
 

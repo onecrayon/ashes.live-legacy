@@ -1,4 +1,4 @@
-{% from "macros.html" import hide_one_load, inline_errors, pagination, usertag %}
+{% from "macros.html" import hide_one_load, inline_errors, pagination, parsed_text_field, usertag %}
 
 <div id="comments">
 	<hr>
@@ -58,41 +58,7 @@
 			{{ comment_form.text.data | parse_text }}
 		</div>
 		{% endif %}
-		<div class="form-field">
-			{# TODO: hook up form-helpers so that they actually do something #}
-			<div class="textarea-helpers responsive-cols">
-				<div class="btn-group col">
-					<button class="btn btn-small" type="button" title="Bold"
-						data-cursor-prefix="**" data-cursor-suffix="**"
-					><i class="fa fa-bold"></i></button
-					><button class="btn btn-small" type="button" title="Italic"
-						data-cursor-prefix="*" data-cursor-suffix="*"
-					><i class="fa fa-italic"></i></button>
-				</div>
-				<div class="btn-group col">
-					<button class="btn btn-small" type="button" title="List"
-						data-line-prefix="* "><i class="fa fa-list-ul"></i></button
-					><button class="btn btn-small" type="button" title="Quote"
-						data-line-prefix="> "><i class="fa fa-quote-left"></i></button>
-				</div>
-				<div class="col">
-					<button class="btn btn-small" type="button" title="Wrap with [[ ]]"
-						data-cursor-prefix="[[" data-cursor-suffix="]]"
-					><strong>[[&hellip;]]</strong></button>
-				</div>
-				<div class="col">
-					<p class="help-text warning btn-small-align"><i class="fa fa-exclamation-triangle"></i> Buttons prevent "undo"</p>
-				</div>
-				<div class="col-flex text-right">
-					<a href="#formatting-help" class="btn btn-small inline-modal-trigger" title="Formatting Help">
-						<i class="fa fa-question"></i>
-					</a>
-				</div>
-			</div>
-			{{ comment_form.text(rows='10') }}
-			{{ inline_errors(comment_form.text.errors) }}
-			<p class="help-text">Please remember the <a href="{{ url_for('home.policies') }}" target="_blank">Ashes.live Content Policies</a>.</p>
-		</div>
+		{{ parsed_text_field(comment_form.text) }}
 		<input class="btn btn-primary" type="submit" value="Publish">
 		{{ comment_form.preview() }}
 	</form>

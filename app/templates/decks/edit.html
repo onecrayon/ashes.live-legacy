@@ -1,4 +1,4 @@
-{% from "macros.html" import with_errors %}
+{% from "macros.html" import parsed_text_field, with_errors %}
 {% from "decks/macros.html" import deck_details %}
 {% extends "base.html" %}
 {% block title %}Edit Snapshot: {{ deck | deck_title }}{% endblock %}
@@ -15,15 +15,11 @@
 	<form method="POST" action="./">
 		{{ form.hidden_tag() }}
 		{{ with_errors(form.title) }}
-		{{ with_errors(form.description) }}
+		{{ parsed_text_field(form.description) }}
 		<input class="btn btn-primary" type="submit" value="Save">
 	</form>
 {% endblock %}
 
 {% block sidebar %}
 	<p class="callout"><i class="fa fa-hand-o-left desktop-only"></i> Editing title and description for this snapshot.</p>
-
-	<p><em>Description supports [[card codes]] and *star formatting*:</em></p>
-
-	{% include "fragments/formatting_help.html" %}
 {% endblock %}
