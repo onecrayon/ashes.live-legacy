@@ -1,8 +1,8 @@
 <template>
 	<div class="editor">
 		<div class="form-field full-width">
-			<textarea-helpers></textarea-helpers>
-			<textarea v-model="content" :id="fieldName.toLowerCase() + '-editor-field'" :placeholder="fieldName"></textarea>
+			<textarea-helpers @actOnText="modifyText"></textarea-helpers>
+			<textarea ref="textarea" v-model="content" :id="fieldName.toLowerCase() + '-editor-field'" :placeholder="fieldName"></textarea>
 
 			<p class="help-text"><em>Supports [[card codes]] and *star formatting*:</em></p>
 			<p class="help-text">
@@ -55,7 +55,7 @@
 <script>
 	import CardCodes from 'app/components/card_codes.vue'
 	import TextareaHelpers from 'app/components/textarea_helpers.vue'
-	import {globals, getFromObject} from 'app/utils'
+	import {actOnText, globals, getFromObject} from 'app/utils'
 	import {reduce} from 'lodash'
 
 	export default {
@@ -97,6 +97,21 @@
 					this.$store.commit(this.setMethod, value)
 				}
 			}
+		},
+		methods: {
+			modifyText (actions) {
+				const logic = actOnText(
+					this.content,
+					this.$refs.textarea.selectionStart,
+					this.$refs.textarea.selectionEnd,
+					actions
+				)
+				if (!logic) return
+				this.content = logic.text
+				this.$nextTick(() => {
+					this.$refs.textarea.setSelectionRange(logic.start, logic.end)
+				})
+			},
 		}
 	}
 </script>

@@ -3,7 +3,7 @@ import 'babel-polyfill'
 // Normal imports
 import Noty from 'noty'
 import parseText from 'base/parse_text'
-import initTextareaHelpers from 'base/textarea_helpers'
+import {initTextareaHelpers, actOnText} from 'base/textarea_helpers'
 import {assetPath, initCardPopups, initTooltips} from 'base/tooltips'
 // Import things that should execute on page load
 import 'base/onload/auto_submit_forms'
@@ -37,7 +37,7 @@ globals.initCardPopups = initCardPopups
 globals.initTooltips = initTooltips
 
 //* Setup textarea helpers handling
-globals.initTextareaHelpers = initTextareaHelpers
+globals.actOnText = actOnText
 
 //* Setup global alert handling
 globals.notify = function (message, category) {

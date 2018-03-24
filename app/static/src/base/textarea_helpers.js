@@ -1,4 +1,63 @@
-export default function initTextareaHelpers (els) {
+/**
+ * Act on textarea text based on button input
+ * 
+ * @param {string} text The text to modify
+ * @param {int} start The selection starting index
+ * @param {int} end The selection ending index
+ * @param {object} actions An object with `prefix`, `suffix`, and/or `linePrefix` keys
+ */
+export function actOnText (text, start, end, actions) {
+	const prefix = actions.prefix || ''
+	const suffix = actions.suffix || ''
+	const linePrefix = actions.linePrefix || ''
+	let textPrefix, textSelection, textSuffix
+
+	// No selection? Default to the end of the value
+	if (!start && !end && start !== 0) {
+		end = text.length
+		start = end
+	}
+
+	if (prefix || suffix) {
+		textPrefix = text.slice(0, start)
+		textSelection = text.slice(start, end)
+		textSuffix = text.slice(end)
+		start += prefix.length
+		end += prefix.length
+	} else if (linePrefix) {
+		let lineRangeStart = start
+		let lineRangeEnd = end
+		const maxRange = text.length
+		while (lineRangeStart > 0 && text.charAt(lineRangeStart - 1) !== '\n') {
+			lineRangeStart--
+		}
+		if (text.charAt(lineRangeEnd) !== '\n') {
+			while (lineRangeEnd < maxRange && text.charAt(lineRangeEnd + 1) !== '\n') {
+				lineRangeEnd++
+			}
+		}
+		const lines = text.slice(lineRangeStart, lineRangeEnd).split('\n')
+		textPrefix = text.slice(0, lineRangeStart)
+		textSuffix = text.slice(lineRangeEnd)
+		textSelection = linePrefix + lines.join('\n' + linePrefix)
+		start = end = lineRangeEnd + (lines.length * linePrefix.length)
+	} else {
+		// Don't both proceeding if we don't actually have anything to parse
+		return
+	}
+
+	text = [
+		textPrefix,
+		prefix,
+		textSelection,
+		suffix,
+		textSuffix
+	].join('')
+
+	return {text, start, end}
+}
+
+export function initTextareaHelpers (els) {
 	for (const parentDiv of els) {
 		const textarea = parentDiv.nextElementSibling
 		if (!textarea) continue
@@ -6,62 +65,18 @@ export default function initTextareaHelpers (els) {
 		for (const button of Array.from(buttons)) {
 			button.addEventListener('mousedown', (event) => {
 				event.preventDefault()
-				let prefix = button.getAttribute('data-cursor-prefix')
-				let suffix = button.getAttribute('data-cursor-suffix')
-				const linePrefix = button.getAttribute('data-line-prefix')
-				let start = textarea.selectionStart
-				let end = textarea.selectionEnd
-				const value = textarea.value
-				let valuePrefix, valueSelection, valueSuffix
-
-				// Make sure we have strings for prefix/suffix so length property works
-				if (!prefix) prefix = ''
-				if (!suffix) suffix = ''
-
-				// No selection? Default to the end of the value
-				if (!start && !end && start !== 0) {
-					end = value.length
-					start = end
+				const actions = {
+					prefix: button.getAttribute('data-cursor-prefix'),
+					suffix: button.getAttribute('data-cursor-suffix'),
+					linePrefix: button.getAttribute('data-line-prefix')
 				}
-
-				if (prefix || suffix) {
-					valuePrefix = value.slice(0, start)
-					valueSelection = value.slice(start, end)
-					valueSuffix = value.slice(end)
-					start += prefix.length
-					end += prefix.length
-				} else if (linePrefix) {
-					let lineRangeStart = start
-					let lineRangeEnd = end
-					const maxRange = value.length
-					while (lineRangeStart > 0 && value.charAt(lineRangeStart - 1) !== '\n') {
-						lineRangeStart--
-					}
-					if (value.charAt(lineRangeEnd) !== '\n') {
-						while (lineRangeEnd < maxRange && value.charAt(lineRangeEnd + 1) !== '\n') {
-							lineRangeEnd++
-						}
-					}
-					const lines = value.slice(lineRangeStart, lineRangeEnd).split('\n')
-					valuePrefix = value.slice(0, lineRangeStart)
-					valueSuffix = value.slice(lineRangeEnd)
-					valueSelection = linePrefix + lines.join('\n' + linePrefix)
-					start = end = lineRangeEnd + (lines.length * linePrefix.length)
-				} else {
-					// Don't both proceeding if we don't actually have anything to parse
-					return
-				}
-
-				// FIXME: find a way to modify textarea value without destroying undo/redo queue
-				textarea.value = [
-					valuePrefix,
-					prefix,
-					valueSelection,
-					suffix,
-					valueSuffix
-				].join('')
+				const logic = actOnText(
+					textarea.value, textarea.selectionStart, textarea.selectionEnd, actions
+				)
+				if (!logic) return
+				textarea.value = logic.text
 				textarea.focus()
-				textarea.setSelectionRange(start, end)
+				textarea.setSelectionRange(logic.start, logic.end)
 			})
 		}
 	}
