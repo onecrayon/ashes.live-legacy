@@ -24,7 +24,10 @@
 			{{ dice_list(entity.dice) }}
 			{% elif entity.entity_type == 'comment' %}
 			<div class="comment-header responsive-cols no-wrap">
-				<p class="col-flex"><strong>{{ usertag(entity.user) }} commented on the {{ entity.source_type }} <a href="{{ entity.url }}">{{ entity.source_title }}</a>:</strong></p>
+				<p class="col-flex">
+					<strong>{{ usertag(entity.user) }} commented on the {{ entity.source_type }} <a href="{{ entity.url }}"
+						{% if entity.source_type == 'card' %} class="card"{% endif %}>{{ entity.source_title }}</a>:</strong>
+				</p>
 				<p class="timestamp col">{{ entity.created | format_date }}</p>
 			</div>
 			<div class="responsive-cols no-wrap">
