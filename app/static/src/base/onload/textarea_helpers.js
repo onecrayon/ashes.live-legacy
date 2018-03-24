@@ -13,9 +13,7 @@ if (textareaHelpers) {
 				let start = textarea.selectionStart
 				let end = textarea.selectionEnd
 				const value = textarea.value
-				let valuePrefix = value.slice(0, start)
-				const valueSelection = value.slice(start, end)
-				let valueSuffix = value.slice(end)
+				let valuePrefix, valueSelection, valueSuffix
 
 				// Make sure we have strings for prefix/suffix so length property works
 				if (!prefix) prefix = ''
@@ -28,10 +26,31 @@ if (textareaHelpers) {
 				}
 
 				if (prefix || suffix) {
+					valuePrefix = value.slice(0, start)
+					valueSelection = value.slice(start, end)
+					valueSuffix = value.slice(end)
 					start += prefix.length
 					end += prefix.length
 				} else if (linePrefix) {
-					// TODO: process line prefixes
+					let lineRangeStart = start
+					let lineRangeEnd = end
+					const maxRange = value.length
+					while (lineRangeStart > 0 && value.charAt(lineRangeStart - 1) !== '\n') {
+						lineRangeStart--
+					}
+					if (value.charAt(lineRangeEnd) !== '\n') {
+						while (lineRangeEnd < maxRange && value.charAt(lineRangeEnd + 1) !== '\n') {
+							lineRangeEnd++
+						}
+					}
+					const lines = value.slice(lineRangeStart, lineRangeEnd).split('\n')
+					valuePrefix = value.slice(0, lineRangeStart)
+					valueSuffix = value.slice(lineRangeEnd)
+					valueSelection = linePrefix + lines.join('\n' + linePrefix)
+					start = end = lineRangeEnd + (lines.length * linePrefix.length)
+				} else {
+					// Don't both proceeding if we don't actually have anything to parse
+					return
 				}
 
 				// FIXME: find a way to modify textarea value without destroying undo/redo queue
