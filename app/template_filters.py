@@ -14,7 +14,7 @@ from app.models.card import DiceFlags
 def paged_title(value, page=None):
     if not page or page == 1:
         return value
-    return '[p. {}] {}'.format(page, value)
+    return '{} [p. {}]'.format(value, page)
 
 
 @app.template_filter('copyright')
