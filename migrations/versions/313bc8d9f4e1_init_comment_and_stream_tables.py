@@ -63,6 +63,7 @@ def upgrade():
     op.add_column('card', sa.Column('entity_id', sa.Integer(), nullable=False))
     op.add_column('card', sa.Column('version', sa.Integer(), nullable=False, server_default='1'))
     op.add_column('deck', sa.Column('entity_id', sa.Integer(), nullable=False))
+    op.add_column('user', sa.Column('exclude_subscriptions', sa.Boolean(), nullable=False, server_default='0'))
     # Go through Card and Deck and generate initial entity_ids
     connection = op.get_bind()
     cards = connection.execute('SELECT id FROM card ORDER BY id ASC').fetchall()
@@ -101,6 +102,7 @@ def upgrade():
 
 
 def downgrade():
+    op.drop_column('user', 'exclude_subscriptions')
     op.drop_column('deck', 'entity_id')
     op.drop_column('card', 'version')
     op.drop_column('card', 'entity_id')

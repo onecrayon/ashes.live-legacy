@@ -71,6 +71,13 @@ def get_stream(page=None):
             Subscription.user_id == user_id
         )
     )
+    if current_user.is_authenticated and current_user.exclude_subscriptions:
+        stream_query = stream_query.filter(
+            db.or_(
+                Stream.entity_type != 'comment',
+                Subscription.source_entity_id.is_(None)
+            )
+        )
     stream = stream_query.order_by(Stream.posted.desc()).limit(per_page).offset(
         (page - 1) * per_page
     ).all()

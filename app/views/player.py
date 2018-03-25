@@ -40,10 +40,11 @@ def settings():
     if form.validate_on_submit():
         # Save changes to account preferences
         current_user.username = form.username.data
-        current_user.newsletter_opt_in = form.newsletter_opt_in.data
         current_user.description = form.description.data
+        current_user.newsletter_opt_in = form.newsletter_opt_in.data
+        current_user.exclude_subscriptions = form.exclude_subscriptions.data
         db.session.commit()
-        flash('Preferences updated!', 'success')
+        flash('Settings updated!', 'success')
     return render_template('player/settings.html', user=current_user, form=form)
 
 
@@ -55,7 +56,7 @@ def account():
     if form.validate_on_submit():
         # Setting the password commits the changes
         current_user.set_password(form.password.data)
-        flash('Account updated!', 'success')
+        flash('Password updated!', 'success')
     return render_template('player/account.html', user=current_user, form=form)
 
 

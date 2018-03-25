@@ -44,8 +44,8 @@ def get_comments(entity_id, page=None):
         else:
             last_seen_entity_id = subscription.last_seen_entity_id
         # Update their subscription now that they've seen this page
-        if (subscription and last_comment_entity_id and
-                subscription.last_seen_entity_id < last_comment_entity_id):
+        if (subscription and last_seen_entity_id and
+                last_seen_entity_id < last_comment_entity_id):
             subscription.last_seen_entity_id = comments[-1].entity_id
     return comments, pagination, last_seen_entity_id
 

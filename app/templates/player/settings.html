@@ -17,6 +17,10 @@
 			{{ form.newsletter_opt_in }} {{ form.newsletter_opt_in.label }}
 			<p class="help-text">Emails are rare, and only focused on major new features or improvements.</p>
 		</div>
+		<div class="form-field full-width">
+			{{ form.exclude_subscriptions }} {{ form.exclude_subscriptions.label }}
+			<p class="help-text">If you use the <i class="fa fa-arrow-circle-o-right" title="Next Unread Subscription"></i> button, excluding subscribed comments will make the homepage much more useful.</p>
+		</div>
 		<input class="btn btn-primary" type="submit" value="Save settings">
 	</form>
 {% endblock %}
