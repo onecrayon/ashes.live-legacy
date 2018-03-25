@@ -7,7 +7,7 @@
 	{% if comments %}
 	<ul class="comments">
 		{% for comment in comments %}
-		<li id="comment-{{ comment.id }}" class="comment">
+		<li id="comment-{{ comment.id }}" class="comment{% if comment_last_seen and comment.entity_id > comment_last_seen %} unread{% endif %}">
 			<div class="comment-header responsive-cols no-wrap">
 				<p class="col-flex">{{  usertag(comment.user) }} says:</p>
 				<p class="timestamp col"><a href="{{ comment.url }}"><i class="fa fa-link"></i> {{ comment.created | format_date }}</a></p>

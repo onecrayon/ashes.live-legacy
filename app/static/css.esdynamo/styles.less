@@ -1227,6 +1227,10 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	padding: 0;
 
 	.deck {
+		&.unread {
+			border-color: @color-inexhaustible-dark;
+		}
+
 		p {
 			margin-bottom: 5px;
 		}
@@ -1244,18 +1248,18 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			border-radius: 0;
 		}
 	}
+}
 
-	.unread {
+.unread {
+	border-color: @color-inexhaustible-dark;
+	
+	&.deck {
+		border-width: 3px;
+	}
+
+	.comment-header {
+		background-color: @color-inexhaustible;
 		border-color: @color-inexhaustible-dark;
-		
-		&.deck {
-			border-width: 3px;
-		}
-
-		.comment-header {
-			background-color: @color-inexhaustible;
-			border-color: @color-inexhaustible-dark;
-		}
 	}
 }
 

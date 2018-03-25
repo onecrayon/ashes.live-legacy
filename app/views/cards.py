@@ -89,7 +89,7 @@ def detail(stub, page=None):
         ).first()
     # Gather comments
     try:
-        comments, pagination, comment_form = process_comments(
+        comments, pagination, last_seen_entity_id, comment_form = process_comments(
             card.entity_id, source_type='card', source_version=card.version, page=page
         )
     except Redirect as error:
@@ -111,6 +111,7 @@ def detail(stub, page=None):
         # Standard comment properties
         comment_version=card.version,
         comments=comments,
+        comment_last_seen=last_seen_entity_id,
         pagination_options={
             'view_path': 'cards.detail',
             'pages': pagination,

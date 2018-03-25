@@ -106,7 +106,7 @@ def view(deck_id, page=None):
     release_names = [current_app.config['RELEASE_NAMES'][release] for release in releases]
     # Gather comments
     try:
-        comments, pagination, comment_form = process_comments(
+        comments, pagination, last_seen_entity_id, comment_form = process_comments(
             deck.source.entity_id, source_type='deck', source_version=deck.id, page=page,
             allow_commenting=deck.is_public
         )
@@ -121,6 +121,7 @@ def view(deck_id, page=None):
         # Standard comment properties
         comment_version=deck.id,
         comments=comments,
+        comment_last_seen=last_seen_entity_id,
         pagination_options={
             'view_path': 'decks.view',
             'pages': pagination,
