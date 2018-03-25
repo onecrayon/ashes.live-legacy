@@ -8,7 +8,7 @@
 	<h1 class="phg-illusion-power">
 		{{ usertag(user, False) }}
 		{% if current_user.is_authenticated and current_user.id == user.id %}
-		<small><a href="{{ url_for('player.account') }}">(edit)</a></small>
+		<small><a href="{{ url_for('player.settings') }}">(edit)</a></small>
 		{% endif %}
 	</h1>
 {% endblock %}

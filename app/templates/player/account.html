@@ -1,10 +1,10 @@
 {% from "macros.html" import with_errors, usertag %}
 {% extends "base.html" %}
-{% block title %}My Account{% endblock %}
+{% block title %}Change Password{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-illusion-class">
-		{{ usertag(user, False) }} <small><a href="{{ url_for('player.view', badge=user.badge) | badge_link }}">(view)</a></small>
+		Change Password
 	</h1>
 {% endblock %}
 
@@ -12,23 +12,16 @@
 	<form method="POST" action="./">
 		{{ form.hidden_tag() }}
 		{{ with_errors(form.email) }}
-		{{ with_errors(form.username) }}
 		{{ with_errors(form.password) }}
 		{{ with_errors(form.password_confirm) }}
-		{{ with_errors(form.description) }}
-		<div class="form-field">
-			{{ form.newsletter_opt_in }} {{ form.newsletter_opt_in.label }}
-		</div>
-		<input class="btn btn-primary" type="submit" value="Update account">
+		<input class="btn btn-primary" type="submit" value="Save password">
 	</form>
 {% endblock %}
 
 {% block sidebar %}
+	<p><a href="{{ url_for('player.settings') }}" class="btn btn-block btn-success">Edit Settings</a></p>
+	
 	<p>To update your email address, please contact <a href="mailto:hello@ashes.live?subject=Update email request">hello@ashes.live</a>.</p>
 
-	<p>New site feature notification emails are rare, and only focused on major new features or improvements.</p>
-
-	<p><em>Description supports [[card codes]] and *star formatting*:</em></p>
-
-	{% include "fragments/formatting_help.html" %}
+	<p>Passwords must be at least 12 characters long.</p>
 {% endblock %}

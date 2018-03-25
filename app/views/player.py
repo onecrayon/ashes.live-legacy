@@ -11,7 +11,7 @@ from app.models.deck import Deck
 from app.models.invite import Invite
 from app.models.user import User
 from app.views.forms.player import (
-    CreateForm, EditForm, EmailForm, LoginForm, ReauthorizeForm, ResetForm
+    CreateForm, EditForm, EmailForm, LoginForm, PasswordForm, ReauthorizeForm, ResetForm
 )
 from app.utils.decks import get_decks
 from app.utils import send_message
@@ -33,20 +33,28 @@ def load_user(user_id):
 
 
 @mod.route('/', methods=['GET', 'POST'])
-@fresh_login_required
-def account():
-    """Edit current player's account"""
+@login_required
+def settings():
+    """Edit current player's account preferences"""
     form = EditForm(obj=current_user)
     if form.validate_on_submit():
-        # Save changes to account
+        # Save changes to account preferences
         current_user.username = form.username.data
         current_user.newsletter_opt_in = form.newsletter_opt_in.data
         current_user.description = form.description.data
-        if form.password.data:
-            # Setting the password commits the changes
-            current_user.set_password(form.password.data)
-        else:
-            db.session.commit()
+        db.session.commit()
+        flash('Preferences updated!', 'success')
+    return render_template('player/settings.html', user=current_user, form=form)
+
+
+@mod.route('/account/', methods=['GET', 'POST'])
+@fresh_login_required
+def account():
+    """Edit current player's password"""
+    form = PasswordForm(obj=current_user)
+    if form.validate_on_submit():
+        # Setting the password commits the changes
+        current_user.set_password(form.password.data)
         flash('Account updated!', 'success')
     return render_template('player/account.html', user=current_user, form=form)
 

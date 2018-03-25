@@ -3,7 +3,7 @@ from urllib.parse import urljoin, urlparse
 from flask import redirect, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, HiddenField, PasswordField, RadioField, StringField, TextAreaField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
 def is_safe_url(target):
@@ -28,7 +28,8 @@ emailField = StringField('Email', validators=[
 ], filters=(strip_filter,))
 usernameField = StringField('Username', validators=[DataRequired()])
 passwordField = PasswordField('Password', validators=[
-    DataRequired(message='Password is required.')
+    DataRequired(message='Password is required.'),
+    Length(min=12, message='Password must be at least %(min)d characters long.')
 ])
 passwordConfirmField = PasswordField('Confirm Password', validators=[
     DataRequired(message='Password confirmation is required.'),
@@ -71,14 +72,15 @@ class ResetForm(FlaskForm):
 
 
 class EditForm(FlaskForm):
-    email = StringField('Email', render_kw={'readonly': True})
     username = usernameField
-    password = PasswordField('New Password (or leave blank)')
-    password_confirm = PasswordField('Confirm Password', validators=[
-        EqualTo('password', message='Must match password.')
-    ])
     description = TextAreaField('Description')
     newsletter_opt_in = newsletterField
+
+
+class PasswordForm(FlaskForm):
+    email = StringField('Email', render_kw={'readonly': True})
+    password = passwordField
+    password_confirm = passwordConfirmField
 
 
 class CreateForm(EditForm):
