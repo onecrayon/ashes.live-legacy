@@ -1,7 +1,7 @@
 from collections import defaultdict
 from datetime import datetime
 
-from flask import current_app
+from flask import current_app, url_for
 from flask_login import current_user
 
 from app import db
@@ -54,6 +54,36 @@ def update_subscription(source_entity_id, last_seen_entity_id=None):
     else:
         subscription.last_seen_entity_id = last_seen_entity_id
     db.session.add(subscription)
+
+
+def next_subscription_link():
+    next_subscription_link = None
+    if not current_user.is_authenticated:
+        return next_subscription_link
+    stream_entity = db.session.query(Stream).join(
+        Subscription, db.and_(
+            Subscription.source_entity_id == Stream.source_entity_id,
+            Subscription.user_id == current_user.id
+        )
+    ).filter(
+        db.or_(
+            Subscription.last_seen_entity_id.is_(None),
+            Stream.entity_id > Subscription.last_seen_entity_id
+        )
+    ).order_by(Stream.posted.asc()).first()
+    if not stream_entity:
+        return next_subscription_link
+    if stream_entity.entity_type == 'comment':
+        comment = db.session.query(Comment).filter(
+            Comment.entity_id == stream_entity.entity_id
+        ).first()
+        next_subscription_link = comment.url
+    elif stream_entity.entity_type == 'deck':
+        deck = db.session.query(Deck.id).filter(
+            Deck.entity_id == stream_entity.source_entity_id
+        ).first()
+        next_subscription_link = url_for('decks.view', deck_id=deck.id)
+    return next_subscription_link
 
 
 def get_stream(page=None):

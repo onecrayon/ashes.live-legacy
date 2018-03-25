@@ -47,4 +47,4 @@ login_manager.init_app(app)
 mail = Mail(app)
 
 # Include template filters (this import requires app to be configured)
-from app import template_filters  # noqa
+from app import jinja_globals  # noqa

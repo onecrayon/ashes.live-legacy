@@ -6,7 +6,7 @@ from app.exceptions import ApiError
 from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.models.stream import Streamable
-from app.template_filters import deck_title as compose_deck_title
+from app.jinja_globals import deck_title as compose_deck_title
 from app.utils.stream import new_entity, refresh_entity, update_subscription
 
 mod = Blueprint('api_decks', __name__, url_prefix='/api/decks')

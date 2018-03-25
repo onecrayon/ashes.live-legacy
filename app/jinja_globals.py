@@ -8,6 +8,15 @@ from jinja2 import evalcontextfilter, Markup, escape
 
 from app import app
 from app.models.card import DiceFlags
+from app.utils.stream import next_subscription_link
+
+
+@app.context_processor
+def global_values():
+    """Declare global variables and methods for use in Jinja templates"""
+    return {
+        'next_subscription_link': next_subscription_link
+    }
 
 
 @app.template_filter('paged_title')
