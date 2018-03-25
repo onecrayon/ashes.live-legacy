@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Card: {{ card.name }}{% endblock %}
+{% block title %}Card: {{ card.name | paged_title(pagination_options.page) }}{% endblock %}
 {% block meta %}
 	<meta property="og:image" content="{{ card.images.compressed | cdn_url }}">
 	<meta property="og:description" content="{%- if card.type == 'Phoenixborn' -%}

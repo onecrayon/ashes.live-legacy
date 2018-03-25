@@ -1,6 +1,6 @@
 {% from "macros.html" import usertag, hide_on_load %}
 {% extends "base.html" %}
-{% block title %}Deck: {{ deck | deck_title }}{% endblock %}
+{% block title %}Deck: {{ deck | deck_title | paged_title(pagination_options.page) }}{% endblock %}
 {% block meta %}
 	<meta property="og:image" content="{{ ('/images/cards/' + deck.phoenixborn.stub + '.jpg') | cdn_url }}">
 	<meta property="og:description" content="{% for dice in deck.dice -%}
