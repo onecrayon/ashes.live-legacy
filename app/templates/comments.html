@@ -50,12 +50,16 @@
 	</div>
 	{% endif %}
 	{% if current_user.is_authenticated and comment_form %}
-	<form action="./" id="comment" method="POST">
+	<form action="./#comment" id="comment" method="POST">
 		{{ comment_form.hidden_tag() }}
 		{% if comment_form.preview.data %}
 		<h3 id="comment-preview">Preview</h3>
 		<div class="boxed">
+			{% if not comment_form.text.data %}
+			<p class="muted">Comment preview will be shown here&hellip;</p>
+			{% else %}
 			{{ comment_form.text.data | parse_text }}
+			{% endif %}
 		</div>
 		{% endif %}
 		{{ parsed_text_field(comment_form.text) }}
