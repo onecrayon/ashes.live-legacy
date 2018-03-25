@@ -12,7 +12,7 @@
 	{% if stream %}
 	<ul class="activity">
 	{% for entity in stream %}
-		<li class="{{ entity.entity_type }}{% if entity.entity_type == 'deck' %} {{ entity.phoenixborn.stub }}{% endif %}">
+		<li class="{{ entity.entity_type }}{% if entity.is_unread %} unread{% endif %}{% if entity.entity_type == 'deck' %} {{ entity.phoenixborn.stub }}{% endif %}">
 			{% if entity.entity_type == 'deck' %}
 			<div class="responsive-cols no-wrap">
 				<p class="col-flex"><strong>{{ usertag(entity.user) }} published a deck!</strong></p>
