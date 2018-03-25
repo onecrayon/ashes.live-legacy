@@ -50,7 +50,7 @@
 		<i class="fa fa-envelope"></i> <span class="full-display-only">Help / feedback</span>
 	</a>
 	{% set next_url = next_subscription_link() %}
-	{% if next_url %}
+	{% if next_url and not suppress_subscription_link %}
 	<a href="{{ next_url }}" class="next-badge" title="Next Unread Subscription">
 		<i class="fa fa-arrow-circle-o-right"></i>
 	</a>
