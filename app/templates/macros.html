@@ -84,6 +84,16 @@
 	{% endif %}
 {%- endmacro %}
 
+{% macro subscribe_button(url, comment_last_seen) -%}
+	<a href="{{ url }}" class="btn btn-block btn-success">
+		{% if comment_last_seen %}
+		<i class="fa fa-bookmark-o"></i> Unsubscribe
+		{% else %}
+		<i class="fa fa-bookmark"></i> Subscribe
+		{% endif %}
+	</a>
+{%- endmacro %}
+
 {% macro hide_on_load(id) -%}
 	<script type="text/javascript">
 		document.getElementById('{{ id }}').style.display = 'none'

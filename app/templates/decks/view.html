@@ -1,4 +1,4 @@
-{% from "macros.html" import usertag, hide_on_load %}
+{% from "macros.html" import usertag, hide_on_load, subscribe_button %}
 {% extends "base.html" %}
 {% block title %}Deck: {{ deck | deck_title | paged_title(pagination_options.page) }}{% endblock %}
 {% block meta %}
@@ -142,6 +142,9 @@ Created with https://ashes.live</textarea>
 	</table>
 
 	{% if current_user.is_authenticated %}
+	<hr>
+	{{ subscribe_button(url_for('decks.subscribe', deck_id=deck.id), comment_last_seen) }}
+	<hr>
 	{% if deck.user_id == current_user.id %}
 	{% if deck.is_snapshot %}
 	<a class="btn btn-block btn-primary"

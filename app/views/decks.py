@@ -13,6 +13,7 @@ from app.models.deck import Deck, DeckCard, DeckDie
 from app.utils.cards import global_json
 from app.utils.comments import process_comments
 from app.utils.decks import get_decks, get_decks_query, process_deck
+from app.utils.stream import toggle_subscription
 from app.views.forms.deck import SnapshotForm
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
@@ -130,6 +131,19 @@ def view(deck_id, page=1):
         },
         comment_form=comment_form
     )
+
+
+@mod.route('/view/<int:deck_id>/subscribe/')
+@login_required
+def subscribe(deck_id):
+    """Toggle subscription for this deck"""
+    deck = Deck.query.get_or_404(deck_id)
+    if deck.is_snapshot:
+        deck = db.session.query(Deck.entity_id).filter(Deck.id == deck.source_id).first()
+    if not deck:
+        abort(404)
+    toggle_subscription(deck.entity_id)
+    return redirect(url_for('decks.view', deck_id=deck_id), code=303)
 
 
 @mod.route('/edit/<int:deck_id>/', methods=['GET', 'POST'])

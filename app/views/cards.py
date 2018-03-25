@@ -3,6 +3,7 @@
 import json
 
 from flask import abort, current_app, Blueprint, url_for, redirect, render_template
+from flask_login import login_required
 
 from app import db
 from app.exceptions import Redirect
@@ -10,6 +11,7 @@ from app.models.card import Card
 from app.models.deck import Deck, DeckCard
 from app.utils.cards import global_json
 from app.utils.comments import process_comments
+from app.utils.stream import toggle_subscription
 
 mod = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -120,3 +122,14 @@ def detail(stub, page=1):
         },
         comment_form=comment_form
     )
+
+
+@mod.route('/<stub>/subscribe/')
+@login_required
+def subscribe(stub):
+    """Toggle subscription for this card"""
+    card = db.session.query(Card.entity_id).filter(Card.stub == stub).first()
+    if not card:
+        abort(404)
+    toggle_subscription(card.entity_id)
+    return redirect(url_for('cards.detail', stub=stub), code=303)

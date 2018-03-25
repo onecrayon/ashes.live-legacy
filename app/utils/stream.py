@@ -56,6 +56,26 @@ def update_subscription(source_entity_id, last_seen_entity_id=None):
     db.session.add(subscription)
 
 
+def toggle_subscription(source_entity_id):
+    subscription = db.session.query(Subscription).filter(
+        Subscription.source_entity_id == source_entity_id,
+        Subscription.user_id == current_user.id
+    ).first()
+    if subscription:
+        db.session.delete(subscription)
+    else:
+        comment = db.session.query(Comment.entity_id).filter(
+            Comment.source_entity_id == source_entity_id
+        ).order_by(Comment.entity_id.desc()).first()
+        last_seen_entity_id = comment.entity_id if comment else None
+        db.session.add(Subscription(
+            source_entity_id=source_entity_id,
+            user_id=current_user.id,
+            last_seen_entity_id=last_seen_entity_id
+        ))
+    db.session.commit()
+
+
 def next_subscription_link():
     next_subscription_link = None
     if not current_user.is_authenticated:

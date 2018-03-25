@@ -1,3 +1,4 @@
+{% from "macros.html" import subscribe_button %}
 {% extends "base.html" %}
 {% block title %}Card: {{ card.name | paged_title(pagination_options.page) }}{% endblock %}
 {% block meta %}
@@ -129,6 +130,10 @@
 		</tr>
 		{% endif %}
 	</table>
+
+	{% if current_user.is_authenticated %}
+	{{ subscribe_button(url_for('cards.subscribe', stub=card.stub), comment_last_seen) }}
+	{% endif %}
 
 	{% if conjurations or phoenixborn_card %}
 	<hr>
