@@ -14,6 +14,7 @@ class Stream(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     entity_id = db.Column(db.Integer, nullable=False, index=True, unique=True)
     entity_type = db.Column(db.String(16))
+    source_entity_id = db.Column(db.Integer, nullable=False, index=True)
     posted = db.Column(db.DateTime, default=datetime.utcnow, index=True)
 
 

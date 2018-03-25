@@ -7,7 +7,7 @@ from app import db
 from app.exceptions import Redirect
 from app.models.comment import Comment
 from app.utils import get_pagination
-from app.utils.stream import new_entity, refresh_entity
+from app.utils.stream import new_entity, refresh_entity, update_subscription
 from app.views.forms.comment import CommentForm
 
 
@@ -50,8 +50,11 @@ def process_comments(entity_id, source_type='deck', source_version=None, page=No
         ).order_by(Comment.created.desc()).limit(1).scalar()
         comment.order = order + 1 if order else 1
         db.session.add(comment)
+        # Add the comment to the Stream
+        refresh_entity(comment.entity_id, 'comment', comment.source_entity_id)
+        # Subscribe the user to the comment's source
+        update_subscription(comment.source_entity_id, comment.entity_id)
         db.session.commit()
-        refresh_entity(comment.entity_id, entity_type='comment')
         raise Redirect(comment.url, status_code=303)
     comments, pagination = get_comments(entity_id, page=page)
     return comments, pagination, comment_form

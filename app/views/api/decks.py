@@ -7,7 +7,7 @@ from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.models.stream import Streamable
 from app.template_filters import deck_title as compose_deck_title
-from app.utils.stream import new_entity, refresh_entity
+from app.utils.stream import new_entity, refresh_entity, update_subscription
 
 mod = Blueprint('api_decks', __name__, url_prefix='/api/decks')
 
@@ -142,9 +142,10 @@ def save(deck_id=None, is_snapshot=False):
         })
 
     # Finally save everything up!
-    if deck.is_public and deck.is_snapshot and source_entity_id:
-        refresh_entity(source_entity_id)
     db.session.add(deck)
+    if deck.is_public and deck.is_snapshot and source_entity_id:
+        refresh_entity(deck.entity_id, 'deck', source_entity_id)
+        update_subscription(source_entity_id, deck.entity_id)
     db.session.commit()
 
     return jsonify({'success': '{} successfully saved!'.format(

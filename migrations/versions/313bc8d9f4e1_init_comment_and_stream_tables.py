@@ -25,10 +25,12 @@ def upgrade():
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('entity_id', sa.Integer(), nullable=False),
         sa.Column('entity_type', sa.String(length=16), nullable=True),
+        sa.Column('source_entity_id', sa.Integer(), nullable=False),
         sa.Column('posted', sa.DateTime(), nullable=True),
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_stream_entity_id'), 'stream', ['entity_id'], unique=True)
+    op.create_index(op.f('ix_stream_souce_entity_id'), 'stream', ['source_entity_id'], unique=False)
     op.create_index(op.f('ix_stream_posted'), 'stream', ['posted'], unique=False)
     op.create_table('comment',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -79,8 +81,10 @@ def upgrade():
     op.create_index(op.f('ix_deck_entity_id'), 'deck', ['entity_id'], unique=True)
     # Create our initial stream (initially just a listing of all published decks)
     connection.execute(
-        "INSERT INTO stream (entity_id, entity_type, posted) "
-        "SELECT source.entity_id, 'deck' AS entity_type, MAX(deck.created) AS posted FROM deck "
+        "INSERT INTO stream (entity_id, entity_type, source_entity_id, posted) "
+        "SELECT MAX(deck.entity_id) AS entity_id, 'deck' AS entity_type, source.entity_id AS source_entity_id, "
+            "MAX(deck.created) AS posted "
+        "FROM deck "
         "INNER JOIN deck AS source ON source.id = deck.source_id "
         "WHERE deck.is_snapshot = 1 AND deck.is_public = 1 "
         "GROUP BY deck.source_id"
