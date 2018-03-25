@@ -20,12 +20,5 @@ class Stream(db.Model):
 class Subscription(db.Model):
     """A Subscription subscribes a user to a Streamable entity's comments"""
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), primary_key=True, nullable=False)
-    entity_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    created = db.Column(db.DateTime, default=datetime.utcnow)
-
-
-class UserStream(db.Model):
-    """This table tracks whether a given user has seen a notification yet"""
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), primary_key=True, nullable=False)
-    entity_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    is_delivered = db.Column(db.Boolean, default=False, nullable=False, index=True)
+    source_entity_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    last_seen_entity_id = db.Column(db.Integer)

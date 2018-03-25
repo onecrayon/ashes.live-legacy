@@ -7,7 +7,7 @@ from flask_login import current_user
 from app import db
 from app.models.comment import Comment
 from app.models.deck import Deck
-from app.models.stream import Stream, Streamable, Subscription, UserStream
+from app.models.stream import Stream, Streamable, Subscription
 from app.utils import get_pagination
 
 
@@ -25,10 +25,7 @@ def refresh_entity(entity_id, entity_type='deck'):
         entity = Stream(entity_id=entity_id, entity_type=entity_type)
     else:
         entity.posted = datetime.utcnow()
-        db.session.query(UserStream).filter(
-            UserStream.is_delivered.is_(True),
-            UserStream.entity_id == entity_id
-        ).update({'is_delivered': False}, synchronize_session=False)
+        # TODO: update subscription
     db.session.add(entity)
     db.session.commit()
 
@@ -41,17 +38,12 @@ def get_stream(page=None):
     user_id = current_user.id if current_user.is_authenticated else None
     stream_query = db.session.query(
         Stream,
-        Subscription.created.label('subscription_start'),
-        UserStream.is_delivered
+        Subscription.created.label('subscription_start')
+        # TODO: add subscription information to this query
     ).outerjoin(
         Subscription, db.and_(
             Subscription.entity_id == Stream.entity_id,
             Subscription.user_id == user_id
-        )
-    ).outerjoin(
-        UserStream, db.and_(
-            UserStream.entity_id == Stream.entity_id,
-            UserStream.user_id == user_id
         )
     )
     stream = stream_query.order_by(Stream.posted.desc()).limit(per_page).offset(

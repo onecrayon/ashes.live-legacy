@@ -52,19 +52,12 @@ def upgrade():
     op.create_index(op.f('ix_comment_order'), 'comment', ['order'], unique=False)
     op.create_table('subscription',
         sa.Column('user_id', sa.Integer(), nullable=False),
-        sa.Column('entity_id', sa.Integer(), nullable=False),
-        sa.Column('created', sa.DateTime(), nullable=True),
+        sa.Column('source_entity_id', sa.Integer(), nullable=False),
+        sa.Column('last_seen_entity_id', sa.Integer(), nullable=True),
         sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-        sa.PrimaryKeyConstraint('user_id', 'entity_id')
+        sa.PrimaryKeyConstraint('user_id', 'source_entity_id')
     )
-    op.create_table('user_stream',
-        sa.Column('user_id', sa.Integer(), nullable=False),
-        sa.Column('entity_id', sa.Integer(), nullable=False),
-        sa.Column('is_delivered', sa.Boolean(), nullable=False),
-        sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-        sa.PrimaryKeyConstraint('user_id', 'entity_id')
-    )
-    op.create_index(op.f('ix_user_stream_is_delivered'), 'user_stream', ['is_delivered'], unique=False)
+    op.create_index(op.f('ix_subscription_last_seen_entity_id'), 'subscription', ['last_seen_entity_id'], unique=False)
     op.add_column('card', sa.Column('entity_id', sa.Integer(), nullable=False))
     op.add_column('card', sa.Column('version', sa.Integer(), nullable=False, server_default='1'))
     op.add_column('deck', sa.Column('entity_id', sa.Integer(), nullable=False))
@@ -94,8 +87,9 @@ def upgrade():
     )
     # Subscribe users to their public decks
     connection.execute(
-        'INSERT INTO subscription (user_id, entity_id, created) '
-        'SELECT deck.user_id, deck.entity_id, NOW() AS created FROM deck '
+        'INSERT INTO subscription (user_id, source_entity_id, last_seen_entity_id) '
+        'SELECT deck.user_id, deck.entity_id AS source_entity_id, MAX(snapshots.entity_id) AS last_seen_entity_id '
+        'FROM deck '
         'INNER JOIN deck AS snapshots ON snapshots.source_id = deck.id '
         'WHERE deck.is_snapshot = 0 AND snapshots.is_snapshot = 1 AND snapshots.is_public = 1 '
         'GROUP BY deck.id'
@@ -106,7 +100,6 @@ def downgrade():
     op.drop_column('deck', 'entity_id')
     op.drop_column('card', 'version')
     op.drop_column('card', 'entity_id')
-    op.drop_table('user_stream')
     op.drop_table('subscription')
     op.drop_table('comment')
     op.drop_table('stream')
