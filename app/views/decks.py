@@ -63,7 +63,7 @@ def index(page=None):
 
 @mod.route('/view/<int:deck_id>/', methods=['GET', 'POST'])
 @mod.route('/view/<int:deck_id>/<int:page>/', methods=['GET', 'POST'])
-def view(deck_id, page=None):
+def view(deck_id, page=1):
     """View a snapshot.
     
     If deck_id points to a deck, shows first public snapshot.

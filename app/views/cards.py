@@ -29,7 +29,7 @@ def index():
 
 @mod.route('/<stub>/', methods=['GET', 'POST'])
 @mod.route('/<stub>/<int:page>/', methods=['GET', 'POST'])
-def detail(stub, page=None):
+def detail(stub, page=1):
     """Card details"""
     card = Card.query.options(
         db.joinedload('conjurations')
