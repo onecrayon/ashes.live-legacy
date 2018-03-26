@@ -22,5 +22,6 @@
 		{% else %}
 		{{ user_form.ban_user }}
 		{% endif %}
+		<a href="{{ url_for('player.view', badge=user.badge) | badge_link }}" class="btn float-right">Cancel</a>
 	</form>
 {% endblock %}
