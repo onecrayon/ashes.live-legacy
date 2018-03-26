@@ -7,11 +7,13 @@ from flask_login import (
 from flask_mail import Message
 
 from app import db, login_manager
+from app.jinja_globals import badge_link
 from app.models.deck import Deck
 from app.models.invite import Invite
 from app.models.user import User
 from app.views.forms.player import (
-    CreateForm, EditForm, EmailForm, LoginForm, PasswordForm, ReauthorizeForm, ResetForm
+    CreateForm, EditForm, EmailForm, LoginForm, ModerateUserForm, PasswordForm, ReauthorizeForm,
+    ResetForm
 )
 from app.utils.decks import get_decks
 from app.utils import send_message
@@ -234,3 +236,28 @@ def reset(uuid=None):
     if uuid is None:
         return request_reset()
     return change_password(uuid)
+
+
+@mod.route('/<badge>/moderate/', methods=['GET', 'POST'])
+@fresh_login_required
+def moderate(badge):
+    if not current_user.is_admin or current_user.badge == badge:
+        abort(404)
+    user = User.query.filter(User.badge == badge).first()
+    user_form = ModerateUserForm(obj=user)
+    if user_form.validate_on_submit():
+        user.moderation_notes = user_form.moderation_notes.data
+        if user_form.ban_user.data or user_form.unban_user.data:
+            user.is_banned = not user.is_banned
+            db.session.commit()
+            if user.is_banned:
+                flash('User has been banned.', 'success')
+            else:
+                flash('Ban has been repealed.', 'warning')
+            return redirect(badge_link(url_for('player.view', badge=badge)), code=303)
+        user.username = user_form.username.data
+        user.description = user_form.description.data
+        db.session.commit()
+        flash('Username and description modified.', 'success')
+        return redirect(badge_link(url_for('player.view', badge=badge)), code=303)
+    return render_template('player/moderate.html', user_form=user_form, user=user)

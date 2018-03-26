@@ -1,7 +1,7 @@
 """Comment editing and moderation"""
 
 from flask import abort, Blueprint, flash, redirect, render_template
-from flask_login import current_user, login_required
+from flask_login import current_user, fresh_login_required, login_required
 
 from app import db
 from app.models.comment import Comment
@@ -63,7 +63,7 @@ def notes(comment_id):
 
 
 @mod.route('/<int:comment_id>/moderate/', methods=['GET', 'POST'])
-@login_required
+@fresh_login_required
 def moderate(comment_id):
 	comment = verify_comment(comment_id, is_admin=True)
 	user = User.query.get(comment.user_id)

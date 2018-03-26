@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     description = db.Column(db.Text, nullable=True)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     is_banned = db.Column(db.Boolean, nullable=False, default=False)
-    ban_notes = db.Column(db.Text)
+    moderation_notes = db.Column(db.Text)
     password = db.Column(db.String(255), nullable=False)
     reset_uuid = db.Column(db.String(36), nullable=True, default=None, index=True, unique=True)
     newsletter_opt_in = db.Column(db.Boolean, nullable=False, default=False)

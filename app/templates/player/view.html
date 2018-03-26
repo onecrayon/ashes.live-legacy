@@ -14,6 +14,9 @@
 {% endblock %}
 
 {% block content %}
+	{% if user.is_banned %}
+	<h2 class="error"><i class="fa fa-ban"></i> This user has been banned.</h2>
+	{% else %}
 	<h2>Published Decks</h2>
 	{% if decks %}
 	<ul class="deck-list">
@@ -27,10 +30,15 @@
 	{% else %}
 	<p>No published decks yet!</p>
 	{% endif %}
+	{% endif %}
 {% endblock %}
 
 {% block sidebar %}
-	{% if user.description %}
+	{% if current_user.is_authenticated and current_user.is_admin and current_user.id != user.id %}
+	<a href="{{ url_for('player.moderate', badge=user.badge) | badge_link }}" class="btn btn-block btn-danger"><i class="fa fa-wrench"></i> Moderate User</a>
+	{% endif %}
+
+	{% if user.description and not user.is_banned %}
 	<h2>Description</h2>
 	
 	{{ user.description | parse_text }}

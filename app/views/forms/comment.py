@@ -25,7 +25,7 @@ class DeleteForm(FlaskForm):
 
 
 class ModerateCommentForm(CommentForm):
-    moderation_notes = TextAreaField('Moderation Reason', validators=[DataRequired()])
+    moderation_notes = TextAreaField('Reason for moderation', validators=[DataRequired()])
     is_deleted = BooleanField('Delete comment')
     undo_moderation = SubmitField('Undo Moderation', render_kw={
         'class': 'btn btn-danger'

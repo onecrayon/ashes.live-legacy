@@ -21,8 +21,8 @@
 		</div>
 		<input class="btn btn-primary" type="submit" value="Moderate Comment">
 		{% if comment.is_moderated %}
-		{{ comment_form.undo_moderation() }}
+		{{ comment_form.undo_moderation }}
 		{% endif %}
-		{{ comment_form.cancel() }}
+		{{ comment_form.cancel }}
 	</form>
 {% endblock %}

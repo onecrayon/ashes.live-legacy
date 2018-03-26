@@ -2,7 +2,9 @@ from urllib.parse import urljoin, urlparse
 
 from flask import redirect, request, url_for
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, HiddenField, PasswordField, RadioField, StringField, TextAreaField
+from wtforms import (
+    BooleanField, HiddenField, PasswordField, RadioField, StringField, SubmitField, TextAreaField
+)
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
@@ -88,3 +90,13 @@ class CreateForm(EditForm):
     badge = RadioField('Badge', validators=[DataRequired()])
     password = passwordField
     password_confirm = passwordConfirmField
+
+
+class ModerateUserForm(EditForm):
+    moderation_notes = TextAreaField('Reason for moderation', validators=[DataRequired()])
+    ban_user = SubmitField('Ban User', render_kw={
+        'class': 'btn btn-danger'
+    })
+    unban_user = SubmitField('Repeal Ban', render_kw={
+        'class': 'btn btn-danger'
+    })
