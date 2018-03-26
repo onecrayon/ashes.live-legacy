@@ -627,6 +627,11 @@ table.meta {
 	background: @color-inexhaustible;
 	padding: 10px;
 
+	&.secondary {
+		border-color: @color-between-realms-dark;
+		background: @color-between-realms;
+	}
+
 	pre& {
 		padding: 10px;
 	}
@@ -1076,6 +1081,10 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
+.admin-area #header .navbar-wrapper {
+	background: @color-between-realms;
+}
+
 .homepage #header {
 	.primary-nav {
 		padding-top: 27px;
@@ -1252,11 +1261,11 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		color: @color-dark-gray;
 		font-weight: bold;
 	}
+}
 
-	.moderator-action {
-		color: @color-error;
-		font-weight: bold;
-	}
+.moderator-action {
+	color: @color-error;
+	font-weight: bold;
 }
 
 /* @end */

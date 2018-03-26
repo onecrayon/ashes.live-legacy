@@ -16,8 +16,8 @@
 	{% endif %}
 {%- endmacro %}
 
-{% macro with_errors(field) -%}
-	<div class="form-field">
+{% macro with_errors(field, full_width=false) -%}
+	<div class="form-field{% if full_width %} full-width{% endif %}">
 		{{ field.label }}
 		{{ field(**kwargs) }}
 		{{ inline_errors(field.errors) }}

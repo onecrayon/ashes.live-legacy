@@ -1,0 +1,29 @@
+{% from "macros.html" import with_errors %}
+{% extends "base.html" %}
+{% block title %}Moderation Notes{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-class">
+		Moderation Notes
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<p class="callout">Your comment has been moderated for the following reason:</p>
+
+	<div class="boxed">
+		{{ comment.moderation_notes | parse_text }}
+	</div>
+
+	<h3>Original comment</h3>
+
+	<div class="boxed secondary">
+		{{ comment.original_text | parse_text }}
+	</div>
+{% endblock %}
+
+{% block sidebar %}
+	<p>If you would like to appeal this moderation, please <a href="{{ url_for('home.feedback') }}">contact me</a>.</p>
+
+	<a href="{{ comment.url }}" class="btn btn-block"><i class="fa fa-arrow-left"></i> Back to Comment</a>
+{% endblock %}

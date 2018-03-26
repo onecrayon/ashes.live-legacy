@@ -12,13 +12,17 @@
 				<div class="col">
 					<i class="fa fa-trash"></i> 
 					{% if comment.is_moderated %}
-					Comment deleted by moderator
+						{% if current_user.is_authenticated and comment.user_id == current_user.id %}
+						<a href="{{ url_for('comments.notes', comment_id=comment.id) }}" class="moderator-action">Comment deleted by moderator</a>
+						{% else %}
+						Comment deleted by moderator
+						{% endif %}
 					{% else %}
 					Comment deleted by user
 					{% endif %}
 				</div>
 				<div class="col-flex text-right timestamp">
-					{{ comment.modified | format_date }}
+					<a href="{{ comment.url }}">{{ comment.modified | format_date }}</a>
 				</div>
 			</li>
 			{% else %}
@@ -47,7 +51,7 @@
 						<ul class="col divider-separated">
 							{% if comment.user_id == current_user.id %}
 								{% if comment.is_moderated %}
-								<li class="moderator-action"><i class="fa fa-lock"></i> Comment locked by moderator</li>
+								<li><a href="{{ url_for('comments.notes', comment_id=comment.id) }}" class="moderator-action"><i class="fa fa-lock"></i> Comment locked by moderator</a></li>
 								{% else %}
 								<li><a href="{{ url_for('comments.edit', comment_id=comment.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
 								<li><a href="{{ url_for('comments.delete', comment_id=comment.id) }}"><i class="fa fa-trash"></i> Delete</a></li>

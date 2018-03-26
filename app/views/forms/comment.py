@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, TextAreaField
+from wtforms import BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
 
@@ -25,8 +25,9 @@ class DeleteForm(FlaskForm):
 
 
 class ModerateCommentForm(CommentForm):
-    moderation_notes = TextAreaField('Moderation Notes', validators=[DataRequired()])
-    delete_comment = SubmitField('Delete Comment', render_kw={
-        'class': 'btn btn-error'
+    moderation_notes = TextAreaField('Moderation Reason', validators=[DataRequired()])
+    is_deleted = BooleanField('Delete comment')
+    undo_moderation = SubmitField('Undo Moderation', render_kw={
+        'class': 'btn btn-danger'
     })
     cancel = cancel_button

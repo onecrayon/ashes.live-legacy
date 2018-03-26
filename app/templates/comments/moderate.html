@@ -1,0 +1,28 @@
+{% from "macros.html" import inline_errors, with_errors, parsed_text_field, usertag %}
+{% extends "base.html" %}
+{% block title %}Moderate Comment{% endblock %}
+{% block page_class %}admin-area{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-class">
+		Moderate Comment by {{ usertag(user) }}
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="./">
+		{{ comment_form.hidden_tag() }}
+		{{ comment_form.text.label }}
+		{{ parsed_text_field(comment_form.text) }}
+		{{ with_errors(comment_form.moderation_notes, full_width=true) }}
+		<div class="form-field error">
+			<strong>{{ comment_form.is_deleted }} {{ comment_form.is_deleted.label }}</strong>
+			{{ inline_errors(comment_form.is_deleted.errors) }}
+		</div>
+		<input class="btn btn-primary" type="submit" value="Moderate Comment">
+		{% if comment.is_moderated %}
+		{{ comment_form.undo_moderation() }}
+		{% endif %}
+		{{ comment_form.cancel() }}
+	</form>
+{% endblock %}
