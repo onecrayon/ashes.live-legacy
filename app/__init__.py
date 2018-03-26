@@ -1,8 +1,8 @@
 import json
 import os
-from flask import Flask
+from flask import Flask, flash, redirect, url_for
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user, logout_user
 from flask_mail import Mail
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
@@ -45,6 +45,19 @@ login_manager.init_app(app)
 
 # Configure mailer
 mail = Mail(app)
+
+@app.before_request
+def verify_user():
+    if current_user.is_authenticated and current_user.is_banned:
+        logout_user()
+        flash(
+            'Your account has been banned. If you wish to appeal the ban, '
+            'please <a href="{}" class="error">contact me</a>.'.format(
+                url_for('home.feedback')
+            ),
+            'error'
+        )
+        return redirect(url_for('home.index'))
 
 # Include template filters (this import requires app to be configured)
 from app import jinja_globals  # noqa

@@ -41,6 +41,8 @@ def upgrade():
         sa.Column('source_version', sa.Integer(), nullable=True),
         sa.Column('text', sa.Text(), nullable=True),
         sa.Column('order', sa.Integer(), nullable=True),
+        sa.Column('is_deleted', sa.Boolean(), nullable=False, server_default='0'),
+        sa.Column('is_moderated', sa.Boolean(), nullable=False, server_default='0'),
         sa.Column('created', sa.DateTime(), nullable=True),
         sa.Column('modified', sa.DateTime(), nullable=True, server_default=sa.text(
             'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
@@ -52,6 +54,7 @@ def upgrade():
     op.create_index(op.f('ix_comment_source_entity_id'), 'comment', ['source_entity_id'], unique=False)
     op.create_index(op.f('ix_comment_created'), 'comment', ['created'], unique=False)
     op.create_index(op.f('ix_comment_order'), 'comment', ['order'], unique=False)
+    op.create_index(op.f('ix_comment_is_deleted'), 'comment', ['is_deleted'], unique=False)
     op.create_table('subscription',
         sa.Column('user_id', sa.Integer(), nullable=False),
         sa.Column('source_entity_id', sa.Integer(), nullable=False),
@@ -64,6 +67,8 @@ def upgrade():
     op.add_column('card', sa.Column('version', sa.Integer(), nullable=False, server_default='1'))
     op.add_column('deck', sa.Column('entity_id', sa.Integer(), nullable=False))
     op.add_column('user', sa.Column('exclude_subscriptions', sa.Boolean(), nullable=False, server_default='0'))
+    op.add_column('user', sa.Column('is_banned', sa.Boolean(), nullable=False, server_default='0'))
+    op.add_column('user', sa.Column('ban_notes', sa.Text(), nullable=True))
     # Go through Card and Deck and generate initial entity_ids
     connection = op.get_bind()
     cards = connection.execute('SELECT id FROM card ORDER BY id ASC').fetchall()
@@ -102,6 +107,8 @@ def upgrade():
 
 
 def downgrade():
+    op.drop_column('user', 'is_banned')
+    op.drop_column('user', 'ban_notes')
     op.drop_column('user', 'exclude_subscriptions')
     op.drop_column('deck', 'entity_id')
     op.drop_column('card', 'version')
