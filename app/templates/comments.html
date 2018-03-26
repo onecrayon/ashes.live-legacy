@@ -25,9 +25,24 @@
 			<div class="comment-body">
 				{{ comment.text | parse_text }}
 			</div>
-			{% if comment.created != comment.modified %}
+			{% if comment.created != comment.modified or (current_user.is_authenticated and (comment.user_id == current_user.id or current_user.is_admin)) %}
 			<div class="comment-footer">
-				<p class="timestamp text-right">Last edited {{ comment.modified | format_date }}</p>
+				<div class="responsive-cols">
+					{% if current_user.is_authenticated and (comment.user_id == current_user.id or current_user.is_admin) %}
+					<ul class="col divider-separated">
+						{% if comment.user_id == current_user.id %}
+						<li><a href="{{ url_for('comments.edit', comment_id=comment.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+						<li><a href="{{ url_for('comments.delete', comment_id=comment.id) }}"><i class="fa fa-trash"></i> Delete</a></li>
+						{% endif %}
+						{% if current_user.is_admin and comment.user_id != current_user.id %}
+						<li><a href="{{ url_for('comments.moderate', comment_id=comment.id) }}" class="admin-action"><i class="fa fa-wrench"></i> Moderate</a></li>
+						{% endif %}
+					</ul>
+					{% endif %}
+					{% if comment.created != comment.modified %}
+					<p class="col-flex timestamp text-right">Last edited {{ comment.modified | format_date }}</p>
+					{% endif %}
+				</div>
 			</div>
 			{% endif %}
 		</li>
@@ -50,6 +65,7 @@
 	</div>
 	{% endif %}
 	{% if current_user.is_authenticated and comment_form %}
+	<h3>Post a comment</h3>
 	<form action="./#comment" id="comment" method="POST">
 		{{ comment_form.hidden_tag() }}
 		{% if comment_form.preview.data %}

@@ -1230,10 +1230,19 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	border-top: 1px solid @color-gray;
 	padding: 5px 10px;
 
-	p {
+	p, ul {
 		.font-size(12);
 		.line-height(12);
 		margin-bottom: 0;
+	}
+
+	a {
+		color: @color-dark-gray;
+		font-weight: bold;
+
+		&.admin-action {
+			color: @color-error;
+		}
 	}
 }
 
