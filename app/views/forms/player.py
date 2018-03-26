@@ -30,6 +30,9 @@ emailField = StringField('Email', validators=[
 ], filters=(strip_filter,))
 usernameField = StringField('Username', validators=[DataRequired()])
 passwordField = PasswordField('Password', validators=[
+    DataRequired(message='Password is required.')
+])
+passwordCreateField = PasswordField('Password', validators=[
     DataRequired(message='Password is required.'),
     Length(min=12, message='Password must be at least %(min)d characters long.')
 ])
@@ -69,7 +72,7 @@ class EmailForm(FlaskForm):
 
 
 class ResetForm(FlaskForm):
-    password = passwordField
+    password = passwordCreateField
     password_confirm = passwordConfirmField
 
 
@@ -82,13 +85,13 @@ class EditForm(FlaskForm):
 
 class PasswordForm(FlaskForm):
     email = StringField('Email', render_kw={'readonly': True})
-    password = passwordField
+    password = passwordCreateField
     password_confirm = passwordConfirmField
 
 
 class CreateForm(EditForm):
     badge = RadioField('Badge', validators=[DataRequired()])
-    password = passwordField
+    password = passwordCreateField
     password_confirm = passwordConfirmField
 
 
