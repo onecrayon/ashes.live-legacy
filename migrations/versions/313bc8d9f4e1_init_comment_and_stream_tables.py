@@ -43,6 +43,8 @@ def upgrade():
         sa.Column('order', sa.Integer(), nullable=True),
         sa.Column('is_deleted', sa.Boolean(), nullable=False, server_default='0'),
         sa.Column('is_moderated', sa.Boolean(), nullable=False, server_default='0'),
+        sa.Column('original_text', sa.Text(), nullable=True),
+        sa.Column('moderation_notes', sa.Text(), nullable=True),
         sa.Column('created', sa.DateTime(), nullable=True),
         sa.Column('modified', sa.DateTime(), nullable=True, server_default=sa.text(
             'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'

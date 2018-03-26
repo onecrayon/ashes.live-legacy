@@ -46,11 +46,15 @@
 						{% if current_user.is_authenticated and (comment.user_id == current_user.id or current_user.is_admin) %}
 						<ul class="col divider-separated">
 							{% if comment.user_id == current_user.id %}
-							<li><a href="{{ url_for('comments.edit', comment_id=comment.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-							<li><a href="{{ url_for('comments.delete', comment_id=comment.id) }}"><i class="fa fa-trash"></i> Delete</a></li>
+								{% if comment.is_moderated %}
+								<li class="moderator-action"><i class="fa fa-lock"></i> Comment locked by moderator</li>
+								{% else %}
+								<li><a href="{{ url_for('comments.edit', comment_id=comment.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+								<li><a href="{{ url_for('comments.delete', comment_id=comment.id) }}"><i class="fa fa-trash"></i> Delete</a></li>
+								{% endif %}
 							{% endif %}
 							{% if current_user.is_admin and comment.user_id != current_user.id %}
-							<li><a href="{{ url_for('comments.moderate', comment_id=comment.id) }}" class="admin-action"><i class="fa fa-wrench"></i> Moderate</a></li>
+							<li><a href="{{ url_for('comments.moderate', comment_id=comment.id) }}" class="moderator-action"><i class="fa fa-wrench"></i> Moderate</a></li>
 							{% endif %}
 						</ul>
 						{% endif %}

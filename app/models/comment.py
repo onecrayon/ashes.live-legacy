@@ -22,6 +22,8 @@ class Comment(db.Model):
     order = db.Column(db.Integer, index=True)
     is_deleted = db.Column(db.Boolean, nullable=False, default=False)
     is_moderated = db.Column(db.Boolean, nullable=False, default=False)
+    original_text = db.Column(db.Text)
+    moderation_notes = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

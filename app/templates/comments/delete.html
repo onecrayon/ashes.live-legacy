@@ -1,0 +1,23 @@
+{% from "macros.html" import with_errors %}
+{% extends "base.html" %}
+{% block title %}Delete Comment{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-sympathy-class">
+		Delete Comment?
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<p class="callout"><strong>Do you wish to delete the following comment?</strong></p>
+
+	<div class="boxed">
+		{{ comment.text | parse_text }}
+	</div>
+
+	<form method="POST" action="./">
+		{{ delete_form.hidden_tag() }}
+		{{ delete_form.delete_comment() }}
+		{{ delete_form.cancel() }}
+	</form>
+{% endblock %}

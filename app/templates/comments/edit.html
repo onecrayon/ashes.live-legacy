@@ -1,0 +1,29 @@
+{% from "macros.html" import with_errors, parsed_text_field %}
+{% extends "base.html" %}
+{% block title %}Edit Comment{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-sympathy-class">
+		Edit Comment
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="./">
+		{{ comment_form.hidden_tag() }}
+		{% if comment_form.preview.data %}
+		<h3 id="comment-preview">Preview</h3>
+		<div class="boxed">
+			{% if not comment_form.text.data %}
+			<p class="muted">Comment preview will be shown here&hellip;</p>
+			{% else %}
+			{{ comment_form.text.data | parse_text }}
+			{% endif %}
+		</div>
+		{% endif %}
+		{{ parsed_text_field(comment_form.text) }}
+		<input class="btn btn-primary" type="submit" value="Save Changes">
+		{{ comment_form.preview() }}
+		{{ comment_form.cancel() }}
+	</form>
+{% endblock %}
