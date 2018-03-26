@@ -88,9 +88,15 @@
 					</a>
 				</li> #}
 				<li>
+					{% if current_user.is_authenticated %}
 					<a href="{{ url_for('player.settings') }}">
 						<i class="fa fa-user" aria-hidden="true"></i> Account
 					</a>
+					{% else %}
+					<a href="{{ url_for('player.new') }}">
+						<i class="fa fa-user" aria-hidden="true"></i> Create <span class="full-display-only">Account</span>
+					</a>
+					{% endif %}
 				</li>
 				<li>
 					{% if current_user.is_authenticated %}
