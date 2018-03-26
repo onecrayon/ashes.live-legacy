@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 
 from app import db
 from app.models.comment import Comment
+from app.models.stream import Stream
 from app.views.forms.comment import CommentForm, DeleteForm, ModerateCommentForm
 
 mod = Blueprint('comments', __name__, url_prefix='/comments')
@@ -36,6 +37,9 @@ def delete(comment_id):
 	delete_form = DeleteForm()
 	if delete_form.delete_comment.data:
 		comment.is_deleted = True
+		db.session.query(Stream).filter(
+			Stream.entity_id == comment.entity_id
+		).delete(synchronize_session=False)
 		db.session.commit()
 		flash('Comment deleted!', 'success')
 		return redirect(comment.url, code=303)
