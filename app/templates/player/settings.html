@@ -12,6 +12,7 @@
 	<form method="POST" action="./">
 		{{ form.hidden_tag() }}
 		{{ with_errors(form.username) }}
+		{{ form.description.label }}
 		{{ parsed_text_field(form.description) }}
 		<div class="form-field full-width">
 			{{ form.newsletter_opt_in }} {{ form.newsletter_opt_in.label }}
