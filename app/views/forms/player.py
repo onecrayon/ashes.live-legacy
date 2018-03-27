@@ -28,6 +28,7 @@ def strip_filter(value):
 emailField = StringField('Email', validators=[
     Email(message='Invalid email.')
 ], filters=(strip_filter,))
+readOnlyEmail = StringField('Email', render_kw={'readonly': True})
 usernameField = StringField('Username', validators=[DataRequired()])
 passwordField = PasswordField('Password', validators=[
     DataRequired(message='Password is required.')
@@ -84,15 +85,19 @@ class EditForm(FlaskForm):
 
 
 class PasswordForm(FlaskForm):
-    email = StringField('Email', render_kw={'readonly': True})
+    email = readOnlyEmail
     password = passwordCreateField
     password_confirm = passwordConfirmField
 
 
-class CreateForm(EditForm):
+class CreateForm(FlaskForm):
+    email = readOnlyEmail
+    username = usernameField
+    description = TextAreaField('Description')
     badge = RadioField('Badge', validators=[DataRequired()])
     password = passwordCreateField
     password_confirm = passwordConfirmField
+    newsletter_opt_in = newsletterField
 
 
 class ModerateUserForm(EditForm):

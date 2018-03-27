@@ -1,4 +1,4 @@
-{% from "macros.html" import with_errors, inline_errors, usertag %}
+{% from "macros.html" import with_errors, inline_errors, parsed_text_field, usertag %}
 {% extends "base.html" %}
 {% block title %}Finalize Account{% endblock %}
 
@@ -22,7 +22,8 @@
 		</div>
 		{{ with_errors(form.password) }}
 		{{ with_errors(form.password_confirm) }}
-		{{ with_errors(form.description) }}
+		{{ form.description.label }}
+		{{ parsed_text_field(form.description) }}
 		<div class="form-field">
 			{{ form.newsletter_opt_in }} {{ form.newsletter_opt_in.label }}
 		</div>
@@ -36,8 +37,4 @@
 	<p><strong>Username</strong> can be anything (though please keep it kid-friendly!), and you will be identified around Ashes.live by a combination of your username and badge; e.g. {{ usertag(example_user, False) }}</p>
 	
 	<p>You can change your username whenever you like, but your badge is permanent.</p>
-
-	<p><em>Description supports [[card codes]] and *star formatting*:</em></p>
-	
-	{% include "fragments/formatting_help.html" %}
 {% endblock %}
