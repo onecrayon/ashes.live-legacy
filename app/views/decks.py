@@ -13,7 +13,7 @@ from app.models.deck import Deck, DeckCard, DeckDie
 from app.utils.cards import global_json
 from app.utils.comments import process_comments
 from app.utils.decks import get_decks, get_decks_query, process_deck
-from app.utils.stream import toggle_subscription
+from app.utils.stream import new_entity, toggle_subscription
 from app.views.forms.deck import SnapshotForm
 
 mod = Blueprint('decks', __name__, url_prefix='/decks')
@@ -274,6 +274,16 @@ def build(deck_id=None):
 @mod.route('/clone/<int:deck_id>/')
 @login_required
 def clone(deck_id):
+    # Simple check if the snapshot exists first (no joinedloads)
+    deck = db.session.query(Deck.id).filter(
+        Deck.is_snapshot.is_(True),
+        Deck.id == deck_id
+    ).first()
+    if not deck:
+        abort(404)
+    # Then we grab a new entity_id first because it causes a commit and kills the process otherwise
+    entity_id = new_entity()
+    # Then we can finally grab our full deck and copy it
     deck = Deck.query.options(
         db.joinedload('cards'),
         db.joinedload('dice')
@@ -281,11 +291,10 @@ def clone(deck_id):
         Deck.is_snapshot.is_(True),
         Deck.id == deck_id
     ).first()
-    if not deck:
-        abort(404)
     # Reset our deck object in order to clone it
     make_transient(deck)
     deck.id = None
+    deck.entity_id = entity_id
     deck.title = 'Copy of {}'.format(deck.title)
     deck.user_id = current_user.id
     deck.is_snapshot = False
