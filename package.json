@@ -3,7 +3,7 @@
   "version": "1.2.3",
   "scripts": {
   	"venv": ". venv/bin/activate",
-	"upgrade": "npm run venv && pip install -r requirements.txt && npm upgrade",
+	"upgrade": "npm run venv && pip3 install -r requirements.txt && npm upgrade",
     "build": "webpack --mode=development && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.css",
     "build-production": "export ENVIRONMENT='production' && export NODE_ENV='production' && webpack --mode=production && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && npm run venv && ./cli.py cdnize_style_urls",
     "dev": "npm run venv && ./cli.py runserver -r",

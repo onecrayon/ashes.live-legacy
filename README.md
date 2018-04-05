@@ -16,11 +16,11 @@ The project has the following dependencies:
 
 2. Install pip, if necessary:
 
-        sudo easy_install pip
+        sudo easy_install pip3
 
 3. Install virtualenv:
 
-        sudo pip install virtualenv
+        sudo pip3 install virtualenv
 
 4. Install [NodeJS](https://nodejs.org/) (and npm)
 
@@ -48,13 +48,13 @@ The project has the following dependencies:
 
 2. Install site requirements:
 
-        npm run venv
-        pip install -r requirements.txt
+        . venv/bin/activate
+        pip3 install -r requirements.txt
         npm install
 
 3. Follow configuration instructions below, then initialize the database:
 
-        npm run venv
+        . venv/bin/activate
         ./cli.py db upgrade
 
 ### Configuration
