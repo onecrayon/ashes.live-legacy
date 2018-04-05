@@ -1,15 +1,20 @@
-Flask==0.12.1
-Flask-Login==0.4.0
+Flask==0.12.2
+Flask-Login==0.4.1
 Flask-Bcrypt==0.7.1
 Flask-Mail==0.9.1
 Flask-Session==0.3.1
 Flask-WTF==0.14.2
 premailer==3.1.1
-PyMySQL==0.7.11
-SQLAlchemy-FullText-Search==0.2.3
-pytz==2017.3
+PyMySQL==0.8.0
+SQLAlchemy-FullText-Search==0.2.4
+pytz==2018.3
 # This pulls in Flask-Script and Alembic with it
-Flask-Migrate==2.0.3
-# Included by Flask-Migrate, but here's explicit versions
-Flask-SQLAlchemy==2.2
-SQLAlchemy==1.1.9
+Flask-Migrate==2.1.1
+# Included by other modules, but here's explicit versions
+Flask-SQLAlchemy==2.3.2
+SQLAlchemy==1.2.6
+alembic==0.9.9
+bcrypt==3.1.4
+Flask-Script==2.0.6
+Jinja2==2.10
+Werkzeug==0.14.1
