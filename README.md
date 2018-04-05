@@ -48,13 +48,13 @@ The project has the following dependencies:
 
 2. Install site requirements:
 
-        . venv/bin/activate
+        npm run venv
         pip install -r requirements.txt
         npm install
 
 3. Follow configuration instructions below, then initialize the database:
 
-        . venv/bin/activate
+        npm run venv
         ./cli.py db upgrade
 
 ### Configuration
@@ -78,12 +78,8 @@ For production servers:
 ## Commands
 
 * `npm run dev`: run development server
+* `npm run venv`: enter virtual environment
+* `npm run upgrade`: upgrade Python and Node dependencies to latest specified versions
 * `npm run build`: parse Javascript (via webpack) and LESS files
 * `npm run build-production`: build production-ready JS and CSS files (may require `export NODE_ENV='production'` first)
 * `npm run lint`: lint Javascript files
-
-## SCRATCH
-
-TODO:
-
-* Figure out how to handle Salamander Monk Spirit better (currently only disappears on click)
