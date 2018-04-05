@@ -101,7 +101,7 @@ def card_img(card, extension='jpg'):
 def parse_card_codes(text):
     # Normalize linebreaks to Unix; for some reason I was getting CRLF from the database
     text = re.sub(r'\r\n|\r', r'\n', text)
-    # Parse arbitrary links; e.g. [[My deck ashes.live/decks/123]] or ashes.live/decks/123
+    # Parse arbitrary links; e.g. [[My deck ashes.live/decks/123]] or https://ashes.live/decks/123
     def parse_url(match):
         text_url = match.group(2) if match.group(2) else match.group(3)
         internal_link = re.match(r'(https?://)?ashes\.live', text_url, flags=re.I) is not None
@@ -175,10 +175,11 @@ def parse_card_codes(text):
     def parse_blockquotes(match):
         return Markup(''.join([
             '<blockquote>',
-            re.sub(r'^&gt;[ \t]*', r'', match.group(0), flags=re.M),
+            re.sub(r'^>[ \t]*', r'', match.group(0), flags=re.M),
             '</blockquote>'
         ]))
-    text = re.sub(r'(^&gt; ?.+?)(?=(\n\n[\w\[*])|\Z)', parse_blockquotes, text, flags=re.M|re.S)
+    text = re.sub(r'^&gt;', '>', text, flags=re.M)
+    text = re.sub(r'(^> ?.+?)(?=(\n[^>\n])|\Z)', parse_blockquotes, text, flags=re.M|re.S)
     text = text.replace('\n</blockquote>', '</blockquote>\n')
     # Parse star formatting
     # * list item
@@ -191,6 +192,10 @@ def parse_card_codes(text):
     text = re.sub(r'(^|\n|<blockquote>)((?:<li>.+?</li>\n?)+)(</blockquote>|\n|$)', list_wrapper, text)
     text = text.replace('</li>\n<li>', '</li><li>')
     text = text.replace('</li>\n</ul>', '</li></ul>\n')
+    # Fix single linebreaks after a block level elements (these break the paragraph logic)
+    def fix_spacing(match):
+        return Markup(match.group(1) + '\n')
+    text = re.sub(r'(</(?:blockquote|ul)>\n)(?=[^\n])', fix_spacing, text)
     # lone star: *
     def lone_star(match):
         return Markup(''.join([match.group(1), '&#42;', match.group(2)]))
