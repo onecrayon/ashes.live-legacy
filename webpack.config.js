@@ -37,7 +37,6 @@ module.exports = {
 				NODE_ENV: '"production"'
 			}
 		}),
-		new LodashModuleReplacementPlugin,
-		new webpack.optimize.UglifyJsPlugin
+		new LodashModuleReplacementPlugin
 	]
 }

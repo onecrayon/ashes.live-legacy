@@ -2,8 +2,8 @@
   "name": "ashes-live",
   "version": "1.2.2",
   "scripts": {
-    "build": "webpack && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.css",
-    "build-production": "export ENVIRONMENT='production' && export NODE_ENV='production' && webpack && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
+    "build": "webpack --mode=development && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.css",
+    "build-production": "export ENVIRONMENT='production' && export NODE_ENV='production' && webpack --mode=production && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
     "dev": ". venv/bin/activate && ./cli.py runserver -r",
     "lint": "eslint --ext .js,.vue app/static/src"
   },
@@ -22,12 +22,13 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "less": "^2.7.2",
+    "less": "^3.0.1",
     "less-plugin-clean-css": "^1.5.1",
     "lodash-webpack-plugin": "^0.11.4",
-    "vue-loader": "^12.2.2",
+    "vue-loader": "^14.2.2",
     "vue-template-compiler": "^2.4.2",
-    "webpack": "^3.5.5"
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -36,6 +37,6 @@
     "qwest": "^4.5.0",
     "tippy.js": "^1.2.1",
     "vue": "^2.4.2",
-    "vuex": "^2.3.1"
+    "vuex": "^3.0.1"
   }
 }
