@@ -20,11 +20,11 @@ class Comment(db.Model):
     source_version = db.Column(db.Integer)
     text = db.Column(db.Text)
     order = db.Column(db.Integer, index=True)
-    is_deleted = db.Column(db.Boolean, nullable=False, default=False)
+    is_deleted = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_moderated = db.Column(db.Boolean, nullable=False, default=False)
     original_text = db.Column(db.Text)
     moderation_notes = db.Column(db.Text)
-    created = db.Column(db.DateTime, default=datetime.utcnow)
+    created = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     user = db.relationship(User)

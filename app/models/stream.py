@@ -22,4 +22,4 @@ class Subscription(db.Model):
     """A Subscription subscribes a user to a Streamable entity's comments"""
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), primary_key=True, nullable=False)
     source_entity_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    last_seen_entity_id = db.Column(db.Integer)
+    last_seen_entity_id = db.Column(db.Integer, index=True)
