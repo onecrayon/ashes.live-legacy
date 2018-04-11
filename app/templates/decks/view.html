@@ -59,14 +59,17 @@
 			{% endfor %}
 		</div>
 	</div>
+	{% if deck.description %}
 	<hr>
 	<div class="deck-description">
-		{% if deck.description %}
 		<h2>Description</h2>
 
 		{{ deck.description | parse_text }}
-		{% endif %}
 	</div>
+	{% endif %}
+	
+	{% include 'comments.html' %}
+
 	<div id="deck-text-export" class="inline-modal">
 		<h2>Export As Text</h2>
 
@@ -95,8 +98,6 @@ Created with https://ashes.live</textarea>
 		</div>
 	</div>
 	{{ hide_on_load('deck-text-export') }}
-
-	{% include 'comments.html' %}
 {% endblock %}
 
 {% block sidebar %}
