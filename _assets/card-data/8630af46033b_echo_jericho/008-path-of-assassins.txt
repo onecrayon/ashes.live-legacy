@@ -49,7 +49,7 @@ Lucky Rabbit
 Conjuration - Battlefield
 Attack 1 - Life 2 - Recover 0 - Copies 4
 
-Luck Stream: When placing 3 or more dice in your exhausted poool, re-roll them. If you roll 1 or more power symbols, you may return 1 of those dice to your active pool on its basic side. Luck Stream cannot be used to return more than 1 die each turn.
+Luck Stream: When placing 3 or more dice in your exhausted pool, re-roll them. If you roll 1 or more power symbols, you may return 1 of those dice to your active pool on its basic side. Luck Stream cannot be used to return more than 1 die each turn.
 
 =====
 
