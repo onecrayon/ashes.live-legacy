@@ -65,7 +65,7 @@ For development servers:
 2. Customize config variables for local development environment
 3. Execute the following:
 
-        npm run dev
+        npm start
 4. Load the specified URL in browser
 
 For production servers:
@@ -77,7 +77,7 @@ For production servers:
 
 ## Commands
 
-* `npm run dev`: run development server
+* `npm run start`: run development server
 * `npm run venv`: enter virtual environment
 * `npm run upgrade`: upgrade Python and Node dependencies to latest specified versions
 * `npm run build`: parse Javascript (via webpack) and LESS files
