@@ -128,14 +128,14 @@ def parse_card_codes(text):
         const text = text ? text.trim() : null
 		return [
 			'<a class="username" href="', globals.playerUrl(badge), '">',
-			text ? text : '', '<span class="badge">', badge, '</span></a>'
+			text ? text : '', '<span class="badge">#', badge, '</span></a>'
 		].join('')
         """
         text = match.group(1).strip() if match.group(1) else None
         badge = match.group(2)
         return ''.join([
             '<a class="username" href="', badge_link(url_for('player.view', badge=badge)), '">',
-			text if text else '', '<span class="badge">', badge, '</span></a>'
+			text if text else '', '<span class="badge">#', badge, '</span></a>'
         ])
     text = re.sub(r'\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]', parse_badges, text, flags=re.I)
     def parse_match(match):
