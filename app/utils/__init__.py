@@ -25,7 +25,7 @@ def get_pagination(results_count, page, per_page, spread=2):
     return pagination
 
 
-def async_email(app, recipient, sender, subject, html_body, text_body):
+def async_email(app, recipients, sender, subject, html_body, text_body):
     with app.app_context():
         api_key = current_app.config['SENDGRID_API_KEY']
         response = None
@@ -36,7 +36,8 @@ def async_email(app, recipient, sender, subject, html_body, text_body):
                 sendgrid_helpers.Email(sender) if isinstance(sender, str)
                 else sendgrid_helpers.Email(email=sender[1], name=sender[0])
             )
-            to_email = sendgrid_helpers.Email(recipient)
+            first_recipient = recipients if isinstance(recipients, str) else recipients[0]
+            to_email = sendgrid_helpers.Email(first_recipient)
             html_content = sendgrid_helpers.Content('text/html', html_body)
             text_content = sendgrid_helpers.Content('text/plain', text_body)
             # The Mail helper will not actually save anything unless every single attribute is
@@ -45,6 +46,11 @@ def async_email(app, recipient, sender, subject, html_body, text_body):
                 subject=subject, from_email=from_email, to_email=to_email, content=text_content
             )
             email.add_content(html_content)
+            if recipients != first_recipient:
+                for recipient in recipients[1:]:
+                    personalization = sendgrid_helpers.Personalization()
+                    personalization.add_to(recipient)
+                    email.add_personalization(personalization)
             email_data = email.get()
             try:
                 response = api.client.mail.send.post(request_body=email_data)
@@ -59,18 +65,23 @@ def async_email(app, recipient, sender, subject, html_body, text_body):
         # Exit if we successfully sent our email via SendGrid; otherwise try sending via SMTP
         if response and response.status_code < 400:
             return
+        
+        if isinstance(recipients, str):
+            recipients = [recipients]
 
-        message = Message(
-            subject,
-            recipients=[recipient],
-            sender=sender,
-            html=html_body,
-            body=text_body
-        )
-        mail.send(message)
+        with mail.connect() as conn:
+            for recipient in recipients:
+                message = Message(
+                    subject,
+                    recipients=[recipient],
+                    sender=sender,
+                    html=html_body,
+                    body=text_body
+                )
+                conn.send(message)
 
 
-def send_message(recipient, subject, template_name, sender=None, **kwargs):
+def send_message(recipients, subject, template_name, sender=None, **kwargs):
     """Sends a two-part HTML+text email using the following files:
     
     * templates/emails/{template_name}.html
@@ -100,4 +111,7 @@ def send_message(recipient, subject, template_name, sender=None, **kwargs):
     if not sender:
         sender = current_app.config['MAIL_DEFAULT_SENDER']
 
-    Thread(target=async_email, args=(app, recipient, sender, subject, html_body, text_body)).start()
+    Thread(
+        target=async_email,
+        args=(app, recipients, sender, subject, html_body, text_body)
+    ).start()
