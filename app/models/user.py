@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
     reset_uuid = db.Column(db.String(36), nullable=True, default=None, index=True, unique=True)
     newsletter_opt_in = db.Column(db.Boolean, nullable=False, default=False)
     exclude_subscriptions = db.Column(db.Boolean, nullable=False, default=False)
+    email_subscriptions = db.Column(db.Boolean, nullable=False, default=False, index=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

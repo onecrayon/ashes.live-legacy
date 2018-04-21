@@ -82,6 +82,7 @@ class EditForm(FlaskForm):
     description = TextAreaField('Description')
     newsletter_opt_in = newsletterField
     exclude_subscriptions = BooleanField('Exclude subscribed comments from homepage')
+    email_subscriptions = BooleanField('Email subscription notifications')
 
 
 class PasswordForm(FlaskForm):

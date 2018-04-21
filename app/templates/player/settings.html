@@ -14,9 +14,14 @@
 		{{ with_errors(form.username) }}
 		{{ form.description.label }}
 		{{ parsed_text_field(form.description) }}
+		<h2>Notification Settings</h2>
 		<div class="form-field full-width">
 			{{ form.newsletter_opt_in }} {{ form.newsletter_opt_in.label }}
 			<p class="help-text">Emails are rare, and only focused on major new features or improvements.</p>
+		</div>
+		<div class="form-field full-width">
+			{{ form.email_subscriptions }} {{ form.email_subscriptions.label }}
+			<p class="help-text">Subscription notifications are sent whenever a new comment is posted on content to which you are subscribed.</p>
 		</div>
 		<div class="form-field full-width">
 			{{ form.exclude_subscriptions }} {{ form.exclude_subscriptions.label }}
