@@ -1,8 +1,8 @@
-"""Lucky Rabbit typo
+"""Fix Blue Jaguar
 
-Revision ID: 29e36534f30e
-Revises: 9dc9e7b1e96e
-Create Date: 2018-04-11 09:27:59.196316
+Revision ID: c6601cceac0b
+Revises: 29e36534f30e
+Create Date: 2018-04-16 13:26:48.586356
 
 """
 import json
@@ -12,32 +12,32 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '29e36534f30e'
-down_revision = '313bc8d9f4e1'
+revision = 'c6601cceac0b'
+down_revision = '29e36534f30e'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
     connection = op.get_bind()
-    # Good ol' exhausted poool
-    rabbit = connection.execute(
+    # I'm so ehausted...
+    card = connection.execute(
         sa.text('SELECT id, json FROM card WHERE stub = :stub'),
-        stub='lucky-rabbit'
+        stub='blue-jaguar'
     ).fetchone()
-    if rabbit:
-        rabbit_json = json.loads(rabbit['json'])
-        rabbit_json['text'][0]['text'] = rabbit_json['text'][0]['text'].replace('poool', 'pool')
+    if card:
+        card_json = json.loads(card['json'])
+        card_json['text'][0]['text'] = card_json['text'][0]['text'].replace('ehaustion', 'exhaustion')
         card_text = []
-        for effect in rabbit_json['text']:
+        for effect in card_json['text']:
             if 'name' in effect:
                 card_text.append(effect['name'])
             card_text.append(effect['text'].replace('[[', '').replace(']]', ''))
         connection.execute(
             sa.text('UPDATE card SET json = :json, text = :text WHERE id = :id'),
-            json=json.dumps(rabbit_json, separators=(',', ':'), sort_keys=True),
+            json=json.dumps(card_json, separators=(',', ':'), sort_keys=True),
             text=' '.join(card_text),
-            id=rabbit['id']
+            id=card['id']
         )
 
 

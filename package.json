@@ -1,6 +1,6 @@
 {
   "name": "ashes-live",
-  "version": "1.2.6",
+  "version": "1.2.9",
   "scripts": {
     "venv": ". venv/bin/activate",
     "upgrade": ". venv/bin/activate && pip3 install -r requirements.txt && npm upgrade",

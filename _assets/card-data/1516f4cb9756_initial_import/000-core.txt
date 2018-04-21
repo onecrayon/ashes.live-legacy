@@ -59,7 +59,7 @@ Blue Jaguar
 Conjuration - Battlefield
 Attack 2 - Life 2 - Recover 0 - Copies 5
 
-Gaze 1: After a unit comes into play on an opponent's battlefield, you may spend 1 [[basic]] to place 1 ehaustion token on that unit.
+Gaze 1: After a unit comes into play on an opponent's battlefield, you may spend 1 [[basic]] to place 1 exhaustion token on that unit.
 
 =====
 

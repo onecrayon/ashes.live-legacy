@@ -35,7 +35,7 @@ export default function parseText (input) {
 		text = text ? text.trim() : null
 		return [
 			'<a class="username" href="', globals.playerUrl(badge), '">',
-			text ? text : '', '<span class="badge">', badge, '</span></a>'
+			text ? text : '', '<span class="badge">#', badge, '</span></a>'
 		].join('')
 	})
 	// Parse card codes
