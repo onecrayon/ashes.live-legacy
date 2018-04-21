@@ -1,4 +1,5 @@
 import math
+from threading import Thread
 
 from flask import current_app, render_template
 from flask_mail import Message
@@ -6,7 +7,7 @@ from premailer import transform as inline_css
 from sendgrid import SendGridAPIClient
 import sendgrid.helpers.mail as sendgrid_helpers
 
-from app import mail
+from app import app, mail
 
 
 def get_pagination(results_count, page, per_page, spread=2):
@@ -22,6 +23,51 @@ def get_pagination(results_count, page, per_page, spread=2):
     if page - spread - extra_left > spread + 1:
         del pagination[1:page - spread - extra_left - 1]
     return pagination
+
+
+def async_email(app, recipient, sender, subject, html_body, text_body):
+    with app.app_context():
+        api_key = current_app.config['SENDGRID_API_KEY']
+        response = None
+        if api_key:
+            api = SendGridAPIClient(apikey=api_key)
+            # sender might be a tuple of (name, email)
+            from_email = (
+                sendgrid_helpers.Email(sender) if isinstance(sender, str)
+                else sendgrid_helpers.Email(email=sender[1], name=sender[0])
+            )
+            to_email = sendgrid_helpers.Email(recipient)
+            html_content = sendgrid_helpers.Content('text/html', html_body)
+            text_content = sendgrid_helpers.Content('text/plain', text_body)
+            # The Mail helper will not actually save anything unless every single attribute is
+            # specified
+            email = sendgrid_helpers.Mail(
+                subject=subject, from_email=from_email, to_email=to_email, content=text_content
+            )
+            email.add_content(html_content)
+            email_data = email.get()
+            try:
+                response = api.client.mail.send.post(request_body=email_data)
+                if response.status_code >= 400:
+                    current_app.logger.error('Mail delivery failed ({}): {}'.format(
+                        response.status_code, response.body
+                    ))
+            except Exception as e:
+                current_app.logger.error('Failed to send email via SendGrid API: {}'.format(e.body))
+                current_app.logger.error('Mail request body: {}'.format(email_data))
+
+        # Exit if we successfully sent our email via SendGrid; otherwise try sending via SMTP
+        if response and response.status_code < 400:
+            return
+
+        message = Message(
+            subject,
+            recipients=[recipient],
+            sender=sender,
+            html=html_body,
+            body=text_body
+        )
+        mail.send(message)
 
 
 def send_message(recipient, subject, template_name, sender=None, **kwargs):
@@ -54,43 +100,4 @@ def send_message(recipient, subject, template_name, sender=None, **kwargs):
     if not sender:
         sender = current_app.config['MAIL_DEFAULT_SENDER']
 
-    api_key = current_app.config['SENDGRID_API_KEY']
-    response = None
-    if api_key:
-        api = SendGridAPIClient(apikey=api_key)
-        # sender might be a tuple of (name, email)
-        from_email = (
-            sendgrid_helpers.Email(sender) if isinstance(sender, str)
-            else sendgrid_helpers.Email(email=sender[1], name=sender[0])
-        )
-        to_email = sendgrid_helpers.Email(recipient)
-        html_content = sendgrid_helpers.Content('text/html', html_body)
-        text_content = sendgrid_helpers.Content('text/plain', text_body)
-        # The Mail helper will not actually save anything unless every single attribute is specified
-        email = sendgrid_helpers.Mail(
-            subject=subject, from_email=from_email, to_email=to_email, content=text_content
-        )
-        email.add_content(html_content)
-        email_data = email.get()
-        try:
-            response = api.client.mail.send.post(request_body=email_data)
-            if response.status_code >= 400:
-                current_app.logger.error('Mail delivery failed ({}): {}'.format(
-                    response.status_code, response.body
-                ))
-        except Exception as e:
-            current_app.logger.error('Failed to send email via SendGrid API: {}'.format(e.body))
-            current_app.logger.error('Mail request body: {}'.format(email_data))
-
-    # Exit if we successfully sent our email via SendGrid; otherwise try sending via SMTP
-    if response and response.status_code < 400:
-        return
-
-    message = Message(
-        subject,
-        recipients=[recipient],
-        sender=sender,
-        html=html_body,
-        body=text_body
-    )
-    mail.send(message)
+    Thread(target=async_email, args=(app, recipient, sender, subject, html_body, text_body)).start()
