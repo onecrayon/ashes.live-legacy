@@ -23,7 +23,7 @@ class Card(db.Model):
     phoenixborn = db.Column(db.String(25), nullable=True, index=True)
     release = db.Column(db.Integer, nullable=False, index=True, default=0)
     # This gets incremented when a card's text is updated due to errata
-    version = db.Column(db.Integer, nullable=True, default=1)
+    version = db.Column(db.Integer, nullable=False, default=1)
     card_type = db.Column(db.String(25), nullable=False, index=True)
     is_summon_spell = db.Column(db.Boolean, nullable=False, default=False)
     cost_weight = db.Column(db.Integer, nullable=False, index=True, default=0)
