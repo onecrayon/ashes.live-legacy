@@ -44,6 +44,7 @@ def settings():
         current_user.username = form.username.data
         current_user.description = form.description.data
         current_user.newsletter_opt_in = form.newsletter_opt_in.data
+        current_user.email_subscriptions = form.email_subscriptions.data
         current_user.exclude_subscriptions = form.exclude_subscriptions.data
         db.session.commit()
         flash('Settings updated!', 'success')
