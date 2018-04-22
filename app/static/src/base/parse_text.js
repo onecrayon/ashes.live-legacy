@@ -39,9 +39,9 @@ export default function parseText (input) {
 		].join('')
 	})
 	// Parse card codes
-	input = input.replace(/\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )/ig, (_, primary, secondary, dash) => {
+	input = input.replace(/\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )/ig, (input, primary, secondary, dash) => {
 		if (dash) {
-			return ' <span class="divider"></span> '
+			return ' <span class="divider"><span class="alt-text">-</span></span> '
 		}
 		const lowerPrimary = primary.toLowerCase().replace('&#39;', '')
 		secondary = secondary && secondary.toLowerCase()
@@ -67,7 +67,8 @@ export default function parseText (input) {
 		}
 		return [
 			'<span class="phg-', lowerPrimary, '-', secondary, '" title="',
-			primary, (secondary ? ' ' + secondary : ''), '"></span>'
+			primary, (secondary ? ' ' + secondary : ''), '"><span class="alt-text">', input,
+			'</span></span>'
 		].join('')
 	})
 	// Parse star formatting

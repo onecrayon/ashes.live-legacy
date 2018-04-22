@@ -42,7 +42,7 @@
 				<li class="spellboard">Spellboard {{ card.spellboard }}</li>
 			</ul>
 			{% else %}
-			<p class="meta">{{ card.type }} <span class="divider"></span> {{ card.placement }}</p>
+			<p class="meta">{{ card.type }} <span class="divider"><span class="alt-text">-</span></span> {{ card.placement }}</p>
 			{% endif %}
 	
 			{% if card.cost %}

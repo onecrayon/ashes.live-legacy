@@ -140,13 +140,14 @@ def parse_card_codes(text):
     text = re.sub(r'\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]', parse_badges, text, flags=re.I)
     def parse_match(match):
         if match.group(3):
-            return Markup(' <span class="divider"></span> ')
+            return Markup(' <span class="divider"><span class="alt-text">-</span></span> ')
         primary = match.group(1)
         lower_primary = primary.lower().replace('&#39;', '')
         secondary = match.group(2).lower() if match.group(2) else None
         if lower_primary in ['discard', 'exhaust']:
             return Markup(''.join(
-                ['<span class="phg-', lower_primary, '" title="', primary, '"></span>']
+                ['<span class="phg-', lower_primary, '" title="', primary,
+                '"><span class="alt-text">', match.group(0), '</span></span>']
             ))
         if lower_primary in DiceFlags.__members__ and lower_primary != 'basic':
             if not secondary:
@@ -167,7 +168,8 @@ def parse_card_codes(text):
             ]))
         return Markup(''.join([
             '<span class="phg-', lower_primary, '-', secondary, '" title="',
-            primary, (' ' + secondary if secondary else ''), '"></span>'
+            primary + (' ' + secondary if secondary else ''), '"><span class="alt-text">',
+            match.group(0), '</span></span>'
         ]))
     # Parse card codes
     text = re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
