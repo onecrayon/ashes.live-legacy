@@ -4,19 +4,25 @@
 
 {{ usertag(entity.user, link=False) }} has updated their deck; see what's new:
 
-{{ entity.url }}
+{{ entity.url | site_url }}
 {%- elif entity.entity_type == 'comment' -%}
 {{ usertag(entity.user, link=False) }} commented on the {{ entity.source_type }} {{ entity.source_title }}:
 
 {{ entity.text }}
 
-{{ entity.url }}
+----------
+
+View or reply to this comment:
+
+{{ entity.url | site_url }}
 {%- endif %}
+
+----------
 
 You received this email because you subscribed to updates for this content. Click here to login and unsubscribe:
 
-{{ entity.unsubscribe_url }}
+{{ entity.unsubscribe_url | site_url }}
 
 To stop receiving emails for all subscribed content update your account settings:
 
-{{ url_for('player.settings') }}
+{{ url_for('player.settings') | site_url }}

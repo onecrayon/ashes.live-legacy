@@ -3,22 +3,28 @@
 {% block content %}
 	{% if entity.entity_type == 'deck' %}
 		<h2>
-			<a href="{{ entity.url }}">{{ entity | deck_title }}</a> has been updated!
+			<a href="{{ entity.url | site_url }}">{{ entity | deck_title }}</a> has been updated!
 		</h2>
 		<p>
-			{{ usertag(entity.user) }} has updated their deck; <a href="{{ entity.url }}">see what's new!</a>
+			{{ usertag(entity.user) }} has updated their deck; <a href="{{ entity.url | site_url }}">see what's new!</a>
 		</p>
 	{% elif entity.entity_type == 'comment' %}
 		<h2>
-			{{ usertag(entity.user) }} commented on the {{ entity.source_type }} <a href="{{ entity.url }}">{{ entity.source_title }}</a>:
+			{{ usertag(entity.user) }} commented on the {{ entity.source_type }} <a href="{{ entity.url | site_url }}">{{ entity.source_title }}</a>:
 		</h2>
 
 		<div class="comment">
 			{{ entity.text | parse_text }}
 		</div>
+
+		<hr>
+
+		<p><strong><a href="{{ entity.url | site_url }}">View or reply to this comment</a>.</strong></p>
 	{% endif %}
 
+	<hr>
+
 	<p><small>
-		You received this email because you subscribed to updates for this content. <a href="{{ entity.unsubscribe_url }}">Click here to login and unsubscribe</a>. To stop receiving emails for all subscribed content <a href="{{ url_for('player.settings') }}">update your account settings</a>.
+		You received this email because you subscribed to updates for this content. <a href="{{ entity.unsubscribe_url | site_url }}">Click here to login and unsubscribe</a>. To stop receiving emails for all subscribed content <a href="{{ url_for('player.settings') | site_url }}">update your account settings</a>.
 	</small></p>
 {% endblock %}
