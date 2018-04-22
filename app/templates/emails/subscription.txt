@@ -1,0 +1,22 @@
+{% from "macros.html" import usertag -%}
+{% if entity.entity_type == 'deck' -%}
+'{{ entity | deck_title }}' has been updated!
+
+{{ usertag(entity.user, link=False) }} has updated their deck; see what's new:
+
+{{ entity.url }}
+{%- elif entity.entity_type == 'comment' -%}
+{{ usertag(entity.user, link=False) }} commented on the {{ entity.source_type }} {{ entity.source_title }}:
+
+{{ entity.text }}
+
+{{ entity.url }}
+{%- endif %}
+
+You received this email because you subscribed to updates for this content. Click here to login and unsubscribe:
+
+{{ entity.unsubscribe_url }}
+
+To stop receiving emails for all subscribed content update your account settings:
+
+{{ url_for('player.settings') }}

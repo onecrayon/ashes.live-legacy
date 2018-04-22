@@ -1,0 +1,24 @@
+{% from "macros.html" import usertag %}
+{% extends "emails/base.html" %}
+{% block content %}
+	{% if entity.entity_type == 'deck' %}
+		<h2>
+			<a href="{{ entity.url }}">{{ entity | deck_title }}</a> has been updated!
+		</h2>
+		<p>
+			{{ usertag(entity.user) }} has updated their deck; <a href="{{ entity.url }}">see what's new!</a>
+		</p>
+	{% elif entity.entity_type == 'comment' %}
+		<h2>
+			{{ usertag(entity.user) }} commented on the {{ entity.source_type }} <a href="{{ entity.url }}">{{ entity.source_title }}</a>:
+		</h2>
+
+		<div class="comment">
+			{{ entity.text | parse_text }}
+		</div>
+	{% endif %}
+
+	<p><small>
+		You received this email because you subscribed to updates for this content. <a href="{{ entity.unsubscribe_url }}">Click here to login and unsubscribe</a>. To stop receiving emails for all subscribed content <a href="{{ url_for('player.settings') }}">update your account settings</a>.
+	</small></p>
+{% endblock %}
