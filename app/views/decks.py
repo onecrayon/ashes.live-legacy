@@ -139,10 +139,11 @@ def subscribe(deck_id):
     """Toggle subscription for this deck"""
     deck = Deck.query.get_or_404(deck_id)
     if deck.is_snapshot:
-        deck = db.session.query(Deck.entity_id).filter(Deck.id == deck.source_id).first()
+        deck = db.session.query(Deck).filter(Deck.id == deck.source_id).first()
     if not deck:
         abort(404)
-    toggle_subscription(deck.entity_id)
+    snapshot = deck.published_snapshot()
+    toggle_subscription(deck.entity_id, fallback_last_seen=snapshot.entity_id if snapshot else None)
     return redirect(url_for('decks.view', deck_id=deck_id), code=303)
 
 

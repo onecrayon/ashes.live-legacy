@@ -149,7 +149,7 @@ def update_subscription(source_entity_id, last_seen_entity_id=None):
     db.session.add(subscription)
 
 
-def toggle_subscription(source_entity_id):
+def toggle_subscription(source_entity_id, fallback_last_seen=None):
     subscription = db.session.query(Subscription).filter(
         Subscription.source_entity_id == source_entity_id,
         Subscription.user_id == current_user.id
@@ -161,6 +161,8 @@ def toggle_subscription(source_entity_id):
             Comment.source_entity_id == source_entity_id
         ).order_by(Comment.entity_id.desc()).first()
         last_seen_entity_id = comment.entity_id if comment else None
+        if not last_seen_entity_id and fallback_last_seen:
+            last_seen_entity_id = fallback_last_seen
         db.session.add(Subscription(
             source_entity_id=source_entity_id,
             user_id=current_user.id,
