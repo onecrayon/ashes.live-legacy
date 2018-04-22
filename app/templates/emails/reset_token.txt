@@ -2,6 +2,6 @@ Forgot your password?
 
 Visit this URL to reset your Ashes.live password:
 
-{{ site_url }}{{ url_for('player.reset', uuid=user.reset_uuid) }}
+{{ url_for('player.reset', uuid=user.reset_uuid) | site_url }}
 
 This email was sent to <{{ user.email }}>. If you received it in error, please disregard it.

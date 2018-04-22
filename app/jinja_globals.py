@@ -60,6 +60,7 @@ def first_name(name):
 
 @app.template_filter('production_url')
 def production_url(url):
+    """Converts JS and CSS URLs into production-ready URLs with cache breaking query strings"""
     if current_app.config['ENVIRONMENT'] == 'development':
         return url
     if url.endswith('.js'):
@@ -75,6 +76,7 @@ def production_url(url):
 
 @app.template_filter('cdn_url')
 def cdn_url(url):
+    """Converts absolute links to images to CDN images"""
     if not url.startswith('/'):
         url = '/' + url
     return '{}{}'.format(
@@ -82,6 +84,14 @@ def cdn_url(url):
         else current_app.config['SITE_URL'],
         url
     )
+
+
+@app.template_filter('site_url')
+def site_url(url_path):
+    """Converts an absolute URL path into a full site URL"""
+    site_url = current_app.config['SITE_URL'].rtrim('/')
+    url_path = url_path.ltrim('/') if url_path else ''
+    return '{}/{}'.format(site_url, url_path)
 
 
 @app.template_filter('badge_link')

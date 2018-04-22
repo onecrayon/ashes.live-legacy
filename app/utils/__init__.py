@@ -92,20 +92,15 @@ def send_message(recipients, subject, template_name, sender=None, **kwargs):
     All templates autmatically receive the following keyword arguments:
     
     * {{ subject }}: the email subject (used as a title for the base template)
-    * {{ site_url }}: the site root URL
     """
     html_body = inline_css(render_template(
         'emails/{}.html'.format(template_name),
         subject=subject,
-        site_url=current_app.config['SITE_URL'],
-        cdn_url=current_app.config['CDN_URL'] if current_app.config['CDN_URL']
-            else current_app.config['SITE_URL'],
         **kwargs
     ))
     text_body = render_template(
         'emails/{}.txt'.format(template_name),
         subject=subject,
-        site_url=current_app.config['SITE_URL'],
         **kwargs
     )
     if not sender:
