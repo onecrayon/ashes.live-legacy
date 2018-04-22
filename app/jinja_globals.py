@@ -89,8 +89,8 @@ def cdn_url(url):
 @app.template_filter('site_url')
 def site_url(url_path):
     """Converts an absolute URL path into a full site URL"""
-    site_url = current_app.config['SITE_URL'].rtrim('/')
-    url_path = url_path.ltrim('/') if url_path else ''
+    site_url = current_app.config['SITE_URL'].rstrip('/')
+    url_path = url_path.lstrip('/') if url_path else ''
     return '{}/{}'.format(site_url, url_path)
 
 
