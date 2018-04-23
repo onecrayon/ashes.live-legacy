@@ -8,7 +8,8 @@ from app import db
 from app.models.comment import Comment
 from app.models.deck import Deck
 from app.models.stream import Stream, Streamable, Subscription
-from app.utils import get_pagination
+from app.models.user import User
+from app.utils import get_pagination, send_message
 
 
 def new_entity():
@@ -17,6 +18,49 @@ def new_entity():
     db.session.add(entity)
     db.session.commit()
     return entity.entity_id
+
+
+def deck_to_entity_map(deck):
+    return {
+        'user': {
+            'badge': deck.user.badge,
+            'username': deck.user.username
+        },
+        'created': deck.created,
+        'source_id': deck.source_id,
+        'title': deck.title,
+        'phoenixborn': {
+            'name': deck.phoenixborn.name,
+            'stub': deck.phoenixborn.stub
+        },
+        'dice': deck.dice,
+        'url': url_for('decks.view', deck_id=deck.source_id),
+        'unsubscribe_url': url_for('decks.subscribe', deck_id=deck.source_id)
+    }
+
+
+def comment_to_entity_map(comment):
+    source_title = None
+    unsubscribe_url = None
+    if comment.source_type == 'card':
+        source_title = comment.source.name
+        unsubscribe_url = url_for('cards.subscribe', stub=comment.source.stub)
+    elif comment.source_type == 'deck':
+        snapshot = comment.source.published_snapshot()
+        source_title = snapshot.title if snapshot else None
+        unsubscribe_url = url_for('decks.subscribe', deck_id=comment.source.id)
+    return {
+        'user': {
+            'badge': comment.user.badge,
+            'username': comment.user.username
+        },
+        'created': comment.created,
+        'text': comment.text,
+        'source_title': source_title,
+        'source_type': comment.source_type,
+        'url': comment.url,
+        'unsubscribe_url': unsubscribe_url
+    }
 
 
 def refresh_entity(entity_id, entity_type, source_entity_id):
@@ -38,6 +82,55 @@ def refresh_entity(entity_id, entity_type, source_entity_id):
         # Ignore comment edits
         return
     db.session.add(entity)
+    # Grab users who are subscribed to this and have email notifications on
+    emails = db.session.query(User.email).join(
+        Subscription, Subscription.user_id == User.id
+    ).filter(
+        User.id != current_user.id,
+        User.email_subscriptions.is_(True),
+        Subscription.source_entity_id == source_entity_id
+    ).all()
+    if not emails:
+        return
+    recipients = [x.email for x in emails]
+    entity_map = {
+        'entity_type': entity_type
+    }
+    if entity_type == 'deck':
+        deck = db.session.query(Deck).options(
+            db.joinedload('phoenixborn'),
+            db.joinedload('dice'),
+            db.joinedload('user')
+        ).filter(
+            entity_id == entity_id,
+            Deck.is_snapshot.is_(True),
+            Deck.is_public.is_(True)
+        ).first()
+        if not deck:
+            return
+        entity_map.update(deck_to_entity_map(deck))
+    else:
+        comment = db.session.query(Comment).options(
+            db.joinedload('user')
+        ).filter(
+            Comment.entity_id == entity_id
+        ).first()
+        if not comment:
+            return
+        entity_map.update(comment_to_entity_map(comment))
+    subject = ''
+    if entity_type == 'deck':
+        subject = "Deck updated: '{}'".format(entity_map['title'])
+    else:
+        subject = "New comment on the {} '{}'".format(
+            entity_map['source_type'],
+            entity_map['source_title']
+        )
+    # Limit subjects to 78 characters
+    if len(subject) > 78:
+        subject = subject[0:74] + "...'"
+    send_message(recipients, subject, 'subscription', entity=entity_map)
+
 
 
 def update_subscription(source_entity_id, last_seen_entity_id=None):
@@ -56,7 +149,7 @@ def update_subscription(source_entity_id, last_seen_entity_id=None):
     db.session.add(subscription)
 
 
-def toggle_subscription(source_entity_id):
+def toggle_subscription(source_entity_id, fallback_last_seen=None):
     subscription = db.session.query(Subscription).filter(
         Subscription.source_entity_id == source_entity_id,
         Subscription.user_id == current_user.id
@@ -68,6 +161,8 @@ def toggle_subscription(source_entity_id):
             Comment.source_entity_id == source_entity_id
         ).order_by(Comment.entity_id.desc()).first()
         last_seen_entity_id = comment.entity_id if comment else None
+        if not last_seen_entity_id and fallback_last_seen:
+            last_seen_entity_id = fallback_last_seen
         db.session.add(Subscription(
             source_entity_id=source_entity_id,
             user_id=current_user.id,
@@ -169,20 +264,7 @@ def get_stream(page=None):
             Deck.is_public.is_(True)
         ).all()
         for deck in decks:
-            entity_map[deck.entity_id].update({
-                'user': {
-                    'badge': deck.user.badge,
-                    'username': deck.user.username
-                },
-                'created': deck.created,
-                'source_id': deck.source_id,
-                'title': deck.title,
-                'phoenixborn': {
-                    'name': deck.phoenixborn.name,
-                    'stub': deck.phoenixborn.stub
-                },
-                'dice': deck.dice
-            })
+            entity_map[deck.entity_id].update(deck_to_entity_map(deck))
     # Gather comments
     if comment_entity_ids:
         comments = db.session.query(Comment).options(
@@ -191,22 +273,6 @@ def get_stream(page=None):
             Comment.entity_id.in_(comment_entity_ids)
         ).all()
         for comment in comments:
-            source_title = None
-            if comment.source_type == 'card':
-                source_title = comment.source.name
-            elif comment.source_type == 'deck':
-                snapshot = comment.source.published_snapshot()
-                source_title = snapshot.title if snapshot else None
-            entity_map[comment.entity_id].update({
-                'user': {
-                    'badge': comment.user.badge,
-                    'username': comment.user.username
-                },
-                'created': comment.created,
-                'text': comment.text,
-                'source_title': source_title,
-                'source_type': comment.source_type,
-                'url': comment.url
-            })
+            entity_map[comment.entity_id].update(comment_to_entity_map(comment))
     pagination = get_pagination(stream_query.count(), page, per_page)
     return [entity_map[x.Stream.entity_id] for x in stream], page, pagination

@@ -46,3 +46,6 @@ MAIL_USERNAME = None
 MAIL_PASSWORD = None
 MAIL_DEFAULT_SENDER = None
 MAIL_MAX_EMAILS = None
+
+# Optional; if set will use SendGrid instead of SMTP
+SENDGRID_API_KEY = ''

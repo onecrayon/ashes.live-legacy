@@ -12,7 +12,7 @@ from app.utils.stream import new_entity, refresh_entity, update_subscription
 from app.views.forms.comment import CommentForm
 
 
-def get_comments(entity_id, page=None):
+def get_comments(entity_id, fallback_last_seen_entity_id=None, page=None):
     """Returns a list of comments for the given entity_id"""
     if not page:
         page = 1
@@ -27,6 +27,9 @@ def get_comments(entity_id, page=None):
     ).all()
     pagination = get_pagination(query.count(), page, per_page)
     last_comment_entity_id = comments[-1].entity_id if comments else None
+    current_app.logger.info('fallback? {}'.format(fallback_last_seen_entity_id))
+    if fallback_last_seen_entity_id and not last_comment_entity_id:
+        last_comment_entity_id = fallback_last_seen_entity_id
     if not current_user.is_authenticated:
         last_seen_entity_id = None
     else:
@@ -44,6 +47,9 @@ def get_comments(entity_id, page=None):
         else:
             last_seen_entity_id = subscription.last_seen_entity_id
         # Update their subscription now that they've seen this page
+        current_app.logger.debug('last_comment: {} last_seen: {}'.format(
+            last_comment_entity_id, last_seen_entity_id
+        ))
         if (subscription and last_comment_entity_id and last_seen_entity_id and
                 last_seen_entity_id < last_comment_entity_id):
             subscription.last_seen_entity_id = last_comment_entity_id
@@ -52,10 +58,12 @@ def get_comments(entity_id, page=None):
 
 
 def process_comments(entity_id, source_type='deck', source_version=None, page=None,
-                     allow_commenting=True):
+                     allow_commenting=True, fallback_last_seen_entity_id=None):
     # Only authenticated users may submit comments
     if not current_user.is_authenticated or not allow_commenting:
-        comments, pagination, last_seen_entity_id = get_comments(entity_id, page=page)
+        comments, pagination, last_seen_entity_id = get_comments(
+            entity_id, fallback_last_seen_entity_id=fallback_last_seen_entity_id, page=page
+        )
         return comments, pagination, last_seen_entity_id, None
     comment_form = CommentForm()
     if not comment_form.preview.data and comment_form.validate_on_submit():
@@ -79,5 +87,7 @@ def process_comments(entity_id, source_type='deck', source_version=None, page=No
         update_subscription(comment.source_entity_id, comment.entity_id)
         db.session.commit()
         raise Redirect(comment.url, status_code=303)
-    comments, pagination, last_seen_entity_id = get_comments(entity_id, page=page)
+    comments, pagination, last_seen_entity_id = get_comments(
+        entity_id, fallback_last_seen_entity_id=fallback_last_seen_entity_id, page=page
+    )
     return comments, pagination, last_seen_entity_id, comment_form

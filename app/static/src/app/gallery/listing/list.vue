@@ -14,7 +14,7 @@
 						({{ card.phoenixborn.split(' ')[0] }})
 					</span>
 				</h3>
-				<p class="meta">{{ card.type }} <span class="divider"></span> {{ card.placement }}</p>
+				<p class="meta">{{ card.type }} <span class="divider"><span class="alt-text">-</span></span> {{ card.placement }}</p>
 				<card-effects :card="card"></card-effects>
 				<ul v-if="hasStatline(card)" class="statline">
 					<li v-if="card.attack !== undefined" class="attack">Attack {{ card.attack }}</li>

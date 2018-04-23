@@ -4,9 +4,9 @@
 	
 	<p>Click this button to finalize your Ashes.live account and start participating on the site:</p>
 	
-	<p class="center"><a href="{{ site_url }}{{ url_for('player.new', uuid=invite.uuid) }}" class="btn">Create your account!</a></p>
+	<p class="center"><a href="{{ url_for('player.new', uuid=invite.uuid) | site_url }}" class="btn">Create your account!</a></p>
 	
-	<p><small>Or visit: <a href="{{ site_url }}{{ url_for('player.new', uuid=invite.uuid) }}">{{ site_url }}{{ url_for('player.new', uuid=invite.uuid) }}</a></small></p>
+	<p><small>Or visit: <a href="{{ url_for('player.new', uuid=invite.uuid) | site_url }}">{{ url_for('player.new', uuid=invite.uuid) | site_url }}</a></small></p>
 	
 	<p><small>This email was sent to &lt;<strong>{{ invite.email }}</strong>&gt;. If you received it in error, please disregard it.</small></p>
 {% endblock %}

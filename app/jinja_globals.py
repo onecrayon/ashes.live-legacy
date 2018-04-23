@@ -60,6 +60,7 @@ def first_name(name):
 
 @app.template_filter('production_url')
 def production_url(url):
+    """Converts JS and CSS URLs into production-ready URLs with cache breaking query strings"""
     if current_app.config['ENVIRONMENT'] == 'development':
         return url
     if url.endswith('.js'):
@@ -75,6 +76,7 @@ def production_url(url):
 
 @app.template_filter('cdn_url')
 def cdn_url(url):
+    """Converts absolute links to images to CDN images"""
     if not url.startswith('/'):
         url = '/' + url
     return '{}{}'.format(
@@ -82,6 +84,14 @@ def cdn_url(url):
         else current_app.config['SITE_URL'],
         url
     )
+
+
+@app.template_filter('site_url')
+def site_url(url_path):
+    """Converts an absolute URL path into a full site URL"""
+    site_url = current_app.config['SITE_URL'].rstrip('/')
+    url_path = url_path.lstrip('/') if url_path else ''
+    return '{}/{}'.format(site_url, url_path)
 
 
 @app.template_filter('badge_link')
@@ -128,25 +138,26 @@ def parse_card_codes(text):
         const text = text ? text.trim() : null
 		return [
 			'<a class="username" href="', globals.playerUrl(badge), '">',
-			text ? text : '', '<span class="badge">', badge, '</span></a>'
+			text ? text : '', '<span class="badge">#', badge, '</span></a>'
 		].join('')
         """
         text = match.group(1).strip() if match.group(1) else None
         badge = match.group(2)
         return ''.join([
             '<a class="username" href="', badge_link(url_for('player.view', badge=badge)), '">',
-			text if text else '', '<span class="badge">', badge, '</span></a>'
+			text if text else '', '<span class="badge">#', badge, '</span></a>'
         ])
     text = re.sub(r'\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]', parse_badges, text, flags=re.I)
     def parse_match(match):
         if match.group(3):
-            return Markup(' <span class="divider"></span> ')
+            return Markup(' <span class="divider"><span class="alt-text">-</span></span> ')
         primary = match.group(1)
         lower_primary = primary.lower().replace('&#39;', '')
         secondary = match.group(2).lower() if match.group(2) else None
         if lower_primary in ['discard', 'exhaust']:
             return Markup(''.join(
-                ['<span class="phg-', lower_primary, '" title="', primary, '"></span>']
+                ['<span class="phg-', lower_primary, '" title="', primary,
+                '"><span class="alt-text">', match.group(0), '</span></span>']
             ))
         if lower_primary in DiceFlags.__members__ and lower_primary != 'basic':
             if not secondary:
@@ -167,7 +178,8 @@ def parse_card_codes(text):
             ]))
         return Markup(''.join([
             '<span class="phg-', lower_primary, '-', secondary, '" title="',
-            primary, (' ' + secondary if secondary else ''), '"></span>'
+            primary + (' ' + secondary if secondary else ''), '"><span class="alt-text">',
+            match.group(0), '</span></span>'
         ]))
     # Parse card codes
     text = re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
