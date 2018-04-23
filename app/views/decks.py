@@ -109,7 +109,7 @@ def view(deck_id, page=1):
     try:
         comments, pagination, last_seen_entity_id, comment_form = process_comments(
             deck.source.entity_id, source_type='deck', source_version=deck.id, page=page,
-            allow_commenting=deck.is_public
+            allow_commenting=deck.is_public, fallback_last_seen_entity_id=deck.entity_id
         )
     except Redirect as error:
         return redirect(error.url, code=error.status_code)
