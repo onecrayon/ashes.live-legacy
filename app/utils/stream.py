@@ -201,7 +201,7 @@ def next_subscription_link():
     return next_subscription_link
 
 
-def get_stream(page=None):
+def get_stream(page=None, show='all'):
     """Returns a stream of site entities and pagination information"""
     if not page:
         page = 1
@@ -222,6 +222,11 @@ def get_stream(page=None):
                 Stream.entity_type != 'comment',
                 Subscription.source_entity_id.is_(None)
             )
+        )
+    if show != 'all':
+        stream_query = stream_query.filter(
+            # Show is always plural, so strip off the trailing 's'
+            Stream.entity_type == show[:-1]
         )
     stream = stream_query.order_by(Stream.posted.desc()).limit(per_page).offset(
         (page - 1) * per_page

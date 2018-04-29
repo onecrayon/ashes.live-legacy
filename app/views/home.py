@@ -1,6 +1,6 @@
 """Index/landing page for the site"""
 
-from flask import Blueprint, current_app, flash, redirect, render_template, url_for
+from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
 
 from app import db
 from app.models.deck import Deck
@@ -14,8 +14,15 @@ mod = Blueprint('home', __name__)
 @mod.route('/')
 @mod.route('/<int:page>/')
 def index(page=None):
-    stream, page, pagination = get_stream(page=page)
-    return render_template('index.html', stream=stream, page=page, pages=pagination)
+    showing = request.args.get('show', 'all')
+    stream, page, pagination = get_stream(page=page, show=showing)
+    return render_template(
+        'index.html',
+        stream=stream,
+        page=page,
+        pages=pagination,
+        showing=showing
+    )
 
 
 @mod.route('/feedback/', methods=['GET', 'POST'])
