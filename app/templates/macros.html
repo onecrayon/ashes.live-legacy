@@ -59,6 +59,14 @@
 		{{ inline_errors(field.errors) }}
 		<p class="help-text">Please remember the <a href="{{ url_for('home.policies') }}" target="_blank">Ashes.live Content Policies</a>.</p>
 	</div>
+	<div id="formatting-help" class="inline-modal">
+		<h2>Formatting Help</h2>
+
+		<div class="modal-scroll">
+			{% include "fragments/formatting_help.html" %}
+		</div>
+	</div>
+	{{ hide_on_load('formatting-help') }}
 {%- endmacro %}
 
 {% macro pagination(view_path=None, pages=None, page=1) -%}

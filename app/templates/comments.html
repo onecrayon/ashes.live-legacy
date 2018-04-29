@@ -106,13 +106,5 @@
 		<input class="btn btn-primary" type="submit" value="Publish">
 		{{ comment_form.preview() }}
 	</form>
-	<div id="formatting-help" class="inline-modal">
-		<h2>Formatting Help</h2>
-
-		<div class="modal-scroll">
-			{% include "fragments/formatting_help.html" %}
-		</div>
-	</div>
-	{{ hide_on_load('formatting-help') }}
 	{% endif %}
 </div>
