@@ -29,3 +29,4 @@ class Post(db.Model):
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     user = db.relationship(User)
+    section = db.relationship(Section)

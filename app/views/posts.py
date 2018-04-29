@@ -6,7 +6,7 @@ from app import db
 from app.models.post import Post, Section
 from app.models.stream import Stream
 from app.models.user import User
-from app.utils.stream import new_entity
+from app.utils.stream import new_entity, refresh_entity
 from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm
 
 mod = Blueprint('posts', __name__, url_prefix='/posts')
@@ -42,9 +42,21 @@ def section(stub, page=None):
 	pass
 
 
+@mod.route('/<stub>/subscribe/')
+def subscribe_section(stub):
+	"""(Un)subscribe to a section"""
+	pass
+
+
 @mod.route('/<int:post_id>/')
 def view(post_id):
 	"""View a particular post"""
+	pass
+
+
+@mod.route('/<int:post_id>/subscribe/')
+def subscribe(post_id):
+	"""(Un)subscribe to a particular post"""
 	pass
 
 
@@ -78,6 +90,8 @@ def submit(section_stub=None):
 			text=post_form.text.data
 		)
 		db.session.add(post)
+		refresh_entity(post.entity_id, 'post', section.entity_id,
+					   section_entity_id=section.entity_id)
 		db.session.commit()
 		flash('Post submitted!', 'success')
 		return redirect(url_for('posts.view', post_id=post.id), code=303)

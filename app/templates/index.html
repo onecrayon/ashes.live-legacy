@@ -44,6 +44,22 @@
 					<a href="{{ entity.url }}" class="btn btn-vertical" title="View comment"><i class="fa fa-chevron-right"></i></a>
 				</div>
 			</div>
+			{% elif entity.entity_type == 'post' %}
+			<div class="post-header responsive-cols no-wrap">
+				<p><strong>{{ usertag(entity.user) }} posted in <a href="{{ url_for('posts.section', stub=entity.section.stub) }}">{{ entity.section.title }}</a>:</strong></p>
+				<p class="timestamp col">{{ entity.created | format_date }}</p>
+			</div>
+			<div class="post-body">
+				<h2><a href="{{ entity.url }}">{{ entity.title }}</a></h2>
+				{{ entity.text | parse_text }}
+			</div>
+			<div class="post-footer">
+				<ul class="divider-separated">
+					<li><a href="{{ entity.url }}#comments">
+						<i class="fa fa-comments-o"></i> View comments
+					</a></li>
+				</ul>
+			</div>
 			{% endif %}
 		</li>
 	{% endfor %}

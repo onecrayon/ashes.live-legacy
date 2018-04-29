@@ -1254,7 +1254,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
-.comment-footer {
+.comment-footer, .post-footer {
 	border-top: 1px solid @color-gray;
 	padding: 5px 10px;
 
@@ -1283,6 +1283,15 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	list-style-type: none;
 	padding: 0;
 
+	.post {
+		border: 1px solid @color-border-gray;
+		margin-bottom: 20px;
+
+		&.unread {
+			border-color: @color-inexhaustible-dark;
+		}
+	}
+
 	.deck {
 		&.unread {
 			border-color: @color-inexhaustible-dark;
@@ -1307,6 +1316,24 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
+.post-header {
+	background: tint(@color-success, 90%);
+	border-bottom: 3px solid @color-success;
+	padding: 10px;
+
+	p {
+		margin-bottom: 0;
+	}
+}
+
+.post-body {
+	padding: 10px;
+
+	:last-child {
+		margin-bottom: 0;
+	}
+}
+
 .unread {
 	border-color: @color-inexhaustible-dark;
 	
@@ -1314,7 +1341,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		border-width: 3px;
 	}
 
-	.comment-header {
+	.comment-header, .post-header {
 		background-color: @color-inexhaustible;
 		border-color: @color-inexhaustible-dark;
 	}

@@ -7,6 +7,7 @@ from flask_login import current_user
 from app import db
 from app.models.comment import Comment
 from app.models.deck import Deck
+from app.models.post import Post
 from app.models.stream import Stream, Streamable, Subscription
 from app.models.user import User
 from app.utils import get_pagination, send_message
@@ -20,12 +21,16 @@ def new_entity():
     return entity.entity_id
 
 
+def user_to_entity_map(user):
+    return {
+        'badge': user.badge,
+        'username': user.username
+    }
+
+
 def deck_to_entity_map(deck):
     return {
-        'user': {
-            'badge': deck.user.badge,
-            'username': deck.user.username
-        },
+        'user': user_to_entity_map(deck.user),
         'created': deck.created,
         'source_id': deck.source_id,
         'title': deck.title,
@@ -36,6 +41,21 @@ def deck_to_entity_map(deck):
         'dice': deck.dice,
         'url': url_for('decks.view', deck_id=deck.source_id),
         'unsubscribe_url': url_for('decks.subscribe', deck_id=deck.source_id)
+    }
+
+
+def post_to_entity_map(post):
+    return {
+        'user': user_to_entity_map(post.user),
+        'section': {
+            'title': post.section.title,
+            'stub': post.section.stub
+        },
+        'created': post.created,
+        'title': post.title,
+        'text': post.text,
+        'url': url_for('posts.view', post_id=post.id),
+        'unsubscribe_url': url_for('posts.subscribe', post_id=post.id)
     }
 
 
@@ -50,10 +70,7 @@ def comment_to_entity_map(comment):
         source_title = snapshot.title if snapshot else None
         unsubscribe_url = url_for('decks.subscribe', deck_id=comment.source.id)
     return {
-        'user': {
-            'badge': comment.user.badge,
-            'username': comment.user.username
-        },
+        'user': user_to_entity_map(comment.user),
         'created': comment.created,
         'text': comment.text,
         'source_title': source_title,
@@ -63,7 +80,7 @@ def comment_to_entity_map(comment):
     }
 
 
-def refresh_entity(entity_id, entity_type, source_entity_id):
+def refresh_entity(entity_id, entity_type, source_entity_id, section_entity_id=None):
     if entity_type == 'deck':
         entity = db.session.query(Stream).filter(
             Stream.source_entity_id == source_entity_id
@@ -72,7 +89,7 @@ def refresh_entity(entity_id, entity_type, source_entity_id):
         entity = db.session.query(Stream).filter(Stream.entity_id == entity_id).first()
     if not entity:
         entity = Stream(entity_id=entity_id, entity_type=entity_type,
-                        source_entity_id=source_entity_id)
+                        source_entity_id=source_entity_id, section_entity_id=section_entity_id)
     elif entity_type == 'deck':
         # Decks are a special case; we update the Stream entity because the snapshots effectively
         # replace one another as far as most users are concerned
@@ -82,13 +99,23 @@ def refresh_entity(entity_id, entity_type, source_entity_id):
         # Ignore comment edits
         return
     db.session.add(entity)
+    subscription_filters = None
+    if section_entity_id:
+        subscription_filters = [db.or_(
+            Subscription.source_entity_id == source_entity_id,
+            Subscription.source_entity_id == section_entity_id
+        )]
+    else:
+        subscription_filters = [
+            Subscription.source_entity_id == source_entity_id
+        ]
     # Grab users who are subscribed to this and have email notifications on
     emails = db.session.query(User.email).join(
         Subscription, Subscription.user_id == User.id
     ).filter(
         User.id != current_user.id,
         User.email_subscriptions.is_(True),
-        Subscription.source_entity_id == source_entity_id
+        *subscription_filters
     ).all()
     if not emails:
         return
@@ -96,6 +123,7 @@ def refresh_entity(entity_id, entity_type, source_entity_id):
     entity_map = {
         'entity_type': entity_type
     }
+    subject = ''
     if entity_type == 'deck':
         deck = db.session.query(Deck).options(
             db.joinedload('phoenixborn'),
@@ -109,6 +137,18 @@ def refresh_entity(entity_id, entity_type, source_entity_id):
         if not deck:
             return
         entity_map.update(deck_to_entity_map(deck))
+        subject = "Deck updated: '{}'".format(entity_map['title'])
+    elif entity_type == 'post':
+        post = db.session.query(Post).options(
+            db.joinedload('user'),
+            db.joinedload('section')
+        ).filter(
+            Post.entity_id == entity_id
+        ).first()
+        if not post:
+            return
+        entity_map.update(post_to_entity_map(post))
+        subject = "New post '{}'".format(entity_map['title'])
     else:
         comment = db.session.query(Comment).options(
             db.joinedload('user')
@@ -118,10 +158,6 @@ def refresh_entity(entity_id, entity_type, source_entity_id):
         if not comment:
             return
         entity_map.update(comment_to_entity_map(comment))
-    subject = ''
-    if entity_type == 'deck':
-        subject = "Deck updated: '{}'".format(entity_map['title'])
-    else:
         subject = "New comment on the {} '{}'".format(
             entity_map['source_type'],
             entity_map['source_title']
@@ -232,11 +268,14 @@ def get_stream(page=None, show='all'):
         (page - 1) * per_page
     ).all()
     deck_entity_ids = set()
+    post_entity_ids = []
     comment_entity_ids = []
     entity_map = {}
     for entity, subscription in stream:
         if entity.entity_type == 'deck':
             deck_entity_ids.add(entity.source_entity_id)
+        elif entity.entity_type == 'post':
+            post_entity_ids.append(entity.entity_id)
         else:
             comment_entity_ids.append(entity.entity_id)
         entity_map[entity.entity_id] = {
@@ -270,6 +309,16 @@ def get_stream(page=None, show='all'):
         ).all()
         for deck in decks:
             entity_map[deck.entity_id].update(deck_to_entity_map(deck))
+    # Gather posts
+    if post_entity_ids:
+        posts = db.session.query(Post).options(
+            db.joinedload('user'),
+            db.joinedload('section')
+        ).filter(
+            Post.entity_id.in_(post_entity_ids)
+        ).all()
+        for post in posts:
+            entity_map[post.entity_id].update(post_to_entity_map(post))
     # Gather comments
     if comment_entity_ids:
         comments = db.session.query(Comment).options(

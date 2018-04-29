@@ -20,6 +20,16 @@
 		<hr>
 
 		<p><strong><a href="{{ entity.url | site_url }}">View or reply to this comment</a>.</strong></p>
+	{% elif entity.entity_type == 'post' %}
+		<h2>New post by {{ usertag(entity.user) }}: <a href="{{ entity.url | site_url }}">{{ entity.title }}</a></h2>
+
+		<div class="post">
+			{{ entity.text | parse_text }}
+		</div>
+
+		<hr>
+
+		<p>Posted under <a href="{{ url_for('posts.section', stub=entity.section.stub) | site_url }}">{{ entity.section.title }}</a>. <strong><a href="{{ entity.url | site_url }}">View or reply to this post</a>.</strong></p>
 	{% endif %}
 
 	<hr>

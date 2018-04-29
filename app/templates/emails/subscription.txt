@@ -15,6 +15,16 @@
 View or reply to this comment:
 
 {{ entity.url | site_url }}
+{%- elif entity.entity_type == 'post' -%}
+New post by {{ usertag(entity.user, link=False) }}: {{ entity.title }}
+
+{{ entity.text }}
+
+----------
+
+Posted under {{ entity.section.title }}. View or reply to this post:
+
+{{ entity.url | site_url }}
 {%- endif %}
 
 ----------
