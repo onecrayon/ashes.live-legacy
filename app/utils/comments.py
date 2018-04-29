@@ -47,9 +47,6 @@ def get_comments(entity_id, fallback_last_seen_entity_id=None, page=None):
         else:
             last_seen_entity_id = subscription.last_seen_entity_id
         # Update their subscription now that they've seen this page
-        current_app.logger.debug('last_comment: {} last_seen: {}'.format(
-            last_comment_entity_id, last_seen_entity_id
-        ))
         if (subscription and last_comment_entity_id and last_seen_entity_id and
                 last_seen_entity_id < last_comment_entity_id):
             subscription.last_seen_entity_id = last_comment_entity_id
