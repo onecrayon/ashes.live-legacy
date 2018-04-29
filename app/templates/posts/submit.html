@@ -1,0 +1,45 @@
+{% from "macros.html" import with_errors, parsed_text_field %}
+{% extends "base.html" %}
+{% block title %}Submit New Post{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-power">
+		Submit New Post
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<form action="./" method="POST">
+		{{ post_form.hidden_tag() }}
+		{% if post_form.preview.data %}
+		<h3 id="post-preview">Preview</h3>
+		<div class="boxed">
+			{% if not post_form.text.data %}
+			<p class="muted">Post preview will be shown here&hellip;</p>
+			{% else %}
+			{{ post_form.text.data | parse_text }}
+			{% endif %}
+		</div>
+		{% endif %}
+		{% if section %}
+			<div class="form-field">
+				{{ post_form.section.label }}
+				<input type="text" value="{{ section.title }}" disabled>
+				<input type="hidden" name="section" value="{{ section.stub }}">
+			</div>
+		{% else %}
+			{{ with_errors(post_form.section) }}
+		{% endif %}
+		{{ with_errors(post_form.title) }}
+		{{ post_form.text.label }}
+		{{ parsed_text_field(post_form.text) }}
+		<input class="btn btn-primary" type="submit" value="Submit">
+		{{ post_form.preview() }}
+	</form>
+{% endblock %}
+
+{% block sidebar %}
+	<p class="callout">Posts are displayed on the homepage, and can be anything you like (as long as it's related to Ashes)!</p>
+		
+	<p>Strategy articles, rules questions, links to recorded matches, etc. are all welcome.</p>
+{% endblock %}

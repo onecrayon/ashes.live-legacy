@@ -26,7 +26,7 @@ def get_section_choices():
 		query = query.filter(
 			Section.is_restricted.is_(False)
 		)
-	return [(x.id, x.title) for x in query.all()]
+	return [(x.stub, x.title) for x in query.all()]
 
 
 @mod.route('/')
@@ -49,7 +49,7 @@ def view(post_id):
 
 
 @mod.route('/submit/', methods=['GET', 'POST'])
-@mod.route('/submit/<section_stub>/', methods=['GET', 'POST'])
+@mod.route('/<section_stub>/submit/', methods=['GET', 'POST'])
 @login_required
 def submit(section_stub=None):
 	"""Submit a new post"""
@@ -60,9 +60,11 @@ def submit(section_stub=None):
 	if section_stub:
 		post_form.section.data = section_stub
 	section = Section.query.filter(
-		Section.stub == post_form.section.data,
-		Section.is_restricted.is_(False) if not current_user.is_admin else None
-	).first()
+		Section.stub == post_form.section.data
+	)
+	if not current_user.is_admin:
+		section = section.filter(Section.is_restricted.is_(False))
+	section = section.first()
 	if not post_form.preview.data and post_form.validate_on_submit():
 		if not section:
 			flash('Post submitted to invalid section; please try again.', 'error')
@@ -129,7 +131,7 @@ def notes(post_id):
 	return render_template('posts/notes.html', post=post)
 
 
-@mod.route('/<int:pos_id>/moderate/', methods=['GET', 'POST'])
+@mod.route('/<int:post_id>/moderate/', methods=['GET', 'POST'])
 @fresh_login_required
 def moderate(post_id):
 	post = verify_post(post_id, is_admin=True)

@@ -62,6 +62,12 @@
 {% endblock %}
 
 {% block sidebar %}
+	{% if current_user.is_authenticated %}
+	<a href="{{ url_for('posts.submit') }}" class="btn btn-block btn-success">
+		<i class="fa fa-sticky-note"></i> Submit New Post
+	</a>
+	{% endif %}
+
 	<h2>Welcome to Ashes.live!</h2>
 
 	<p class="callout">Ashes.live is a fan site for <a href="https://www.plaidhatgames.com/games/ashes">Ashes: Rise of the Phoenixborn</a> by Plaid Hat Games, offering a <a href="{{ url_for('cards.index') }}"><strong>card browser</strong></a>, <a href="{{ url_for('decks.build') }}"><strong>deck builder</strong></a>, and <strong>social features</strong> in an interface that highlights the gorgeous card art.</p>
