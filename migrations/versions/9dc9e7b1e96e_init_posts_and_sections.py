@@ -66,8 +66,11 @@ def upgrade():
         {'title': 'Rules', 'stub': 'rules', 'is_restricted': False, 'entity_id': entity_ids[2]},
         {'title': 'Strategy', 'stub': 'strategy', 'is_restricted': False, 'entity_id': entity_ids[3]}
     ])
+    op.add_column('stream', sa.Column('section_entity_id', sa.Integer(), nullable=True))
+    op.create_index('ix_stream_section_entity_id', 'stream', ['section_entity_id'], unique=False)
 
 
 def downgrade():
+    op.drop_column('stream', 'section_entity_id')
     op.drop_table('post')
     op.drop_table('section')
