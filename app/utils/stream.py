@@ -47,11 +47,15 @@ def deck_to_entity_map(deck):
 def post_to_entity_map(post):
     return {
         'user': user_to_entity_map(post.user),
+        'user_id': post.user.id,
         'section': {
             'title': post.section.title,
             'stub': post.section.stub
         },
+        'id': post.id,
         'created': post.created,
+        'modified': post.modified,
+        'is_moderated': post.is_moderated,
         'title': post.title,
         'text': post.text,
         'url': url_for('posts.view', post_id=post.id),

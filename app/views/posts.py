@@ -77,6 +77,11 @@ def submit(section_stub=None):
 	if not current_user.is_admin:
 		section = section.filter(Section.is_restricted.is_(False))
 	section = section.first()
+	if post_form.cancel.data:
+		if not section_stub:
+			return redirect(url_for('home.index'), code=303)
+		else:
+			return redirect (url_for('posts.section', stub=section_stub), code=303)
 	if not post_form.preview.data and post_form.validate_on_submit():
 		if not section:
 			flash('Post submitted to invalid section; please try again.', 'error')
@@ -107,6 +112,7 @@ def submit(section_stub=None):
 def edit(post_id):
 	post = verify_post(post_id)
 	post_form = PostForm(obj=post)
+	post_form.section.choices = get_section_choices()
 	if post_form.cancel.data:
 		return redirect(url_for('posts.view', post_id=post_id), code=303)
 	if not post_form.preview.data and post_form.validate_on_submit():
@@ -115,7 +121,7 @@ def edit(post_id):
 		db.session.commit()
 		flash('Post updated!', 'success')
 		return redirect(url_for('posts.view', post_id=post_id), code=303)
-	return render_template('posts/edit.html', post_form=post_form)
+	return render_template('posts/edit.html', post_form=post_form, section=post.section)
 
 
 @mod.route('/<int:post_id>/delete/', methods=['GET', 'POST'])

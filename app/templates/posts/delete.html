@@ -1,0 +1,23 @@
+{% from "macros.html" import with_errors %}
+{% extends "base.html" %}
+{% block title %}Delete Post: {{ post.title }}{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-power">
+		Delete Post: {{ post.title }}
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<p class="callout"><strong>Do you wish to delete the following post?</strong></p>
+
+	<div class="boxed">
+		{{ post.text | parse_text }}
+	</div>
+
+	<form method="POST" action="./">
+		{{ delete_form.hidden_tag() }}
+		{{ delete_form.delete_post() }}
+		{{ delete_form.cancel() }}
+	</form>
+{% endblock %}
