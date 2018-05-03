@@ -1,0 +1,49 @@
+{% from "macros.html" import usertag, hide_on_load, subscribe_button %}
+{% extends "base.html" %}
+{% block title %}Post: {{ post.title | paged_title(pagination_options.page) }}{% endblock %}
+{% block page_class %}sidebar-first{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-power">{{ post.title }}</h1>
+{% endblock %}
+
+{% block content %}
+	{{ post.text | parse_text }}
+	{% include 'comments.html' %}
+{% endblock %}
+
+{% block sidebar %}
+	<table class="meta" cellspacing="0" cellpadding="0">
+		<tr>
+			<th>Author:</th>
+			<td>{{ usertag(post.user) }}</td>
+		</tr>
+		<tr>
+			<th>
+				{% if post.created != post.modified %}
+				Updated:
+				{% else %}
+				Posted:
+				{% endif %}
+			</th>
+			<td>{{ post.modified | format_date }}</td>
+		</tr>
+	</table>
+
+	<hr>
+	{{ subscribe_button(url_for('posts.subscribe', post_id=post.id), comment_last_seen) }}
+	<hr>
+	{% if current_user.is_authenticated and (post.user_id == current_user.id or current_user.is_admin) %}
+		{% if post.user_id == current_user.id %}
+			{% if post.is_moderated %}
+			<a href="{{ url_for('posts.notes', post_id=post.id) }}" class="btn btn-block btn-danger"><i class="fa fa-lock"></i> Comment locked by moderator</a>
+			{% else %}
+			<a href="{{ url_for('posts.edit', post_id=post.id) }}" class="btn btn-block btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+			<a href="{{ url_for('posts.delete', post_id=post.id) }}" class="btn btn-block btn-danger"><i class="fa fa-trash"></i> Delete</a>
+			{% endif %}
+		{% endif %}
+		{% if current_user.is_admin and post.user_id != current_user.id %}
+		<a href="{{ url_for('posts.moderate', post_id=post.id) }}" class="btn btn-block btn-danger"><i class="fa fa-wrench"></i> Moderate</a>
+		{% endif %}
+	{% endif %}
+{% endblock %}
