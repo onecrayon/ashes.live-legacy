@@ -1317,17 +1317,22 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 }
 
 .post-header {
-	background: tint(@color-success, 90%);
-	border-bottom: 3px solid @color-success;
+	border-bottom: 3px solid @color-border-gray;
 	padding: 10px;
+	margin: 0;
+}
+
+.post-meta {
+	padding: 10px 10px 0;
 
 	p {
-		margin-bottom: 0;
+		.font-size(12);
+		margin: 0;
 	}
 }
 
 .post-body {
-	padding: 10px;
+	padding: 5px 10px 10px;
 
 	:last-child {
 		margin-bottom: 0;
@@ -1341,8 +1346,12 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		border-width: 3px;
 	}
 
-	.comment-header, .post-header {
+	.comment-header {
 		background-color: @color-inexhaustible;
+		border-color: @color-inexhaustible-dark;
+	}
+
+	.post-header {
 		border-color: @color-inexhaustible-dark;
 	}
 }

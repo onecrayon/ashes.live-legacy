@@ -45,12 +45,13 @@
 				</div>
 			</div>
 			{% elif entity.entity_type == 'post' %}
-			<div class="post-header responsive-cols no-wrap">
-				<p><strong>{{ usertag(entity.user) }} posted in <a href="{{ url_for('posts.section', stub=entity.section.stub) }}">{{ entity.section.title }}</a>:</strong></p>
+
+			<h2 class="post-header"><a href="{{ entity.url }}">{{ entity.title }}</a></h2>
+			<div class="post-meta responsive-cols no-wrap">
+				<p class="col-flex">Posted by {{ usertag(entity.user) }} in <strong><a href="{{ url_for('posts.section', stub=entity.section.stub) }}">{{ entity.section.title }}</a></strong></p>
 				<p class="timestamp col">{{ entity.created | format_date }}</p>
 			</div>
 			<div class="post-body">
-				<h2><a href="{{ entity.url }}">{{ entity.title }}</a></h2>
 				{{ entity.text | parse_text }}
 			</div>
 			<div class="post-footer responsive-cols">
