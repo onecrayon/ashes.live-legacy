@@ -31,7 +31,7 @@
 					<p class="col-flex">{{  usertag(comment.user) }} says:</p>
 					<p class="timestamp col"><a href="{{ comment.url }}"><i class="fa fa-link"></i> {{ comment.created | format_date }}</a></p>
 				</div>
-				{% if comment.source_version < comment_version %}
+				{% if comment.source_version and comment.source_version < comment_version %}
 				<p class="comment-outdated">
 					<i class="fa fa-history"></i> This comment was posted on a 
 					{% if comment.source_type == 'deck' %}
