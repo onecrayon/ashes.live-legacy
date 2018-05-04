@@ -1,4 +1,4 @@
-{% from "macros.html" import usertag, pagination %}
+{% from "macros.html" import usertag, sectiontag, pagination %}
 {% from "decks/macros.html" import dice_list %}
 {% extends "base.html" %}
 {% block title %}{{ 'Recent Activity' | paged_title(page) }}{% endblock %}
@@ -48,7 +48,7 @@
 
 			<h2 class="post-header"><a href="{{ entity.url }}">{{ entity.title }}</a></h2>
 			<div class="post-meta responsive-cols no-wrap">
-				<p class="col-flex">Posted by {{ usertag(entity.user) }} in <strong><a href="{{ url_for('posts.section', stub=entity.section.stub) }}">{{ entity.section.title }}</a></strong></p>
+				<p class="col-flex">Posted by {{ usertag(entity.user) }} in {{ sectiontag(entity.section) }}</p>
 				<p class="timestamp col">{{ entity.created | format_date }}</p>
 			</div>
 			<div class="post-body">

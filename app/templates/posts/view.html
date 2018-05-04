@@ -1,4 +1,4 @@
-{% from "macros.html" import usertag, hide_on_load, subscribe_button %}
+{% from "macros.html" import usertag, sectiontag, hide_on_load, subscribe_button %}
 {% extends "base.html" %}
 {% block title %}Post: {{ post.title | paged_title(pagination_options.page) }}{% endblock %}
 {% block page_class %}sidebar-first{% endblock %}
@@ -17,6 +17,10 @@
 		<tr>
 			<th>Author:</th>
 			<td>{{ usertag(post.user) }}</td>
+		</tr>
+		<tr>
+			<th>Category:</th>
+			<td>{{ sectiontag(post.section) }}</td>
 		</tr>
 		<tr>
 			<th>

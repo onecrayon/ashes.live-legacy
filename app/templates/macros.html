@@ -6,6 +6,19 @@
 	{%- endif %}
 {%- endmacro %}
 
+{% macro sectiontag(section, classes='') -%}
+	<a href="{{ url_for('posts.section', stub=section.stub) }}" class="section{% if classes %} {{ classes }}{% endif %}">
+		{%- if section.stub == 'news' -%}
+		<i class="fa fa-rss"></i>
+		{%- elif section.stub == 'general' -%}
+		<i class="fa fa-archive"></i>
+		{%- elif section.stub == 'rules' -%}
+		<i class="fa fa-gavel"></i>
+		{%- elif section.stub == 'strategy' -%}
+		<i class="fa fa-flag"></i>
+		{%- endif %} {{ section.title }}</a>
+{%- endmacro %}
+
 {% macro inline_errors(errors) -%}
 	{% if errors %}
 		<ul class="alerts">
