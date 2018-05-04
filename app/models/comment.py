@@ -7,6 +7,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from app import db
 from app.models.card import Card
 from app.models.deck import Deck
+from app.models.post import Post
 from app.models.user import User
 
 
@@ -42,6 +43,10 @@ class Comment(db.Model):
                 self._source = db.session.query(Deck).filter(
                     Deck.entity_id == self.source_entity_id
                 ).first()
+            elif self.source_type == 'post':
+                self._source = db.session.query(Post).filter(
+                    Post.entity_id == self.source_entity_id
+                ).first()
             return self._source
 
     @hybrid_property
@@ -56,3 +61,5 @@ class Comment(db.Model):
             return url_for('cards.detail', stub=self.source.stub, page=page, _anchor=anchor)
         elif self.source_type == 'deck':
             return url_for('decks.view', deck_id=self.source.id, page=page, _anchor=anchor)
+        elif self.source_type == 'post':
+            return url_for('posts.view', post_id=self.source.id, page=page, _anchor=anchor)

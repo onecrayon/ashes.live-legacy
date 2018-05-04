@@ -73,6 +73,9 @@ def comment_to_entity_map(comment):
         snapshot = comment.source.published_snapshot()
         source_title = snapshot.title if snapshot else None
         unsubscribe_url = url_for('decks.subscribe', deck_id=comment.source.id)
+    elif comment.source_type == 'post':
+        source_title = comment.source.title
+        unsubscribe_url = url_for('posts.subscribe', post_id=comment.source.id)
     return {
         'user': user_to_entity_map(comment.user),
         'created': comment.created,
