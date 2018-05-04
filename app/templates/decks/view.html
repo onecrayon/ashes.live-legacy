@@ -144,8 +144,10 @@ Created with https://ashes.live</textarea>
 
 	{% if current_user.is_authenticated %}
 	<hr>
+	{% if comment_form %}
 	{{ subscribe_button(url_for('decks.subscribe', deck_id=deck.id), comment_last_seen) }}
 	<hr>
+	{% endif %}
 	{% if deck.user_id == current_user.id %}
 	{% if deck.is_snapshot %}
 	<a class="btn btn-block btn-primary"
