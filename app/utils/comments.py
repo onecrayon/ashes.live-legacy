@@ -27,7 +27,6 @@ def get_comments(entity_id, fallback_last_seen_entity_id=None, page=None):
     ).all()
     pagination = get_pagination(query.count(), page, per_page)
     last_comment_entity_id = comments[-1].entity_id if comments else None
-    current_app.logger.info('fallback? {}'.format(fallback_last_seen_entity_id))
     if fallback_last_seen_entity_id and not last_comment_entity_id:
         last_comment_entity_id = fallback_last_seen_entity_id
     if not current_user.is_authenticated:
