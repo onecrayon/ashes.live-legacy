@@ -76,11 +76,11 @@ def view(deck_id, page=1):
         db.joinedload('user'),
         db.joinedload('source').joinedload('phoenixborn')
     ).get_or_404(deck_id)
-    if deck.is_snapshot and not deck.is_public and (not current_user.is_authenticated or
-            deck.user_id != current_user.id):
+    not_own_deck = (not current_user.is_authenticated or deck.user_id != current_user.id)
+    if deck.is_snapshot and not deck.is_public and not_own_deck:
         abort(404)
     # Re-route to the latest public snapshot, if viewing a deck
-    if not deck.is_snapshot:
+    if not deck.is_snapshot and not_own_deck:
         deck = deck.published_snapshot(full=True)
         if not deck:
             abort(404)
@@ -107,8 +107,9 @@ def view(deck_id, page=1):
     release_names = [current_app.config['RELEASE_NAMES'][release] for release in releases]
     # Gather comments
     try:
+        source_entity_id = deck.source.entity_id if deck.source else deck.entity_id
         comments, pagination, last_seen_entity_id, comment_form = process_comments(
-            deck.source.entity_id, source_type='deck', source_version=deck.id, page=page,
+            source_entity_id, source_type='deck', source_version=deck.id, page=page,
             allow_commenting=deck.is_public, fallback_last_seen_entity_id=deck.entity_id
         )
     except Redirect as error:
