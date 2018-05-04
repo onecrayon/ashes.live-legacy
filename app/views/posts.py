@@ -8,7 +8,7 @@ from app.models.post import Post, Section
 from app.models.stream import Stream
 from app.models.user import User
 from app.utils.comments import process_comments
-from app.utils.stream import new_entity, refresh_entity
+from app.utils.stream import new_entity, refresh_entity, update_subscription
 from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm
 
 mod = Blueprint('posts', __name__, url_prefix='/posts')
@@ -125,6 +125,8 @@ def submit(section_stub=None):
         db.session.add(post)
         refresh_entity(post.entity_id, 'post', section.entity_id,
                        section_entity_id=section.entity_id)
+        # Subscribe the user to the post
+        update_subscription(post.entity_id)
         db.session.commit()
         flash('Post submitted!', 'success')
         return redirect(url_for('posts.view', post_id=post.id), code=303)
