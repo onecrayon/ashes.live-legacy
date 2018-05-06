@@ -51,7 +51,7 @@
 				{{ deck.phoenixborn.name }}
 			</a>
 			{% if current_user.is_authenticated and deck.user_id == current_user.id and not deck.is_snapshot %}
-			<a href="{{ url_for('decks.view', deck_id=deck.id) }}" class="view-link" title="View details"><i class="fa fa-expand"></i></a>
+			<a href="{{ url_for('decks.view_saved', deck_id=deck.id) }}" class="view-link" title="View details"><i class="fa fa-expand"></i></a>
 			{% endif %}
 			<span class="card-count float-right">{{ deck.cards | sum(attribute='count') }} / 30</span>
 		</h3>

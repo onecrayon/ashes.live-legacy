@@ -12,6 +12,11 @@
 {% block page_class %}sidebar-first deck-view-page{% endblock %}
 
 {% block heading %}
+	{% if is_base_deck %}
+	<ul class="alerts">
+		<li class="warning"><i class="fa fa-eye-slash"></i> You are viewing your most recent private save for this deck. <a href="{{ url_for('decks.view', deck_id=deck.id) }}">View public URL.</a></li>
+	</ul>
+	{% endif %}
 	<h1 class="phg-main-action">{{ deck | deck_title }}</h1>
 {% endblock %}
 
