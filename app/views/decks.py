@@ -64,7 +64,7 @@ def index(page=None):
 
 @mod.route('/view/<int:deck_id>/', methods=['GET', 'POST'])
 @mod.route('/view/<int:deck_id>/<int:page>/', methods=['GET', 'POST'])
-def view(deck_id, page=1):
+def view(deck_id, page=1, show_saved=False):
     """View a snapshot.
     
     If deck_id points to a deck, shows first public snapshot.
@@ -80,7 +80,7 @@ def view(deck_id, page=1):
     if deck.is_snapshot and not deck.is_public and not_own_deck:
         abort(404)
     # Re-route to the latest public snapshot, if viewing a deck
-    if not deck.is_snapshot and not_own_deck:
+    if not deck.is_snapshot and (not_own_deck or not show_saved):
         deck = deck.published_snapshot(full=True)
         if not deck:
             abort(404)
@@ -120,18 +120,29 @@ def view(deck_id, page=1):
         sections=sections,
         releases=release_names,
         has_history=deck.has_snapshots,
+        is_base_deck=show_saved,
         # Standard comment properties
         comment_version=deck.id,
         comments=comments,
         comment_last_seen=last_seen_entity_id,
         pagination_options={
-            'view_path': 'decks.view',
+            'view_path': 'decks.view' if not show_saved else 'decks.view_saved',
             'pages': pagination,
             'deck_id': deck_id,
             'page': page
         },
         comment_form=comment_form
     )
+
+
+@mod.route('/view/<int:deck_id>/saved/')
+@mod.route('/view/<int:deck_id>/saved/<int:page>/')
+@login_required
+def view_saved(deck_id, page=1):
+    deck = Deck.query.get_or_404(deck_id)
+    if deck.is_snapshot:
+        return redirect(url_for('decks.view', deck_id=deck_id))
+    return view(deck_id, page=page, show_saved=True)
 
 
 @mod.route('/view/<int:deck_id>/subscribe/')
