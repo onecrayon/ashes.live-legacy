@@ -1,12 +1,13 @@
 """Post viewing, editing, and moderation"""
-from flask import abort, Blueprint, flash, redirect, render_template, url_for
+from flask import abort, Blueprint, current_app, flash, redirect, render_template, url_for
 from flask_login import current_user, fresh_login_required, login_required
 
 from app import db
 from app.exceptions import Redirect
 from app.models.post import Post, Section
-from app.models.stream import Stream
+from app.models.stream import Stream, Subscription
 from app.models.user import User
+from app.utils import get_pagination
 from app.utils.comments import process_comments
 from app.utils.stream import new_entity, refresh_entity, toggle_subscription, update_subscription
 from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm
@@ -41,7 +42,45 @@ def index():
 @mod.route('/<stub>/<int:page>/')
 def section(stub, page=None):
     """List posts in a particular section"""
-    pass
+    section = db.session.query(Section).filter(Section.stub == stub).first()
+    if not section:
+        abort(404)
+    query = db.session.query(Post).options(
+        db.joinedload('user'),
+        db.joinedload('section')
+    ).filter(Post.section_id == section.id)
+    # TODO: add filter logic to search for posts by title/text (similar to cards)
+    if not page:
+        page = 1
+    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
+    posts = query.order_by(Post.created.desc()).limit(per_page).offset(
+        (page - 1) * per_page
+    ).all()
+    pagination = get_pagination(query.count(), page, per_page)
+    if current_user.is_authenticated:
+        is_subscribed = db.session.query(Subscription.user_id).filter(
+            Subscription.user_id == current_user.id,
+            Subscription.source_entity_id == section.entity_id
+        ).count()
+        unreads = db.session.query(Subscription.source_entity_id).filter(
+            Subscription.source_entity_id.in_([x.entity_id for x in posts]),
+            Subscription.user_id == current_user.id,
+            Subscription.last_seen_entity_id.is_(None)
+        ).all() if posts else None
+        unreads = [x.source_entity_id for x in unreads] if unreads else []
+    else:
+        is_subscribed = False
+        unreads = []
+    # TODO: figure out how to get `is_unread` into the list of posts
+    return render_template(
+        'posts/section.html',
+        section=section,
+        posts=posts,
+        unread_entity_ids=unreads,
+        page=page,
+        pages=pagination,
+        is_subscribed=is_subscribed
+    )
 
 
 @mod.route('/<stub>/subscribe/')
