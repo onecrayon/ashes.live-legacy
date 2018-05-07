@@ -34,7 +34,7 @@ def get_section_choices():
 @mod.route('/')
 def index():
     """List all available sections"""
-    pass
+    return render_template('posts/index.html', sections=db.session.query(Section).all())
 
 
 @mod.route('/<stub>/')

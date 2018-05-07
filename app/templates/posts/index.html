@@ -1,0 +1,13 @@
+{% from "macros.html" import sectiontag %}
+{% extends "base.html" %}
+{% block title %}Sections{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-power">View Posts In:</h1>
+{% endblock %}
+
+{% block content %}
+	{% for section in sections %}
+	<h2>{{ sectiontag(section) }}</h2>
+	{% endfor %}
+{% endblock %}
