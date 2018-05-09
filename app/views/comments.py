@@ -65,6 +65,8 @@ def notes(comment_id):
 @mod.route('/<int:comment_id>/moderate/', methods=['GET', 'POST'])
 @fresh_login_required
 def moderate(comment_id):
+	if not current_user.is_admin:
+		abort(404)
 	comment = verify_comment(comment_id, is_admin=True)
 	user = User.query.get(comment.user_id)
 	comment_form = ModerateCommentForm(obj=comment)

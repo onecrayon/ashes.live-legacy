@@ -231,6 +231,8 @@ def notes(post_id):
 @mod.route('/<int:post_id>/moderate/', methods=['GET', 'POST'])
 @fresh_login_required
 def moderate(post_id):
+    if not current_user.is_admin:
+        abort(404)
     post = verify_post(post_id, is_admin=True)
     user = User.query.get(post.user_id)
     post_form = ModeratePostForm(obj=post)
