@@ -236,6 +236,8 @@ def moderate(post_id):
     post = verify_post(post_id, is_admin=True)
     user = User.query.get(post.user_id)
     post_form = ModeratePostForm(obj=post)
+    if post_form.cancel.data:
+        return redirect(url_for('posts.view', post_id=post_id), code=303)
     if not post_form.section_stub.data or post_form.section_stub.data == 'None':
         post_form.section_stub.data = post.section.stub
     post_form.section_stub.choices = get_section_choices()
@@ -259,6 +261,7 @@ def moderate(post_id):
         if post.section.stub != post_form.section_stub.data:
             post.section_id = section.id
             if post.text == post_form.text.data and post.title == post_form.title.data:
+                post.moderation_notes = post_form.moderation_notes.data
                 db.session.commit()
                 flash('Post has been moved to a new category.', 'success')
                 return redirect(url_for('posts.view', post_id=post_id), code=303)
