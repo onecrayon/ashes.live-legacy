@@ -142,12 +142,12 @@ def submit(section_stub=None):
     """Submit a new post"""
     post_form = PostForm()
     section_tuples = get_section_choices()
-    post_form.section.choices = section_tuples
-    post_form.section.default = section_tuples[0][0]
+    post_form.section_stub.choices = section_tuples
+    post_form.section_stub.default = section_tuples[0][0]
     if section_stub:
         post_form.section.data = section_stub
     section = Section.query.filter(
-        Section.stub == post_form.section.data
+        Section.stub == post_form.section_stub.data
     )
     if not current_user.is_admin:
         section = section.filter(Section.is_restricted.is_(False))
@@ -236,6 +236,13 @@ def moderate(post_id):
     post = verify_post(post_id, is_admin=True)
     user = User.query.get(post.user_id)
     post_form = ModeratePostForm(obj=post)
+    if not post_form.section_stub.data or post_form.section_stub.data == 'None':
+        post_form.section_stub.data = post.section.stub
+    post_form.section_stub.choices = get_section_choices()
+    section = Section.query.filter(
+        Section.stub == post_form.section_stub.data
+    )
+    section = section.first()
     if post_form.validate_on_submit():
         if post_form.undo_moderation.data:
             # Completely undo all moderation
@@ -249,6 +256,12 @@ def moderate(post_id):
             db.session.commit()
             flash('Moderation has been reversed.', 'warning')
             return redirect(url_for('posts.view', post_id=post_id), code=303)
+        if post.section.stub != post_form.section_stub.data:
+            post.section_id = section.id
+            if post.text == post_form.text.data and post.title == post_form.title.data:
+                db.session.commit()
+                flash('Post has been moved to a new category.', 'success')
+                return redirect(url_for('posts.view', post_id=post_id), code=303)
         if not post.original_text:
             post.original_text = post.text
         if not post.original_title:

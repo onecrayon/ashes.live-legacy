@@ -9,7 +9,7 @@ cancel_button = SubmitField('Cancel', render_kw={
 
 
 class PostForm(FlaskForm):
-    section = SelectField('Section', validators=[DataRequired()])
+    section_stub = SelectField('Section', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     text = TextAreaField('Text', validators=[DataRequired()])
     preview = SubmitField('Preview', render_kw={
@@ -32,4 +32,3 @@ class ModeratePostForm(PostForm):
     undo_moderation = SubmitField('Undo Moderation', render_kw={
         'class': 'btn btn-danger'
     })
-    cancel = cancel_button

@@ -23,12 +23,12 @@
 		{% endif %}
 		{% if section %}
 			<div class="form-field">
-				{{ post_form.section.label }}
+				{{ post_form.section_stub.label }}
 				<input type="text" value="{{ section.title }}" disabled>
-				<input type="hidden" name="section" value="{{ section.stub }}">
+				<input type="hidden" name="section_stub" value="{{ section.stub }}">
 			</div>
 		{% else %}
-			{{ with_errors(post_form.section) }}
+			{{ with_errors(post_form.section_stub) }}
 		{% endif %}
 		{{ with_errors(post_form.title) }}
 		{{ post_form.text.label }}
