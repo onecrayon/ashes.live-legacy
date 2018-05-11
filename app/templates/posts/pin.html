@@ -1,0 +1,26 @@
+{% from "macros.html" import inline_errors, with_errors, parsed_text_field, usertag %}
+{% extends "base.html" %}
+{% block title %}Pin Post{% endblock %}
+{% block page_class %}admin-area{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-class">
+		Pin Post: {{ post.title }}
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST" action="./">
+		{{ post_form.hidden_tag() }}
+		{{ post_form.pin_teaser.label }}
+		{{ parsed_text_field(post_form.pin_teaser) }}
+		<input class="btn btn-primary" type="submit" value="Pin Post">
+		{{ post_form.cancel }}
+	</form>
+
+	<h3>Text</h3>
+
+	<div class="boxed">
+		{{ post.text | parse_text }}
+	</div>
+{% endblock %}

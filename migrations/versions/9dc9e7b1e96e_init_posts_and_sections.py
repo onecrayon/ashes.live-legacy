@@ -36,6 +36,7 @@ def upgrade():
         sa.Column('section_id', sa.Integer(), nullable=False),
         sa.Column('title', sa.String(length=255), nullable=False),
         sa.Column('text', sa.Text(), nullable=True),
+        sa.Column('pin_teaser', sa.Text(), nullable=True),
         sa.Column('is_pinned', sa.Boolean(), nullable=False, server_default='0'),
         sa.Column('is_deleted', sa.Boolean(), nullable=False, server_default='0'),
         sa.Column('is_moderated', sa.Boolean(), nullable=False, server_default='0'),

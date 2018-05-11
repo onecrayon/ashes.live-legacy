@@ -20,6 +20,7 @@ class Post(db.Model):
     section_id = db.Column(db.Integer, db.ForeignKey(Section.id), nullable=False, index=True)
     title = db.Column(db.String(255), nullable=False)
     text = db.Column(db.Text)
+    pin_teaser = db.Column(db.Text)
     is_pinned = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_deleted = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_moderated = db.Column(db.Boolean, nullable=False, default=False)

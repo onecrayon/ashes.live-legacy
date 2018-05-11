@@ -32,3 +32,8 @@ class ModeratePostForm(PostForm):
     undo_moderation = SubmitField('Undo Moderation', render_kw={
         'class': 'btn btn-danger'
     })
+
+
+class PinPostForm(FlaskForm):
+    pin_teaser = TextAreaField('Teaser Text', validators=[DataRequired()])
+    cancel = cancel_button

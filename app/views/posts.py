@@ -10,7 +10,7 @@ from app.models.user import User
 from app.utils import get_pagination
 from app.utils.comments import process_comments
 from app.utils.stream import new_entity, refresh_entity, toggle_subscription, update_subscription
-from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm
+from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm, PinPostForm
 from app.wrappers import admin_required
 
 mod = Blueprint('posts', __name__, url_prefix='/posts')
@@ -278,3 +278,27 @@ def moderate(post_id):
         return redirect(url_for('posts.view', post_id=post_id), code=303)
     return render_template('posts/moderate.html', post=post, post_form=post_form,
                            user=user)
+
+
+@mod.route('/<int:post_id>/pin/', methods=['GET', 'POST'])
+@admin_required
+def pin(post_id):
+    post = verify_post(post_id, is_admin=True)
+    response = redirect(url_for('posts.view', post_id=post_id), code=303)
+    # Simply toggle off if the post is already pinned
+    if post.is_pinned:
+        post.is_pinned = False
+        db.session.commit()
+        flash('Post has been unpinned.', 'success')
+        return response
+    post_form = PinPostForm(obj=post)
+    if post_form.cancel.data:
+        return response
+    if post_form.validate_on_submit():
+        post.is_pinned = True
+        post.pin_teaser = post_form.pin_teaser.data
+        db.session.commit()
+        flash('Post has been pinned.', 'success')
+        return response
+    return render_template('posts/pin.html', post=post, post_form=post_form)
+
