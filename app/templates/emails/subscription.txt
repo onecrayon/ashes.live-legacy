@@ -1,12 +1,11 @@
-{% from "macros.html" import usertag -%}
 {% if entity.entity_type == 'deck' -%}
 '{{ entity | deck_title }}' has been updated!
 
-{{ usertag(entity.user, link=False) }} has updated their deck; see what's new:
+{{ entity.user.username }}#{{ entity.user.badge }} has updated their deck; see what's new:
 
 {{ entity.url | site_url }}
 {%- elif entity.entity_type == 'comment' -%}
-{{ usertag(entity.user, link=False) }} commented on the {{ entity.source_type }} {{ entity.source_title }}:
+{{ entity.user.username }}#{{ entity.user.badge }} commented on the {{ entity.source_type }} {{ entity.source_title }}:
 
 {{ entity.text }}
 
@@ -16,7 +15,7 @@ View or reply to this comment:
 
 {{ entity.url | site_url }}
 {%- elif entity.entity_type == 'post' -%}
-New post by {{ usertag(entity.user, link=False) }}: {{ entity.title }}
+New post by {{ entity.user.username }}#{{ entity.user.badge }}: {{ entity.title }}
 
 {{ entity.text }}
 
