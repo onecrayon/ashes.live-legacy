@@ -56,6 +56,7 @@ def upgrade():
     op.create_index(op.f('ix_post_created'), 'post', ['created'], unique=False)
     op.create_index(op.f('ix_post_entity_id'), 'post', ['entity_id'], unique=True)
     op.create_index(op.f('ix_post_section_id'), 'post', ['section_id'], unique=False)
+    op.execute('CREATE FULLTEXT INDEX ix_post_text ON post (title, text)')
     # Create default sections
     entity_ids = []
     for _ in range(0, 4):

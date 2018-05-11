@@ -1,4 +1,4 @@
-{% from "macros.html" import pagination, show_on_load %}
+{% from "macros.html" import pagination %}
 {% from "decks/macros.html" import deck_details %}
 {% extends "base.html" %}
 {% block title %}{{ 'Public Decks' | paged_title(page) }}{% endblock %}
@@ -35,7 +35,6 @@
 		</div>
 		</noscript>
 	</form>
-	{{ show_on_load('clear-search-button') }}
 
 	{% if decks %}
 	<ul class="deck-list">
@@ -49,7 +48,9 @@
 	{% else %}
 	<div class="no-results">
 		<h2>No decks found</h2>
+		{% if filters.s %}
 		<p><a href="{{ url_for('decks.index') }}" class="btn btn-primary">Clear filters</a></p>
+		{% endif %}
 	</div>
 	{% endif %}
 {% endblock %}

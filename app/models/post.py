@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from sqlalchemy_fulltext import FullText
+
 from app import db
 from app.models.user import User
 
@@ -32,3 +34,7 @@ class Post(db.Model):
 
     user = db.relationship(User)
     section = db.relationship(Section)
+
+
+class TitleTextSearch(FullText, Post):
+    __fulltext_columns__ = ('title', 'text')

@@ -1,10 +1,14 @@
 """Post viewing, editing, and moderation"""
-from flask import abort, Blueprint, current_app, flash, redirect, render_template, url_for
+import re
+
+from flask import abort, Blueprint, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
+from sqlalchemy_fulltext import FullTextSearch
+import sqlalchemy_fulltext.modes as FullTextMode
 
 from app import db
 from app.exceptions import Redirect
-from app.models.post import Post, Section
+from app.models.post import Post, Section, TitleTextSearch
 from app.models.stream import Stream, Subscription
 from app.models.user import User
 from app.utils import get_pagination
@@ -53,7 +57,18 @@ def section(stub, page=None):
         db.joinedload('user'),
         db.joinedload('section')
     ).filter(Post.section_id == section.id)
-    # TODO: add filter logic to search for posts by title/text (similar to cards)
+    search = request.args.get('s')
+    if search:
+        # Setup exact or prefix search so that we can get partial word matches
+        exact = ''.join(('"', search, '"'))
+        prefixes = re.compile('[ ]+').split(search)
+        prefixes = '* '.join(prefixes)
+        prefixes = prefixes + '*'
+        query = query.filter(db.or_(
+            FullTextSearch(search, TitleTextSearch, FullTextMode.NATURAL),
+            FullTextSearch(exact, TitleTextSearch, FullTextMode.BOOLEAN),
+            FullTextSearch(prefixes, TitleTextSearch, FullTextMode.BOOLEAN)
+        ))
     if not page:
         page = 1
     per_page = current_app.config['DEFAULT_PAGED_RESULTS']
@@ -67,6 +82,7 @@ def section(stub, page=None):
         section=section,
         posts=posts,
         pinned=pinned,
+        filters={'s': search} if search else {},
         page=page,
         pages=pagination
     )
@@ -146,7 +162,7 @@ def submit(section_stub=None):
     post_form.section_stub.choices = section_tuples
     post_form.section_stub.default = section_tuples[0][0]
     if section_stub:
-        post_form.section.data = section_stub
+        post_form.section_stub.data = section_stub
     section = Section.query.filter(
         Section.stub == post_form.section_stub.data
     )
