@@ -40,7 +40,7 @@
 	{% if current_user.is_authenticated and (post.user_id == current_user.id or current_user.is_admin) %}
 		{% if post.user_id == current_user.id %}
 			{% if post.is_moderated %}
-			<a href="{{ url_for('posts.notes', post_id=post.id) }}" class="btn btn-block btn-danger"><i class="fa fa-lock"></i> Comment locked by moderator</a>
+			<a href="{{ url_for('posts.notes', post_id=post.id) }}" class="btn btn-block btn-danger"><i class="fa fa-lock"></i> Post locked by moderator</a>
 			{% else %}
 			<a href="{{ url_for('posts.edit', post_id=post.id) }}" class="btn btn-block btn-primary"><i class="fa fa-pencil"></i> Edit</a>
 			<a href="{{ url_for('posts.delete', post_id=post.id) }}" class="btn btn-block btn-danger"><i class="fa fa-trash"></i> Delete</a>

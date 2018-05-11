@@ -226,8 +226,8 @@ def delete(post_id):
 @mod.route('/<int:post_id>/notes/')
 @login_required
 def notes(post_id):
-    post = verify_post(post_id)
-    if not post.is_moderated:
+    post = Post.query.get_or_404(post_id)
+    if not post or not post.is_moderated or post.user_id != current_user.id:
         abort(404)
     return render_template('posts/notes.html', post=post)
 
