@@ -1,6 +1,6 @@
 """Post viewing, editing, and moderation"""
 from flask import abort, Blueprint, current_app, flash, redirect, render_template, url_for
-from flask_login import current_user, fresh_login_required, login_required
+from flask_login import current_user, login_required
 
 from app import db
 from app.exceptions import Redirect
@@ -11,6 +11,7 @@ from app.utils import get_pagination
 from app.utils.comments import process_comments
 from app.utils.stream import new_entity, refresh_entity, toggle_subscription, update_subscription
 from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm
+from app.wrappers import admin_required
 
 mod = Blueprint('posts', __name__, url_prefix='/posts')
 
@@ -229,10 +230,8 @@ def notes(post_id):
 
 
 @mod.route('/<int:post_id>/moderate/', methods=['GET', 'POST'])
-@fresh_login_required
+@admin_required
 def moderate(post_id):
-    if not current_user.is_admin:
-        abort(404)
     post = verify_post(post_id, is_admin=True)
     user = User.query.get(post.user_id)
     post_form = ModeratePostForm(obj=post)
