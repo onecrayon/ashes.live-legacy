@@ -7,6 +7,33 @@
 {% endblock %}
 
 {% block content %}
+	{% if pinned %}
+	<h2>Noteworthy</h2>
+
+	<ul class="activity">
+	{% for post in pinned %}
+		<li class="post low-impact">
+			<div class="responsive-cols no-wrap">
+				<div class="col-flex col-flush">
+					<h3 class="post-header"><a href="{{ url_for('posts.view', post_id=post.id) }}">{{ post.title }}</a></h3>
+					<div class="post-meta responsive-cols no-wrap">
+						<p class="col-flex">Posted by {{ usertag(post.user) }} in {{ sectiontag(post.section) }}</p>
+						<p class="timestamp col">{{ post.created | format_date }}</p>
+					</div>
+					<div class="post-body">
+						{{ post.pin_teaser | parse_text }}
+					</div>
+				</div>
+				<div class="col onward-button">
+					<a href="{{ url_for('posts.view', post_id=post.id) }}" class="btn btn-vertical" title="View post"><i class="fa fa-chevron-right"></i></a>
+				</div>
+			</div>
+		</li>
+	{% endfor %}
+	</ul>
+	<h2>All Posts</h2>
+	{% endif %}
+
 	{% if posts %}
 	<ul class="activity">
 	{% for post in posts %}

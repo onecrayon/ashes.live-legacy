@@ -9,6 +9,7 @@ from app.models.stream import Stream, Subscription
 from app.models.user import User
 from app.utils import get_pagination
 from app.utils.comments import process_comments
+from app.utils.posts import get_pinned_posts
 from app.utils.stream import new_entity, refresh_entity, toggle_subscription, update_subscription
 from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm, PinPostForm
 from app.wrappers import admin_required
@@ -72,11 +73,13 @@ def section(stub, page=None):
     else:
         is_subscribed = False
         unreads = []
+    pinned = get_pinned_posts(section_id=section.id) if page == 1 else None
     # TODO: figure out how to get `is_unread` into the list of posts
     return render_template(
         'posts/section.html',
         section=section,
         posts=posts,
+        pinned=pinned,
         unread_entity_ids=unreads,
         page=page,
         pages=pagination,

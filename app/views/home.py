@@ -5,6 +5,7 @@ from flask import Blueprint, current_app, flash, redirect, render_template, requ
 from app import db
 from app.models.deck import Deck
 from app.utils import send_message
+from app.utils.posts import get_pinned_posts
 from app.utils.stream import get_stream
 from app.views.forms.feedback import FeedbackForm
 
@@ -16,8 +17,10 @@ mod = Blueprint('home', __name__)
 def index(page=None):
     showing = request.args.get('show', 'all')
     stream, page, pagination = get_stream(page=page, show=showing)
+    pinned = get_pinned_posts() if page == 1 else None    
     return render_template(
         'index.html',
+        pinned=pinned,
         stream=stream,
         page=page,
         pages=pagination,

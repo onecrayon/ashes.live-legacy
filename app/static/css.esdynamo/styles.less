@@ -701,7 +701,7 @@ table.meta {
 		margin-right: 10px;
 	}
 
-	.col:last-child, .col-flex:last-child {
+	.col-flush, .col:last-child, .col-flex:last-child {
 		margin-right: 0;
 	}
 }
@@ -1308,6 +1308,14 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		&.unread {
 			border-color: @color-inexhaustible-dark;
 		}
+
+		&.low-impact {
+			border-color: tint(@color-dark-gray, 80%);
+
+			.post-header {
+				border-color: tint(@color-dark-gray, 80%);
+			}
+		}
 	}
 
 	.deck {
@@ -1324,7 +1332,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		}
 	}
 
-	.comment-button {
+	.onward-button {
 		position: relative;
 
 		.btn-vertical {
@@ -1338,6 +1346,10 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	border-bottom: 3px solid @color-border-gray;
 	padding: 10px;
 	margin: 0;
+
+	h3 {
+		margin: 0 0 5px;
+	}
 }
 
 .post-meta {
@@ -1347,6 +1359,10 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		.font-size(12);
 		margin: 0;
 	}
+}
+
+.post-header .post-meta {
+	padding: 0;
 }
 
 .post-body {
