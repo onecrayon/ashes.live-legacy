@@ -73,7 +73,9 @@
 	{% else %}
 	<div class="no-results">
 		<h2>No {{ section.title }} posts yet!</h2>
+		{% if current_user.is_authenticated %}
 		<p>Well, that's no good! Why not <a href="{{ url_for('posts.submit', section_stub=section.stub) }}">post one yourself</a>?</p>
+		{% endif %}
 	</div>
 	{% endif %}
 {% endblock %}

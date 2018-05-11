@@ -114,7 +114,9 @@
 	{% else %}
 	<div class="no-results">
 		<h2>No recent activity</h2>
+		{% if current_user.is_authenticated %}
 		<p>Publish a deck, submit a post, or leave a comment, and let's get this ball rolling!</p>
+		{% endif %}
 	</div>
 	{% endif %}
 {% endblock %}
