@@ -76,7 +76,7 @@ def section(stub, page=None):
         (page - 1) * per_page
     ).all()
     pagination = get_pagination(query.count(), page, per_page)
-    pinned = get_pinned_posts(section_id=section.id) if page == 1 else None
+    pinned = get_pinned_posts(section_id=section.id) if page == 1 and not search else None
     return render_template(
         'posts/section.html',
         section=section,
