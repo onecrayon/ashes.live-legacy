@@ -1,0 +1,31 @@
+{% from "macros.html" import with_errors, parsed_text_field, sectiontag %}
+{% extends "base.html" %}
+{% block title %}Edit Section: {{ section.title }}{% endblock %}
+{% block page_class %}admin-area{% endblock %}
+
+{% block heading %}
+	<h1 class="phg-divine-class">
+		Edit Section: {{ section.title }}
+	</h1>
+{% endblock %}
+
+{% block content %}
+	<form action="./" method="POST">
+		{{ form.hidden_tag() }}
+		{% if form.preview.data %}
+		<h3 id="preview">Preview</h3>
+		<div class="boxed">
+			{% if not form.description.data %}
+			<p class="muted">Description preview will be shown here&hellip;</p>
+			{% else %}
+			{{ form.description.data | parse_text }}
+			{% endif %}
+		</div>
+		{% endif %}
+		{{ form.description.label }}
+		{{ parsed_text_field(form.description) }}
+		<input class="btn btn-primary" type="submit" value="Submit">
+		{{ form.preview() }}
+		{{ form.cancel() }}
+	</form>
+{% endblock %}

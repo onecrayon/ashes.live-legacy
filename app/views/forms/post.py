@@ -37,3 +37,12 @@ class ModeratePostForm(PostForm):
 class PinPostForm(FlaskForm):
     pin_teaser = TextAreaField('Teaser Text', validators=[DataRequired()])
     cancel = cancel_button
+
+
+class SectionForm(FlaskForm):
+    description = TextAreaField('Description', validators=[DataRequired()])
+    preview = SubmitField('Preview', render_kw={
+        'class': 'btn',
+        'formaction': './#preview'
+    })
+    cancel = cancel_button

@@ -11,7 +11,9 @@ from app.utils import get_pagination
 from app.utils.comments import process_comments
 from app.utils.posts import get_pinned_posts
 from app.utils.stream import new_entity, refresh_entity, toggle_subscription, update_subscription
-from app.views.forms.post import PostForm, DeletePostForm, ModeratePostForm, PinPostForm
+from app.views.forms.post import (
+    PostForm, DeletePostForm, ModeratePostForm, PinPostForm, SectionForm
+)
 from app.wrappers import admin_required
 
 mod = Blueprint('posts', __name__, url_prefix='/posts')
@@ -84,6 +86,28 @@ def section(stub, page=None):
         page=page,
         pages=pagination,
         is_subscribed=is_subscribed
+    )
+
+
+@mod.route('/<stub>/edit/', methods=['GET', 'POST'])
+@admin_required
+def edit_section(stub):
+    """Edit section description"""
+    section = db.session.query(Section).filter(Section.stub == stub).first()
+    if not section:
+        abort(404)
+    form = SectionForm(obj=section)
+    if form.cancel.data:
+        return redirect(url_for('posts.section', stub=stub), code=303)
+    if not form.preview.data and form.validate_on_submit():
+        section.description = form.description.data
+        db.session.commit()
+        flash('Section description saved.', 'success')
+        return redirect(url_for('posts.section', stub=stub), code=303)
+    return render_template(
+        'posts/section_description.html',
+        section=section,
+        form=form
     )
 
 

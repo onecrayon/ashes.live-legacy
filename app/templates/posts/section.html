@@ -85,4 +85,9 @@
 	</a>
 	{% endif %}
 	{{ section.description | parse_text }}
+	{% if current_user.is_authenticated and current_user.is_admin %}
+	<a href="{{ url_for('posts.edit_section', stub=section.stub) }}" class="btn btn-block btn-primary">
+		<i class="fa fa-pencil"></i> Edit Description
+	</a>
+	{% endif %}
 {% endblock %}
