@@ -22,6 +22,7 @@ def upgrade():
         sa.Column('entity_id', sa.Integer(), nullable=False),
         sa.Column('title', sa.String(length=255), nullable=False),
         sa.Column('stub', sa.String(length=255), nullable=False),
+        sa.Column('description', sa.Text(), nullable=True),
         sa.Column('is_restricted', sa.Boolean(), nullable=False, server_default='0'),
         sa.PrimaryKeyConstraint('id')
     )
@@ -61,10 +62,35 @@ def upgrade():
         connection.execute('INSERT INTO streamable () VALUES()')
         entity_ids.append(connection.execute('SELECT LAST_INSERT_ID()').scalar())
     op.bulk_insert(section_table, [
-        {'title': 'Site News', 'stub': 'news', 'is_restricted': True, 'entity_id': entity_ids[0]},
-        {'title': 'General', 'stub': 'general', 'is_restricted': False, 'entity_id': entity_ids[1]},
-        {'title': 'Rules', 'stub': 'rules', 'is_restricted': False, 'entity_id': entity_ids[2]},
-        {'title': 'Strategy', 'stub': 'strategy', 'is_restricted': False, 'entity_id': entity_ids[3]}
+        {
+            'title': 'Site News', 'stub': 'news', 'is_restricted': True, 'entity_id': entity_ids[0],
+            'description': (
+                'Ever wondered about the minutiae of every update to Ashes.live? Wonder no longer!'
+            )
+        },
+        {
+            'title': 'General', 'stub': 'general', 'is_restricted': False,
+            'entity_id': entity_ids[1],
+            'description': (
+                'General discussion about Ashes; if it doesn\'t fit elsewhere, post it here!'
+            )
+        },
+        {
+            'title': 'Rules', 'stub': 'rules', 'is_restricted': False, 'entity_id': entity_ids[2],
+            'description': """Have a rules question or clarification about Ashes? Post it here!
+
+* [[Official Ashes Rules https://www.plaidhatgames.com/images/games/ashes/rules.pdf]] (PDF)
+* [[Official Ashes FAQ https://www.plaidhatgames.com/images/games/ashes/faq20.pdf]] (PDF)
+* [[Unofficial Ashes Rules Reference ashes.live/files/ashes-rules-reference.pdf]] (PDF)"""
+        },
+        {
+            'title': 'Strategy', 'stub': 'strategy', 'is_restricted': False,
+            'entity_id': entity_ids[3],
+            'description': (
+                'Have or need advice on demolishing your opponents? '
+                'You\'ve come to the right place!'
+            )
+        }
     ])
     op.add_column('stream', sa.Column('section_entity_id', sa.Integer(), nullable=True))
     op.create_index('ix_stream_section_entity_id', 'stream', ['section_entity_id'], unique=False)

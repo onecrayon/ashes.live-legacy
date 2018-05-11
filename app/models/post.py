@@ -9,6 +9,7 @@ class Section(db.Model):
     entity_id = db.Column(db.Integer, nullable=False, index=True, unique=True)
     title = db.Column(db.String(255), nullable=False)
     stub = db.Column(db.String(255), nullable=False, index=True, unique=True)
+    description = db.Column(db.Text)
     is_restricted = db.Column(db.Boolean, nullable=False, default=False, index=True)
 
 

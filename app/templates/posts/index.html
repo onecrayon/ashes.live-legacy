@@ -3,11 +3,13 @@
 {% block title %}Sections{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-divine-power">View Posts In:</h1>
+	<h1 class="phg-divine-power">Sections</h1>
 {% endblock %}
 
 {% block content %}
 	{% for section in sections %}
 	<h2>{{ sectiontag(section) }}</h2>
+	{{ section.description | parse_text }}
+	{% if not loop.last %}<hr>{% endif %}
 	{% endfor %}
 {% endblock %}

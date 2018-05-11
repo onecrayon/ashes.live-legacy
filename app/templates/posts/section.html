@@ -56,9 +56,6 @@
 	<a href="{{ url_for('posts.submit', section_stub=section.stub) }}" class="btn btn-block btn-success">
 		<i class="fa fa-sticky-note"></i> Submit New Post
 	</a>
-	{% if not section.is_restricted or current_user.is_admin %}
-	<hr>
-	{{ subscribe_button(url_for('posts.subscribe_section', stub=section.stub), is_subscribed) }}
 	{% endif %}
-	{% endif %}
+	{{ section.description | parse_text }}
 {% endblock %}
