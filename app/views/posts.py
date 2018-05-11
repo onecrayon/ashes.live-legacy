@@ -61,31 +61,14 @@ def section(stub, page=None):
         (page - 1) * per_page
     ).all()
     pagination = get_pagination(query.count(), page, per_page)
-    if current_user.is_authenticated:
-        is_subscribed = db.session.query(Subscription.user_id).filter(
-            Subscription.user_id == current_user.id,
-            Subscription.source_entity_id == section.entity_id
-        ).count()
-        unreads = db.session.query(Subscription.source_entity_id).filter(
-            Subscription.source_entity_id.in_([x.entity_id for x in posts]),
-            Subscription.user_id == current_user.id,
-            Subscription.last_seen_entity_id.is_(None)
-        ).all() if posts else None
-        unreads = [x.source_entity_id for x in unreads] if unreads else []
-    else:
-        is_subscribed = False
-        unreads = []
     pinned = get_pinned_posts(section_id=section.id) if page == 1 else None
-    # TODO: figure out how to get `is_unread` into the list of posts
     return render_template(
         'posts/section.html',
         section=section,
         posts=posts,
         pinned=pinned,
-        unread_entity_ids=unreads,
         page=page,
-        pages=pagination,
-        is_subscribed=is_subscribed
+        pages=pagination
     )
 
 
@@ -109,16 +92,6 @@ def edit_section(stub):
         section=section,
         form=form
     )
-
-
-@mod.route('/<stub>/subscribe/')
-def subscribe_section(stub):
-    """(Un)subscribe to a section"""
-    section = db.session.query(Section.entity_id).filter(Section.stub == stub).first()
-    if not section:
-        abort(404)
-    toggle_subscription(section.entity_id)
-    return redirect(url_for('posts.section', stub=stub), code=303)
 
 
 @mod.route('/<int:post_id>/', methods=['GET', 'POST'])
@@ -198,8 +171,7 @@ def submit(section_stub=None):
             text=post_form.text.data
         )
         db.session.add(post)
-        refresh_entity(post.entity_id, 'post', section.entity_id,
-                       section_entity_id=section.entity_id)
+        refresh_entity(post.entity_id, 'post', section.entity_id)
         # Subscribe the user to the post
         update_subscription(post.entity_id)
         db.session.commit()

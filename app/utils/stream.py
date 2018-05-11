@@ -87,7 +87,7 @@ def comment_to_entity_map(comment):
     }
 
 
-def refresh_entity(entity_id, entity_type, source_entity_id, section_entity_id=None):
+def refresh_entity(entity_id, entity_type, source_entity_id):
     if entity_type == 'deck':
         entity = db.session.query(Stream).filter(
             Stream.source_entity_id == source_entity_id
@@ -96,7 +96,7 @@ def refresh_entity(entity_id, entity_type, source_entity_id, section_entity_id=N
         entity = db.session.query(Stream).filter(Stream.entity_id == entity_id).first()
     if not entity:
         entity = Stream(entity_id=entity_id, entity_type=entity_type,
-                        source_entity_id=source_entity_id, section_entity_id=section_entity_id)
+                        source_entity_id=source_entity_id)
     elif entity_type == 'deck':
         # Decks are a special case; we update the Stream entity because the snapshots effectively
         # replace one another as far as most users are concerned
@@ -106,23 +106,13 @@ def refresh_entity(entity_id, entity_type, source_entity_id, section_entity_id=N
         # Ignore comment edits
         return
     db.session.add(entity)
-    subscription_filters = None
-    if section_entity_id:
-        subscription_filters = [db.or_(
-            Subscription.source_entity_id == source_entity_id,
-            Subscription.source_entity_id == section_entity_id
-        )]
-    else:
-        subscription_filters = [
-            Subscription.source_entity_id == source_entity_id
-        ]
     # Grab users who are subscribed to this and have email notifications on
     emails = db.session.query(User.email).join(
         Subscription, Subscription.user_id == User.id
     ).filter(
         User.id != current_user.id,
         User.email_subscriptions.is_(True),
-        *subscription_filters
+        Subscription.source_entity_id == source_entity_id
     ).all()
     if not emails:
         return

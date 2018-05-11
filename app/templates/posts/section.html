@@ -37,7 +37,7 @@
 	{% if posts %}
 	<ul class="activity">
 	{% for post in posts %}
-		<li class="post{% if post.entity_id in unread_entity_ids %} unread{% endif %}">
+		<li class="post">
 			<h2 class="post-header"><a href="{{ url_for('posts.view', post_id=post.id) }}">{{ post.title }}</a></h2>
 			<div class="post-meta responsive-cols no-wrap">
 				<p class="col-flex">Posted by {{ usertag(post.user) }} in {{ sectiontag(post.section) }}</p>
