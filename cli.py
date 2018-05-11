@@ -30,5 +30,15 @@ def cdnize_style_urls():
             )), end='')
 
 
+@manager.command
+def local_dev():
+    """Toggles all automated emails off for local development"""
+    db.session.query(user.User).filter(db.or_(
+        user.User.email_subscriptions.is_(True)
+    )).update({'email_subscriptions': False, 'newsletter_opt_in': True})
+    db.session.commit()
+    print('Site emails disabled!')
+
+
 if __name__ == '__main__':
     manager.run()
