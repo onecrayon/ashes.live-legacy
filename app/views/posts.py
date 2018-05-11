@@ -56,7 +56,10 @@ def section(stub, page=None):
     query = db.session.query(Post).options(
         db.joinedload('user'),
         db.joinedload('section')
-    ).filter(Post.section_id == section.id)
+    ).filter(
+        Post.section_id == section.id,
+        Post.is_deleted.is_(False)
+    )
     search = request.args.get('s')
     if search:
         # Setup exact or prefix search so that we can get partial word matches
@@ -118,6 +121,8 @@ def view(post_id, page=1):
         db.joinedload('user'),
         db.joinedload('section')
     ).get_or_404(post_id)
+    if post.is_deleted:
+        abort(404)
      # Gather comments
     try:
         comments, pagination, last_seen_entity_id, comment_form = process_comments(
@@ -145,7 +150,10 @@ def view(post_id, page=1):
 @mod.route('/<int:post_id>/subscribe/')
 def subscribe(post_id):
     """(Un)subscribe to a particular post"""
-    post = db.session.query(Post.entity_id).filter(Post.id == post_id).first()
+    post = db.session.query(Post.entity_id).filter(
+        Post.id == post_id,
+        Post.is_deleted.is_(False)
+    ).first()
     if not post:
         abort(404)
     toggle_subscription(post.entity_id)
@@ -229,7 +237,7 @@ def delete(post_id):
         ).delete(synchronize_session=False)
         db.session.commit()
         flash('Post deleted!', 'success')
-        return redirect(url_for('posts.view', post_id=post_id), code=303)
+        return redirect(url_for('home.index'), code=303)
     elif delete_form.cancel.data:
         return redirect(url_for('posts.view', post_id=post_id), code=303)
     return render_template('posts/delete.html', post=post, delete_form=delete_form)
@@ -239,7 +247,7 @@ def delete(post_id):
 @login_required
 def notes(post_id):
     post = Post.query.get_or_404(post_id)
-    if not post or not post.is_moderated or post.user_id != current_user.id:
+    if not post or not post.is_moderated or post.is_deleted or post.user_id != current_user.id:
         abort(404)
     return render_template('posts/notes.html', post=post)
 
