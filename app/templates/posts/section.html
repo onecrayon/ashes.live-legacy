@@ -1,6 +1,7 @@
 {% from "macros.html" import pagination, usertag, sectiontag, subscribe_button %}
 {% extends "base.html" %}
 {% block title %}{{ section.title | paged_title(page) }}{% endblock %}
+{% block page_class %}sidebar-first{% endblock %}
 
 {% block heading %}
 	<h1 class="phg-divine-power">{{ section.title | paged_title(page) }}</h1>
