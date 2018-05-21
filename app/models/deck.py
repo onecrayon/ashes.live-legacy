@@ -4,6 +4,7 @@ from flask_login import current_user
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
+from app.models.ashes_500 import Ashes500Revision
 from app.models.card import Card
 from app.models.user import User
 
@@ -18,6 +19,9 @@ class Deck(db.Model):
     is_preconstructed = db.Column(db.Boolean, nullable=False, default=False, index=True)
     created = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, index=True)
+    ashes_500_score = db.Column(db.Integer, nullable=True, default=None)
+    ashes_500_revision_id = db.Column(db.Integer, db.ForeignKey(Ashes500Revision.id), nullable=True,
+                                      default=None)
     # Snapshots will always have a deck as their source; decks can be sourced from a private
     # snapshot (if the two share a user_id) or any public snapshot
     source_id = db.Column(db.Integer, db.ForeignKey('deck.id'), index=True)
