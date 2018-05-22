@@ -9,9 +9,11 @@ class Ashes500Revision(db.Model):
 
 
 class Ashes500Value(db.Model):
-    card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=False, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=False, index=True)
     revision_id = db.Column(db.Integer, db.ForeignKey(Ashes500Revision.id), nullable=False,
-                            primary_key=True, index=True)
+                            index=True)
+    combo_card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=True, default=None)
     qty_1 = db.Column(db.SmallInteger, nullable=False)
     qty_2 = db.Column(db.SmallInteger, nullable=True)
     qty_3 = db.Column(db.SmallInteger, nullable=True)
