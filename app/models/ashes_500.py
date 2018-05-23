@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app import db
 from app.models.card import Card
 
@@ -6,6 +8,7 @@ class Ashes500Revision(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     entity_id = db.Column(db.Integer, nullable=False, index=True)
     description = db.Column(db.Text)
+    created = db.Column(db.DateTime, default=datetime.utcnow, index=True)
 
 
 class Ashes500Value(db.Model):

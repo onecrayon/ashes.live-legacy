@@ -5,6 +5,7 @@ Revises: 9dc9e7b1e96e
 Create Date: 2018-05-22 14:18:57.749458
 
 """
+from datetime import datetime
 import json
 import os.path
 
@@ -24,6 +25,7 @@ def upgrade():
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('entity_id', sa.Integer(), nullable=False),
         sa.Column('description', sa.Text(), nullable=True),
+        sa.Column('created', sa.DateTime(), nullable=True),
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_ashes500_revision_entity_id'), 'ashes500_revision', ['entity_id'], unique=False)
@@ -44,7 +46,7 @@ def upgrade():
     op.create_index(op.f('ix_ashes500_value_revision_id'), 'ashes500_value', ['revision_id'], unique=False)
     op.add_column('deck', sa.Column('ashes_500_revision_id', sa.Integer(), nullable=True))
     op.add_column('deck', sa.Column('ashes_500_score', sa.Integer(), nullable=True))
-    op.create_foreign_key(None, 'deck', 'ashes500_revision', ['ashes_500_revision_id'], ['id'])
+    op.create_foreign_key('fk_ashes_500_revision_id', 'deck', 'ashes500_revision', ['ashes_500_revision_id'], ['id'])
     # Populate initial Ashes 500 data
     my_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(my_dir, '../data/78a3d6a3eca0_ashes_500.json'), 'r') as f:
@@ -54,6 +56,7 @@ def upgrade():
     entity_id = connection.execute('SELECT LAST_INSERT_ID()').scalar()
     op.bulk_insert(revision_table, [{
         'entity_id': entity_id,
+        'created': datetime.utcnow(),
         'description': """**Ashes 500** is an alternate constructed format for Ashes [[originally created by Elliot Kramer http://www.strangecopy.com/index.php/2017/03/19/ashes-500/]] and now maintained by [[doktarr#0a=m]] with input from the community. In Ashes 500 all cards are assigned point values, and your deck must cost 500 points or less (while following all standard deck construction rules). Originally provided [[as a spreadsheet https://docs.google.com/spreadsheets/d/14vX5nkIR2_2gcxIOn8X1-cnt18v1VFr2H70xB6FXfNs/edit#gid=0]], you can now construct Ashes 500 decks here on Ashes.live.
 
 Ashes 500 costs are formatted like **25/15/10** where the first copy of the card costs **25** points, the second copy costs **15** points, and the third copy costs **10** points (so if you included 3x copies, you would spend **25 + 15 + 10 = 50** points).
@@ -80,6 +83,7 @@ If you would like to suggest changes to Ashes 500 prices, you can join the conve
 
 def downgrade():
     op.drop_column('deck', 'ashes_500_score')
+    op.drop_constraint('fk_ashes_500_revision_id', 'deck', type_='foreignkey')
     op.drop_column('deck', 'ashes_500_revision_id')
     op.drop_table('ashes500_value')
     op.drop_table('ashes500_revision')
