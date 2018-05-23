@@ -119,5 +119,6 @@ queryCombo(function () {
 	outFile.write(JSON.stringify(data))
 	outFile.end()
 
+	console.log('===================================================================')
 	console.log('Writing to ' + outPath + ' complete!')
 })
