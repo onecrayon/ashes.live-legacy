@@ -57,7 +57,7 @@ def upgrade():
     op.bulk_insert(revision_table, [{
         'entity_id': entity_id,
         'created': datetime.utcnow(),
-        'description': """**Ashes 500** is an alternate constructed format for Ashes [[originally created by Elliot Kramer http://www.strangecopy.com/index.php/2017/03/19/ashes-500/]] and now maintained by [[doktarr#0a=m]] with input from the community. In Ashes 500 all cards are assigned point values, and your deck must cost 500 points or less (while following all standard deck construction rules). Originally provided [[as a spreadsheet https://docs.google.com/spreadsheets/d/14vX5nkIR2_2gcxIOn8X1-cnt18v1VFr2H70xB6FXfNs/edit#gid=0]], you can now construct Ashes 500 decks here on Ashes.live.
+        'description': """**Ashes 500** is an alternate constructed format for Ashes [[originally created by Elliot Kramer http://www.strangecopy.com/index.php/2017/03/19/ashes-500/]] and now maintained by [[doktarr#0a=m]] with input from the community. In Ashes 500 all cards are assigned point values, and your deck must cost 500 points or less (while following all standard deck construction rules). Originally provided [[as a spreadsheet https://docs.google.com/spreadsheets/d/14vX5nkIR2_2gcxIOn8X1-cnt18v1VFr2H70xB6FXfNs/edit?usp=sharing]], you can now construct Ashes 500 decks here on Ashes.live.
 
 Ashes 500 costs are formatted like **25/15/10** where the first copy of the card costs **25** points, the second copy costs **15** points, and the third copy costs **10** points (so if you included 3x copies, you would spend **25 + 15 + 10 = 50** points).
 
