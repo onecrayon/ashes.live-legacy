@@ -6,12 +6,12 @@ import CardGallery from 'app/gallery/main.vue'
 /* eslint-disable no-new */
 
 new Vue({
-	el: '#main',
+	el: (globals.preserveSidebar ? '#content' : '#main'),
 	store,
 	render (createElement) {
 		return createElement('div', {
 			domProps: {
-				id: 'main'
+				id: (globals.preserveSidebar ? 'content' : 'main')
 			}
 		}, (globals.galleryOnly ? [
 			createElement(CardGallery)
