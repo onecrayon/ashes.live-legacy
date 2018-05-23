@@ -7,7 +7,7 @@ from flask_script import Manager
 
 from app import db
 from app.models import (
-    card, comment, deck, invite, post, stream, user
+   ashes_500, card, comment, deck, invite, post, stream, user
 )
 from manager import app
 
