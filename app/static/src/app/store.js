@@ -142,7 +142,7 @@ export default new Vuex.Store({
 	},
 	getters: {
 		phoenixborn (state) {
-			return cardManager.cardById(state.deck.phoenixborn)
+			return !cardManager ? null : cardManager.cardById(state.deck.phoenixborn)
 		},
 		totalDice (state) {
 			let totalDice = 0
@@ -162,7 +162,7 @@ export default new Vuex.Store({
 		},
 		deckSections (state, getters) {
 			const ids = Object.keys(state.deck.cards)
-			if (!ids.length) return []
+			if (!ids.length || !cardManager) return []
 			let sections = {}
 			const cards = cardManager.idsToListing(ids)
 			let conjurations = []
@@ -215,7 +215,7 @@ export default new Vuex.Store({
 		},
 		neededDice (state) {
 			const ids = Object.keys(state.deck.cards)
-			if (!ids.length) return []
+			if (!ids.length || !cardManager) return []
 			const cards = cardManager.idsToListing(ids)
 			return reduce(cards, (result, card) => {
 				if (card.dice && card.dice.length) {
