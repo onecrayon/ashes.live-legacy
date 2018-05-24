@@ -3,7 +3,7 @@ Ally - Battlefield
 [[main]] - 3 [[basic]]
 Attack 2 - Life 3 - Recover 1
 
-Magic Potential 1: When this unit attacks or counters, select 1 die in your exhausted pool and place it into your active pool on its basic side.
+Magic Potential 1: When this unit deals damage by attacking or countering, select 1 die in your exhausted pool and place it into your active pool on its basic side.
 
 =====
 
