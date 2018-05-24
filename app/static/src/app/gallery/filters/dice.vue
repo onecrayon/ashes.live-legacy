@@ -1,14 +1,15 @@
 <template>
 	<div class="btn-group">
 		<button @click="toggleDiceLogic"
-			class="btn btn-all" :class="{active: isDiceLogicActive }">{{ diceLogicText }}:</button
+			class="btn btn-all" :class="{active: isDiceLogicActive }"
+			:disabled="isDisabled">{{ diceLogicText }}:</button
 		><button @click="toggleDie('basic')"
 			class="btn phg-basic-magic" :class="{active: isDieActive('basic') }"
-			:disabled="isBasicDisabled" title="Basic"></button
+			:disabled="isBasicDisabled || isDisabled" title="Basic"></button
 		><button v-for="dieType of diceList" :key="dieType"
 			@click="toggleDie(dieType)" :title="capitalize(dieType)"
 			class="btn" :class="[isDieActive(dieType) ? 'active' : '', 'phg-' + dieType + '-power']"
-			:disabled="!isShowingRelease(dieType)"></button>
+			:disabled="!isShowingRelease(dieType) || isDisabled"></button>
 	</div>
 </template>
 
@@ -18,6 +19,9 @@
 	
 	export default {
 		computed: {
+			isDisabled () {
+				return this.$store.state.isDisabled
+			},
 			diceList () {
 				return globals.diceData
 			},
@@ -35,11 +39,11 @@
 			capitalize,
 			toggleDiceLogic () {
 				this.$store.commit('toggleDiceLogic')
-				this.$store.commit('filterCards')
+				this.$store.dispatch('filterCards')
 			},
 			toggleDie (die) {
 				this.$store.commit('toggleDieFilter', die)
-				this.$store.commit('filterCards')
+				this.$store.dispatch('filterCards')
 			},
 			isDieActive (die) {
 				return includes(this.$store.state.options.dice || [], die)

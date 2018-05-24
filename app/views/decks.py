@@ -10,7 +10,6 @@ from app import db
 from app.exceptions import Redirect
 from app.models.card import Card, DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
-from app.utils.cards import global_json
 from app.utils.comments import process_comments
 from app.utils.decks import get_decks, get_decks_query, process_deck
 from app.utils.stream import new_entity, toggle_subscription
@@ -251,7 +250,8 @@ def build(deck_id=None):
     """Edit a deck"""
     deck = None if not deck_id else Deck.query.options(
         db.joinedload('cards'),
-        db.joinedload('dice')
+        db.joinedload('dice'),
+        db.joinedload('phoenixborn')
     ).get(deck_id)
     if deck_id and not deck:
         abort(404)
@@ -278,10 +278,14 @@ def build(deck_id=None):
             'title': deck.title,
             'description': deck.description,
             'phoenixborn': deck.phoenixborn_id,
+            '_phoenixborn_data': {
+                'name': deck.phoenixborn.name,
+                'release': deck.phoenixborn.release
+            },
             'dice': {DiceFlags(x.die_flag).name: x.count for x in deck.dice},
             'cards': {x.card_id: x.count for x in deck.cards}
         })
-    return render_template('decks/build.html', deck_json=deck_json, **global_json())
+    return render_template('decks/build.html', deck_json=deck_json)
 
 
 @mod.route('/clone/<int:deck_id>/')

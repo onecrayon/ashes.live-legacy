@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import qwest from 'qwest'
+import Nanobar from 'app/nanobar'
 import CardManager from './card_manager'
 import {isInteger, merge, reduce} from 'lodash'
 import {globals} from './utils'
@@ -7,8 +9,6 @@ import {globals} from './utils'
 /* eslint-disable no-new */
 
 Vue.use(Vuex)
-
-const cardManager = new CardManager()
 
 function disableReleaseDice (state) {
 	if (!state.options.releases || state.options.releases.indexOf('expansions') === -1) {
@@ -54,7 +54,7 @@ const cardTypeOrder = [
 let defaultReleases = !globals.galleryOnly ? ['core'] : ['core', 'expansions']
 let deckPhoenixborn = null
 if (globals.deck) {
-	deckPhoenixborn = cardManager.cardById(globals.deck.phoenixborn)
+	deckPhoenixborn = globals.deck._phoenixborn_data
 	if (deckPhoenixborn.release > 100) {
 		defaultReleases = ['core', 'expansions', 'promos']
 	} else if (deckPhoenixborn.release > 0) {
@@ -99,8 +99,13 @@ if (oldReleases && isInteger(oldReleases[0])) {
 	storeSet('releases', releases)
 }
 
+// This will be set asyncronously after defining the store
+let cardManager = null
+let pendingFilterOptions = null
+
 export default new Vuex.Store({
 	state: {
+		isDisabled: false,
 		deck: merge({
 			id: null,
 			title: '',
@@ -228,6 +233,10 @@ export default new Vuex.Store({
 		}
 	},
 	mutations: {
+		// We disable controls that could cause an AJAX call while an AJAX call is pending
+		setAppDisabled (state, isDisabled) {
+			state.isDisabled = isDisabled
+		},
 		// Deck editing methods
 		setId (state, id) {
 			state.deck.id = id
@@ -401,6 +410,9 @@ export default new Vuex.Store({
 			}
 		},
 		// Listing methods
+		setListing (state, listing) {
+			state.listing = listing
+		},
 		setListType (state, listType) {
 			state.options.listType = listType
 			storeSet('listType', listType)
@@ -408,16 +420,52 @@ export default new Vuex.Store({
 		setTempListType (state, listType) {
 			state.options.listType = listType
 		},
-		filterCards (state, options) {
-			options = options || state.options
-			cardManager.cardListing((cards) => {
-				state.listing = cards
-			}, options)
-		},
 		// Deck listing methods
 		setShowDetails (state, value) {
 			state.options.showDetails = value
 			storeSet('showDetails', value)
+		}
+	},
+	actions: {
+		filterCards (context, options) {
+			if (cardManager) {
+				context.commit('setAppDisabled', true)
+				cardManager.cardListing((cards) => {
+					context.commit('setListing', cards)
+					context.commit('setAppDisabled', false)
+				}, options || context.state.options)
+			} else if (!pendingFilterOptions) {
+				pendingFilterOptions = options || true
+				const nano = new Nanobar({ autoRun: true })
+				context.commit('setAppDisabled', true)
+				qwest.get('/api/cards/', null, {responseType: 'json'}).then((xhr, response) => {
+					cardManager = new CardManager(response)
+					context.dispatch(
+						'filterCards',
+						pendingFilterOptions !== true ? pendingFilterOptions : null
+					)
+				}).catch(function (error, xhr, response) {
+					globals.notify('Server error! Unable to fetch card listing.', 'error')
+					console.error('Server error when fetching card data:', error, xhr, response)
+					context.commit('setAppDisabled', false)
+				}).complete(() => {
+					nano.go(100)
+				})
+			} else {
+				pendingFilterOptions = options || true
+			}
+		},
+		sortCards (context) {
+			if (cardManager) {
+				context.commit('setListing', cardManager.sortListing(context.state.listing, {
+					primaryOrder: context.state.options.primaryOrder,
+					primarySort: context.state.options.primarySort,
+					secondaryOrder: context.state.options.secondaryOrder,
+					secondarySort: context.state.options.secondarySort
+				}))
+			} else {
+				context.dispatch('filterCards')
+			}
 		}
 	}
 })

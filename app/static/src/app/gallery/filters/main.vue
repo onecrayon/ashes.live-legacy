@@ -7,29 +7,29 @@
 		<div class="secondary-filters responsive-cols">
 			<div class="btn-group col">
 				<button @click="toggleCardType('Ally')"
-					class="btn btn-small" :class="{active: isTypeActive('Ally')}"
+					class="btn btn-small" :class="{active: isTypeActive('Ally')}" :disabled="isDisabled"
 					><i class="fa" :class="typeToFontAwesome('Ally')"></i> <span class="full-display-only">Ally</span></button
 				><button @click="toggleCardType('Action Spell')"
-					class="btn btn-small" :class="{active: isTypeActive('Action Spell')}"
+					class="btn btn-small" :class="{active: isTypeActive('Action Spell')}" :disabled="isDisabled"
 					><i class="fa" :class="typeToFontAwesome('Action Spell')"></i> <span class="full-display-only">Action</span></button
 				><button @click="toggleCardType('Reaction Spell')"
-					class="btn btn-small" :class="{active: isTypeActive('Reaction Spell')}"
+					class="btn btn-small" :class="{active: isTypeActive('Reaction Spell')}" :disabled="isDisabled"
 					><i class="fa" :class="typeToFontAwesome('Reaction Spell')"></i> <span class="full-display-only">Reaction</span></button
 				><button @click="toggleCardType('Alteration Spell')"
-					class="btn btn-small" :class="{active: isTypeActive('Alteration Spell')}"
+					class="btn btn-small" :class="{active: isTypeActive('Alteration Spell')}" :disabled="isDisabled"
 					><i class="fa" :class="typeToFontAwesome('Alteration Spell')"></i> <span class="full-display-only">Alteration</span></button
 				><button @click="toggleCardType('Ready Spell')"
-					class="btn btn-small" :class="{active: isTypeActive('Ready Spell')}"
+					class="btn btn-small" :class="{active: isTypeActive('Ready Spell')}" :disabled="isDisabled"
 					><i class="fa" :class="typeToFontAwesome('Ready Spell')"></i> <span class="full-display-only">Ready</span></button
 				><button @click="toggleCardType('summon')"
-					class="btn btn-small" :class="{active: isTypeActive('summon')}"
+					class="btn btn-small" :class="{active: isTypeActive('summon')}" :disabled="isDisabled"
 					><i class="fa" :class="typeToFontAwesome('summon')"></i> <span class="full-display-only">Summon</span></button
 				><button v-if="isCardGallery" @click="toggleCardType('Phoenixborn')"
-					class="btn btn-small" :class="{active: isTypeActive('Phoenixborn')}"
+					class="btn btn-small" :class="{active: isTypeActive('Phoenixborn')}" :disabled="isDisabled"
 					><i class="fa" :class="typeToFontAwesome('Phoenixborn')"></i> <span class="full-display-only">Phoenixborn</span></button
 				><button v-if="isCardGallery" @click="toggleCardType('conjurations')"
 					class="btn btn-small" :class="{active: isTypeActive('conjurations')}"
-					:disabled="diceFilterExcludesConjurations"
+					:disabled="diceFilterExcludesConjurations || isDisabled"
 					><i class="fa" :class="typeToFontAwesome('Conjuration')"></i> <span class="full-display-only">Conjuration</span></button
 				>
 			</div>
@@ -69,6 +69,9 @@
 			'text-filter': TextFilter
 		},
 		computed: {
+			isDisabled () {
+				return this.$store.state.isDisabled
+			},
 			isCardGallery () {
 				return globals.galleryOnly
 			},
@@ -84,7 +87,7 @@
 			typeToFontAwesome,
 			toggleCardType (typeName) {
 				this.$store.commit('toggleTypeFilter', typeName)
-				this.$store.commit('filterCards')
+				this.$store.dispatch('filterCards')
 			},
 			setListType (listType) {
 				this.$store.commit('setListType', listType)

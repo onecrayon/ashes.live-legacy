@@ -35,11 +35,11 @@
 		methods: {
 			toggleOrdering () {
 				this.$store.commit('toggleSortOrder')
-				this.$store.commit('filterCards')
+				this.$store.dispatch('sortCards')
 			},
 			sortBy (field) {
 				this.$store.commit('setSort', field)
-				this.$store.commit('filterCards')
+				this.$store.dispatch('sortCards')
 			},
 			isSortedBy (field) {
 				return this.$store.state.options.primarySort === field

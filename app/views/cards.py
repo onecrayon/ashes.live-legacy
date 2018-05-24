@@ -9,7 +9,6 @@ from app import db
 from app.exceptions import Redirect
 from app.models.card import Card
 from app.models.deck import Deck, DeckCard
-from app.utils.cards import global_json
 from app.utils.comments import process_comments
 from app.utils.stream import toggle_subscription
 
@@ -26,7 +25,7 @@ def gather_conjurations(card):
 @mod.route('/')
 def index():
     """Card gallery"""
-    return render_template('cards/index.html', **global_json())
+    return render_template('cards/index.html')
 
 
 @mod.route('/<stub>/', methods=['GET', 'POST'])

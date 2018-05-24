@@ -58,7 +58,7 @@
 			} else if (!this.$store.state.deck.phoenixborn) {
 				this.$store.commit('setTypes', ['Phoenixborn'])
 			}
-			this.$store.commit('filterCards')
+			this.$store.dispatch('filterCards')
 		},
 		computed: {
 			phoenixborn: {
@@ -68,7 +68,7 @@
 				set (cardId) {
 					this.$store.commit('setPhoenixborn', cardId)
 					this.$store.commit('setTypes', null)
-					this.$store.commit('filterCards')
+					this.$store.dispatch('filterCards')
 				}
 			},
 			listing () {

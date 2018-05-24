@@ -29,7 +29,7 @@
 		</div>
 		<div v-if="activeTab == 'deck' && phoenixborn">
 			<h3 class="phoenixborn-header">
-				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" title="Swap Phoenixborn"></span>
+				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" :class="{disabled: isDisabled === true}" title="Swap Phoenixborn"></span>
 				<card-link :card="phoenixborn"></card-link>
 				<span @click="showDetails = !showDetails" class="fa details-btn"
 					:class="showDetails ? 'fa-toggle-up' : 'fa-toggle-down'" title="Toggle Details"></span>
@@ -59,7 +59,7 @@
 					</button>
 				</div>
 				<div class="col">
-					<button class="btn btn-small" @click="setDiceFilters" :disabled="diceEmpty">
+					<button class="btn btn-small" @click="setDiceFilters" :disabled="diceEmpty || isDisabled">
 						Set Dice Filter <i class="fa fa-arrow-right desktop-only"></i>
 					</button>
 				</div>
@@ -136,6 +136,9 @@
 			}
 		},
 		computed: {
+			isDisabled () {
+				return this.$store.state.isDisabled
+			},
 			title: {
 				get () {
 					return this.$store.state.deck.title
@@ -196,7 +199,7 @@
 			clearPhoenixborn () {
 				this.$store.commit('setTypes', ['Phoenixborn'])
 				this.$store.commit('setPhoenixborn', null)
-				this.$store.commit('filterCards')
+				this.$store.dispatch('filterCards')
 				this.toggleEditorPane(false)
 			},
 			clearDie (die) {
@@ -208,7 +211,7 @@
 			},
 			setDiceFilters () {
 				this.$store.commit('diceToFilters')
-				this.$store.commit('filterCards')
+				this.$store.dispatch('filterCards')
 				this.toggleEditorPane(false)
 			},
 			save () {

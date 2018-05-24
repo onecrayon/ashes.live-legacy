@@ -1,10 +1,15 @@
 <template>
 	<table class="tabular-listing" cellspacing="0" cellpadding="0">
 		<tbody>
-			<tr v-if="!listing.length">
+			<tr v-if="!listing.length && !isDisabled">
 				<td :colspan="numColumns" class="no-results">
 					<h2>No cards found</h2>
 					<p><button @click="resetFilters" class="btn btn-primary">Clear filters</button></p>
+				</td>
+			</tr>
+			<tr v-else-if="!listing.length">
+				<td :colspan="numColumns" class="loading-results">
+					<p class="callout muted"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading cards...</p>
 				</td>
 			</tr>
 			<tr v-for="card of listing" :key="card.id">
@@ -65,6 +70,9 @@
 			'card-codes': CardCodes
 		},
 		computed: {
+			isDisabled () {
+				return this.$store.state.isDisabled
+			},
 			listing () {
 				return this.$store.state.listing
 			},
@@ -83,7 +91,7 @@
 			},
 			resetFilters () {
 				this.$store.commit('resetFilters')
-				this.$store.commit('filterCards')
+				this.$store.dispatch('filterCards')
 			}
 		}
 	}
