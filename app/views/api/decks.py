@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 
 from app import db
 from app.exceptions import ApiError
+from app.models.ashes_500 import Ashes500Revision, Ashes500Value
 from app.models.card import DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.models.stream import Streamable
@@ -49,6 +50,7 @@ def save(deck_id=None, is_snapshot=False):
             db.session.commit()
             return jsonify({'success': 'Snapshot successfully saved!'})
         deck.phoenixborn_id = data.get('phoenixborn')
+        deck.ashes_500_revision_id = data.get('ashes_500_revision')
     else:
         source_id = data.get('source_id')
         # Verify that the source_id is a legal source
@@ -72,7 +74,8 @@ def save(deck_id=None, is_snapshot=False):
             phoenixborn_id=data.get('phoenixborn'),
             is_snapshot=is_snapshot,
             is_public=is_public,
-            source_id=source_id
+            source_id=source_id,
+            ashes_500_revision_id=data.get('ashes_500_revision')
         )
 
     # We only save a new snapshot if it differs from the previous one,
@@ -121,9 +124,9 @@ def save(deck_id=None, is_snapshot=False):
     deck.dice = dice
     # And then the card listing
     cards = []
-    for card_id, count in data.get('cards', {}).items():
+    card_counts = {int(key): int(value) for key, value in data.get('cards', {}).items()}
+    for card_id, count in card_counts.items():
         count = count if count <= 3 else 3
-        card_id = int(card_id)
         cards.append(DeckCard(
             card_id=card_id,
             count=count
@@ -140,6 +143,42 @@ def save(deck_id=None, is_snapshot=False):
                 'snapshot\'s title &amp; description</a>.'
             ).format(url_for('decks.edit', deck_id=previous.id))
         })
+    
+    # If this is an Ashes500 deck, calculate the deck's score
+    if deck.ashes_500_revision_id:
+        card_counts[deck.phoenixborn_id] = 1
+        ashes_500_values = db.session.query(Ashes500Value).filter(
+            Ashes500Value.revision_id == deck.ashes_500_revision_id,
+            Ashes500Value.card_id.in_(card_counts.keys())
+        )
+        if not ashes_500_values:
+            return jsonify({
+                'error': (
+                    'Unable to locate Ashes 500 revision. '
+                    'Please disable Ashes 500, save the deck again, reload the page, '
+                    'and re-enable Ashes 500 scoring to proceed.'
+                )
+            })
+        deck_cost = 0
+        for cost in ashes_500_values:
+            card_cost = 0
+            count = card_counts[cost.card_id]
+            if cost.combo_card_id and cost.combo_card_id in card_counts:
+                card_cost += cost.qty_1
+                if count >= 2 and cost.qty_2:
+                    card_cost += cost.qty_2
+                if count == 3 and cost.qty_3:
+                    card_cost += cost.qty_3
+            elif not cost.combo_card_id:
+                card_cost += cost.qty_1
+                if count >= 2 and cost.qty_2:
+                    card_cost += cost.qty_2
+                if count == 3 and cost.qty_3:
+                    card_cost += cost.qty_3
+            deck_cost += card_cost
+        deck.ashes_500_score = deck_cost
+    else:
+        deck.ashes_500_score = None
 
     # Finally save everything up!
     db.session.add(deck)

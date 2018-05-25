@@ -231,9 +231,13 @@
 			},
 			save () {
 				const nano = new Nanobar({ autoRun: true })
+				let deckData = JSON.parse(JSON.stringify(this.$store.state.deck))
+				if (this.$store.state.options.enableAshes500) {
+					deckData.ashes_500_revision = this.$store.state.ashes_500_revision
+				}
 				qwest.post(
-					'/api/decks/' + (this.$store.state.deck.id || ''),
-					this.$store.state.deck,
+					'/api/decks/' + (deckData.id || ''),
+					deckData,
 					{dataType: 'json'}
 				).then((xhr, response) => {
 					if (response.validation) {

@@ -111,6 +111,7 @@ let pendingFilterOptions = null
 export default new Vuex.Store({
 	state: {
 		cardManager: null,
+		ashes_500_revision: null,
 		isDisabled: false,
 		deck: merge({
 			id: null,
@@ -480,6 +481,9 @@ export default new Vuex.Store({
 		// Setup the cardManager
 		setCardManager (state, cardManager) {
 			state.cardManager = cardManager
+		},
+		setAshes500Revision (state, revision) {
+			state.ashes_500_revision = revision
 		}
 	},
 	actions: {
@@ -495,7 +499,8 @@ export default new Vuex.Store({
 				const nano = new Nanobar({ autoRun: true })
 				context.commit('setAppDisabled', true)
 				qwest.get('/api/cards/', null, {responseType: 'json'}).then((xhr, response) => {
-					context.commit('setCardManager', new CardManager(response))
+					context.commit('setCardManager', new CardManager(response.cards))
+					context.commit('setAshes500Revision', response.ashes_500_revision)
 					context.dispatch(
 						'filterCards',
 						pendingFilterOptions !== true ? pendingFilterOptions : null

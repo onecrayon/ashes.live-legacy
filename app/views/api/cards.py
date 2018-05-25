@@ -39,7 +39,10 @@ def listing():
         card_json['ashes_500_costs'] = ashes_500_map.get(card.id)
         card_json['ashes_500_combos'] = ashes_500_combo_map.get(card.id)
         results.append(card_json)
-    return jsonify(results)
+    return jsonify({
+        'ashes_500_revision': ashes_500_revision_id,
+        'cards': results
+    })
 
 
 @mod.route('/search', methods=['POST'])
