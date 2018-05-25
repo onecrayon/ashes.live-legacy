@@ -100,11 +100,11 @@ if (oldReleases && isInteger(oldReleases[0])) {
 }
 
 // This will be set asyncronously after defining the store
-let cardManager = null
 let pendingFilterOptions = null
 
 export default new Vuex.Store({
 	state: {
+		cardManager: null,
 		isDisabled: false,
 		deck: merge({
 			id: null,
@@ -142,7 +142,7 @@ export default new Vuex.Store({
 	},
 	getters: {
 		phoenixborn (state) {
-			return !cardManager ? null : cardManager.cardById(state.deck.phoenixborn)
+			return !state.cardManager ? null : state.cardManager.cardById(state.deck.phoenixborn)
 		},
 		totalDice (state) {
 			let totalDice = 0
@@ -162,9 +162,9 @@ export default new Vuex.Store({
 		},
 		deckSections (state, getters) {
 			const ids = Object.keys(state.deck.cards)
-			if (!ids.length || !cardManager) return []
+			if (!ids.length || !state.cardManager) return []
 			let sections = {}
-			const cards = cardManager.idsToListing(ids)
+			const cards = state.cardManager.idsToListing(ids)
 			let conjurations = []
 			for (let card of cards) {
 				if (!sections[card.type]) {
@@ -215,8 +215,8 @@ export default new Vuex.Store({
 		},
 		neededDice (state) {
 			const ids = Object.keys(state.deck.cards)
-			if (!ids.length || !cardManager) return []
-			const cards = cardManager.idsToListing(ids)
+			if (!ids.length || !state.cardManager) return []
+			const cards = state.cardManager.idsToListing(ids)
 			return reduce(cards, (result, card) => {
 				if (card.dice && card.dice.length) {
 					for (let die of card.dice) {
@@ -248,7 +248,7 @@ export default new Vuex.Store({
 			state.deck.description = description
 		},
 		setPhoenixborn (state, id) {
-			const phoenixborn = cardManager.cardById(id)
+			const phoenixborn = state.cardManager.cardById(id)
 			state.deck.phoenixborn = id
 			state.options.phoenixborn = phoenixborn ? phoenixborn.name : null
 			// Configure the sorting options (because they differ between the listing types)
@@ -264,7 +264,7 @@ export default new Vuex.Store({
 			const ids = Object.keys(state.deck.cards)
 			if (phoenixborn && ids.length) {
 				// Clear out any Phoenixborn-specific cards in the deck
-				const cards = cardManager.idsToListing(ids)
+				const cards = state.cardManager.idsToListing(ids)
 				for (let card of cards) {
 					if (card.phoenixborn && card.phoenixborn !== phoenixborn.name) {
 						Vue.delete(state.deck.cards, card.id)
@@ -375,7 +375,7 @@ export default new Vuex.Store({
 				}
 			}
 			if (onlyPromos) {
-				const phoenixborn = cardManager.cardById(state.deck.phoenixborn)
+				const phoenixborn = state.cardManager.cardById(state.deck.phoenixborn)
 				if (phoenixborn.release < 100) {
 					state.options.releases = ['core']
 				}
@@ -424,13 +424,17 @@ export default new Vuex.Store({
 		setShowDetails (state, value) {
 			state.options.showDetails = value
 			storeSet('showDetails', value)
+		},
+		// Setup the cardManager
+		setCardManager (state, cardManager) {
+			state.cardManager = cardManager
 		}
 	},
 	actions: {
 		filterCards (context, options) {
-			if (cardManager) {
+			if (context.state.cardManager) {
 				context.commit('setAppDisabled', true)
-				cardManager.cardListing((cards) => {
+				context.state.cardManager.cardListing((cards) => {
 					context.commit('setListing', cards)
 					context.commit('setAppDisabled', false)
 				}, options || context.state.options)
@@ -439,7 +443,7 @@ export default new Vuex.Store({
 				const nano = new Nanobar({ autoRun: true })
 				context.commit('setAppDisabled', true)
 				qwest.get('/api/cards/', null, {responseType: 'json'}).then((xhr, response) => {
-					cardManager = new CardManager(response)
+					context.commit('setCardManager', new CardManager(response))
 					context.dispatch(
 						'filterCards',
 						pendingFilterOptions !== true ? pendingFilterOptions : null
@@ -456,8 +460,8 @@ export default new Vuex.Store({
 			}
 		},
 		sortCards (context) {
-			if (cardManager) {
-				context.commit('setListing', cardManager.sortListing(context.state.listing, {
+			if (context.state.cardManager) {
+				context.commit('setListing', context.state.cardManager.sortListing(context.state.listing, {
 					primaryOrder: context.state.options.primaryOrder,
 					primarySort: context.state.options.primarySort,
 					secondaryOrder: context.state.options.secondaryOrder,
