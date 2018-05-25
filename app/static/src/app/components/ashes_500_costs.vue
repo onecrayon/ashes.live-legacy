@@ -83,7 +83,7 @@
 				return total
 			},
 			costQty2 () {
-				if (!this.cardData.ashes_500_costs) return null
+				if (!this.cardData.ashes_500_costs || this.cardData.type == 'Phoenixborn') return null
 				let total = 0
 				for (let cost of this.cardData.ashes_500_costs) {
 					if (!cost.qty_2 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {
@@ -94,7 +94,7 @@
 				return total
 			},
 			costQty3 () {
-				if (!this.cardData.ashes_500_costs) return null
+				if (!this.cardData.ashes_500_costs || this.cardData.type == 'Phoenixborn') return null
 				let total = 0
 				for (let cost of this.cardData.ashes_500_costs) {
 					if (!cost.qty_3 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {

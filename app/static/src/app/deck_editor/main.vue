@@ -31,6 +31,7 @@
 			<h3 class="phoenixborn-header">
 				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" :class="{disabled: isDisabled === true}" title="Swap Phoenixborn"></span>
 				<card-link :card="phoenixborn"></card-link>
+				<ashes-500-costs v-if="isAshes500Enabled" :card="phoenixborn"></ashes-500-costs>
 				<span @click="showDetails = !showDetails" class="fa details-btn"
 					:class="showDetails ? 'fa-toggle-up' : 'fa-toggle-down'" title="Toggle Details"></span>
 			</h3>
@@ -113,6 +114,7 @@
 	import TextEditor from 'app/components/text_editor.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import DeckListing from 'app/components/deck_listing.vue'
+	import Ashes500Costs from 'app/components/ashes_500_costs.vue'
 	import CardEffects from 'app/gallery/listing/card_effects.vue'
 	import DieCounter from './die_counter.vue'
 	import DeleteModal from './delete_modal.vue'
@@ -129,7 +131,8 @@
 			'text-editor': TextEditor,
 			'export-modal': ExportModal,
 			'delete-modal': DeleteModal,
-			'snapshot-modal': SnapshotModal
+			'snapshot-modal': SnapshotModal,
+			'ashes-500-costs': Ashes500Costs,
 		},
 		data () {
 			return {

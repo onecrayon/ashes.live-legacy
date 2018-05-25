@@ -239,7 +239,10 @@ export default new Vuex.Store({
 			return 'Untitled ' + ((getters.phoenixborn && getters.phoenixborn.name) || 'deck')
 		},
 		ashes500Score (state) {
-			const ids = Object.keys(state.deck.cards).map(str => parseInt(str))
+			let ids = Object.keys(state.deck.cards).map(str => parseInt(str))
+			if (state.deck.phoenixborn) {
+				ids.push(state.deck.phoenixborn)
+			}
 			let score = 0
 			if (!ids.length || !state.cardManager) return score
 			const cards = state.cardManager.idsToListing(ids)

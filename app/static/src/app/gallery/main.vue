@@ -24,6 +24,10 @@
 							{{ card.name }}
 						</span>
 						<img :src="assetPath(card.images.compressed)" :alt="card.name">
+						<div v-if="isAshes500Enabled" class="ashes-500-overlay">
+							<i class="fa fa-tachometer" aria-hidden="true"></i>
+							<ashes-500-costs :card="card"></ashes-500-costs>
+						</div>
 					</a>
 				</li>
 			</ul>
@@ -39,6 +43,7 @@
 	import SortFilter from './filters/sort.vue'
 	import TextFilter from './filters/text.vue'
 	import NoResults from './listing/no_results.vue'
+	import Ashes500Costs from 'app/components/ashes_500_costs.vue'
 	import {assetPath, cardUrl, globals} from 'app/utils'
 	
 	export default {
@@ -49,7 +54,8 @@
 			'release-filter': ReleaseFilter,
 			'sort-filter': SortFilter,
 			'text-filter': TextFilter,
-			'no-results': NoResults
+			'no-results': NoResults,
+			'ashes-500-costs': Ashes500Costs,
 		},
 		created () {
 			if (this.isCardGallery) {
@@ -76,7 +82,10 @@
 			},
 			isCardGallery () {
 				return globals.galleryOnly
-			}
+			},
+			isAshes500Enabled () {
+				return this.$store.state.options.enableAshes500
+			},
 		},
 		methods: {
 			assetPath,
