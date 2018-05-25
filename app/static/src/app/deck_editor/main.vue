@@ -68,6 +68,12 @@
 			<deck-listing></deck-listing>
 		</div>
 		<div v-else-if="activeTab == 'meta' && phoenixborn">
+			<button class="btn btn-block" :class="{'btn-success': !isAshes500Enabled}" @click="toggleAshes500">
+				<i class="fa fa-tachometer" aria-hidden="true"></i> {{ ashes500ToggleWord }} Ashes 500
+			</button>
+			<p><a href="/ashes-500/" target="_blank"><strong>Ashes 500</strong></a> is an alternate constructed format where your deck must cost 500 points or less.</p>
+			<hr>
+			<h3>Description</h3>
 			<text-editor state-path="deck.description" field-name="Description"></text-editor>
 		</div>
 		<div v-else-if="activeTab == 'actions' && phoenixborn">
@@ -88,14 +94,6 @@
 				<i class="fa fa-share-square-o"></i> Publish Deck
 			</button>
 			<snapshot-modal :show="showSnapshotModal" :public="createPublicSnapshot" @close="closeSnapshotModal"></snapshot-modal>
-			<hr>
-			<h3></h3>
-			<button class="btn btn-block" @click="toggleAshes500">
-				<i class="fa fa-tachometer" aria-hidden="true"></i> {{ ashes500ToggleWord }} Ashes 500
-			</button>
-
-			<p><a href="/ashes-500/" target="_blank"><strong>Ashes 500</strong></a> is an alternate constructed format where your deck must cost 500 points or less.</p>
-
 			<hr>
 			<button class="btn btn-block" @click="showExportModal = true">
 				<i class="fa fa-share-square-o"></i> Export As Text
@@ -201,6 +199,9 @@
 			historyUrl () {
 				if (!this.$store.state.deck.id) return '#'
 				return ['/decks/view', this.$store.state.deck.id, 'history'].join('/')
+			},
+			isAshes500Enabled () {
+				return this.$store.state.options.enableAshes500
 			},
 			ashes500ToggleWord () {
 				return this.$store.state.options.enableAshes500 ? 'Disable' : 'Enable'

@@ -239,7 +239,7 @@ export default new Vuex.Store({
 			return 'Untitled ' + ((getters.phoenixborn && getters.phoenixborn.name) || 'deck')
 		},
 		ashes500Score (state) {
-			const ids = Object.keys(state.deck.cards)
+			const ids = Object.keys(state.deck.cards).map(str => parseInt(str))
 			let score = 0
 			if (!ids.length || !state.cardManager) return score
 			const cards = state.cardManager.idsToListing(ids)
@@ -259,6 +259,23 @@ export default new Vuex.Store({
 				}
 			}
 			return score
+		},
+		activeComboIds (state) {
+			const ids = Object.keys(state.deck.cards).map(str => parseInt(str))
+			let comboIds = []
+			if (!ids.length || !state.cardManager) return comboIds
+			const cards = state.cardManager.idsToListing(ids)
+			for (let card of cards) {
+				if (!card.ashes_500_combos) continue
+				for (let combo_id of card.ashes_500_combos) {
+					if (ids.indexOf(combo_id) > -1) {
+						comboIds.push(combo_id)
+						comboIds.push(card.id)
+					}
+				}
+			}
+			comboIds = Array.from(new Set(comboIds))
+			return comboIds
 		}
 	},
 	mutations: {
