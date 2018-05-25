@@ -283,7 +283,9 @@ def build(deck_id=None):
                 'release': deck.phoenixborn.release
             },
             'dice': {DiceFlags(x.die_flag).name: x.count for x in deck.dice},
-            'cards': {x.card_id: x.count for x in deck.cards}
+            'cards': {x.card_id: x.count for x in deck.cards},
+            'ashes_500_score': deck.ashes_500_score,
+            'ashes_500_revision_id': deck.ashes_500_revision_id
         })
     return render_template('decks/build.html', deck_json=deck_json)
 

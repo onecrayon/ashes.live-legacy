@@ -61,6 +61,12 @@ if (globals.deck) {
 		defaultReleases = ['core', 'expansions']
 	}
 }
+const enableAshes500 = !!(
+	globals.enableAshes500
+	|| (globals.deck && globals.deck.ashes_500_revision_id)
+	|| window.location.search.indexOf('mode=ashes-500') > -1
+	|| false
+)
 
 const storageOptionsKey = 'deckbuilder.options'
 function storeSet (key, value) {
@@ -133,6 +139,7 @@ export default new Vuex.Store({
 			secondarySort: null,
 			secondaryOrder: 1,
 			includeAllCards: false,
+			enableAshes500: enableAshes500,
 			// These options affect the deck listing display
 			showDetails: true
 		}, storeGetAll(), !globals.galleryOnly && (!globals.deck || !globals.deck.phoenixborn) ? {
@@ -230,6 +237,28 @@ export default new Vuex.Store({
 		},
 		untitledText (state, getters) {
 			return 'Untitled ' + ((getters.phoenixborn && getters.phoenixborn.name) || 'deck')
+		},
+		ashes500Score (state) {
+			const ids = Object.keys(state.deck.cards)
+			let score = 0
+			if (!ids.length || !state.cardManager) return score
+			const cards = state.cardManager.idsToListing(ids)
+			for (let card of cards) {
+				if (!card.ashes_500_costs) continue
+				const qty = state.deck.cards[card.id]
+				for (let cost of card.ashes_500_costs) {
+					// Skip combo entries for where the combo card isn't in the deck
+					if (cost.combo_card_id && ids.indexOf(cost.combo_card_id) === -1) continue
+					score += cost.qty_1
+					if (qty >= 2 && cost.qty_2) {
+						score += cost.qty_2
+					}
+					if (qty === 3 && cost.qty_3) {
+						score += cost.qty_3
+					}
+				}
+			}
+			return score
 		}
 	},
 	mutations: {
@@ -419,6 +448,9 @@ export default new Vuex.Store({
 		},
 		setTempListType (state, listType) {
 			state.options.listType = listType
+		},
+		toggleAshes500 (state) {
+			state.options.enableAshes500 = !state.options.enableAshes500
 		},
 		// Deck listing methods
 		setShowDetails (state, value) {

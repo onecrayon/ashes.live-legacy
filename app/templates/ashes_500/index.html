@@ -28,6 +28,7 @@
 {% block app %}
 	<script type="text/javascript">
 		globals.galleryOnly = true
+		globals.enableAshes500 = true
 		globals.preserveSidebar = true
 	</script>
 	<script src="{{ url_for('static', filename='js/app.js') | production_url }}" type="text/javascript"></script>
