@@ -13,10 +13,10 @@ const globals = window.globals || {}
 
 //* Define global URL helpers and constants
 globals.cardUrl = function (data) {
-	return '/cards/' + data.stub
+	return '/cards/' + data.stub + '/'
 }
 globals.playerUrl = function (badge) {
-	return '/player/' + badge
+	return '/player/' + badge + '/'
 }
 globals.diceData = [
 	'ceremonial', 'charm', 'illusion', 'natural',
