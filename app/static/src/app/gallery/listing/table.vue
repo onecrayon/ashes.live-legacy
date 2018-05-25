@@ -13,7 +13,7 @@
 				</td>
 			</tr>
 			<tr v-for="card of listing" :key="card.id">
-				<td v-if="numColumns === 5" class="qty-col">
+				<td v-if="isDeckbuilder" class="qty-col">
 					<qty-buttons :card="card" classes="btn-small"></qty-buttons>
 				</td>
 				<td class="type-col" :title="card.type"><i class="fa" :class="typeToFontAwesome(card.type)" aria-hidden="true"></i></td>
@@ -22,6 +22,7 @@
 					<span v-if="card.phoenixborn" class="phoenixborn" :title="card.phoenixborn">
 						({{ card.phoenixborn.split(' ')[0] }})
 					</span>
+					<ashes-500-costs v-if="isAshes500Enabled" :card="card" class="block-level"></ashes-500-costs>
 				</td>
 				<td class="stats-col">
 					<span v-if="hasStatline(card)" class="muted">
@@ -61,13 +62,15 @@
 	import {globals, typeToFontAwesome} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
+	import Ashes500Costs from 'app/components/ashes_500_costs.vue'
 	import QtyButtons from './qty_buttons.vue'
 	
 	export default {
 		components: {
 			'card-link': CardLink,
 			'qty-buttons': QtyButtons,
-			'card-codes': CardCodes
+			'card-codes': CardCodes,
+			'ashes-500-costs': Ashes500Costs,
 		},
 		computed: {
 			isDisabled () {
@@ -78,6 +81,12 @@
 			},
 			numColumns () {
 				return globals.galleryOnly ? 4 : 5
+			},
+			isAshes500Enabled () {
+				return this.$store.state.options.enableAshes500
+			},
+			isDeckbuilder () {
+				return !globals.galleryOnly
 			}
 		},
 		methods: {

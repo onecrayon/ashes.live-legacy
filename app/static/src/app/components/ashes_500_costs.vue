@@ -1,11 +1,11 @@
 <template>
 	<span class="ashes-500-points">
-		<span v-if="costQty1 !== null" class="active">{{ costQty1 }}</span
+		<span v-if="costQty1 !== null" :class="{active: cardQty >= 1}">{{ costQty1 }}</span
 		><span v-if="costQty2 !== null">
-			\ <span :class="{active: card.count >= 2}">{{ costQty2 }}</span
+			\ <span :class="{active: cardQty >= 2}">{{ costQty2 }}</span
 		></span
 		><span v-if="costQty3 !== null">
-			\ <span :class="{active: card.count >= 3}">{{ costQty3 }}</span
+			\ <span :class="{active: cardQty >= 3}">{{ costQty3 }}</span
 		></span>
 		<span v-if="comboTooltip" class="tooltip" :class="{active: hasActiveCombo}" :title="comboTooltip">
 			<i class="fa fa-exclamation-circle"></i>
@@ -26,16 +26,25 @@
 		},
 		beforeDestroy: teardownTooltips,
 		computed: {
+			cardData () {
+				if (this.card.data) return this.card.data
+				return this.card
+			},
+			cardQty () {
+				if (this.card.count) return this.card.count
+				const count = this.$store.state.deck.cards[this.cardData.id]
+				return !count ? 0 : count
+			},
 			hasActiveCombo () {
 				const combo_ids = this.$store.getters.activeComboIds
-				return includes(combo_ids, this.card.data.id)
+				return includes(combo_ids, this.cardData.id)
 			},
 			cardIds () {
 				return Object.keys(this.$store.state.deck.cards).map(str => parseInt(str))
 			},
 			comboTooltip () {
-				const costs = this.card.data.ashes_500_costs
-				if ((!costs || costs.length <= 1) && !this.card.data.ashes_500_combos) {
+				const costs = this.cardData.ashes_500_costs
+				if ((!costs || costs.length <= 1) && !this.cardData.ashes_500_combos) {
 					return null
 				}
 				let statements = []
@@ -48,11 +57,11 @@
 						statements.push('+' + cost.qty_1 + ' per copy with ' + comboCard.name)
 					}
 				}
-				if (!this.card.data.ashes_500_combos) return statements.join('; ')
-				for (let comboId of this.card.data.ashes_500_combos) {
+				if (!this.cardData.ashes_500_combos) return statements.join('; ')
+				for (let comboId of this.cardData.ashes_500_combos) {
 					let comboedCard = this.$store.state.cardManager.cardById(comboId)
 					for (let cost of comboedCard.ashes_500_costs) {
-						if (!cost.combo_card_id || cost.combo_card_id !== this.card.data.id) continue
+						if (!cost.combo_card_id || cost.combo_card_id !== this.cardData.id) continue
 						if (cost.qty_2 === null) {
 							statements.push('+' + cost.qty_1 + ' with ' + comboedCard.name)
 						} else if (cost.qty_1 === cost.qty_2 && cost.qty_1 === cost.qty_3) {
@@ -63,9 +72,9 @@
 				return statements.join('; ')
 			},
 			costQty1 () {
-				if (!this.card.data.ashes_500_costs) return null
+				if (!this.cardData.ashes_500_costs) return null
 				let total = 0
-				for (let cost of this.card.data.ashes_500_costs) {
+				for (let cost of this.cardData.ashes_500_costs) {
 					if (!cost.qty_1 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {
 						continue
 					}
@@ -74,9 +83,9 @@
 				return total
 			},
 			costQty2 () {
-				if (!this.card.data.ashes_500_costs) return null
+				if (!this.cardData.ashes_500_costs) return null
 				let total = 0
-				for (let cost of this.card.data.ashes_500_costs) {
+				for (let cost of this.cardData.ashes_500_costs) {
 					if (!cost.qty_2 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {
 						continue
 					}
@@ -85,9 +94,9 @@
 				return total
 			},
 			costQty3 () {
-				if (!this.card.data.ashes_500_costs) return null
+				if (!this.cardData.ashes_500_costs) return null
 				let total = 0
-				for (let cost of this.card.data.ashes_500_costs) {
+				for (let cost of this.cardData.ashes_500_costs) {
 					if (!cost.qty_3 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {
 						continue
 					}

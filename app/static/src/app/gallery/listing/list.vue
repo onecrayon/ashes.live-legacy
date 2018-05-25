@@ -13,6 +13,7 @@
 					<span v-if="card.phoenixborn" class="phoenixborn" :title="card.phoenixborn">
 						({{ card.phoenixborn.split(' ')[0] }})
 					</span>
+					<ashes-500-costs v-if="isAshes500Enabled" :card="card"></ashes-500-costs>
 				</h3>
 				<p class="meta">{{ card.type }} <span class="divider"><span class="alt-text">-</span></span> {{ card.placement }}</p>
 				<card-effects :card="card"></card-effects>
@@ -41,6 +42,7 @@
 	import {assetPath, globals, typeToFontAwesome} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
+	import Ashes500Costs from 'app/components/ashes_500_costs.vue'
 	import CardEffects from './card_effects.vue'
 	import NoResults from './no_results.vue'
 	import QtyButtons from './qty_buttons.vue'
@@ -51,7 +53,8 @@
 			'card-link': CardLink,
 			'no-results': NoResults,
 			'qty-buttons': QtyButtons,
-			'card-codes': CardCodes
+			'card-codes': CardCodes,
+			'ashes-500-costs': Ashes500Costs,
 		},
 		computed: {
 			listing () {
@@ -59,7 +62,10 @@
 			},
 			isCardGallery () {
 				return globals.galleryOnly
-			}
+			},
+			isAshes500Enabled () {
+				return this.$store.state.options.enableAshes500
+			},
 		},
 		methods: {
 			isArray,
