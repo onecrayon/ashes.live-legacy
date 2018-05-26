@@ -61,7 +61,7 @@ def upgrade():
 
 Ashes 500 costs are formatted like **25/15/10** where the first copy of the card costs **25** points, the second copy costs **15** points, and the third copy costs **10** points (so if you included 3x copies, you would spend **25 + 15 + 10 = 50** points).
 
-Additionally, a small number of cards include penalties when they are included together, represented by a "**!**" next to the prices. Tap or mouse over the "**!**" to view relevant penalties for that card; for instance, if your deck includes both [[Shifting Mist]] and [[Summon Butterfly Monk]], an extra 20 points will be added to the deck's total. Penalties are used to discourage overly strong archetypes and combos from standard constructed.
+Additionally, a small number of cards include penalties when they are included together, represented by a "**!**" next to the prices. Tap or mouse over the "**!**" to view relevant penalties for that card; for instance, if your deck includes both [[Shifting Mist]] and [[Summon Butterfly Monk]], an extra 20 points will be added to the deck's total. Penalties are used to discourage overly strong archetypes and combos.
 
 **Why use Ashes 500?** The Ashes 500 format encourages creative deck construction with cards that would not normally be competitive, and is a great way to shake up your local meta if you find yourselves falling into a rut.
 
