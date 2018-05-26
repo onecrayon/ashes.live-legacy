@@ -23,10 +23,18 @@
 {% block content %}
 	{% set current = {'count': 0, 'type': 'None'} -%}
 	<div class="deck-view {{ deck.phoenixborn.stub }}">
-		<h2>
-			<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
-				{{ deck.phoenixborn.name }}
-			</a>
+		<h2 class="responsive-cols no-wrap">
+			<span class="col-flex">
+				<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
+					{{ deck.phoenixborn.name }}
+				</a>
+			</span>
+			{% if deck.ashes_500_revision_id %}
+			<span class="ashes-500-score col{% if deck.ashes_500_score > 500 %} error{% endif %}">
+				<i class="fa fa-tachometer" aria-hidden="true"></i>
+				{{ deck.ashes_500_score }}
+			</span>
+			{% endif %}
 		</h2>
 		<ul class="dice large">
 		{% for dice in deck.dice -%}
