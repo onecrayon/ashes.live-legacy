@@ -46,8 +46,16 @@
 				<p class="col-flex"><strong>{{ usertag(entity.user) }} published a deck!</strong></p>
 				<p class="timestamp col">{{ entity.created | format_date }}</p>
 			</div>
-			<h2>
-				<a href="{{ url_for('decks.view', deck_id=entity.source_id) }}">{{ entity | deck_title }}</a>
+			<h2 class="responsive-cols no-wrap">
+				<span class="col-flex">
+					<a href="{{ url_for('decks.view', deck_id=entity.source_id) }}">{{ entity | deck_title }}</a>
+				</span>
+				{% if entity.ashes_500_score is not none %}
+				<span class="ashes-500-score col{% if entity.ashes_500_score > 500 %} error{% endif %}">
+					<i class="fa fa-tachometer" aria-hidden="true"></i>
+					{{ entity.ashes_500_score }}
+				</span>
+				{% endif %}
 			</h2>
 			{{ dice_list(entity.dice) }}
 			{% elif entity.entity_type == 'comment' %}

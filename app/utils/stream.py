@@ -39,6 +39,7 @@ def deck_to_entity_map(deck):
             'stub': deck.phoenixborn.stub
         },
         'dice': deck.dice,
+        'ashes_500_score': deck.ashes_500_score if deck.ashes_500_revision_id else None,
         'url': url_for('decks.view', deck_id=deck.source_id),
         'unsubscribe_url': url_for('decks.subscribe', deck_id=deck.source_id)
     }
