@@ -126,18 +126,22 @@
 				const title = this.title || this.untitledText
 				const description = this.description || ''
 				const nano = new Nanobar({ autoRun: true })
+				let deckData = {
+					'title': title,
+					'description': description,
+					'phoenixborn': this.$store.state.deck.phoenixborn,
+					'dice': this.$store.state.deck.dice,
+					'cards': this.$store.state.deck.cards,
+					'source_id': this.$store.state.deck.id,
+					'is_snapshot': true,
+					'is_public': this.public
+				}
+				if (this.$store.state.options.enableAshes500) {
+					deckData.ashes_500_revision = this.$store.state.ashes_500_revision
+				}
 				qwest.post(
 					'/api/decks/snapshot',
-					{
-						'title': title,
-						'description': description,
-						'phoenixborn': this.$store.state.deck.phoenixborn,
-						'dice': this.$store.state.deck.dice,
-						'cards': this.$store.state.deck.cards,
-						'source_id': this.$store.state.deck.id,
-						'is_snapshot': true,
-						'is_public': this.public
-					},
+					deckData,
 					{dataType: 'json'}
 				).then((xhr, response) => {
 					if (response.validation) {
