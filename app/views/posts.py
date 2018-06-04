@@ -213,7 +213,7 @@ def submit(section_stub=None):
 def edit(post_id):
     post = verify_post(post_id)
     post_form = PostForm(obj=post)
-    post_form.section.choices = get_section_choices()
+    post_form.section_stub.choices = get_section_choices()
     if post_form.cancel.data:
         return redirect(url_for('posts.view', post_id=post_id), code=303)
     if not post_form.preview.data and post_form.validate_on_submit():
