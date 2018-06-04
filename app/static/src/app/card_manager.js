@@ -61,6 +61,7 @@ function releasesToIds (releases) {
 export default class {
 	constructor (cardData) {
 		// Create lookup table by ID
+		this.cardData = cardData
 		this.idMap = {}
 		let nameMap = {}
 		for (let card of cardData) {
@@ -96,25 +97,87 @@ export default class {
 	} = {}) {
 		const releaseIds = releasesToIds(releases)
 		const nano = new Nanobar({ autoRun: true })
-		qwest.post('/api/cards/search', {
-			search: search,
-			types: types,
-			releases: releaseIds,
-			dice: dice,
-			diceLogic: diceLogic,
-			phoenixborn: phoenixborn,
-			includeAllCards: includeAllCards
-		}, {dataType: 'json'}).then((xhr, response) => {
-			let cards = this.idsToListing(response)
-			callback(this.sortListing(cards, {
-				primaryOrder, primarySort, secondaryOrder, secondarySort
-			}))
-		}).catch(function (error, xhr, response) {
-			console.log('Failure!', response)
-			callback(null)
-		}).complete(() => {
-			nano.go(100)
+		if (search) {
+			qwest.post('/api/cards/search', {
+				search: search,
+				types: types,
+				releases: releaseIds,
+				dice: dice,
+				diceLogic: diceLogic,
+				phoenixborn: phoenixborn,
+				includeAllCards: includeAllCards
+			}, {dataType: 'json'}).then((xhr, response) => {
+				let cards = this.idsToListing(response)
+				callback(this.sortListing(cards, {
+					primaryOrder, primarySort, secondaryOrder, secondarySort
+				}))
+			}).catch(function (error, xhr, response) {
+				console.log('Failure!', response)
+				callback(null)
+			}).complete(() => {
+				nano.go(100)
+			})
+			return
+		}
+		// Only include conjurations if they are specifically called for
+		const excludeConjurations = (!types || !includes(types, 'conjurations')) && !includeAllCards
+		const excludePhoenixborn = (!types || !includes(types, 'Phoenixborn')) && !includeAllCards
+		let subset = filter(this.cardData, (card) => {
+			if (excludeConjurations &&
+					(card.type === 'Conjuration' || card.type === 'Conjured Alteration Spell')) {
+				return false
+			}
+			if (excludePhoenixborn && card.type === 'Phoenixborn') {
+				return false
+			}
+			if (phoenixborn && card.phoenixborn && card.phoenixborn !== phoenixborn) {
+				return false
+			}
+			if (types && types.length &&
+					!includes(types, card.type) &&
+					(!includes(types, 'summon') || !startsWith(card.name, 'Summon')) &&
+					(!includes(types, 'conjurations') ||
+					!includes(['Conjuration', 'Conjured Alteration Spell'], card.type))) {
+				return false
+			}
+			if (releaseIds && releaseIds.length && !releaseIds.includes(card.release)) {
+				return false
+			}
+			if (dice && dice.length) {
+				if (diceLogic === 'and') {
+					for (const die of dice) {
+						if (!includes(card.dice, die) && !includes(card.splitDice, die)) {
+							return false
+						}
+					}
+				} else if (card.dice && card.dice.length) {
+					for (const die of card.dice) {
+						if (!includes(dice, die)) {
+							return false
+						}
+					}
+				} else if (card.splitDice && card.splitDice.length) {
+					let oneSplitMatch = false
+					for (const die of card.splitDice) {
+						if (includes(dice, die)) {
+							oneSplitMatch = true
+						}
+					}
+					if (!oneSplitMatch) {
+						return false
+					}
+				} else if (!includes(dice, 'basic')) {
+					// Card doesn't have any dice associated with it,
+					// and we aren't filtering for basic-only
+					return false
+				}
+			}
+			return true
 		})
+		callback(this.sortListing(subset, {
+			primaryOrder, primarySort, secondaryOrder, secondarySort
+		}))
+		nano.go(100)
 	}
 	sortListing (cards, {
 		primarySort = 'name',
