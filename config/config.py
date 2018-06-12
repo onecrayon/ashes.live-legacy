@@ -46,6 +46,8 @@ MAIL_USERNAME = None
 MAIL_PASSWORD = None
 MAIL_DEFAULT_SENDER = None
 MAIL_MAX_EMAILS = None
+# Set to an email to have all site emails re-routed here when DEBUG == True above
+DEBUG_MAIL_RECIPIENT = ''
 
 # Optional; if set will use SendGrid instead of SMTP
 SENDGRID_API_KEY = ''

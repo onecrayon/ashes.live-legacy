@@ -105,6 +105,15 @@ def send_message(recipients, subject, template_name, sender=None, **kwargs):
     )
     if not sender:
         sender = current_app.config['MAIL_DEFAULT_SENDER']
+    
+    if current_app.config['DEBUG'] and current_app.config['DEBUG_MAIL_RECIPIENT']:
+        if isinstance(recipients, str):
+            recipients = [recipients]
+        new_recipients = []
+        for recipient in recipients:
+            current_app.logger.warning('Replacing email recipient: <{}>'.format(recipient))
+            new_recipients.append(current_app.config['DEBUG_MAIL_RECIPIENT'])
+        recipients = new_recipients
 
     Thread(
         target=async_email,
