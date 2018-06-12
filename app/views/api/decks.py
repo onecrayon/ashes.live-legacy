@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from app import db
 from app.exceptions import ApiError
 from app.models.ashes_500 import Ashes500Revision, Ashes500Value
-from app.models.card import DiceFlags
+from app.models.card import Card, DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.models.stream import Streamable
 from app.jinja_globals import deck_title as compose_deck_title
@@ -125,8 +125,22 @@ def save(deck_id=None, is_snapshot=False):
     # And then the card listing
     cards = []
     card_counts = {int(key): int(value) for key, value in data.get('cards', {}).items()}
+    # No idea how, but a Phoenixborn managed to get saved in a deck; so let's quash that possibility
+    phoenixborn_ids = [
+        x.id for x in db.session.query(Card.id).filter(Card.card_type == 'Phoenixborn').all()
+    ]
     for card_id, count in card_counts.items():
         count = count if count <= 3 else 3
+        if card_id in phoenixborn_ids:
+            return jsonify({
+                'error': (
+                    'Your deck includes a Phoenixborn within the decklist (this should be '
+                    'impossible; that it happened means a bug has occurred). Please remove the '
+                    'offending card, or reload the page and try saving again. If you remember how '
+                    'you added the Phoenixborn to the decklist, please '
+                    '<a href="{}" class="error" target="_blank">contact me</a>.'
+                ).format(url_for('home.feedback'))
+            })
         cards.append(DeckCard(
             card_id=card_id,
             count=count
