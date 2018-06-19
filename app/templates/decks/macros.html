@@ -18,7 +18,7 @@
 	</ul>
 {%- endmacro %}
 
-{% macro deck_details(deck, card_map, current_user, history_view=1, link_id=0) -%}
+{% macro deck_details(deck, card_map, current_user, history_view=1, link_id=0, latest_ashes_500=0) -%}
 	{% from "macros.html" import usertag %}
 	<div class="responsive-cols no-wrap">
 		<h2 class="col-flex">
@@ -56,8 +56,8 @@
 			{% endif %}
 			<span class="card-count float-right">{{ deck.cards | sum(attribute='count') }} / 30</span>
 			{% if deck.ashes_500_revision_id %}
-			<span class="ashes-500-score float-right{% if deck.ashes_500_score > 500 %} error{% endif %}">
-				<i class="fa fa-tachometer" aria-hidden="true"></i>
+			<span class="ashes-500-score float-right{% if deck.ashes_500_score > 500 %} error{% elif deck.ashes_500_revision != latest_ashes_500 %} warning{% endif %}">
+				<i class="fa fa-{% if deck.ashes_500_revision == latest_ashes_500 %}tachometer{% else %}exclamation-triangle{% endif %}" aria-hidden="true"></i>
 				{{ deck.ashes_500_score }}
 			</span>
 			{% endif %}

@@ -48,11 +48,12 @@
 			</div>
 			<h2 class="responsive-cols no-wrap">
 				<span class="col-flex">
+					{% if entity.ashes_500_score is not none %}<i class="fa fa-tachometer deck-type-icon" title="Ashes 500"></i>{% endif %}
 					<a href="{{ url_for('decks.view', deck_id=entity.source_id) }}">{{ entity | deck_title }}</a>
 				</span>
 				{% if entity.ashes_500_score is not none %}
-				<span class="ashes-500-score col{% if entity.ashes_500_score > 500 %} error{% endif %}">
-					<i class="fa fa-tachometer" aria-hidden="true"></i>
+				<span class="ashes-500-score col{% if entity.ashes_500_score > 500 %} error{% elif entity.ashes_500_revision != latest_ashes_500 %} warning{% endif %}">
+					<i class="fa fa-{% if entity.ashes_500_revision == latest_ashes_500 %}tachometer{% else %}exclamation-triangle{% endif %}" aria-hidden="true"></i>
 					{{ entity.ashes_500_score }}
 				</span>
 				{% endif %}

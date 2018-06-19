@@ -15,6 +15,7 @@ from app.views.forms.player import (
     CreateForm, EditForm, EmailForm, LoginForm, ModerateUserForm, PasswordForm, ReauthorizeForm,
     ResetForm
 )
+from app.utils.ashes_500 import latest_ashes_500_revision
 from app.utils.decks import get_decks
 from app.utils import send_message
 from app.wrappers import guest_required
@@ -79,6 +80,7 @@ def view(badge, page=None):
         user=user,
         decks=decks,
         card_map=card_map,
+        latest_ashes_500=latest_ashes_500_revision(),
         page=page,
         pages=pagination
     )

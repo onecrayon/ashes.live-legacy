@@ -12,12 +12,20 @@
 {% block page_class %}sidebar-first deck-view-page{% endblock %}
 
 {% block heading %}
-	{% if is_base_deck %}
+	{% if is_base_deck or is_outdated %}
 	<ul class="alerts">
+		{% if is_base_deck %}
 		<li class="warning"><i class="fa fa-eye-slash"></i> You are viewing your most recent private save for this deck. <a href="{{ url_for('decks.view', deck_id=deck.id) }}">View public URL.</a></li>
+		{% endif %}
+		{% if is_outdated %}
+		<li class="warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> This deck is using outdated Ashes 500 point values. Please{% if not current_user.is_authenticated %} log in and{% endif %} {% if current_user.is_authenticated and deck.user_id == current_user.id%}edit{% else %}copy{% endif %} the deck to see current values.</li>
+		{% endif %}
 	</ul>
 	{% endif %}
-	<h1 class="phg-main-action">{{ deck | deck_title }}</h1>
+	<h1 class="phg-main-action">
+		{% if deck.ashes_500_revision_id %}<i class="fa fa-tachometer deck-type-icon" title="Ashes 500"></i>{% endif %}
+		{{ deck | deck_title }}
+	</h1>
 {% endblock %}
 
 {% block content %}
@@ -30,8 +38,8 @@
 				</a>
 			</span>
 			{% if deck.ashes_500_revision_id %}
-			<span class="ashes-500-score col{% if deck.ashes_500_score > 500 %} error{% endif %}">
-				<i class="fa fa-tachometer" aria-hidden="true"></i>
+			<span class="ashes-500-score col{% if deck.ashes_500_score > 500 %} error{% elif is_outdated %} warning{% endif %}">
+				<i class="fa fa-{% if not is_outdated %}tachometer{% else %}exclamation-triangle{% endif %}" aria-hidden="true"></i>
 				{{ deck.ashes_500_score }}
 			</span>
 			{% endif %}

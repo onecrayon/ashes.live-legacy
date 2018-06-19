@@ -9,7 +9,7 @@
 
 {% block content %}
 	<div class="deck {{ deck.phoenixborn.stub }}{% if deck.is_public %} public{% endif %}">
-		{{ deck_details(deck, card_map, current_user) }}
+		{{ deck_details(deck, card_map, current_user, latest_ashes_500=latest_ashes_500) }}
 	</div>
 
 	<form method="POST" action="./">

@@ -10,6 +10,7 @@ from app import db
 from app.exceptions import Redirect
 from app.models.card import Card, DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
+from app.utils.ashes_500 import latest_ashes_500_revision
 from app.utils.comments import process_comments
 from app.utils.decks import get_decks, get_decks_query, process_deck
 from app.utils.stream import new_entity, toggle_subscription
@@ -57,7 +58,8 @@ def index(page=None):
         pages=pagination,
         precon_decks=precon_decks,
         filters={k: v for k, v in filters.items() if v},
-        phoenixborn=phoenixborn
+        phoenixborn=phoenixborn,
+        latest_ashes_500=latest_ashes_500_revision(),
     )
 
 
@@ -104,6 +106,9 @@ def view(deck_id, page=1, show_saved=False):
     releases = list(releases)
     releases.sort()
     release_names = [current_app.config['RELEASE_NAMES'][release] for release in releases]
+    # Check for outdated Ashes 500
+    if deck.ashes_500_revision_id:
+        latest_ashes_500 = latest_ashes_500_revision()
     # Gather comments
     try:
         source_entity_id = deck.source.entity_id if deck.source else deck.entity_id
@@ -120,6 +125,7 @@ def view(deck_id, page=1, show_saved=False):
         releases=release_names,
         has_history=deck.has_snapshots,
         is_base_deck=show_saved,
+        is_outdated=(deck.ashes_500_revision_id and deck.ashes_500_revision_id != latest_ashes_500),
         # Standard comment properties
         comment_version=deck.id,
         comments=comments,
@@ -181,7 +187,8 @@ def edit(deck_id):
         'decks/edit.html',
         deck=deck,
         card_map={deck.id: process_deck(deck)},
-        form=form
+        form=form,
+        latest_ashes_500=latest_ashes_500_revision()
     )
 
 
@@ -221,6 +228,7 @@ def history(deck_id, page=None):
         published_deck=source if own_deck else published_deck,
         snapshots=decks,
         card_map=card_map,
+        latest_ashes_500=latest_ashes_500_revision(),
         page=page,
         pages=pagination
     )
@@ -239,6 +247,7 @@ def mine(page=None):
         'decks/mine.html',
         decks=decks,
         card_map=card_map,
+        latest_ashes_500=latest_ashes_500_revision(),
         page=page,
         pages=pagination
     )

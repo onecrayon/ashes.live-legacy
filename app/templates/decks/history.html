@@ -14,9 +14,9 @@
 	{% for snapshot in snapshots %}
 		<li class="deck {{ snapshot.phoenixborn.stub }}{% if snapshot.is_public %} public{% endif %}">
 			{% if published_deck and published_deck.id == snapshot.id %}
-			{{ deck_details(snapshot, card_map, current_user, link_id=snapshot.source_id) }}
+			{{ deck_details(snapshot, card_map, current_user, link_id=snapshot.source_id, latest_ashes_500=latest_ashes_500) }}
 			{% else %}
-			{{ deck_details(snapshot, card_map, current_user) }}
+			{{ deck_details(snapshot, card_map, current_user, latest_ashes_500=latest_ashes_500) }}
 			{% endif %}
 		</li>
 	{% endfor %}

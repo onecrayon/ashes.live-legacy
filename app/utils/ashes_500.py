@@ -1,6 +1,7 @@
 from collections import defaultdict
 
-from app.models.ashes_500 import Ashes500Value
+from app import db
+from app.models.ashes_500 import Ashes500Revision, Ashes500Value
 
 
 def get_ashes_500_maps(revision_id, ids=None):
@@ -24,3 +25,9 @@ def get_ashes_500_maps(revision_id, ids=None):
         if values.combo_card_id:
             ashes_500_combo_map[values.combo_card_id].append(values.card_id)
     return ashes_500_map, ashes_500_combo_map
+
+
+def latest_ashes_500_revision():
+    return db.session.query(Ashes500Revision.id).order_by(
+        Ashes500Revision.id.desc()
+    ).limit(1).scalar()
