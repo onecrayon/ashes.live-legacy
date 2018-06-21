@@ -1,5 +1,8 @@
 <template>
 	<div :id="isCardGallery ? 'gallery' : 'editor-gallery'">
+		<ul v-if="!isCardGallery && isAshes500Enabled && isOutdated && ashes500Score !== savedAshes500Score" class="alerts">
+			<li class="warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> This deck is using outdated Ashes 500 point values. It will update to the latest values when you save ({{ savedAshes500Score }} <i class="fa fa-arrow-right"></i> {{ ashes500Score }}).</li>
+		</ul>
 		<div v-if="isCardGallery || phoenixborn" class="gallery">
 			<card-filters></card-filters>
 			<card-listing></card-listing>
@@ -85,6 +88,17 @@
 			},
 			isAshes500Enabled () {
 				return this.$store.state.options.enableAshes500
+			},
+			ashes500Score () {
+				return this.$store.getters.ashes500Score
+			},
+			savedAshes500Score () {
+				return parseInt(this.$store.state.deck.ashes_500_score)
+			},
+			isOutdated () {
+				const currentRevision = this.$store.state.ashes_500_revision
+				const deckRevision = this.$store.state.deck.ashes_500_revision_id
+				return currentRevision && deckRevision && currentRevision !== deckRevision
 			},
 		},
 		methods: {

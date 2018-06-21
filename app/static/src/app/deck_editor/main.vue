@@ -251,6 +251,10 @@
 						this.$store.commit('setId', response.data.id)
 						history.pushState(null, 'Deck saved!', '/decks/build/' + response.data.id + '/')
 					}
+					if (response.data.ashes_500_revision_id) {
+						this.$store.commit('setDeck500Revision', response.data.ashes_500_revision_id)
+						this.$store.commit('setDeck500Score', response.data.ashes_500_score)
+					}
 				}).complete(() => {
 					nano.go(100)
 				})

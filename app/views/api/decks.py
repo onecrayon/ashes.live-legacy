@@ -203,7 +203,11 @@ def save(deck_id=None, is_snapshot=False):
 
     return jsonify({'success': '{} successfully saved!'.format(
         'Snapshot' if is_snapshot else 'Deck'
-    ), 'data': {'id': deck.id}})
+    ), 'data': {
+        'id': deck.id,
+        'ashes_500_score': deck.ashes_500_score,
+        'ashes_500_revision_id': deck.ashes_500_revision_id
+    }})
 
 
 @mod.route('/<int:deck_id>', methods=['DELETE'])

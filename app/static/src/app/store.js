@@ -122,7 +122,9 @@ export default new Vuex.Store({
 				result[value] = 0
 				return result
 			}, {}),
-			cards: {}
+			cards: {},
+			ashes_500_score: null,
+            ashes_500_revision_id: null
 		}, globals.deck || {}),
 		listing: [],
 		options: merge({
@@ -343,6 +345,12 @@ export default new Vuex.Store({
 			} else {
 				state.deck.cards[payload.id] = payload.qty
 			}
+		},
+		setDeck500Revision (state, revision) {
+			state.deck.ashes_500_revision_id = revision
+		},
+		setDeck500Score (state, score) {
+			state.deck.ashes_500_score = score
 		},
 		// Filter methods
 		setSearch (state, search) {
