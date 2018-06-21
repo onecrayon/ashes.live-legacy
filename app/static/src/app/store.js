@@ -51,7 +51,7 @@ const cardTypeOrder = [
 	'Ready Spell', 'Ally', 'Alteration Spell', 'Action Spell', 'Reaction Spell'
 ]
 
-let defaultReleases = !globals.galleryOnly ? ['core'] : ['core', 'expansions']
+let defaultReleases = ['core', 'expansions']
 let deckPhoenixborn = null
 if (globals.deck) {
 	deckPhoenixborn = globals.deck._phoenixborn_data
