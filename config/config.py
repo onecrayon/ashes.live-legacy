@@ -19,6 +19,8 @@ RELEASE_NAMES = {
     8: 'The Path of Assassins',
     9: 'The Goddess of Ishra',
     10: 'The Boy Among Wolves',
+    11: 'The Demons of Darmas',
+    12: 'The Spirits of Memoria',
     101: 'Dimona Odinstar (promo)',
     102: 'Lulu Firststone (promo)',
     103: 'Orrick Gilstream (promo)'
