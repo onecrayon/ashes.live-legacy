@@ -154,7 +154,9 @@ if (files) {
 			}
 			
 			// Check to see if we are working with a phoenixborn
-			if (meta.length == 2) {
+			if (meta.length == 2 && 
+					!meta[1].startsWith('Reaction Spell') &&
+					!meta[1].startsWith('Conjured Alteration Spell')) {
 				card.type = 'Phoenixborn'
 				stats = meta[1].split(sep)
 			} else {
@@ -167,10 +169,10 @@ if (files) {
 				card.type = typePlacement[0]
 				card.placement = typePlacement[1]
 				// If the third line starts with a letter, it's stats; otherwise cost
-				if (/^[a-z]/i.test(meta[2])) {
+				if (meta[2] && /^[a-z]/i.test(meta[2])) {
 					stats = meta[2].split(sep)
 				} else {
-					card.cost = meta[2].split(sep)
+					card.cost = meta.length > 2 ? meta[2].split(sep) : []
 					parseCostsToDiceTypes(card.cost, diceTypes, splitTypes)
 					// Calculate cost weighting
 					var cardWeight = 0
