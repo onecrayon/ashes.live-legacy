@@ -41,7 +41,7 @@ Attack 3 - Life 3 - Recover 2
 
 Chained Creations
 Ready Spell - Spellboard
-[[main]] [[side]] - 1 [[illusion:class]] - 1 [[divine:class]]
+[[main]] - [[side]] - 1 [[illusion:class]] - 1 [[divine:class]]
 
 When an ally is placed into your hand from your discard pile or from your battlefield, you may discard this card. If you do, remove a target conjuration from the game.
 
