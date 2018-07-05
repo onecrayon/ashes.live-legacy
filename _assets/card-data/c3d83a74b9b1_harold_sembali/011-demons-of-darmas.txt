@@ -1,0 +1,126 @@
+Adrenaline Rush
+Reaction Spell - Discard
+1 [[ceremonial:class]]
+
+You may play this spell when you would declare attackers. Deal 2 damage to a target unit you control and remove 1 exhaustion token from that unit. That unit may be declared as an attacker.
+
+=====
+
+Beast Mage
+Ally - Battlefield
+[[main]] - 2 [[sympathy:class]] - 1 [[basic]]
+Attack 2 - Life 2 - Recover 0
+
+Terrifying 1: This unit cannot be blocked or guarded against by units with an attack value of 1 or less.
+
+* Transform 2: While you do not have the first player token, the attack value, life value, and recover value of this unit are increased by 2.
+
+=====
+
+Beast Warrior
+Ally - Battlefield
+[[main]] - [[side]] - 1 [[sympathy:class]]
+Attack 1 - Life 1 - Recover 0
+
+Group Tactics 1: After you declare 3 or more attackers, you may add 1 to this unit's attack value for the remainder of this turn.
+
+* Transform 1: While you do not have the first player token, the attack value, life value, and recover value of this unit are increased by 1.
+
+=====
+
+Dark Reaping
+Action Spell - Discard
+[[main]] - 2 [[ceremonial:class]]
+
+Destroy a target unit you control. If you do, select 4 dice in your exhausted pool, re-roll them, and place them into your active pool.
+
+=====
+
+Dark Transformation (Harold Westraven)
+Conjured Alteration Spell - Phoenixborn
+Battlefield +1 - Life +1 - Spellboard +1 - Copies 3
+
+After attaching this spell, you may select 1 die in your exhausted pool, re-roll it, and place it into your active pool.
+
+* Spell Guard: This spell cannot be affected by an opponent's spell.
+
+=====
+
+Drain Vitality
+Ready Spell - Spellboard
+[[main]] / [[side]] - 1 [[basic]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]]: Deal 1 damage to a target unit. If you do, remove 1 wound token from a target unit.
+
+[[side]] - [[exhaust]] - 1 [[sympathy:class]]: Remove 1 status token from a target unit. If you do, place 1 status token on a target unit.
+
+=====
+
+Harold Westraven
+Battlefield 5 - Life 21 - Spellboard 2
+
+Mark Prey: [[side]] - [[exhaust]] - 1 [[basic]]: Attach a [[Hunter's Mark]] conjured alteration spell to a target unit.
+
+=====
+
+Harvest Soul (Harold Westraven)
+Reaction Spell - Discard
+
+You may play this spell when a unit is destroyed as a result of a spell, attack, counter, ability, or dice power you control. Remove that unit from the game. Draw 1 card and attach a [[Dark Transformation]] conjured alteration spell to your Phoenixborn.
+
+=====
+
+Hunter's Mark (Harold Westraven)
+Conjured Alteration Spell - Unit
+
+When this unit receives damage, place twice the normal number of wound tokens on it.
+
+While this unit is the target of an attack, no guard may be declared.
+
+=====
+
+Master Vampire
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:power]] / 1 [[sympathy:power]] - 1 [[ceremonial:class]] - 1 [[sympathy:class]]
+Attack 3 - Life 4 - Recover 1
+
+Blood Drain 1: When a unit is destroyed as a result of this unit's attack, place 1 status token on this unit.
+
+Mesmerize: When this unit becomes blocked or guarded against by a unit, you may remove 1 status token from this unit. If you do, that unit cannot counter for the remainder of this turn.
+
+=====
+
+Psychic Vampire
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:power]]
+Attack 2 - Life 1 - Recover 0
+
+Lobotomize 1: When this unit is destroyed as a result of a spell, attack, counter, ability, or dice power an opponent controls, that opponent must discard 1 card of their choice from their hand.
+
+=====
+
+Summon Vampire Bat Swarm
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[sympathy:class]]: Place a [[Vampire Bat Swarm]] conjuration onto your battlefield.
+
+=====
+
+Transmute Magic
+Action Spell - Discard
+[[side]] - 1 [[sympathy:class]] - X [[basic]]
+
+Select X dice in your exhausted pool and place them into your active pool on a side of your choice. Change 2 dice in a target player's active pool to a side of your choice.
+
+=====
+
+Vampire Bat Swarm
+Conjuration - Battlefield
+Attack 2 - Life 3 - Recover 0 - Copies 3
+
+Swarm 2: When this unit would deal damage to a Phoenixborn by attacking, you may instead deal 1 damage to up to 2 target units.
+
+* Relentless: When this unit would receive damage, reduce that damage to 1.
+
+* Fleeting: Discard this card at the end of this round.

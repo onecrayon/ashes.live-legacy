@@ -1,0 +1,135 @@
+Admonisher
+Conjuration - Battlefield
+Attack 0 - Life 2 - Recover 0 - Copies 3
+
+Rebuke 1: At the end of each round, deal 1 damage to a target Phoenixborn.
+
+=====
+
+Angelic Rescue
+Reaction Spell - Discard
+1 [[illusion:power]]
+
+You may play this spell when an opponent would use a spell, ability, or dice power that targets a unit you control. Cancel the effects of that spell, ability, or dice power. You may spend 1 [[divine:class]] to attach an [[Angel's Embrace]] conjured alteration spell to that unit.
+
+=====
+
+Angel's Embrace
+Conjured Alteration Spell - Unit
+Copies 3
+
+* Fleeting: Discard this card at the end of this round.
+
+* This unit now has the following abilities:
+
+* Magic Guard: This unit cannot be affected by an opponent's spell.
+
+* Word of Recall: [[side]]: If this unit is an ally, place it into its owner's hand.
+
+=====
+
+Celestial Knight
+Ally - Battlefield
+[[main]] - 1 [[divine:power]] - 2 [[divine:class]]
+Attack 3 - Life 3 - Recover 2
+
+* Spiked Skin 2: When this unit is dealt damage by one or more attacking or countering units, deal 2 damage to each unit that is attacking or countering this unit.
+
+* Armored 1: When this unit would receive damage, prevent 1 damage.
+
+=====
+
+Chained Creations
+Ready Spell - Spellboard
+[[main]] [[side]] - 1 [[illusion:class]] - 1 [[divine:class]]
+
+When an ally is placed into your hand from your discard pile or from your battlefield, you may discard this card. If you do, remove a target conjuration from the game.
+
+* Respark: 1 [[basic]] or 1 [[discard]]
+
+=====
+
+Gates Thrown Open
+Ready Spell - Spellboard
+[[main]] - 2 [[illusion:class]]
+
+When this spell comes into play, select 4 dice in your exhausted pool and place them onto this spell on a side of your choice.
+
+You may exhaust dice on this spell as if they were in your active pool when paying the costs of cards in your hand.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+=====
+
+Law Of Banishment
+Ready Spell - Spellboard
+[[main]] - 1 [[divine:class]]
+
+When this spell comes into play, choose a player. That player must place 1 exhaustion token on an unexhausted ready spell they control.
+
+When a conjuration leaves play, that conjuration's controlling player may discard an unexhausted ready spell they control. If they do not or cannot, remove that conjuration from the game.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Sembali Grimtongue
+Battlefield 5 - Life 19 - Spellboard 3
+
+Ban Manifestation: When a unit you control leaves play, you may discard 1 card from your hand and place 1 exhaustion token on this card to choose a target conjuration an opponent owns. That opponent must remove that conjuration from the game or remove all copies of that conjuration in their conjuration pile from the game.
+
+=====
+
+Shadow Guard
+Ally - Battlefield
+[[main]] - 2 [[illusion:class]]
+Attack 3 - Life 1 - Recover 1
+
+~ Hidden: After an opponent has declared attackers, you may play this unit from your hand without paying its main action cost.
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+=====
+
+Shepherd Of Lost Souls
+Ally - Battlefield
+[[main]] - [[side]] - 1 [[divine:class]]
+Attack 1 - Life 1 - Recover 0
+
+Spirit Guide: When this unit comes into play, you may search your discard pile for an ally with a title other than this unit's title and place it into your hand.
+
+=====
+
+Spectral Assassin
+Conjuration - Battlefield
+Attack 2 - Life 1 - Recover 0 - Copies 3
+
+Spy 1: After this unit deals damage to an opponent's Phoenixborn by attacking, you may draw 1 card.
+
+=====
+
+Summon Admonisher
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[divine:class]]: Place an [[Admonisher]] conjuration onto your battlefield.
+
+Focus 1: If you cannot, deal 1 damage to a target Phoenixborn.
+
+=====
+
+Summon Spectral Assassin
+Action Spell - Discard
+[[side]] - 1 [[illusion:class]] - 1 [[basic]]
+
+Choose a target ally you control and place it into its owner's hand. If you do, place a [[Spectral Assassin]] conjuration onto your battlefield. You may draw 1 card.
+
+=====
+
+Veil Of Reversal (Sembali Grimtongue)
+Reaction Spell - Discard
+2 [[basic]]
+
+You may play this spell when an opponent would use a spell, ability, or dice power that targets you, your draw pile, your discard pile, or your Phoenixborn. Cancel the effects of that spell, ability, or dice power. You may choose a target ally you control and place it into its owner's hand. If you do, remove a target conjuration from the game.
