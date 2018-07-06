@@ -72,6 +72,7 @@ You may play this spell when a unit is destroyed as a result of a spell, attack,
 
 Hunter's Mark (Harold Westraven)
 Conjured Alteration Spell - Unit
+Copies 1
 
 When this unit receives damage, place twice the normal number of wound tokens on it.
 
