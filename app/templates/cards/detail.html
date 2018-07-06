@@ -80,11 +80,13 @@
 			</ol>
 			{% endif %}
 
-			{% if card.type != 'Phoenixborn' and (card.attack is defined or card.life is defined or card.recover is defined or card.copies is defined) %}
+			{% if card.type != 'Phoenixborn' and (card.attack is defined or card.life is defined or card.recover is defined or card.copies is defined or card.battlefield is defined or card.spellboard is defined) %}
 			<ul class="statline">
 				{% if card.attack is defined %}<li class="attack">Attack {{ card.attack }}</li>{% endif %}
+				{% if card.battlefield is defined %}<li class="attack">Battlefield {{ card.battlefield }}</li>{% endif %}
 				{% if card.life is defined %}<li class="life">Life {{ card.life }}</li>{% endif %}
 				{% if card.recover is defined %}<li class="recover">Recover {{ card.recover }}</li>{% endif %}
+				{% if card.spellboard is defined %}<li class="recover">Spellboard {{ card.spellboard }}</li>{% endif %}
 				{% if card.copies is defined %}<li class="copies">{{ card.copies }}</li>{% endif %}
 			</ul>
 			{% endif %}
