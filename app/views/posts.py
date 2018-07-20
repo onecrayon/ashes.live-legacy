@@ -15,7 +15,9 @@ from app.models.user import User
 from app.utils import get_pagination
 from app.utils.comments import process_comments
 from app.utils.posts import get_pinned_posts
-from app.utils.stream import new_entity, refresh_entity, toggle_subscription, update_subscription
+from app.utils.stream import (
+    new_entity, refresh_entity, toggle_subscription, update_subscription, post_to_entity_map
+)
 from app.views.forms.post import (
     PostForm, DeletePostForm, ModeratePostForm, PinPostForm, SectionForm
 )
@@ -110,9 +112,25 @@ def section(stub, page=None):
     section = db.session.query(Section).filter(Section.stub == stub).first()
     if not section:
         abort(404)
-    query = db.session.query(Post).options(
+    user_id = current_user.id if current_user.is_authenticated else None
+    query = db.session.query(
+        Post,
+        Subscription,
+        db.func.count(Comment.id).label('comment_count'),
+        db.func.max(Comment.entity_id).label('max_entity_id')
+    ).options(
         db.joinedload('user'),
         db.joinedload('section')
+    ).outerjoin(
+        Subscription, db.and_(
+            Subscription.source_entity_id == Post.entity_id,
+            Subscription.user_id == user_id
+        )
+    ).outerjoin(
+        Comment, db.and_(
+            Comment.source_entity_id == Post.entity_id,
+            Comment.is_deleted.is_(False)
+        )
     ).filter(
         Post.section_id == section.id,
         Post.is_deleted.is_(False)
@@ -132,9 +150,19 @@ def section(stub, page=None):
     if not page:
         page = 1
     per_page = current_app.config['DEFAULT_PAGED_RESULTS']
-    posts = query.order_by(Post.created.desc()).limit(per_page).offset(
+    post_results = query.group_by(Post.entity_id).order_by(
+        db.func.max(Comment.created).desc()
+    ).limit(per_page).offset(
         (page - 1) * per_page
     ).all()
+    posts = [dict({
+        'is_unread': (
+            x.max_entity_id > x.Subscription.last_seen_entity_id
+            if x.Subscription and x.Subscription.last_seen_entity_id
+            else False
+        ),
+        'comment_count': x.comment_count
+    }, **post_to_entity_map(x.Post)) for x in post_results]
     pagination = get_pagination(query.count(), page, per_page)
     pinned = get_pinned_posts(section_id=section.id) if page == 1 and not search else None
     return render_template(
