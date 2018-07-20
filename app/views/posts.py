@@ -147,10 +147,11 @@ def section(stub, page=None):
             FullTextSearch(exact, TitleTextSearch, FullTextMode.BOOLEAN),
             FullTextSearch(prefixes, TitleTextSearch, FullTextMode.BOOLEAN)
         ))
+    query = query.group_by(Post.entity_id)
     if not page:
         page = 1
     per_page = current_app.config['DEFAULT_PAGED_RESULTS']
-    post_results = query.group_by(Post.entity_id).order_by(
+    post_results = query.order_by(
         db.func.max(Comment.created).desc()
     ).limit(per_page).offset(
         (page - 1) * per_page
