@@ -8,6 +8,7 @@ import sqlalchemy_fulltext.modes as FullTextMode
 
 from app import db
 from app.exceptions import Redirect
+from app.models.comment import Comment
 from app.models.post import Post, Section, TitleTextSearch
 from app.models.stream import Stream, Subscription
 from app.models.user import User
@@ -43,7 +44,63 @@ def get_section_choices():
 @mod.route('/')
 def index():
     """List all available sections"""
-    return render_template('posts/index.html', sections=db.session.query(Section).all())
+    sections = db.session.query(
+        Section.id,
+        Section.title,
+        Section.description,
+        Section.stub,
+        Section.is_restricted,
+        db.func.count(Post.id).label('post_count')
+    ).outerjoin(
+        Post, Post.section_id == Section.id
+    ).group_by(Section.id).all()
+    meta_map = {}
+    per_page = 5
+    user_id = current_user.id if current_user.is_authenticated else None
+    for section in sections:
+        posts = db.session.query(
+            Post,
+            Subscription,
+            db.func.count(Comment.id).label('comment_count'),
+            db.func.max(Comment.entity_id).label('max_entity_id')
+        ).options(
+            db.joinedload('user')
+        ).outerjoin(
+            Subscription, db.and_(
+                Subscription.source_entity_id == Post.entity_id,
+                Subscription.user_id == user_id
+            )
+        ).outerjoin(
+            Comment, db.and_(
+                Comment.source_entity_id == Post.entity_id,
+                Comment.is_deleted.is_(False)
+            )
+        ).filter(
+            Post.is_deleted.is_(False),
+            Post.section_id == section.id
+        ).group_by(Post.entity_id).order_by(db.func.max(Comment.created).desc()).limit(
+            per_page if not section.is_restricted else 1
+        ).all()
+        meta_map[section.id] = [{
+            'id': x.Post.id,
+            'title': x.Post.title,
+            'created': x.Post.created,
+            'user': {
+                'badge': x.Post.user.badge,
+                'username': x.Post.user.username
+            },
+            'is_unread': (
+                x.max_entity_id > x.Subscription.last_seen_entity_id
+                if x.Subscription and x.Subscription.last_seen_entity_id
+                else False
+            ),
+            'comment_count': x.comment_count
+        } for x in posts]
+    return render_template(
+        'posts/index.html',
+        sections=sections,
+        section_map=meta_map
+    )
 
 
 @mod.route('/<stub>/')

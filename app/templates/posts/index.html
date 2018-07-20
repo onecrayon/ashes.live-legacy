@@ -1,15 +1,61 @@
-{% from "macros.html" import sectiontag %}
+{% from "macros.html" import sectiontag, usertag %}
 {% extends "base.html" %}
 {% block title %}Sections{% endblock %}
 
 {% block heading %}
-	<h1 class="phg-divine-power">Sections</h1>
+	<h1 class="phg-divine-power">Recent Posts</h1>
 {% endblock %}
 
 {% block content %}
 	{% for section in sections %}
-	<h2>{{ sectiontag(section) }}</h2>
+	<h2>{{ sectiontag(section) }} <span class="muted">({{ section.post_count }})</span></h2>
+
+	{% if section_map[section.id] %}
+	<ul class="post-listing">
+		{% for post in section_map[section.id] %}
+		<li class="post{% if post.is_unread %} unread{% endif %}">
+			<h4><a href="{{ url_for('posts.view', post_id=post.id) }}">
+				{{ post.title }}
+				<span class="float-right comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</span>
+			</a></h4>
+			<div class="post-meta">
+				<p>Posted by {{ usertag(post.user) }} on {{ post.created | format_date }}</p>
+			</div>
+			{# <div class="post-footer responsive-cols">
+				<ul class="divider-separated col">
+					{% if current_user.is_authenticated and (post.user_id == current_user.id or current_user.is_admin) %}
+						{% if post.user_id == current_user.id %}
+							{% if post.is_moderated %}
+							<li><a href="{{ url_for('posts.notes', post_id=post.id) }}" class="moderator-action"><i class="fa fa-lock"></i> Comment locked by moderator</a></li>
+							{% else %}
+							<li><a href="{{ url_for('posts.edit', post_id=post.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+							<li><a href="{{ url_for('posts.delete', post_id=post.id) }}"><i class="fa fa-trash"></i> Delete</a></li>
+							{% endif %}
+						{% endif %}
+						{% if current_user.is_admin and post.user_id != current_user.id %}
+						<li><a href="{{ url_for('posts.moderate', post_id=post.id) }}" class="moderator-action"><i class="fa fa-wrench"></i> Moderate</a></li>
+						{% endif %}
+					{% endif %}
+				</ul>
+				{% if post.created != post.modified %}
+				<p class="col-flex timestamp text-right">Last edited {{ post.modified | format_date }}</p>
+				{% endif %}
+			</div> #}
+		</li>
+		{% endfor %}
+	</ul>
+	<p class="text-right">{{ sectiontag(section, prepend='View all') }}</p>
+	{% else %}
 	{{ section.description | parse_text }}
+	{% endif %}
 	{% if not loop.last %}<hr>{% endif %}
 	{% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+	{% if current_user.is_authenticated %}
+	<a href="{{ url_for('posts.submit') }}" class="btn btn-block btn-success">
+		<i class="fa fa-sticky-note"></i> Submit New Post
+	</a>
+	{% endif %}
 {% endblock %}

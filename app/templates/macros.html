@@ -6,8 +6,9 @@
 	{%- endif %}
 {%- endmacro %}
 
-{% macro sectiontag(section, classes='') -%}
+{% macro sectiontag(section, classes='', prepend='') -%}
 	<a href="{{ url_for('posts.section', stub=section.stub) }}" class="section{% if classes %} {{ classes }}{% endif %}">
+		{%- if prepend %}{{ prepend }} {% endif %}
 		{%- if section.stub == 'news' -%}
 		<i class="fa fa-rss"></i>
 		{%- elif section.stub == 'general' -%}
