@@ -53,9 +53,9 @@
 	{% endif %}
 	{% for post in posts %}
 		<li class="post{% if post.is_unread %} unread{% endif %}">
-			<h2 class="post-header"><a href="{{ url_for('posts.view', post_id=post.id) }}">
-				{{ post.title }}
-				<span class="float-right comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</span>
+			<h2 class="post-header"><a href="{{ url_for('posts.view', post_id=post.id) }}" class="responsive-cols no-wrap">
+				<span class="col-flex">{{ post.title }}</span>
+				<span class="col comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</span>
 			</a></h2>
 			<div class="post-meta responsive-cols no-wrap">
 				<p class="col-flex">Posted by {{ usertag(post.user) }} in {{ sectiontag(post.section) }}</p>

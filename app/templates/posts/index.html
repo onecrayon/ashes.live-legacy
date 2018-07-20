@@ -14,9 +14,9 @@
 	<ul class="post-listing">
 		{% for post in section_map[section.id] %}
 		<li class="post{% if post.is_unread %} unread{% endif %}">
-			<h4><a href="{{ url_for('posts.view', post_id=post.id) }}">
-				{{ post.title }}
-				<span class="float-right comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</span>
+			<h4><a href="{{ url_for('posts.view', post_id=post.id) }}" class="responsive-cols no-wrap">
+				<span class="col-flex">{{ post.title }}</span>
+				<span class="col comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</span>
 			</a></h4>
 			<div class="post-meta">
 				<p>Posted by {{ usertag(post.user) }} on {{ post.created | format_date }}</p>
