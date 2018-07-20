@@ -20,7 +20,17 @@
 		display: block;
 	}
 
-	#sidebar .btn {
+	#sidebar {
+		.btn {
+			display: none;
+		}
+
+		.btn + hr {
+			display: none;
+		}
+	}
+
+	#comments {
 		display: none;
 	}
 
@@ -40,6 +50,10 @@
 		background: transparent;
 		padding: 0;
 		color: @color-black;
+	}
+
+	.alerts {
+		display: none;
 	}
 
 	.deck-listing #sidebar {
@@ -100,6 +114,7 @@
 
 		h2:before {
 			content: 'Phoenixborn: ';
+			padding-right: 5px;
 		}
 
 		h3 .card-count {
@@ -124,6 +139,10 @@
 			&:nth-of-type(3n+4) {
 				clear: left;
 			}
+		}
+
+		.ashes-500-score {
+			color: @color-black !important;
 		}
 	}
 
