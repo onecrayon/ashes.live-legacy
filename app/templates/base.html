@@ -71,50 +71,54 @@
 					</li>
 				</ul>
 			</div>
-			<ul class="secondary-nav">
-				<li>
-					<a class="decks-link" href="{{ url_for('decks.index') }}">
-						<i class="fa fa-eye" aria-hidden="true"></i> <span class="full-display-only">Public</span> Decks
-					</a>
-				</li>
-				<li>
-					<a class="gallery-link" href="{{ url_for('cards.index') }}">
-						<i class="fa fa-th-list" aria-hidden="true"></i> <span class="full-display-only">Browse</span> Cards
-					</a>
-				</li>
-				<li class="mid-link">
-					<a class="posts-link" href="{{ url_for('posts.index') }}">
-						<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Posts
-					</a>
-				</li>
-				{# <li>
-					<a class="stats-link disabled" href="{{ url_for('stats.view') }}">
-						<i class="fa fa-bar-chart" aria-hidden="true"></i> <span class="full-display-only">Statistics</span>
-					</a>
-				</li> #}
-				<li>
-					{% if current_user.is_authenticated %}
-					<a href="{{ url_for('player.settings') }}">
-						<i class="fa fa-user" aria-hidden="true"></i> Account
-					</a>
-					{% else %}
-					<a href="{{ url_for('player.new') }}">
-						<i class="fa fa-user" aria-hidden="true"></i> Create <span class="full-display-only">Account</span>
-					</a>
-					{% endif %}
-				</li>
-				<li>
-					{% if current_user.is_authenticated %}
-					<a href="{{ url_for('player.logout') }}">
-						<i class="fa fa-sign-out" aria-hidden="true"></i> Log out
-					</a>
-					{% else %}
-					<a href="{{ url_for('player.login') }}">
-						<i class="fa fa-sign-in" aria-hidden="true"></i> Log in
-					</a>
-					{% endif %}
-				</li>
-			</ul>
+			<div class="secondary-nav responsive-cols">
+				<div class="col-flex responsive-cols no-wrap nav-items">
+					<div class="col">
+						<a class="decks-link" href="{{ url_for('decks.index') }}">
+							<i class="fa fa-eye" aria-hidden="true"></i> <span class="full-display-only">Public</span> Decks
+						</a>
+					</div>
+					<div class="col">
+						<a class="gallery-link" href="{{ url_for('cards.index') }}">
+							<i class="fa fa-th-list" aria-hidden="true"></i> <span class="full-display-only">Browse</span> Cards
+						</a>
+					</div>
+					<div class="col-flex">
+						<a class="posts-link" href="{{ url_for('posts.index') }}">
+							<i class="fa fa-sticky-note-o" aria-hidden="true"></i> Posts
+						</a>
+					</div>
+					{# <div>
+						<a class="stats-link disabled" href="{{ url_for('stats.view') }}">
+							<i class="fa fa-bar-chart" aria-hidden="true"></i> <span class="full-display-only">Statistics</span>
+						</a>
+					</div> #}
+				</div>
+				<div class="col responsive-cols no-wrap nav-items nav-following-line">
+					<div class="col-flex">
+						{% if current_user.is_authenticated %}
+						<a href="{{ url_for('player.settings') }}">
+							<i class="fa fa-user" aria-hidden="true"></i> Account
+						</a>
+						{% else %}
+						<a href="{{ url_for('player.new') }}">
+							<i class="fa fa-user" aria-hidden="true"></i> Create <span class="full-display-only">Account</span>
+						</a>
+						{% endif %}
+					</div>
+					<div class="last-nav-item col">
+						{% if current_user.is_authenticated %}
+						<a href="{{ url_for('player.logout') }}">
+							<i class="fa fa-sign-out" aria-hidden="true"></i> Log out
+						</a>
+						{% else %}
+						<a href="{{ url_for('player.login') }}">
+							<i class="fa fa-sign-in" aria-hidden="true"></i> Log in
+						</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
 		</nav>
 	</header>
 	<div id="page">
