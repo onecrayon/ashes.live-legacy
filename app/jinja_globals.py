@@ -129,7 +129,7 @@ def parse_card_codes(text):
             text if text else text_url, '</a>'
         ])
     text = re.sub(
-        r'\[\[([^\]]*?)((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?)\]\]|(https?://[^\s/$.?#]+\.[^\s*]+?(?=[.?][^a-z]|!|\s|$))',
+        r'\[\[([^\]]*?)((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?)\]\]|(https?://[^\s/$.?#]+\.[^\s*]+?(?=[.?)][^a-z]|!|\s|$))',
         parse_url, text, flags=re.I
     )
     # Parse player links; e.g. [[Username#1234]] or [[#1234]]
