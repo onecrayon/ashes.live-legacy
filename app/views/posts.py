@@ -60,19 +60,22 @@ def index():
     per_page = 5
     user_id = current_user.id if current_user.is_authenticated else None
     for section in sections:
-        posts = db.session.query(
+        query = db.session.query(
             Post,
-            Subscription,
+            Subscription if user_id else db.bindparam('subscription', None).label('Subscription'),
             db.func.count(Comment.id).label('comment_count'),
             db.func.max(Comment.entity_id).label('max_entity_id')
         ).options(
             db.joinedload('user')
-        ).outerjoin(
-            Subscription, db.and_(
-                Subscription.source_entity_id == Post.entity_id,
-                Subscription.user_id == user_id
+        )
+        if user_id:
+            query = query.outerjoin(
+                Subscription, db.and_(
+                    Subscription.source_entity_id == Post.entity_id,
+                    Subscription.user_id == user_id
+                )
             )
-        ).outerjoin(
+        posts = query.outerjoin(
             Comment, db.and_(
                 Comment.source_entity_id == Post.entity_id,
                 Comment.is_deleted.is_(False)
@@ -115,18 +118,21 @@ def section(stub, page=None):
     user_id = current_user.id if current_user.is_authenticated else None
     query = db.session.query(
         Post,
-        Subscription,
+        Subscription if user_id else db.bindparam('subscription', None).label('Subscription'),
         db.func.count(Comment.id).label('comment_count'),
         db.func.max(Comment.entity_id).label('max_entity_id')
     ).options(
         db.joinedload('user'),
         db.joinedload('section')
-    ).outerjoin(
-        Subscription, db.and_(
-            Subscription.source_entity_id == Post.entity_id,
-            Subscription.user_id == user_id
+    )
+    if user_id:
+        query = query.outerjoin(
+            Subscription, db.and_(
+                Subscription.source_entity_id == Post.entity_id,
+                Subscription.user_id == user_id
+            )
         )
-    ).outerjoin(
+    query = query.outerjoin(
         Comment, db.and_(
             Comment.source_entity_id == Post.entity_id,
             Comment.is_deleted.is_(False)
