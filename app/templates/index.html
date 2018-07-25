@@ -76,36 +76,46 @@
 				</div>
 			</div>
 			{% elif entity.entity_type == 'post' %}
-			<h2 class="post-header"><a href="{{ entity.url }}">{{ entity.title }}</a></h2>
-			<div class="post-meta responsive-cols no-wrap">
-				<p class="col-flex">Posted by {{ usertag(entity.user) }} in {{ sectiontag(entity.section) }}</p>
-				<p class="timestamp col">{{ entity.created | format_date }}</p>
-			</div>
-			<div class="post-body">
-				{{ entity.text | parse_text }}
-			</div>
-			<div class="post-footer responsive-cols">
-				<ul class="divider-separated col">
-					<li><a href="{{ entity.url }}#comments">
-						<i class="fa fa-comments-o"></i> View comments
-					</a></li>
-					{% if current_user.is_authenticated and (entity.user_id == current_user.id or current_user.is_admin) %}
-						{% if entity.user_id == current_user.id %}
-							{% if entity.is_moderated %}
-							<li><a href="{{ url_for('posts.notes', post_id=entity.id) }}" class="moderator-action"><i class="fa fa-lock"></i> Comment locked by moderator</a></li>
-							{% else %}
-							<li><a href="{{ url_for('posts.edit', post_id=entity.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-							<li><a href="{{ url_for('posts.delete', post_id=entity.id) }}"><i class="fa fa-trash"></i> Delete</a></li>
+			<h2 class="post-header"><a href="{{ entity.url }}" class="responsive-cols no-wrap">
+				<span class="col-flex">{{ entity.title }}</span>
+				<span class="col comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ entity.comment_count }}</span>
+			</a></h2>
+			<div class="responsive-cols no-wrap">
+				<div class="col-flex col-flush">
+					<div class="post-meta responsive-cols no-wrap">
+						<p class="col-flex">Posted by {{ usertag(entity.user) }} in {{ sectiontag(entity.section) }}</p>
+						<p class="timestamp col">{{ entity.created | format_date }}</p>
+					</div>
+					<div class="post-body post-fadeout">
+						{{ entity.text | parse_text }}
+					</div>
+					<div class="post-footer responsive-cols">
+						<ul class="divider-separated col">
+							<li><a href="{{ entity.url }}#comments">
+								<i class="fa fa-comments-o"></i> View comments
+							</a></li>
+							{% if current_user.is_authenticated and (entity.user_id == current_user.id or current_user.is_admin) %}
+								{% if entity.user_id == current_user.id %}
+									{% if entity.is_moderated %}
+									<li><a href="{{ url_for('posts.notes', post_id=entity.id) }}" class="moderator-action"><i class="fa fa-lock"></i> Comment locked by moderator</a></li>
+									{% else %}
+									<li><a href="{{ url_for('posts.edit', post_id=entity.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+									<li><a href="{{ url_for('posts.delete', post_id=entity.id) }}"><i class="fa fa-trash"></i> Delete</a></li>
+									{% endif %}
+								{% endif %}
+								{% if current_user.is_admin and entity.user_id != current_user.id %}
+								<li><a href="{{ url_for('posts.moderate', post_id=entity.id) }}" class="moderator-action"><i class="fa fa-wrench"></i> Moderate</a></li>
+								{% endif %}
 							{% endif %}
+						</ul>
+						{% if entity.created != entity.modified %}
+						<p class="col-flex timestamp text-right">Last edited {{ entity.modified | format_date }}</p>
 						{% endif %}
-						{% if current_user.is_admin and entity.user_id != current_user.id %}
-						<li><a href="{{ url_for('posts.moderate', post_id=entity.id) }}" class="moderator-action"><i class="fa fa-wrench"></i> Moderate</a></li>
-						{% endif %}
-					{% endif %}
-				</ul>
-				{% if entity.created != entity.modified %}
-				<p class="col-flex timestamp text-right">Last edited {{ entity.modified | format_date }}</p>
-				{% endif %}
+					</div>
+				</div>
+				<div class="col onward-button">
+					<a href="{{ entity.url }}" class="btn btn-vertical" title="View post"><i class="fa fa-chevron-right"></i></a>
+				</div>
 			</div>
 			{% endif %}
 		</li>

@@ -66,7 +66,7 @@ def index():
             db.func.count(Comment.id).label('comment_count'),
             db.func.max(Comment.entity_id).label('max_entity_id')
         ).options(
-            db.joinedload('user')
+            db.joinedload(Post.user)
         )
         if user_id:
             query = query.outerjoin(
@@ -122,8 +122,8 @@ def section(stub, page=None):
         db.func.count(Comment.id).label('comment_count'),
         db.func.max(Comment.entity_id).label('max_entity_id')
     ).options(
-        db.joinedload('user'),
-        db.joinedload('section')
+        db.joinedload(Post.user),
+        db.joinedload(Post.section)
     )
     if user_id:
         query = query.outerjoin(

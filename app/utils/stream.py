@@ -310,14 +310,26 @@ def get_stream(page=None, show='all'):
             entity_map[deck.entity_id].update(deck_to_entity_map(deck))
     # Gather posts
     if post_entity_ids:
-        posts = db.session.query(Post).options(
-            db.joinedload('user'),
-            db.joinedload('section')
+        posts = db.session.query(
+            Post,
+            db.func.count(Comment.id).label('comment_count'),
+        ).options(
+            db.joinedload(Post.user),
+            db.joinedload(Post.section)
+        ).outerjoin(
+            Comment, db.and_(
+                Comment.source_entity_id == Post.entity_id,
+                Comment.is_deleted.is_(False)
+            )
         ).filter(
             Post.entity_id.in_(post_entity_ids)
-        ).all()
-        for post in posts:
-            entity_map[post.entity_id].update(post_to_entity_map(post))
+        ).group_by(Post.id).all()
+        for x in posts:
+            entity_map[x.Post.entity_id].update(dict(
+                comment_count=x.comment_count,
+                **post_to_entity_map(x.Post)
+            ))
+
     # Gather comments
     if comment_entity_ids:
         comments = db.session.query(Comment).options(
