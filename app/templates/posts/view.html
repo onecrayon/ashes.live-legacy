@@ -34,10 +34,12 @@
 		</tr>
 	</table>
 
+	{% if current_user.is_authenticated %}
 	<hr>
 	{{ subscribe_button(url_for('posts.subscribe', post_id=post.id), comment_last_seen) }}
-	<hr>
+	{% endif %}
 	{% if current_user.is_authenticated and (post.user_id == current_user.id or current_user.is_admin) %}
+	<hr>
 		{% if post.user_id == current_user.id %}
 			{% if post.is_moderated %}
 			<a href="{{ url_for('posts.notes', post_id=post.id) }}" class="btn btn-block btn-danger"><i class="fa fa-lock"></i> Post locked by moderator</a>
