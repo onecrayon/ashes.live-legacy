@@ -1,0 +1,6 @@
+Sun Sister
+Ally - Battlefield
+[[main]] - 1 [[divine:class]] - 1 [[basic]]
+Attack 2 - Life 2 - Recover 2
+
+Resurrect: When this unit would leave play, you may search your discard pile for an ally with a title other than this unit's title and place it into your hand.

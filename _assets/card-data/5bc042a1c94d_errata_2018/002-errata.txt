@@ -1,0 +1,7 @@
+Blood Chains
+Action Spell - Discard
+[[main]] - 1 [[ceremonial:class]]
+
+Choose a unit you control and destroy it. If you do, place X exhaustion tokens on a target unit.
+
+X = the chosen unit's life value minus the number of wound tokens on the chosen unit.
