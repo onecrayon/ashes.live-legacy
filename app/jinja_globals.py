@@ -202,8 +202,9 @@ def parse_card_codes(text):
     def list_wrapper(match):
         return Markup(''.join([match.group(1), '<ul>', match.group(2), '</ul>', match.group(3)]))
     text = re.sub(r'(^|\n|<blockquote>)((?:<li>.+?</li>\n?)+)(</blockquote>|\n|$)', list_wrapper, text)
-    text = text.replace('</li>\n<li>', '</li><li>')
-    text = text.replace('</li>\n</ul>', '</li></ul>\n')
+    text = re.sub(r'</li>\n+<li>', '</li><li>', text)
+    text = re.sub(r'</li>\n+</ul>', '</li></ul>\n', text)
+    text = re.sub(r'</li></ul>\n+<li>|</li>\n+<ul><li>', '</li><li>', text)
     # Fix single linebreaks after a block level elements (these break the paragraph logic)
     def fix_spacing(match):
         return Markup(match.group(1) + '\n')
