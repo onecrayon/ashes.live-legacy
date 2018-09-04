@@ -129,7 +129,7 @@ def refresh_entity(entity_id, entity_type, source_entity_id):
             db.joinedload('dice'),
             db.joinedload('user')
         ).filter(
-            entity_id == entity_id,
+            Deck.entity_id == entity_id,
             Deck.is_snapshot.is_(True),
             Deck.is_public.is_(True)
         ).first()
