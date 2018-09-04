@@ -92,7 +92,8 @@ def comment_to_entity_map(comment):
 def refresh_entity(entity_id, entity_type, source_entity_id):
     if entity_type == 'deck':
         entity = db.session.query(Stream).filter(
-            Stream.source_entity_id == source_entity_id
+            Stream.source_entity_id == source_entity_id,
+            Stream.entity_type == 'deck'
         ).first()
     else:
         entity = db.session.query(Stream).filter(Stream.entity_id == entity_id).first()

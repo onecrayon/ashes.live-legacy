@@ -13,7 +13,7 @@ class Stream(db.Model):
     """Stream entries are used to construct activity streams"""
     id = db.Column(db.Integer, primary_key=True)
     entity_id = db.Column(db.Integer, nullable=False, index=True, unique=True)
-    entity_type = db.Column(db.String(16))
+    entity_type = db.Column(db.String(16), index=True)
     source_entity_id = db.Column(db.Integer, nullable=False, index=True)
     posted = db.Column(db.DateTime, default=datetime.utcnow, index=True)
 
