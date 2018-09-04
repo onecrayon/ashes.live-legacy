@@ -19,13 +19,10 @@ from app.views.forms.deck import SnapshotForm
 mod = Blueprint('decks', __name__, url_prefix='/decks')
 
 
-@mod.route('/')
-@mod.route('/<int:page>/')
-def index(page=None):
-    """View list of all public decks"""
+def get_deck_filters():
     phoenixborn = db.session.query(Card.name, Card.stub, Card.id).filter(
         Card.card_type == 'Phoenixborn'
-    ).order_by(Card.release.asc(), Card.name.asc()).all()
+    ).order_by(Card.name.asc()).all()
     filters = {
         's': request.args.get('s'),
         'phoenixborn': request.args.get('phoenixborn')
@@ -40,7 +37,15 @@ def index(page=None):
         if phoenixborn_id:
             active_filters.append(Deck.phoenixborn_id == phoenixborn_id)
         else:
-            flash('Unable to find Phoenixborn; showing all cards.', 'error')
+            flash('Unable to find Phoenixborn; showing all decks.', 'error')
+    return filters, active_filters, phoenixborn
+
+
+@mod.route('/')
+@mod.route('/<int:page>/')
+def index(page=None):
+    """View list of all public decks"""
+    filters, active_filters, phoenixborn = get_deck_filters()
     decks, card_map, page, pagination = get_decks(
         page, order_by='created', most_recent_public=True,
         filters=(active_filters or None)
@@ -239,14 +244,18 @@ def history(deck_id, page=None):
 @login_required
 def mine(page=None):
     """View logged-in player's decks"""
-    decks, card_map, page, pagination = get_decks(page, filters=[
+    filters, active_filters, phoenixborn = get_deck_filters()
+    active_filters = [
         Deck.user_id == current_user.id,
         Deck.is_snapshot.is_(False)
-    ])
+    ] + active_filters
+    decks, card_map, page, pagination = get_decks(page, filters=active_filters)
     return render_template(
         'decks/mine.html',
         decks=decks,
         card_map=card_map,
+        filters={k: v for k, v in filters.items() if v},
+        phoenixborn=phoenixborn,
         latest_ashes_500=latest_ashes_500_revision(),
         page=page,
         pages=pagination
