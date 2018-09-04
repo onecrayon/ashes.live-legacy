@@ -385,11 +385,20 @@ def moderate(post_id):
             post.original_title = post.title
         post.title = post_form.title.data
         post.text = post_form.text.data
+        # Handle deletion and undeletion logic if it is flipped
+        if post.is_deleted and not post_form.is_deleted.data:
+            refresh_entity(post.entity_id, 'post', section.entity_id)
+        elif not post.is_deleted and post_form.is_deleted.data:
+            db.session.query(Stream).filter(
+                Stream.entity_id == post.entity_id
+            ).delete(synchronize_session=False)
         post.is_deleted = post_form.is_deleted.data
         post.is_moderated = True
         post.moderation_notes = post_form.moderation_notes.data
         db.session.commit()
         flash('Post has been moderated.', 'success')
+        if post.is_deleted:
+            return redirect(url_for('home.index'))
         return redirect(url_for('posts.view', post_id=post_id), code=303)
     return render_template('posts/moderate.html', post=post, post_form=post_form,
                            user=user)
