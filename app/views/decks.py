@@ -126,6 +126,7 @@ def view(deck_id, page=1, show_saved=False):
     return render_template(
         'decks/view.html',
         deck=deck,
+        phoenixborn_stats=json.loads(deck.phoenixborn.json),
         sections=sections,
         releases=release_names,
         has_history=deck.has_snapshots,

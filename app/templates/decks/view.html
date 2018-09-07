@@ -44,6 +44,11 @@
 			</span>
 			{% endif %}
 		</h2>
+		<ul class="statline">
+			<li class="battlefield">Battlefield {{ phoenixborn_stats.battlefield }}</li>
+			<li class="life">Life {{ phoenixborn_stats.life }}</li>
+			<li class="spellboard">Spellboard {{ phoenixborn_stats.spellboard }}</li>
+		</ul>
 		<ul class="dice large">
 		{% for dice in deck.dice -%}
 			{# Setting a variable in a loop doesn't respect context, so we need to use this hack #}
