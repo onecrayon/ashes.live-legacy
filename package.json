@@ -6,7 +6,7 @@
     "upgrade": ". venv/bin/activate && pip3 install -r requirements.txt && npm upgrade",
     "build": "webpack --mode=development && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.css",
     "build-production": "export ENVIRONMENT='production' && export NODE_ENV='production' && webpack --mode=production && ./node_modules/less/bin/lessc app/static/css.esdynamo/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
-    "start": ". venv/bin/activate && ./cli.py runserver -r",
+    "start": "export FLASK_ENV=development && . venv/bin/activate && ./cli.py runserver -r",
     "lint": "eslint --ext .js,.vue app/static/src"
   },
   "homepage": "https://ashes.live",
