@@ -35,7 +35,7 @@
 							class="recover">{{ card.spellboard || card.recover }}</span>
 						<span v-else>&ndash;</span>
 					</span>
-					<card-link v-else-if="card.conjurations" :card="card.conjurations[0]">
+					<card-link v-else-if="card.conjurations" v-for="conjuration of conjurationChain(card.conjurations)" :key="conjuration.id" :card="conjuration">
 						<i class="fa" :class="typeToFontAwesome('summon')"></i>
 					</card-link>
 				</td>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-	import {isArray, startsWith} from 'lodash'
+	import {assign, isArray, startsWith} from 'lodash'
 	import {globals, typeToFontAwesome} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
@@ -101,6 +101,28 @@
 			resetFilters () {
 				this.$store.commit('resetFilters')
 				this.$store.dispatch('filterCards')
+			},
+			conjurationChain (conjurations, returnMapping) {
+				let conjurationMap = {}
+				let order = []
+				for (const conjuration of conjurations) {
+					order.push(conjuration.id)
+					conjurationMap[conjuration.id] = conjuration
+					if (conjuration.conjurations && conjuration.conjurations.length) {
+						const nested = this.conjurationChain(conjuration.conjurations, true)
+						order = order.concat(nested.order)
+						assign(conjurationMap, nested.map)
+					}
+				}
+				if (returnMapping) {
+					return {'order': order, 'map': conjurationMap}
+				}
+				order = Array.from(new Set(order))
+				let cards = []
+				for (const cardId of order) {
+					cards.push(conjurationMap[cardId])
+				}
+				return cards
 			}
 		}
 	}
