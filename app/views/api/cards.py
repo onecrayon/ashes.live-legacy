@@ -32,6 +32,15 @@ def listing():
     })
 
 
+
+@mod.route('/tts-export')
+def tts_export():
+    """Returns basic card data necessary for parsing Ashes.live decks into TableTop Simulator"""
+    cards = db.session.query(Card.json).all()
+    card_data = [json.loads(x.json) for x in cards]
+    return jsonify({x['name']: x.get('placement') for x in card_data})
+
+
 @mod.route('/search', methods=['POST'])
 def search():
     """Returns IDs that match the given filter criteria"""
