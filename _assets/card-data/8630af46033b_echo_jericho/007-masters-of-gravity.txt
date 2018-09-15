@@ -109,7 +109,7 @@ Ally - Battlefield
 [[main]] - 1 [[divine:power]] - 1 [[sympathy:class]] - 1 [[basic]]
 Attack 2 - Life 3 - Recover 1
 
-Aftershock : When this unit deals damage by attacking or countering, you may place 2 wound tokens on a target unit.
+Aftershock 2: When this unit deals damage by attacking or countering, you may place 2 wound tokens on a target unit.
 
 * Rhythmic Healing 1: When you draw 1 or more cards, you may remove 1 wound token from this unit.
 
