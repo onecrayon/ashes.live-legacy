@@ -6,7 +6,7 @@
 			</div>
 			<div class="conjuration"
 				><h4><card-link :card="card.conjurations[0]"></card-link></h4
-				><span v-for="(effect, effect_index) of namedEffects(card.conjurations[0].text)" class="effect tooltip"
+				><span v-for="(effect, effect_index) of namedEffects(card.conjurations[0])" class="effect tooltip"
 					:title="effectTextTooltip(effect, true)" :key="card.conjurations[0].id + '-effect-' + effect_index"
 					>{{ effect.name }}</span
 				><ul class="statline"
@@ -35,7 +35,7 @@
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import {initTooltips, teardownTooltips} from 'app/utils'
-	import {filter, startsWith} from 'lodash'
+	import {filter, endsWith, startsWith} from 'lodash'
 
 	export default {
 		props: [
@@ -53,9 +53,11 @@
 		},
 		beforeDestroy: teardownTooltips,
 		methods: {
-			namedEffects (effects) {
-				return filter(effects, (effect) => {
-					return !!effect.name
+			namedEffects (card) {
+				// Exclude common mount abilities (always the last two)
+				const maxLength = endsWith(card.name, ' Mount') ? card.text.length - 2 : card.text.length
+				return filter(card.text, (effect, index) => {
+					return !!effect.name && index < maxLength
 				})
 			},
 			effectTextTooltip (effect, showAll) {
