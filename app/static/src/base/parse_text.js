@@ -43,12 +43,16 @@ export default function parseText (input) {
 		if (dash) {
 			return ' <span class="divider"><span class="alt-text">-</span></span> '
 		}
-		const lowerPrimary = primary.toLowerCase().replace('&#39;', '')
+		let lowerPrimary = primary.toLowerCase().replace('&#39;', '')
 		secondary = secondary && secondary.toLowerCase()
 		if (['discard', 'exhaust'].indexOf(lowerPrimary) > -1) {
 			return ['<span class="phg-', lowerPrimary, '" title="', primary, '"></span>'].join('')
 		}
 
+		// Alias "nature" => "natural" (common mistake)
+		if (lowerPrimary === 'nature') {
+			lowerPrimary = 'natural'
+		}
 		if (globals.diceData.indexOf(lowerPrimary) > -1) {
 			if (!secondary) {
 				secondary = 'power'

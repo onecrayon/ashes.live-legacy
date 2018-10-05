@@ -159,6 +159,9 @@ def parse_card_codes(text):
                 ['<span class="phg-', lower_primary, '" title="', primary,
                 '"><span class="alt-text">', match.group(0), '</span></span>']
             ))
+        # Alias "nature" => "natural" (common mistake)
+        if lower_primary == 'nature':
+            lower_primary = 'natural'
         if lower_primary in DiceFlags.__members__ and lower_primary != 'basic':
             if not secondary:
                 secondary = 'power'
