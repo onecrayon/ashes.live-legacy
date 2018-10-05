@@ -1,0 +1,149 @@
+Archasaurus Mount
+Conjuration - Battlefield
+Attack 4 - Life 5 - Recover 0 - Copies 1
+
+Gigantic 2: This unit cannot be blocked or guarded against by units with a life value of 2 or less.
+
+* Unsummon: [[main]]: Discard this unit.
+
+* Dismount Rider: After this unit leaves play, choose a face down ally that was under this unit and dismount that ally.
+
+=====
+
+Cerasaurus Mount
+Conjuration - Battlefield
+Attack 3 - Life 3 - Recover 0 - Copies 3
+
+Overkill 1: When this unit destroys a unit an opponent controls by attacking, deal 1 damage to that opponent's Phoenixborn.
+
+* Unsummon: [[main]]: Discard this unit.
+
+* Dismount Rider: After this unit leaves play, choose a face down ally that was under this unit and dismount that ally.
+
+=====
+
+Earthquake (Xander Heartsblood)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Deal 4 damage to a target unit and 1 damage to each other unit.
+
+=====
+
+Law Of Domination
+Ready Spell - Spellboard
+[[main]] - 1 [[divine:class]]
+
+When this spell comes into play, choose an opponent to choose a unit they control. Then, choose a unit you control. Those units deal damage to each other equal to their attack value.
+
+This damage, and damage from attacking or countering, cannot be prevented.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Mass Heal
+Action Spell - Discard
+[[side]]
+
+Remove 1 wound token from all units. If you have a divine die on its class or power side in your active pool, you may instead remove 1 wound token from your Phoenixborn and all units you control.
+
+=====
+
+Nature's Wrath
+Action Spell - Discard
+[[main]] - 1 [[natural:class]]
+
+Deal 1 damage to all units.
+
+=====
+
+Pain Shaman
+Ally - Battlefield
+[[main]] - 1 [[divine:power]] - 1 [[natural:class]] - 1 [[basic]]
+Attack 2 - Life 3 - Recover 3
+
+Exchange Pain 1: After this unit receives damage, you may deal 1 damage to a target unit or remove 1 wound token from a target unit.
+
+=====
+
+Raptor Hatchling
+Conjuration - Battlefield
+Attack 0 - Life 1 - Recover 0 - Copies 3
+
+Group Tactics 2: After you declare 3 or more attackers, you may add 2 to this unit's attack value for the remainder of this turn.
+
+=====
+
+Raptor Herder
+Ally - Battlefield
+[[main]] - 1 [[natural:class]] / 1 [[sympathy:class]]
+Attack 1 - Life 1 - Recover 1
+
+Call Raptor Hatchling: When this unit comes into play, place a [[Raptor Hatchling]] conjuration onto your battlefield.
+
+=====
+
+Sacred Ground
+Ready Spell - Spellboard
+[[main]] - 1 [[divine:power]]
+
+When an opponent would use a spell that affects all units or each unexhausted unit, you may discard this spell. If you do, cancel the effects of that spell.
+
+After a player has declared attackers, you may place 1 exhaustion token on this spell to have all units gain the following ability for the remainder of this turn:
+
+* Armored 1: When this unit would receive damage, prevent 1 damage.
+
+=====
+
+Shining Hydra
+Conjuration - Battlefield
+Attack 3 - Life 3 - Recover 0 - Copies 3
+
+Regenerate Heads: After 1 or more wound tokens are placed on this unit as a result of damage, if this unit is not destroyed, attach a [[Shining Hydra Head]] conjured alteration spell to this unit.
+
+=====
+
+Shining Hydra Head
+Conjured Alteration Spell - Unit
+Attack +1 - Life +1 - Recover +1 - Copies 7
+
+This unit now has the following ability:
+
+Terrifying 1: This unit cannot be blocked or guarded against by units with an attack value of 1 or less.
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+Summon Archasaurus Mount
+Action Spell - Discard
+[[main]] - [[side]] - 1 [[divine:class]] - 1 [[natural:class]] - 1 [[basic]]
+
+Remove an unexhausted ally you control from play. If you do, place an [[Archasaurus Mount]] conjuration onto your battlefield and place that ally face down under that unit.
+
+=====
+
+Summon Cerasaurus Mount
+Ready Spell - Spellboard
+[[main]] - 1 [[basic]]
+
+[[side]] - [[exhaust]] - 1 [[natural:class]] - 1 [[divine:class]]: Remove an unexhausted ally you control from play. If you do, place a [[Cerasaurus Mount]] conjuration onto your battlefield and place that ally face down under that unit.
+
+=====
+
+Summon Shining Hydra
+Action Spell - Discard
+[[main]] - 1 [[divine:class]] - 1 [[natural:class]] - 1 [[basic]]
+
+Place a [[Shining Hydra]] conjuration onto your battlefield.
+
+=====
+
+Xander Heartsblood
+Battlefield 6 - Life 20 - Spellboard 3
+
+Reincarnate: [[side]] - [[exhaust]] - 1 [[divine:class]]: Search your discard pile for an ally and place it into your hand.
+
