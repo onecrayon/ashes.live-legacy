@@ -218,7 +218,7 @@ if (files) {
 				if (!text) {
 					return
 				}
-				var parts = text.match(/^(?:(\*|~)\s+)?(?:([a-z0-9' ]+):\s+)?(?:((?:(?:\d+[ ])?\[\[[a-z:]+\]\](?:[ ]-[ ])?)+):\s+)?(.+)\n*$/i)
+				var parts = text.match(/^(?:(\*|~)\s+)?(?:([a-z0-9' ]+):\s+)?(?:((?:(?:\d+[ ])?\[\[[a-z:]+\]\](?:[ ](?:or|-)[ ])?)+):\s+)?(.+)\n*$/i)
 					effect = {},
 					conjurationMatches = parts[4].match(/\[\[[A-Z][A-Za-z' ]+\]\](?=[ ](?:(?:conjuration|conjured alteration spell)s?|or))/g)
 				if (parts[1]) {
