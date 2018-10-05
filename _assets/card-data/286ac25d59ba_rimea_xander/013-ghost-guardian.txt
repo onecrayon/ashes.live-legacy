@@ -1,0 +1,156 @@
+Ancestor Spirit
+Conjuration - Battlefield
+Attack 0 - Life 1 - Recover 0 - Copies 5
+
+Distract: [[side]] - [[exhaust]]: Place 1 exhaustion token on a target unit.
+
+* Ephemeral: After this unit becomes exhausted, remove it from the game.
+
+=====
+
+Ancestral Army (Rimea Careworn)
+Ally - Battlefield
+[[main]] - 3 [[basic]]
+Attack 3 - Life 3 - Recover 0
+
+* Dauntless: If this unit receives damage in battle, remove 1 exhaustion token from this unit at the end of that battle.
+
+* Inviolable: This unit cannot be targeted by a spell or have alteration spells attached to it.
+
+=====
+
+Augury
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]]
+
+* When this spell comes into play, place 3 status tokens on it. Discard this card when it no longer has any status tokens on it.
+
+[[side]] - [[exhaust]] - 1 [[basic]]: Search your draw pile for 1 card with a magic play cost of X, reveal it, and place it into your hand. Shuffle your draw pile. Remove 1 status token from this spell.
+
+* X = the number of status tokens on this spell.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+=====
+
+Battle Seer
+Ally - Battlefield
+[[main]] - 1 [[illusion:power]] - 1 [[sympathy:class]] - 1 [[basic]]
+Attack 3 - Life 3 - Recover 1
+
+Battle Trance: When this unit is declared as an attacker or leaves play, you may draw 1 card.
+
+=====
+
+Dark Presence
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]]
+
+* All units you control now have the following ability:
+
+* Fog of War: When this unit deals damage to an opponent's Phoenixborn, that opponent places the top card of their draw pile on the bottom of their draw pile. Then, that opponent discards the top card of their draw pile.
+
+Focus 1: [[main]] or [[side]] - 1 [[basic]] - [[exhaust]]: Place 1 exhaustion token on an unexhausted unit you control. That unit deals 1 damage to a Phoenixborn.
+
+Focus 2: You may remove 1 token from that unit.
+
+=====
+
+Hex Bane
+Ready Spell - Spellboard
+[[main]] - 1 [[sympathy:class]]
+
+After an opponent uses an ability or dice power to place a die into your exhausted pool, you may place 1 exhaustion token on this spell to select 1 die in that opponent's active pool and place it in that opponent's exhausted pool. After an opponent uses an ability or dice power to deal damage to a unit or Phoenixborn you control, you may place 1 exhaustion token on this spell to deal 1 damage to that opponent's Phoenixborn.
+
+=====
+
+Hollow
+Ally - Battlefield
+[[main]] - 1 [[sympathy:class]] / 1 [[illusion:class]]
+Attack 2 - Life 1 - Recover 0
+
+Possession: When this unit leaves play as a result of a spell, ability, or dice power you control, you may spend 1 [[sympathy:power]] to remove all exhaustion tokens from a target unit you control.
+
+~ Poltergeist: After a player has declared attackers, you may spend 1 [[illusion:power]] to remove this card from the game. If you do, reduce the attack value of a target unit by 2 for the remainder of this turn.
+
+=====
+
+Nightmare Mount
+Conjuration - Battlefield
+Attack 4 - Life 3 - Recover 0 - Copies 2
+
+Terrifying 2: This unit cannot be blocked or guarded against by units with an attack value of 2 or less.
+
+* Unsummon: [[main]]: Discard this unit.
+
+* Dismount Rider: After this unit leaves play, choose a face down ally that was under this unit and dismount that ally.
+
+=====
+
+Pale Steed Mount
+Conjuration - Battlefield
+Attack 2 - Life 4 - Recover 0 - Copies 2
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+* Unsummon: [[main]]: Discard this unit.
+
+* Dismount Rider: After this unit leaves play, choose a face down ally that was under this unit and dismount that ally.
+
+=====
+
+Resonance
+Ready Spell - Spellboard
+[[side]] - 2 [[sympathy:class]] - 1 [[basic]]
+
+When this spell comes into play, select 2 dice in your exhausted pool and place them into your active pool on a side of your choice.
+
+When you play this spell, place it face up under a ready spell on your spellboard. While this card is on your spellboard, all other cards in its spellboard slot are focused one additional time.
+
+=====
+
+Rimea Careworn
+Battlefield 4 - Life 20 - Spellboard 5
+
+Visions: [[side]]: Look at the top 3 cards of a target draw pile. You may spend 1 [[basic]] and place 1 exhaustion token on this card to place 1 of those cards on the bottom of that draw pile. Place the remaining looked at cards on the top of that draw pile in the order of your choice.
+
+=====
+
+Shared Sorrow
+Action Spell - Discard
+[[main]] - 1 [[sympathy:class]] - 1 [[basic]]
+
+Discard 1 card from your hand with a magic play cost of 1 or more. Search your discard pile for another card with a magic play cost of X and place it into your hand. Deal X damage to a target unit.
+
+X = the magic play cost of the discarded card.
+
+=====
+
+Spectral Charger Mount
+Conjuration - Battlefield
+Attack 3 - Life 2 - Recover 0 - Copies 2
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+* Unsummon: [[main]]: Discard this unit.
+
+* Dismount Rider: After this unit leaves play, choose a face down ally that was under this unit and dismount that ally.
+
+=====
+
+Summon Ancestor Spirit
+Ready Spell - Spellboard
+[[main]] - 1 [[illusion:class]] - 1 [[basic]]
+
+[[main]] - [[exhaust]]: Discard 1 card from your hand or move 1 die from your active pool to your exhausted pool. If you do, draw 1 card or place an [[Ancestor Spirit]] conjuration onto your battlefield.
+
+=====
+
+Summon Ghostly Mount
+Ready Spell - Spellboard
+[[main]] - 1 [[basic]]
+
+[[main]] or [[side]] - [[exhaust]] - 1 [[illusion:class]] - 1 [[sympathy:class]]: Remove an unexhausted ally you control from play. If you do, place a [[Pale Steed Mount]] or [[Spectral Charger Mount]] conjuration onto your battlefield and place that ally face down under that unit.
+
+Focus 2: You may place a [[Nightmare Mount]] conjuration instead.
+

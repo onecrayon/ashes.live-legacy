@@ -21,6 +21,8 @@ RELEASE_NAMES = {
     10: 'The Boy Among Wolves',
     11: 'The Demons of Darmas',
     12: 'The Spirits of Memoria',
+    13: 'The Ghost Guardian',
+    14: 'The King of Titans',
     101: 'Dimona Odinstar (promo)',
     102: 'Lulu Firststone (promo)',
     103: 'Orrick Gilstream (promo)'
