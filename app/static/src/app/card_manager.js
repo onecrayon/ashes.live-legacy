@@ -146,7 +146,7 @@ export default class {
 			if (dice && dice.length) {
 				if (diceLogic === 'and') {
 					for (const die of dice) {
-						if (!includes(card.dice, die) && !includes(card.splitDice, die)) {
+						if (!includes(card.dice, die) && !includes(card.altDice, die)) {
 							return false
 						}
 					}
@@ -156,9 +156,9 @@ export default class {
 							return false
 						}
 					}
-				} else if (card.splitDice && card.splitDice.length) {
+				} else if (card.altDice && card.altDice.length) {
 					let oneSplitMatch = false
-					for (const die of card.splitDice) {
+					for (const die of card.altDice) {
 						if (includes(dice, die)) {
 							oneSplitMatch = true
 						}
@@ -191,11 +191,11 @@ export default class {
 				// Grab sorted versions of our dice arrays
 				let aDice = a.dice && a.dice.length ? a.dice : null
 				let bDice = b.dice && b.dice.length ? b.dice : null
-				if (a.splitDice && a.splitDice.length) {
-					aDice = aDice ? Array.from(new Set(aDice + a.splitDice)) : a.splitDice
+				if (a.altDice && a.altDice.length) {
+					aDice = aDice ? Array.from(new Set(aDice + a.altDice)) : a.altDice
 				}
-				if (b.splitDice && b.splitDice.length) {
-					bDice = bDice ? Array.from(new Set(bDice + b.splitDice)) : b.splitDice
+				if (b.altDice && b.altDice.length) {
+					bDice = bDice ? Array.from(new Set(bDice + b.altDice)) : b.altDice
 				}
 				if (aDice === null || bDice === null) {
 					if (aDice === bDice) {

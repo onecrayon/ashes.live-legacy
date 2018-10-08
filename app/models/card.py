@@ -28,7 +28,7 @@ class Card(db.Model):
     is_summon_spell = db.Column(db.Boolean, nullable=False, default=False)
     cost_weight = db.Column(db.Integer, nullable=False, index=True, default=0)
     dice_flags = db.Column(db.Integer, nullable=False, index=True, default=0)
-    split_dice_flags = db.Column(db.Integer, nullable=False, index=True, default=0)
+    alt_dice_flags = db.Column(db.Integer, nullable=False, index=True, default=0)
     copies = db.Column(db.SmallInteger, nullable=True, default=None)
     json = db.Column(db.Text)
     text = db.Column(db.Text)
@@ -58,13 +58,13 @@ class Card(db.Model):
         if 'basic' in dice:
             filters.append(db.and_(
                 Card.dice_flags == 0,
-                Card.split_dice_flags == 0
+                Card.alt_dice_flags == 0
             ))
             dice.remove('basic')
         filters = filters + [
             Card.dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice
         ] + [
-            Card.split_dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice
+            Card.alt_dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value for die in dice
         ]
         return db.or_(*filters)
     
@@ -73,7 +73,7 @@ class Card(db.Model):
         flags = Card.dice_to_flags(dice)
         filters = [db.or_(
             Card.dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value,
-            Card.split_dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value
+            Card.alt_dice_flags.op('&')(DiceFlags[die].value) == DiceFlags[die].value
         ) for die in dice]
         return db.and_(
             *filters

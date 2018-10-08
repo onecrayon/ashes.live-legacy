@@ -256,7 +256,7 @@ if (files) {
 				card.dice = Array.from(new Set(diceTypes))
 			}
 			if (splitTypes.length) {
-				card.splitDice = Array.from(new Set(splitTypes))
+				card.altDice = Array.from(new Set(splitTypes))
 			}
 			// And finally append our card and continue
 			data.push(card)
