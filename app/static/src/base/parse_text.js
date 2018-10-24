@@ -31,7 +31,7 @@ export default function parseText (input) {
 		}
 	)
 	// Parse player links
-	input = input.replace(/\[\[([^\]]*?)#([0-9][a-z0-9*&+=-]+[a-z0-9*!])\]\]/ig, (_, text, badge) => {
+	input = input.replace(/\[\[([^\]]*?)#([0-9](?:[a-z0-9*&+=-]|&amp;)+[a-z0-9*!])\]\]/ig, (_, text, badge) => {
 		text = text ? text.trim() : null
 		return [
 			'<a class="username" href="', globals.playerUrl(badge), '">',
