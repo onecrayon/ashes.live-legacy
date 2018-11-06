@@ -23,7 +23,7 @@
 					let search = value || null
 					this.$store.commit('setSearch', search)
 					this.$store.dispatch('filterCards')
-				}, 400)
+				}, 750)
 			}
 		},
 		methods: {
