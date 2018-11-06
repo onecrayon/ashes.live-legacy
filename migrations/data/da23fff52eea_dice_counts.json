@@ -1,0 +1,1262 @@
+{
+    "abundance": {
+        "magicCost": {
+            "illusion": 1
+        }
+    },
+    "adrenaline-rush": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "amplify": {
+        "magicCost": {
+            "charm": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "ancestral-army": {
+        "magicCost": {
+            "basic": 3
+        }
+    },
+    "anchornaut": {
+        "magicCost": {
+            "basic": 1
+        }
+    },
+    "angelic-rescue": {
+        "magicCost": {
+            "illusion": 1
+        },
+        "effectMagicCost": {
+			"divine": 1
+		}
+    },
+    "anguish": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "aradel-summergaard": {
+        "effectMagicCost": {
+            "natural": 1
+        }
+    },
+    "astrea": {},
+    "augury": {
+        "magicCost": {
+            "sympathy": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "battle-mage": {
+        "magicCost": {
+            "basic": 3
+        },
+		"diceRecursion": 1
+    },
+    "battle-seer": {
+        "magicCost": {
+            "illusion": 1,
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "beast-mage": {
+        "magicCost": {
+            "sympathy": 2,
+            "basic": 1
+        }
+    },
+    "beast-tamer": {
+        "magicCost": {
+            "charm": 2,
+            "basic": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "beast-warrior": {
+        "magicCost": {
+            "sympathy": 1
+        }
+    },
+    "blackcloud-ninja": {
+        "magicCost": {
+            "ceremonial": 1,
+            "basic": 2
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "blood-archer": {
+        "magicCost": {
+            "ceremonial": 1,
+            "charm": 1,
+            "basic": 2
+        }
+    },
+    "blood-chains": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "blood-transfer": {
+        "effectMagicCost": {
+            "ceremonial": 1,
+            "charm": 1
+        }
+    },
+    "body-inversion": {
+        "magicCost": {
+            "illusion": 2
+        },
+		"diceRecursion": 2
+    },
+    "bound-soul": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "brennen-blackcloud": {
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "bring-forth": {
+        "magicCost": {
+            "ceremonial": 2
+        },
+        "effectMagicCost": {
+            "basic": 2
+        }
+    },
+    "call-to-action": {
+        "magicCost": {
+            "charm": 1
+        }
+    },
+    "call-upon-the-realms": {},
+    "celestial-knight": {
+        "magicCost": {
+            "divine": 3
+        }
+    },
+    "chained-creations": {
+        "magicCost": {
+            "illusion": 1,
+            "divine": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "change-psyche": {
+        "magicCost": {
+            "charm": 1,
+            "basic": 1
+        }
+    },
+    "changing-winds": {
+        "magicCost": {
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "chant-of-protection": {
+        "magicCost": {
+            "basic": 1
+        }
+    },
+    "chant-of-revenge": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "chant-of-the-dead": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "chaos-gravity": {
+        "magicCost": {
+            "divine / sympathy": 1,
+            "basic": 1
+        }
+    },
+    "choke": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "coal-roarkwin": {},
+    "crescendo": {
+        "magicCost": {
+            "sympathy": 1
+        }
+    },
+    "crimson-bomber": {
+        "magicCost": {
+            "ceremonial": 2
+        }
+    },
+    "crystal-shield": {
+        "magicCost": {
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "cut-the-strings": {
+        "effectMagicCost": {
+            "ceremonial": 1,
+            "basic": 1
+        }
+    },
+    "dark-presence": {
+        "magicCost": {
+            "sympathy": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "dark-reaping": {
+        "magicCost": {
+            "ceremonial": 2
+        },
+		"diceRecursion": 4
+    },
+    "deep-freeze": {
+        "magicCost": {
+            "natural": 1
+        }
+    },
+    "devotion": {
+        "magicCost": {
+            "divine": 1,
+            "basic": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "dimona-odinstar": {
+        "effectMagicCost": {
+            "basic": 2
+        }
+    },
+    "dispel": {
+        "magicCost": {
+            "basic": 1
+        }
+    },
+    "double-edge": {},
+    "drain-vitality": {
+        "magicCost": {
+            "basic": 1
+        },
+        "effectMagicCost": {
+            "ceremonial": 1,
+            "sympathy": 1
+        }
+    },
+    "earthquake": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "echo-greystorm": {
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "elephant-rider": {
+        "magicCost": {
+            "basic": 7
+        }
+    },
+    "empower": {
+        "magicCost": {
+            "natural": 2
+        },
+        "effectMagicCost": {
+			"basic": 1
+		},
+		"diceRecursion": 1
+    },
+    "enchanted-violinist": {
+        "magicCost": {
+            "basic": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "encore": {},
+    "enlightenment": {
+        "magicCost": {
+            "divine": 1,
+            "basic": 1
+        }
+    },
+    "expand-energy": {
+        "magicCost": {
+            "ceremonial": 1
+        },
+		"diceRecursion": 1
+    },
+    "explosive-growth": {
+        "magicCost": {
+            "sympathy": 1,
+            "natural": 1
+        }
+    },
+    "fade-away": {
+        "magicCost": {
+            "illusion": 1
+        }
+    },
+    "fear": {},
+    "figures-in-the-fog": {
+        "magicCost": {
+            "illusion": 2,
+            "basic": 1
+        }
+    },
+    "final-cry": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "fire-archer": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "flash-archer": {
+        "magicCost": {
+            "illusion": 2,
+            "basic": 2
+        }
+    },
+    "flute-mage": {
+        "magicCost": {
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "freezing-blast": {
+        "magicCost": {
+            "natural": 2
+        }
+    },
+    "frost-bite": {
+        "effectMagicCost": {
+            "natural / basic": 1
+        }
+    },
+    "frost-fang": {
+        "magicCost": {
+            "natural": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "frozen-crown": {
+        "magicCost": {
+            "natural": 1,
+            "basic": 2
+        }
+    },
+    "gates-thrown-open": {
+        "magicCost": {
+            "illusion": 2
+        },
+		"diceRecursion": 4
+    },
+    "gobi-sunshield": {
+        "magicCost": {
+            "basic": 4
+        }
+    },
+    "golden-veil": {
+        "magicCost": {
+            "natural": 1,
+            "charm": 1
+        }
+    },
+    "gravity-training": {
+        "effectMagicCost": {
+			"divine / sympathy": 1
+		}
+    },
+    "guilt-link": {
+        "magicCost": {
+            "sympathy": 1
+        }
+    },
+    "hammer-knight": {
+        "magicCost": {
+            "ceremonial": 1,
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "hand-tricks": {
+        "magicCost": {
+            "basic": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		},
+		"diceRecursion": 1
+    },
+    "harold-westraven": {
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "harvest-soul": {
+		"diceRecursion": 1
+	},
+    "heal": {
+        "magicCost": {
+            "divine": 1
+        }
+    },
+    "hex-bane": {
+        "magicCost": {
+            "sympathy": 1
+        }
+    },
+    "hidden-power": {
+        "magicCost": {
+            "illusion": 1
+        },
+		"diceRecursion": 2
+    },
+    "hollow": {
+        "magicCost": {
+            "sympathy / illusion": 1
+        },
+        "effectMagicCost": {
+			"sympathy": 1,
+			"illusion": 1
+		}
+    },
+    "holy-knight": {
+        "magicCost": {
+            "divine": 3,
+            "basic": 1
+        }
+    },
+    "holy-relics": {
+        "magicCost": {
+            "divine": 2
+        }
+    },
+    "hunt-master": {
+        "magicCost": {
+            "natural": 1,
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "hypnotize": {
+        "effectMagicCost": {
+            "charm": 2
+        }
+    },
+    "ice-trap": {
+        "magicCost": {
+            "natural": 1
+        }
+    },
+    "illusionary-cycle": {
+		"diceRecursion": 1
+	},
+    "imperial-ninja": {
+        "magicCost": {
+            "charm": 2
+        }
+    },
+    "iron-worker": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "jericho-kill": {},
+    "jessa-na-ni": {
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "join-the-hunt": {
+        "magicCost": {
+            "sympathy": 1
+        }
+    },
+    "jungle-warrior": {
+        "magicCost": {
+            "sympathy": 1,
+            "basic": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "kneel": {
+        "magicCost": {
+            "divine": 1,
+            "charm": 1
+        }
+    },
+    "koji-wolfcub": {},
+    "law-of-assurance": {
+        "magicCost": {
+            "divine": 1,
+            "basic": 1
+        },
+		"diceRecursion": 2
+    },
+    "law-of-banishment": {
+        "magicCost": {
+            "divine": 1
+        }
+    },
+    "law-of-domination": {
+        "magicCost": {
+            "divine": 1
+        }
+    },
+    "law-of-fear": {
+        "magicCost": {
+            "divine": 1
+        }
+    },
+    "law-of-sight": {
+        "magicCost": {
+            "divine": 1,
+            "basic": 1
+        }
+    },
+    "leech-warrior": {
+        "magicCost": {
+            "ceremonial": 2,
+            "basic": 1
+        }
+    },
+    "leo-sunshadow": {
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "lick-wounds": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "light-swordsman": {
+        "magicCost": {
+            "sympathy": 1,
+            "divine": 1
+        }
+    },
+    "living-doll": {
+        "magicCost": {
+            "ceremonial": 1,
+            "charm": 1,
+            "basic": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "lulu-firststone": {
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "maeoni-viper": {
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "magic-purity": {
+		"diceRecursion": 1
+	},
+    "magic-syphon": {
+        "magicCost": {
+            "sympathy": 1
+        }
+    },
+    "mark-of-the-goddess": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "mark-of-the-red-flower": {
+        "effectMagicCost": {
+			"natural / sympathy": 1
+		}
+    },
+    "mass-heal": {},
+    "massive-growth": {
+        "magicCost": {
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "master-vampire": {
+        "magicCost": {
+            "ceremonial / sympathy": 1,
+            "ceremonial": 1,
+            "sympathy": 1
+        }
+    },
+    "memory-theft": {
+        "effectMagicCost": {
+            "charm": 1
+        }
+    },
+    "meteor": {
+        "magicCost": {
+            "divine": 2
+        }
+    },
+    "mind-probe": {
+        "magicCost": {
+            "charm": 1
+        }
+    },
+    "mist-typhoon": {
+        "magicCost": {
+            "illusion": 1,
+            "natural": 1
+        }
+    },
+    "molten-gold": {
+        "magicCost": {
+            "natural": 2
+        }
+    },
+    "namine-hymntide": {
+        "effectMagicCost": {
+            "sympathy": 1
+        }
+    },
+    "natures-wrath": {
+        "magicCost": {
+            "natural": 1
+        }
+    },
+    "noah-redmoon": {
+        "effectMagicCost": {
+            "ceremonial": 1
+        }
+    },
+    "odette-diamondcrest": {},
+    "one-hundred-blades": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "open-memories": {
+        "magicCost": {
+            "charm": 1,
+            "basic": 1
+        }
+    },
+    "orrick-gilstream": {
+        "effectMagicCost": {
+            "basic": 2
+        }
+    },
+    "out-of-the-mist": {
+        "magicCost": {
+            "illusion": 1,
+            "natural": 1
+        }
+    },
+    "pain-shaman": {
+        "magicCost": {
+            "divine": 1,
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "particle-shield": {
+        "magicCost": {
+            "basic": 1
+        }
+    },
+    "phoenix-barrage": {
+        "magicCost": {
+            "basic": 3
+        }
+    },
+    "poison": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "polarity-mage": {
+        "magicCost": {
+            "divine / sympathy": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "power-through": {
+        "magicCost": {
+            "divine": 1,
+            "basic": 1
+        }
+    },
+    "prepare": {},
+    "protect": {
+        "magicCost": {
+            "natural": 1,
+            "ceremonial": 1
+        }
+    },
+    "psychic-vampire": {
+        "magicCost": {
+            "ceremonial": 1
+        }
+    },
+    "purge": {
+        "effectMagicCost": {
+            "charm": 1,
+			"basic": 1
+        }
+    },
+    "raptor-herder": {
+        "magicCost": {
+            "natural / sympathy": 1
+        }
+    },
+    "rayward-knight": {
+        "magicCost": {
+            "basic": 3
+        }
+    },
+    "redirect": {
+        "magicCost": {
+            "charm": 1
+        }
+    },
+    "reflections-in-the-water": {
+        "magicCost": {
+            "illusion": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "refresh": {
+        "magicCost": {
+            "charm": 1,
+            "basic": 1
+        }
+    },
+    "regress": {
+        "magicCost": {
+            "ceremonial": 1,
+            "basic": 1
+        }
+    },
+    "remorse": {
+        "magicCost": {
+            "charm": 1,
+            "basic": 1
+        }
+    },
+    "resonance": {
+        "magicCost": {
+            "sympathy": 2,
+            "basic": 1
+        },
+		"diceRecursion": 2
+    },
+    "rimea-careworn": {
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "rin-northfell": {},
+    "rins-fury": {
+        "magicCost": {
+            "basic": 3
+        },
+		"diceRecursion": 5
+    },
+    "river-skald": {
+        "magicCost": {
+            "sympathy": 2,
+            "basic": 1
+        }
+    },
+    "root-armor": {
+        "magicCost": {
+            "natural": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        }
+    },
+    "rose-fire-dancer": {
+        "magicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "royal-charm": {
+        "magicCost": {
+            "basic": 1
+        }
+    },
+    "sacred-ground": {
+        "magicCost": {
+            "divine": 1
+        }
+    },
+    "saria-guideman": {
+        "effectMagicCost": {
+            "charm": 1
+        }
+    },
+    "seal": {
+        "magicCost": {
+            "illusion": 1,
+            "charm": 1
+        }
+    },
+    "secret-door": {
+        "magicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "sembali-grimtongue": {},
+    "shadow-counter": {
+        "magicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "shadow-guard": {
+        "magicCost": {
+            "illusion": 2
+        }
+    },
+    "shared-sorrow": {
+        "magicCost": {
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "shatter-pulse": {
+        "magicCost": {
+            "sympathy": 2,
+            "basic": 1
+        }
+    },
+    "shepherd-of-lost-souls": {
+        "magicCost": {
+            "divine": 1
+        }
+    },
+    "shield-mage": {
+        "magicCost": {
+            "divine": 1
+        }
+    },
+    "shifting-mist": {
+        "magicCost": {
+            "illusion": 1
+        }
+    },
+    "sleeping-bear": {
+        "magicCost": {
+            "natural": 2
+        }
+    },
+    "sleight-of-hand": {
+        "magicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "small-sacrifice": {
+        "effectMagicCost": {
+            "ceremonial": 1
+        }
+    },
+    "sonic-swordsman": {
+        "magicCost": {
+            "divine": 1,
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "spear-master": {
+        "magicCost": {
+            "basic": 3
+        }
+    },
+    "spiked-armor": {
+        "magicCost": {
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "squire": {
+        "magicCost": {
+            "basic": 1
+        }
+    },
+    "steady-gaze": {
+        "magicCost": {
+            "illusion": 2
+        }
+    },
+    "stormwind-sniper": {
+        "magicCost": {
+            "illusion": 1,
+            "ceremonial": 1,
+            "basic": 1
+        }
+    },
+    "strange-copy": {
+        "magicCost": {
+            "illusion": 2
+        }
+    },
+    "strengthen": {
+        "magicCost": {
+            "natural": 1,
+            "ceremonial": 1
+        }
+    },
+    "string-mage": {
+        "magicCost": {
+            "sympathy": 2
+        }
+    },
+    "summon-admonisher": {
+        "effectMagicCost": {
+            "divine": 1
+        }
+    },
+    "summon-ancestor-spirit": {
+        "magicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "summon-archasaurus-mount": {
+        "magicCost": {
+            "divine": 1,
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "summon-biter": {
+        "effectMagicCost": {
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "summon-blood-puppet": {
+        "effectMagicCost": {
+            "ceremonial": 1
+        }
+    },
+    "summon-blue-jaguar": {
+        "effectMagicCost": {
+            "basic": 2
+        }
+    },
+    "summon-butterfly-monk": {
+        "effectMagicCost": {
+            "natural": 1
+        }
+    },
+    "summon-cerasaurus-mount": {
+        "magicCost": {
+            "basic": 1
+        },
+        "effectMagicCost": {
+            "natural": 1,
+            "divine": 1
+        }
+    },
+    "summon-dread-wraith": {
+        "effectMagicCost": {
+            "ceremonial": 3
+        }
+    },
+    "summon-emperor-lion": {
+        "effectMagicCost": {
+            "divine": 2,
+            "basic": 1
+        }
+    },
+    "summon-false-demon": {
+        "effectMagicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "summon-frostback-bear": {
+        "magicCost": {
+            "natural": 1
+        },
+        "effectMagicCost": {
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "summon-ghostly-mount": {
+        "magicCost": {
+            "basic": 1
+        },
+        "effectMagicCost": {
+            "illusion": 1,
+            "sympathy": 1
+        }
+    },
+    "summon-gilder": {
+        "magicCost": {
+            "charm": 1
+        },
+        "effectMagicCost": {
+            "natural": 1
+        }
+    },
+    "summon-ice-golem": {
+        "effectMagicCost": {
+            "natural": 2,
+            "basic": 1
+        }
+    },
+    "summon-indiglow-creeper": {
+        "effectMagicCost": {
+            "natural": 1,
+            "sympathy": 1
+        }
+    },
+    "summon-iron-rhino": {
+        "magicCost": {
+            "natural": 1
+        },
+        "effectMagicCost": {
+            "basic": 6
+        }
+    },
+    "summon-light-bringer": {
+        "effectMagicCost": {
+            "divine": 1
+        }
+    },
+    "summon-lucky-rabbit": {
+        "effectMagicCost": {
+            "basic": 2
+        },
+		"diceRecursion": 1
+    },
+    "summon-masked-wolf": {
+        "effectMagicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "summon-mirror-spirit": {
+        "effectMagicCost": {
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "summon-mist-spirit": {
+        "effectMagicCost": {
+            "illusion": 1,
+			"basic": 1
+        }
+    },
+    "summon-nightshade-swallow": {
+        "effectMagicCost": {
+            "charm": 2
+        }
+    },
+    "summon-orchid-dove": {
+        "effectMagicCost": {
+            "charm / basic": 1
+        }
+    },
+    "summon-salamander-monk": {
+        "effectMagicCost": {
+            "sympathy": 1
+        }
+    },
+    "summon-seaside-raven": {
+        "effectMagicCost": {
+            "basic": 3
+        }
+    },
+    "summon-shadow-hound": {
+        "effectMagicCost": {
+            "illusion": 3
+        }
+    },
+    "summon-shadow-spirit": {
+        "effectMagicCost": {
+            "illusion": 1
+        }
+    },
+    "summon-shining-hydra": {
+        "magicCost": {
+            "divine": 1,
+            "natural": 1,
+            "basic": 1
+        }
+    },
+    "summon-silver-snake": {
+        "effectMagicCost": {
+            "charm": 1,
+            "natural": 1
+        }
+    },
+    "summon-sleeping-widows": {
+        "magicCost": {
+            "ceremonial": 2
+        }
+    },
+    "summon-spectral-assassin": {
+        "magicCost": {
+            "illusion": 1,
+            "basic": 1
+        }
+    },
+    "summon-squall-stallion": {
+        "magicCost": {
+            "sympathy": 1
+        },
+        "effectMagicCost": {
+            "sympathy": 1,
+            "basic": 1
+        }
+    },
+    "summon-steadfast-guardian": {
+        "effectMagicCost": {
+			"divine": 1,
+			"charm": 1
+		}
+    },
+    "summon-three-eyed-owl": {
+        "effectMagicCost": {
+            "charm": 1
+        }
+    },
+    "summon-turtle-guard": {
+        "effectMagicCost": {
+            "basic": 3
+        }
+    },
+    "summon-vampire-bat-swarm": {
+        "effectMagicCost": {
+            "ceremonial": 1,
+            "sympathy": 1
+        }
+    },
+    "summon-weeping-spirit": {
+        "effectMagicCost": {
+            "charm": 1
+        }
+    },
+    "summon-winged-lioness": {
+        "effectMagicCost": {
+            "divine": 1,
+            "basic": 1
+        }
+    },
+    "sun-sister": {
+        "magicCost": {
+            "divine": 1,
+            "basic": 1
+        }
+    },
+    "sword-of-virtue": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "sympathy-pain": {
+        "magicCost": {
+            "charm": 2
+        }
+    },
+    "temple-elder": {
+        "magicCost": {
+            "basic": 2
+        },
+        "effectMagicCost": {
+			"sympathy": 1
+		}
+    },
+    "to-shadows": {
+        "effectMagicCost": {
+            "illusion": 1
+        }
+    },
+    "transfer": {
+        "magicCost": {
+            "charm": 1,
+            "basic": 1
+        }
+    },
+    "transmute-magic": {
+        "magicCost": {
+            "sympathy": 1
+        }
+    },
+    "undying-heart": {
+        "magicCost": {
+            "charm": 1,
+            "basic": 1
+        },
+        "effectMagicCost": {
+            "basic": 2
+        }
+    },
+    "vanish": {
+        "magicCost": {
+            "illusion": 2
+        }
+    },
+    "veil-of-reversal": {
+        "magicCost": {
+            "basic": 2
+        }
+    },
+    "victoria-glassfire": {
+        "effectMagicCost": {
+            "illusion": 1
+        },
+		"diceRecursion": 2
+    },
+    "xander-heartsblood": {
+        "effectMagicCost": {
+            "divine": 1
+        }
+    }
+}

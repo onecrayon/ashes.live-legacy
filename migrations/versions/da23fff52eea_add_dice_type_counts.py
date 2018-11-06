@@ -6,6 +6,7 @@ Create Date: 2018-05-18 09:39:30.092729
 
 """
 import json
+import os.path
 
 from alembic import op
 import sqlalchemy as sa
@@ -24,15 +25,20 @@ def upgrade():
     # Rename our split_dice_flags column to reflect its new broader usage
     op.alter_column('card', 'split_dice_flags', nullable=False, server_default='0',
                     existing_type=sa.Integer, new_column_name='alt_dice_flags')
-    # Update JSON with new naming
+    my_dir = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(my_dir, '../data/da23fff52eea_dice_counts.json'), 'r') as f:
+        data = json.load(f)
+    # Update JSON with new naming and magic costs
     connection = op.get_bind()
-    cards = connection.execute('SELECT id, json FROM card').fetchall()
+    cards = connection.execute('SELECT id, stub, json FROM card').fetchall()
     for card in cards:
         card_json = json.loads(card['json'])
         # Rename splitDice to altDice, because we are storing more than parallel costs
         if card_json.get('splitDice'):
             card_json['altDice'] = card_json['splitDice']
             del card_json['splitDice']
+        if data.get(card['stub']):
+            card_json.update(data[card['stub']])
         connection.execute(
             sa.text('UPDATE card SET json = :json WHERE id = :id'),
             json=json.dumps(card_json, separators=(',', ':'), sort_keys=True),
@@ -53,7 +59,7 @@ def upgrade():
         connection.execute(
             sa.text(
                 'UPDATE card SET json = :json, dice_flags = :dice_flags, '
-                'alt_dice_flags = :alt_dice_flags, '
+                'alt_dice_flags = :alt_dice_flags '
                 'WHERE id = :id'
             ),
             json=json.dumps(card_json, separators=(',', ':'), sort_keys=True),
