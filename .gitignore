@@ -19,3 +19,4 @@ node_modules/
 /app/static/css/styles.css
 /npm-debug.log
 /.vscode
+/*.sublime-workspace

@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"folder_exclude_patterns": [".*", "__pycache__", "#.Espresso", "node_modules"],
+			"file_exclude_patterns": ["*.sublime-project", ".*"]
+		}
+	],
+	"build_systems": [
+		{
+			"name": "Lint",
+			"shell_cmd": "bash -c \"source ~/.nvm/nvm.sh && npm run lint\""
+		},
+		{
+			"name": "Build",
+			"shell_cmd": "bash -c \"source ~/.nvm/nvm.sh && npm run build\"",
+		},
+		{
+			"name": "Build Production",
+			"shell_cmd": "bash -c \"source ~/.nvm/nvm.sh && npm run build-production\"",
+			"env": {
+				"ENVIRONMENT": "production",
+				"NODE_ENV": "production"
+			}
+		},
+		{
+			"name": "Run",
+			"shell_cmd": "bash -c \"source ~/.nvm/nvm.sh && npm start\""
+		}
+	]
+}
