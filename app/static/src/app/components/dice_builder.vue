@@ -8,6 +8,37 @@
 				</span>
 			</div>
 		</h3>
+		<div v-if="phoenixborn.effectMagicCost" class="deck-section">
+			<ul>
+				<li>
+					<div class="responsive-cols no-wrap">
+						<div class="col">
+							<div class="btn-group">
+								<button class="btn btn-small" title="First Five" disabled><i class="fa fa-hand-paper-o"></i></button
+								><button class="btn btn-small" title="Recurring"><i class="fa fa-refresh"></i></button
+								>
+							</div>
+						</div>
+						<div class="col-flex">
+							<card-link :card="phoenixborn"><em>{{ phoenixborn.text[0].name }}</em></card-link>
+						</div>
+						<div class="col">
+							[<ol class="costs">
+								<li v-for="cost of magicCosts(phoenixborn, true)" class="cost">
+									<span v-if="isArray(cost)" class="parallel-costs">
+										<span v-for="splitCost of cost" class="cost">
+											<card-codes :content="splitCost"></card-codes>
+										</span>
+									</span>
+									<card-codes v-else :content="cost"></card-codes>
+								</li>
+							</ol>]
+							<span class="dice-count">({{ diceCount(phoenixborn) }})</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
 		<div v-for="section of deckSections" :key="section.title" class="deck-section">
 			<hr v-if="section.title == 'Conjuration Deck'">
 			<h4>{{ section.title }}<span v-if="section.count" class="card-count"> ({{ section.count }})</span></h4>
@@ -90,6 +121,9 @@
 			},
 			totalCards () {
 				return this.$store.getters.totalCards
+			},
+			phoenixborn () {
+				return this.$store.getters.phoenixborn
 			},
 		},
 		methods: {
