@@ -22,12 +22,14 @@
 		<div v-else class="tabs btn-group">
 			<button class="btn btn-small" :class="{active: activeTab == 'deck'}"
 				@click="activeTab = 'deck'" :disabled="!phoenixborn">Deck</button
+			><button class="btn btn-small" :class="{active: activeTab == 'costs'}"
+				@click="activeTab = 'costs'" :disabled="!phoenixborn">Costs</button
 			><button class="btn btn-small" :class="{active: activeTab == 'meta'}"
 				@click="activeTab = 'meta'" :disabled="!phoenixborn">Meta</button
 			><button class="btn btn-small" :class="{active: activeTab == 'actions'}"
 				@click="activeTab = 'actions'" :disabled="!phoenixborn">Actions</button>
 		</div>
-		<div v-if="activeTab == 'deck' && phoenixborn">
+		<div v-if="(activeTab == 'deck' || activeTab == 'costs') && phoenixborn">
 			<h3 class="phoenixborn-header">
 				<span @click="clearPhoenixborn" class="fa fa-refresh refresh-btn" :class="{disabled: isDisabled === true}" title="Swap Phoenixborn"></span>
 				<card-link :card="phoenixborn"></card-link>
@@ -66,7 +68,8 @@
 				</div>
 			</div>
 			<hr>
-			<deck-listing></deck-listing>
+			<deck-listing v-if="activeTab == 'deck'"></deck-listing>
+			<dice-builder v-else></dice-builder>
 		</div>
 		<div v-else-if="activeTab == 'meta' && phoenixborn">
 			<button class="btn btn-block" :class="{'btn-success': !isAshes500Enabled}" @click="toggleAshes500">
@@ -114,6 +117,7 @@
 	import TextEditor from 'app/components/text_editor.vue'
 	import CardLink from 'app/components/card_link.vue'
 	import DeckListing from 'app/components/deck_listing.vue'
+	import DiceBuilder from 'app/components/dice_builder.vue'
 	import Ashes500Costs from 'app/components/ashes_500_costs.vue'
 	import CardEffects from 'app/gallery/listing/card_effects.vue'
 	import DieCounter from './die_counter.vue'
@@ -127,6 +131,7 @@
 			'card-effects': CardEffects,
 			'card-link': CardLink,
 			'deck-listing': DeckListing,
+			'dice-builder': DiceBuilder,
 			'die-counter': DieCounter,
 			'text-editor': TextEditor,
 			'export-modal': ExportModal,
