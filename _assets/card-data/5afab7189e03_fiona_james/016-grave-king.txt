@@ -1,0 +1,120 @@
+Chant Of Sacrifice
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:class]] - 1 [[divine:class]]
+
+After a player has declared blockers, you may place 1 exhaustion token on this spell to destroy a unit you control. If you do, for the remainder of this turn, a target unit you control adds 2 to its attack value or gains one of the following abilities:
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+Armored 2: When this unit would receive damage, prevent 2 damage.
+
+=====
+
+Fallen
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 1 - Copies 7
+
+Infectious: Damage dealt by this unit by attacking or countering cannot be prevented.
+
+=====
+
+Grave Knight
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:power]] - 1 [[divine:class]] - 1 [[basic]]
+Attack 3 - Life 3 - Recover 2
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+Smite 1: After this unit destroys a unit by attacking or countering, you may remove 1 wound token from your Phoenixborn.
+
+=====
+
+Immortal Commander
+Ally - Battlefield
+[[main]] - 2 [[divine:class]]
+Attack 2 - Life 2 - Recover 1
+
+Exert: [[side]]: Place 1 exhaustion token on this unit.
+
+* Command 1: While this unit has 1 or more exhaustion tokens on it, the attack value of all other units you control is increased by 1.
+
+~ Soul Fire 2: When this card would leave your discard pile, you may spend 1 [[divine:power]] to deal 2 damage to a target unit.
+
+=====
+
+James Endersight
+Battlefield 7 - Life 19 - Spellboard 3
+
+Convene With Souls: [[side]] - [[exhaust]]: Search your draw pile for an ally, reveal it, and place it into your hand. Place a number of wound tokens equal to that ally's life value on this card. Shuffle your draw pile.
+
+=====
+
+Law Of Repentance
+Ready Spell - Spellboard
+[[side]] - 1 [[divine:class]]
+
+When this spell comes into play, if you control an ally, remove 2 wound tokens from your Phoenixborn.
+
+When a player would place 1 or more dice into their active pool from their exhausted pool, deal 1 damage to that player's Phoenixborn.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+* Fleeting: Discard this card at the end of the round.
+
+=====
+
+Rally The Troops
+Action Spell - Discard
+[[side]] - 1 [[divine:class]]
+
+Choose X allies you control with 1 or more exhaustion tokens on them and place them into their owner's hand. Remove X wound tokens from your Phoenixborn.
+
+=====
+
+Reaping Angel
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]] - 1 [[divine:class]]
+Attack 1 - Life 2 - Recover 3
+
+Offer: When this unit comes into play, you may search your draw pile for an ally and place it into your discard pile. If you do, remove a number of wound tokens from equal to that ally's recover value from your Phoenixborn. Shuffle your draw pile.
+
+Sustain 1: When a unit you control would receive damage, you may place 1 wound token on this unit. If you do, prevent 1 damage to that unit.
+
+=====
+
+Reclaim Soul
+Action Spell - Discard
+[[main]] - 2 [[ceremonial:class]]
+
+Choose a target unit. That unit deals damage equal to its attack value to itself. The owner of that unit selects a number of of dice in their exhausted pool up to that unit's recover value, re-rolls them, and places them into their active pool.
+
+=====
+
+Rising Horde
+Ally - Battlefield
+[[main]] - 2 [[ceremonial:class]]
+Attack 1 - Life 1 - Recover 1
+
+* Raise Fallen: When this unit is destroyed, place 2 [[Fallen]] conjurations onto your battlefield.
+
+=====
+
+Summon Fallen
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:class]]
+
+[[main]] - 1 [[basic]]: Discard an ally from your hand or remove an ally in your discard pile from the game. If you do, place a [[Fallen]] conjuration onto your battlefield. You may repeat this effect one additional time.
+
+Focus 1: When a [[Fallen]] conjuration you control would receive damage, you may place 1 exhaustion token on this spell. If you do, prevent that damage.
+
+=====
+
+Vengeance (James Endersight)
+Reaction Spell - Discard
+X [[basic]]
+
+You may play this spell after you declare an Attack a Phoenixborn main action. Destroy X units you control. If you do, X target units you currently control gain the following abilities for the remainder of this turn:
+
+Overkill X: When this unit destroys a unit an opponent controls by attacking, deal X damage to that opponent's Phoenixborn.
+
+Spite X: When this unit deals damage to a Phoenixborn by attacking, you may deal X additional damage to that Phoenixborn.

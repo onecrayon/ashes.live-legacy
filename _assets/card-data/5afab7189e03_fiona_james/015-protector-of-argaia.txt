@@ -1,0 +1,137 @@
+Cognitive Dissonance
+Reaction Spell - Discard
+1 [[charm:class]]
+
+You may play this spell after an opponent draws 1 or more cards or places 1 or more cards into their hand. That opponent discards 3 cards off the top of their draw pile. Then, remove up to 3 spells in each player's discard pile from the game.
+
+=====
+
+Confusion Spores
+Ready Spell - Spellboard
+[[main]] - 1 [[charm:class]]
+
+[[side]] - [[exhaust]]: Target unit cannot block or guard for the remainder of this turn.
+
+Focus 1: You may spend an additional 1 [[sympathy:class]] to take 1 additional side action ([[side]]) this turn.
+
+=====
+
+Essence Druid
+Ally - Battlefield
+[[main]] - 2 [[sympathy:class]] - 1 [[basic]]
+Attack 1 - Life 4 - Recover 1
+
+Spell Recall: When this unit comes into play, search your discard pile for a ready spell and place it into your hand.
+
+Calm the Beast: While this unit is in battle, reduce the attack value of all units in battle with this unit that you do not control by 4.
+
+=====
+
+Exhortation
+Action Spell - Discard
+[[side]] - 1 [[charm:class]] - 1 [[sympathy:class]]
+
+Choose 2 units you control. For each unit, add the other unit's current attack value to its attack value for the remainder of this turn.
+
+=====
+
+Fiona Mercywind
+Battlefield 6 - Life 15 - Spellboard 5
+
+Ingenuity: [[side]] - [[exhaust]] - 1 [[discard]]: Draw 1 card or remove 1 exhaustion token from a ready spell you control.
+
+=====
+
+Majestic Titan
+Conjuration - Battlefield
+Attack 2 - Life 6 - Recover 3 - Copies 1
+
+Gigantic 2: This unit cannot be blocked or guarded against by units with a life value of 2 or less.
+
+Befuddling Blow: When this unit deals damage to a unit, you may force that unit to deal damage equal to its attack value to a target unit of your choice other than itself.
+
+=====
+
+Mind Fog Owl
+Conjuration - Battlefield
+Attack 2 - Life 2 - Recover 0 - Copies 2
+
+Unseen: This unit cannot be blocked unless all attacking units without the Unseen ability have been blocked.
+
+=====
+
+Mind Maze (Fiona Mercywind)
+Alteration Spell - Unit
+[[main]] - 1 [[basic]]
+
+This unit cannot attack, block, or guard.
+
+When this spell would leave play, discard this unit unless its controlling player spends 1 [[basic]].
+
+* Fleeting: Discard this card at the end of this round.
+
+=====
+
+New Ideas
+Action Spell - Discard
+[[main]] / [[side]] - 1 [[sympathy:class]]
+
+Draw 2 cards.
+
+~ If you did not Meditate this turn, after this card is discarded unplayed form your hand, you may draw 1 card.
+
+=====
+
+Nightsong Cricket
+Conjuration - Battlefield
+Attack 2 - Life 1 - Recover 0 - Copies 4
+
+Polyphony: When this unit is destroyed, change 1 die in a target player's active pool to a side of your choice.
+
+Renewed Harmony: When this unit is destroyed, you and a target opponent each choose a card in the other's discard pile. Place the chosen cards into their owner's hand.
+
+=====
+
+Seeds Of Aggression
+Action Spell - Discard
+[[main]] - 1 [[charm:power]] / 1 [[sympathy:power]]
+
+Choose a target unit you control and a target unit an opponent controls. Those units deal damage to each other equal to their attack value.
+
+=====
+
+Summon Majestic Titan
+Ready Spell - Spellboard
+[[main]]
+
+When a spell, ability, or dice power would target a [[Majestic Titan]] you control, you may discard this card to cancel the effects of that spell, ability, or dice power.
+
+[[main]] - [[exhaust]] - 1 [[charm:power]] - 1 [[charm:class]] or 1 [[sympathy:class]] - 2 [[basic]]: Place a [[Majestic Titan]] conjuration onto your battlefield.
+
+Focus 1: Opponents cannot attach an alteration spell to a [[Majestic Titan]] you control.
+
+=====
+
+Summon Mind Fog Owl
+Ready Spell - Spellboard
+[[main]]
+
+~ During a player's turn, when you would draw 1 or more cards, you may draw 1 fewer card. If you do, place this card onto your spellboard.
+
+[[main]] - [[exhaust]] - 1 [[charm:class]] - 1 [[basic]]: Place a [[Mind Fog Owl]] conjuration onto your battlefield.
+
+Focus 1: You may change the activation cost of this spell to [[main]] - [[exhaust]] - 1 [[charm:power]] - 1 [[discard]].
+
+Focus 2: If you cannot place a Mind Fog Owl, choose a target opponent to discard 1 card of their choice from their hand.
+
+=====
+
+Summon Nightsong Cricket
+Ready Spell - Spellboard
+[[main]]
+
+~ If you did not Meditate this turn, after this card is discarded from your hand, you may spend 1 [[basic]] to place it onto your spellboard.
+
+[[main]] - [[exhaust]] - 1 [[sympathy:class]] - 1 [[basic]]: Place a [[Nightsong Cricket]] conjuration onto your battlefield.
+
+Focus 1: You may, as an additional cost, discard 1 card from your hand to place 1 exhaustion token on an unexhausted copy of this spell that you control. If you do, place an additional [[Nightsong Cricket]] conjuration onto your battlefield.
