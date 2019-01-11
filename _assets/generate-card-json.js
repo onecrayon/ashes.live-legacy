@@ -168,8 +168,8 @@ if (files) {
 				// Parse out type, placement, and costs
 				card.type = typePlacement[0]
 				card.placement = typePlacement[1]
-				// If the third line starts with a letter, it's stats; otherwise cost
-				if (meta[2] && /^[a-z]/i.test(meta[2])) {
+				// If the third line starts with a letter other than X, it's stats; otherwise cost
+				if (meta[2] && /^[a-wyz]/i.test(meta[2])) {
 					stats = meta[2].split(sep)
 				} else {
 					card.cost = meta.length > 2 ? meta[2].split(sep) : []
