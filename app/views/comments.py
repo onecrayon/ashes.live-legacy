@@ -86,6 +86,10 @@ def moderate(comment_id):
         comment.is_deleted = comment_form.is_deleted.data
         comment.is_moderated = True
         comment.moderation_notes = comment_form.moderation_notes.data
+        if comment.is_deleted:
+            db.session.query(Stream).filter(
+                Stream.entity_id == comment.entity_id
+            ).delete(synchronize_session=False)
         db.session.commit()
         flash('Comment has been moderated.', 'success')
         return redirect(comment.url, code=303)
