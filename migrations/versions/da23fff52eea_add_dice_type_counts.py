@@ -16,7 +16,7 @@ from app.models.card import Card
 
 # revision identifiers, used by Alembic.
 revision = 'da23fff52eea'
-down_revision = '286ac25d59ba'
+down_revision = '5afab7189e03'
 branch_labels = None
 depends_on = None
 

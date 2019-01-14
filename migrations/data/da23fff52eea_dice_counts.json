@@ -1258,5 +1258,125 @@
         "effectMagicCost": {
             "divine": 1
         }
-    }
+    },
+	"cognitive-dissonance": {
+	    "magicCost": {
+	        "charm": 1
+	    }
+	},
+	"confusion-spores": {
+	    "magicCost": {
+	        "charm": 1
+	    },
+	    "effectMagicCost": {
+			"sympathy": 1
+		}
+	},
+	"essence-druid": {
+	    "magicCost": {
+	        "sympathy": 2,
+	        "basic": 1
+	    }
+	},
+	"exhortation": {
+	    "magicCost": {
+	        "charm": 1,
+	        "sympathy": 1
+	    }
+	},
+	"fiona-mercywind": {},
+	"majestic-titan": {},
+	"mind-fog-owl": {},
+	"mind-maze": {
+	    "magicCost": {
+	        "basic": 1
+	    }
+	},
+	"new-ideas": {
+	    "magicCost": {
+	        "sympathy": 1
+	    }
+	},
+	"nightsong-cricket": {},
+	"seeds-of-aggression": {
+	    "magicCost": {
+	        "charm / sympathy": 1
+	    }
+	},
+	"summon-majestic-titan": {
+	    "effectMagicCost": {
+	        "charm": 2,
+	        "basic": 2
+	    }
+	},
+	"summon-mind-fog-owl": {
+	    "effectMagicCost": {
+	        "charm": 1,
+	        "basic": 1
+	    }
+	},
+	"summon-nightsong-cricket": {
+	    "effectMagicCost": {
+	        "sympathy": 1,
+	        "basic": 1
+	    }
+	},
+	"chant-of-sacrifice": {
+	    "magicCost": {
+	        "ceremonial": 1,
+	        "divine": 1
+	    }
+	},
+	"fallen": {},
+	"grave-knight": {
+	    "magicCost": {
+	        "ceremonial": 1,
+	        "divine": 1,
+	        "basic": 1
+	    }
+	},
+	"immortal-commander": {
+	    "magicCost": {
+	        "divine": 2
+	    },
+	    "effectMagicCost": {
+			"divine": 1
+		}
+	},
+	"james-endersight": {},
+	"law-of-repentance": {
+	    "magicCost": {
+	        "divine": 1
+	    }
+	},
+	"rally-the-troops": {
+	    "magicCost": {
+	        "divine": 1
+	    }
+	},
+	"reaping-angel": {
+	    "magicCost": {
+	        "ceremonial": 1,
+	        "divine": 1
+	    }
+	},
+	"reclaim-soul": {
+	    "magicCost": {
+	        "ceremonial": 2
+	    }
+	},
+	"rising-horde": {
+	    "magicCost": {
+	        "ceremonial": 2
+	    }
+	},
+	"summon-fallen": {
+	    "magicCost": {
+	        "ceremonial": 1
+	    },
+	    "effectMagicCost": {
+	        "basic": 1
+	    }
+	},
+	"vengeance": {}
 }
