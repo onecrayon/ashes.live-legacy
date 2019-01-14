@@ -1305,7 +1305,8 @@
 	},
 	"summon-majestic-titan": {
 	    "effectMagicCost": {
-	        "charm": 2,
+	        "charm": 1,
+			"charm / sympathy": 1,
 	        "basic": 2
 	    }
 	},
