@@ -113,6 +113,22 @@ If you need to inspect the history, `./cli.py db history -r-10:` will give you t
 
 Use 4 spaces for indenting Python, and tabs for indenting everything else. No semicolons in Javascript, please. Otherwise, try to match the existing style used across the site.
 
+## Adding expansions
+
+1. Create card data files in `_assets/card-data/` following naming pattern `ID-expansion.txt` (e.g. `014-king-of-titans.txt`). Card data formatting is documented in `_assets/generate-card-json.js`.
+2. Process card data files on command line:
+    
+        cd _assets/
+        ./generate-card-json.js card-data/FOLDER_NAME
+3. Verify card dice requirements for any cards with costs in their effects (these tend to parse poorly).
+4. Create a new migration and copy the hash
+5. Move exported card JSON into `migrations/data/` named like `HASH_expansion_name.json`
+6. Copy and paste migration logic from most recent expansion migration, modifying as necessary
+7. Add expansion ID and name to `config/config.py`
+8. Add expansion ID to `app/static/src/global.js`
+9. Add new Phoenixborn to `app/static/css.esdynamo/styles.less` in two locations (search for `mixin-phoenixborn-slice`)
+10. Add card images to `app/static/images/cards/`
+
 ## Commands
 
 * `npm start` or `npm run start`: run development server
