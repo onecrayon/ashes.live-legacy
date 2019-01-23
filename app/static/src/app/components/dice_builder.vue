@@ -186,10 +186,11 @@
 				return this.$store.state.deck.first_five.indexOf(cardId) > -1
 			},
 			isFirstFiveFull (cardId) {
-				if (this.$store.state.deck.first_five.indexOf(cardId) > -1) {
+				// Always allow toggling if the card is already in the First Five
+				if (this.isInFirstFive(cardId)) {
 					return false
 				}
-				return this.$store.state.deck.first_five.length === 5
+				return this.$store.state.deck.first_five.length === this.$store.getters.firstFiveLimit
 			}
 		}
 	}

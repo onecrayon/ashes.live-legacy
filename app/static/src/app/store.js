@@ -10,6 +10,8 @@ import {globals} from './utils'
 
 Vue.use(Vuex)
 
+const tutorCardStubs = ['open-memories', 'augury', 'shared-sorrow', 'james-endersight']
+
 function disableReleaseDice (state) {
 	if (!state.options.releases || state.options.releases.indexOf('expansions') === -1) {
 		if (state.options.dice && state.options.dice.indexOf('divine') > -1) {
@@ -113,6 +115,7 @@ export default new Vuex.Store({
 		cardManager: null,
 		ashes_500_revision: null,
 		isDisabled: false,
+		first_five_limit: 5,
 		deck: merge({
 			id: null,
 			title: '',
@@ -283,6 +286,13 @@ export default new Vuex.Store({
 			}
 			comboIds = Array.from(new Set(comboIds))
 			return comboIds
+		},
+		firstFiveLimit (state) {
+			const phoenixborn = !state.cardManager ? null : state.cardManager.cardById(state.deck.phoenixborn)
+			if (phoenixborn && tutorCardStubs.indexOf(phoenixborn.stub) > -1) {
+				return state.first_five_limit + 1
+			}
+			return state.first_five_limit
 		}
 	},
 	mutations: {
@@ -354,10 +364,19 @@ export default new Vuex.Store({
 			state.deck.ashes_500_score = score
 		},
 		toggleFirstFive (state, cardId) {
+			const card = state.cardManager ? state.cardManager.cardById(cardId) : null
+			// Tutors: Augury, Open Memories, Shared Sorrow, James Endersight
+			const adjustFirstFive = card ? tutorCardStubs.indexOf(card.stub) > -1 : false
 			if (state.deck.first_five.indexOf(cardId) > -1) {
 				state.deck.first_five.splice(state.deck.first_five.indexOf(cardId), 1)
+				if (adjustFirstFive) {
+					state.first_five_limit = state.first_five_limit - 1
+				}
 			} else {
 				state.deck.first_five.push(cardId)
+				if (adjustFirstFive) {
+					state.first_five_limit = state.first_five_limit + 1
+				}
 			}
 		},
 		// Filter methods
