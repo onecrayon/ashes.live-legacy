@@ -230,6 +230,9 @@ export default new Vuex.Store({
 		},
 		neededDice (state) {
 			const ids = Object.keys(state.deck.cards)
+			if (state.deck.phoenixborn) {
+				ids.push(state.deck.phoenixborn)
+			}
 			if (!ids.length || !state.cardManager) return []
 			const cards = state.cardManager.idsToListing(ids)
 			return reduce(cards, (result, card) => {
