@@ -47,7 +47,11 @@
 					<div class="responsive-cols no-wrap">
 						<div class="col" v-if="section.title !== 'Conjuration Deck'">
 							<div class="btn-group">
-								<button class="btn btn-small" title="First Five"><i class="fa fa-hand-paper-o"></i></button
+								<button @click="toggleFirstFive(card.data.id)"
+									class="btn btn-small"
+									:class="{active: isInFirstFive(card.data.id)}"
+									:disabled="isFirstFiveFull(card.data.id)"
+									title="First Five"><i class="fa fa-hand-paper-o"></i></button
 								><button class="btn btn-small" title="Recurring"
 									:disabled="!canRecur(card.data)"
 									><i class="fa fa-refresh"></i></button
@@ -174,6 +178,18 @@
 					return false
 				}
 				return !!data.effectMagicCost
+			},
+			toggleFirstFive (cardId) {
+				this.$store.commit('toggleFirstFive', cardId)
+			},
+			isInFirstFive (cardId) {
+				return this.$store.state.deck.first_five.indexOf(cardId) > -1
+			},
+			isFirstFiveFull (cardId) {
+				if (this.$store.state.deck.first_five.indexOf(cardId) > -1) {
+					return false
+				}
+				return this.$store.state.deck.first_five.length === 5
 			}
 		}
 	}

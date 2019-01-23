@@ -123,6 +123,7 @@ export default new Vuex.Store({
 				return result
 			}, {}),
 			cards: {},
+			first_five: [],
 			ashes_500_score: null,
             ashes_500_revision_id: null
 		}, globals.deck || {}),
@@ -351,6 +352,13 @@ export default new Vuex.Store({
 		},
 		setDeck500Score (state, score) {
 			state.deck.ashes_500_score = score
+		},
+		toggleFirstFive (state, cardId) {
+			if (state.deck.first_five.indexOf(cardId) > -1) {
+				state.deck.first_five.splice(state.deck.first_five.indexOf(cardId), 1)
+			} else {
+				state.deck.first_five.push(cardId)
+			}
 		},
 		// Filter methods
 		setSearch (state, search) {
