@@ -152,39 +152,45 @@
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	
+	function sortDiceTypes(a, b) {
+		const aIsBasic = a === 'basic'
+		const bIsBasic = b === 'basic'
+		if (aIsBasic && !bIsBasic) {
+			return 1
+		}
+		if (!aIsBasic && bIsBasic) {
+			return -1
+		}
+		if (aIsBasic && bIsBasic) {
+			return 0
+		}
+		const aIsSplit = includes(a, '/')
+		const bIsSplit = includes(b, '/')
+		if (aIsSplit && !bIsSplit) {
+			return 1
+		}
+		if (!aIsSplit && bIsSplit) {
+			return -1
+		}
+		if (aIsSplit && bIsSplit) {
+			const aSplit = a.split(' / ')
+			const bSplit = b.split(' / ')
+			if (aSplit[0] === bSplit[0]) {
+				return sortDiceTypes(aSplit[1], bSplit[1])
+			}
+			return sortDiceTypes(aSplit[0], bSplit[0])
+		}
+		const aPos = globals.diceData.indexOf(a)
+		const bPos = globals.diceData.indexOf(b)
+		if (aPos === bPos) {
+			return 0
+		}
+		return aPos < bPos ? -1 : 1
+	}
+	
 	function getSortedCostKeys(costObject) {
 		let keys = Object.keys(costObject)
-		keys.sort((a, b) => {
-			const aIsBasic = a === 'basic'
-			const bIsBasic = b === 'basic'
-			if (aIsBasic && !bIsBasic) {
-				return 1
-			}
-			if (!aIsBasic && bIsBasic) {
-				return -1
-			}
-			if (aIsBasic && bIsBasic) {
-				return 0
-			}
-			const aIsSplit = includes(a, '/')
-			const bIsSplit = includes(b, '/')
-			if (aIsSplit && !bIsSplit) {
-				return 1
-			}
-			if (!aIsSplit && bIsSplit) {
-				return -1
-			}
-			if (aIsSplit && bIsSplit) {
-				// TODO: sort splits
-				return 0
-			}
-			const aPos = globals.diceData.indexOf(a)
-			const bPos = globals.diceData.indexOf(b)
-			if (aPos === bPos) {
-				return 0
-			}
-			return aPos < bPos ? -1 : 1
-		})
+		keys.sort(sortDiceTypes)
 		return keys
 	}
 
