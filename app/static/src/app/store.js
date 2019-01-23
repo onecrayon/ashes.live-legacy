@@ -127,6 +127,7 @@ export default new Vuex.Store({
 			}, {}),
 			cards: {},
 			first_five: [],
+			effect_costs: [],
 			ashes_500_score: null,
             ashes_500_revision_id: null
 		}, globals.deck || {}),
@@ -287,13 +288,25 @@ export default new Vuex.Store({
 			comboIds = Array.from(new Set(comboIds))
 			return comboIds
 		},
+		firstFive (state) {
+			if (!state.deck.first_five.length || !state.cardManager) {
+				return null
+			}
+			return state.cardManager.idsToListing(state.deck.first_five)
+		},
 		firstFiveLimit (state) {
 			const phoenixborn = !state.cardManager ? null : state.cardManager.cardById(state.deck.phoenixborn)
 			if (phoenixborn && tutorCardStubs.indexOf(phoenixborn.stub) > -1) {
 				return state.first_five_limit + 1
 			}
 			return state.first_five_limit
-		}
+		},
+		effectCostCards (state) {
+			if (!state.deck.effect_costs.length || !state.cardManager) {
+				return null
+			}
+			return state.cardManager.idsToListing(state.deck.effect_costs)
+		},
 	},
 	mutations: {
 		// We disable controls that could cause an AJAX call while an AJAX call is pending
@@ -311,6 +324,7 @@ export default new Vuex.Store({
 			state.deck.description = description
 		},
 		setPhoenixborn (state, id) {
+			const previousPhoenixborn = state.deck.phoenixborn
 			const phoenixborn = state.cardManager.cardById(id)
 			state.deck.phoenixborn = id
 			state.options.phoenixborn = phoenixborn ? phoenixborn.name : null
@@ -334,6 +348,10 @@ export default new Vuex.Store({
 					}
 				}
 			}
+			// Remove the Phoenixborn ability from effect cost listing, if it's there
+			if (!phoenixborn && previousPhoenixborn && state.deck.effect_costs.indexOf(previousPhoenixborn) > -1) {
+				state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(previousPhoenixborn), 1)
+			}
 		},
 		setDieCount (state, payload) {
 			state.deck.dice[payload.die] = payload.count
@@ -353,6 +371,13 @@ export default new Vuex.Store({
 				Vue.set(state.deck.cards, payload.id, payload.qty)
 			} else if (state.deck.cards[payload.id] && payload.qty === 0) {
 				Vue.delete(state.deck.cards, payload.id)
+				// Clear card from first five and effect costs, if necessary
+				if (state.deck.first_five.indexOf(payload.id) > -1) {
+					state.deck.first_five.splice(state.deck.first_five.indexOf(payload.id), 1)
+				}
+				if (state.deck.effect_costs.indexOf(payload.id) > -1) {
+					state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(payload.id), 1)
+				}
 			} else {
 				state.deck.cards[payload.id] = payload.qty
 			}
@@ -377,6 +402,13 @@ export default new Vuex.Store({
 				if (adjustFirstFive) {
 					state.first_five_limit = state.first_five_limit + 1
 				}
+			}
+		},
+		toggleEffectCost (state, cardId) {
+			if (state.deck.effect_costs.indexOf(cardId) > -1) {
+				state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(cardId), 1)
+			} else {
+				state.deck.effect_costs.push(cardId)
 			}
 		},
 		// Filter methods

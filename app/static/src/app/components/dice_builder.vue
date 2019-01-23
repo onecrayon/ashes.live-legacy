@@ -1,5 +1,47 @@
 <template>
 	<div>
+		<div id="dice-tools">
+			<h3>Stats</h3>
+			<h4>First Five</h4>
+			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
+				<tr>
+					<th>Magic Cost:</th>
+					<td>
+						<ol class="costs" v-if="firstFiveMagicCost">
+							<li v-for="cost of firstFiveMagicCost" class="cost">
+								<span v-if="isArray(cost)" class="parallel-costs">
+									<span v-for="splitCost of cost" class="cost">
+										<card-codes :content="splitCost"></card-codes>
+									</span>
+								</span>
+								<card-codes v-else :content="cost"></card-codes>
+							</li>
+						</ol>
+						<span v-else class="muted">--</span>
+					</td>
+				</tr>
+				<tr>
+					<th>Dice Cost:</th>
+					<td>{{ firstFiveDiceCount }}</td>
+				</tr>
+				<tr>
+					<th>Cards:</th>
+					<td>
+						<span :class="{error: firstFiveTotalCards > firstFiveLimit}">{{ firstFiveTotalCards }}</span> <span class="muted">of {{ firstFiveLimit }} possible</span>
+					</td>
+				</tr>
+			</tbody></table>
+			<!-- TODO: add stats for things like:
+			* Recurring effect dice costs
+			* Average costs (magic and dice) for hands, taking into account the FF (and maybe recurring effect costs)
+			* Average per-round dice recursion?
+			
+			Tool ideas:
+			* Example randomized draw tool (with magic/dice cost output?)
+			* Clear all effect cost and FF toggles
+			-->
+		</div>
+		<hr>
 		<h3 class="responsive-cols no-wrap">
 			<div class="col-flex">
 				Cards
@@ -14,8 +56,13 @@
 					<div class="responsive-cols no-wrap">
 						<div class="col">
 							<div class="btn-group">
-								<button class="btn btn-small" title="First Five" disabled><i class="fa fa-hand-paper-o"></i></button
-								><button class="btn btn-small" title="Recurring"><i class="fa fa-refresh"></i></button
+								<button class="btn btn-small" title="First Five"
+									disabled><i class="fa fa-hand-paper-o"></i></button
+								><button @click="toggleEffectCost(phoenixborn.id)"
+									class="btn btn-small"
+									:class="{active: isEffectCost(phoenixborn.id)}"
+									title="Pay Effect Cost"
+									><i class="fa fa-plus-square-o"></i></button
 								>
 							</div>
 						</div>
@@ -52,9 +99,11 @@
 									:class="{active: isInFirstFive(card.data.id)}"
 									:disabled="isFirstFiveFull(card.data.id)"
 									title="First Five"><i class="fa fa-hand-paper-o"></i></button
-								><button class="btn btn-small" title="Recurring"
-									:disabled="!canRecur(card.data)"
-									><i class="fa fa-refresh"></i></button
+								><button @click="toggleEffectCost(card.data.id)"
+									class="btn btn-small" title="Pay Effect Cost"
+									:class="{active: isEffectCost(card.data.id)}"
+									:disabled="!hasEffectCost(card.data)"
+									><i class="fa fa-plus-square-o"></i></button
 								>
 							</div>
 						</div>
@@ -88,30 +137,56 @@
 									</li>
 								</ol>]
 							</span>
-							<span class="dice-count">({{ diceCount(card.data) }})</span>
+							<span class="dice-count" title="Dice Cost">({{ diceCount(card.data) }})</span>
 						</div>
 					</div>
 				</li>
 			</ul>
 		</div>
-		<!-- TODO: add stats for things like:
-		* First Five "thunder number"/dice cost
-		* Recurring dice costs
-		* Average costs (magic and dice) for hands, taking into account the FF (and maybe recurring cards)
-		* Average per-round dice recursion?
-		
-		Tool ideas:
-		* Example randomized draw tool (with magic/dice cost output?)
-		* Clear all recurring and FF toggles
-		* Add PB ability to the very top of the list (and make it selectable as a recurring cost)?
-		-->
 	</div>
 </template>
 
 <script>
 	import {includes, isArray} from 'lodash'
+	import {globals} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
+	
+	function getSortedCostKeys(costObject) {
+		let keys = Object.keys(costObject)
+		keys.sort((a, b) => {
+			const aIsBasic = a === 'basic'
+			const bIsBasic = b === 'basic'
+			if (aIsBasic && !bIsBasic) {
+				return 1
+			}
+			if (!aIsBasic && bIsBasic) {
+				return -1
+			}
+			if (aIsBasic && bIsBasic) {
+				return 0
+			}
+			const aIsSplit = includes(a, '/')
+			const bIsSplit = includes(b, '/')
+			if (aIsSplit && !bIsSplit) {
+				return 1
+			}
+			if (!aIsSplit && bIsSplit) {
+				return -1
+			}
+			if (aIsSplit && bIsSplit) {
+				// TODO: sort splits
+				return 0
+			}
+			const aPos = globals.diceData.indexOf(a)
+			const bPos = globals.diceData.indexOf(b)
+			if (aPos === bPos) {
+				return 0
+			}
+			return aPos < bPos ? -1 : 1
+		})
+		return keys
+	}
 
 	export default {
 		props: ['viewOnly'],
@@ -126,8 +201,76 @@
 			totalCards () {
 				return this.$store.getters.totalCards
 			},
+			firstFive () {
+				return this.$store.getters.firstFive
+			},
+			effectCostCards () {
+				return this.$store.getters.effectCostCards
+			},
 			phoenixborn () {
 				return this.$store.getters.phoenixborn
+			},
+			firstFiveTotalCards () {
+				return this.$store.state.deck.first_five.length
+			},
+			firstFiveLimit () {
+				return this.$store.getters.firstFiveLimit
+			},
+			firstFiveMagicCost () {
+				const cards = this.$store.getters.firstFive || []
+				let costs = {}
+				function extractCosts(costObject) {
+					if (!costObject) {
+						return
+					}
+					for (const key of Object.keys(costObject)) {
+						costs[key] = costs[key] ? costs[key] + costObject[key] : costObject[key]
+					}
+				}
+				for (const card of cards) {
+					extractCosts(card.magicCost)
+					if (this.isEffectCost(card.id)) {
+						extractCosts(card.effectMagicCost)
+					}
+				}
+				if (includes(this.$store.state.deck.effect_costs, this.phoenixborn.id)) {
+					extractCosts(this.phoenixborn.effectMagicCost)
+				}
+				let formattedCosts = []
+				const keys = getSortedCostKeys(costs)
+				for (const key of keys) {
+					const dice = key.split(' / ')
+					let finalCosts = []
+					let firstIteration = true
+					for (const cost of dice) {
+						if (firstIteration) {
+							finalCosts.push([costs[key], ' [[', cost, ']]'].join(''))
+							firstIteration = false
+						} else {
+							finalCosts.push(['[[', cost, ']]'].join(''))
+						}
+					}
+					if (finalCosts.length > 1) {
+						formattedCosts.push(finalCosts)
+					} else {
+						formattedCosts.push(finalCosts[0])
+					}
+				}
+				if (!formattedCosts.length) {
+					return null
+				}
+				return formattedCosts
+			},
+			firstFiveDiceCount () {
+				const cards = this.$store.getters.firstFive || []
+				let cost = 0
+				for (const card of cards) {
+					cost = cost + this.diceCount(card)
+				}
+				if (includes(this.$store.state.deck.effect_costs, this.phoenixborn.id)) {
+					cost = cost + this.diceCount(this.phoenixborn)
+				}
+				return cost
 			},
 		},
 		methods: {
@@ -138,7 +281,8 @@
 				}
 				const costObject = !returnEffectCost ? data.magicCost : data.effectMagicCost
 				let costs = []
-				for (const key of Object.keys(costObject)) {
+				const keys = getSortedCostKeys(costObject)
+				for (const key of keys) {
 					const dice = key.split(' / ')
 					let finalCosts = []
 					let firstIteration = true
@@ -165,7 +309,7 @@
 						total += value
 					}
 				}
-				if (data.effectMagicCost) {
+				if (data.effectMagicCost && (this.isEffectCost(data.id) || (!data.magicCost && data.diceRecursion !== 0))) {
 					for (const value of Object.values(data.effectMagicCost)) {
 						total += value
 					}
@@ -173,17 +317,14 @@
 				const recursion = data.diceRecursion || 0
 				return total - recursion
 			},
-			canRecur (data) {
-				if (includes(['Action Spell', 'Reaction Spell'], data.type)) {
-					return false
-				}
+			hasEffectCost (data) {
 				return !!data.effectMagicCost
 			},
 			toggleFirstFive (cardId) {
 				this.$store.commit('toggleFirstFive', cardId)
 			},
 			isInFirstFive (cardId) {
-				return this.$store.state.deck.first_five.indexOf(cardId) > -1
+				return includes(this.$store.state.deck.first_five, cardId)
 			},
 			isFirstFiveFull (cardId) {
 				// Always allow toggling if the card is already in the First Five
@@ -191,7 +332,13 @@
 					return false
 				}
 				return this.$store.state.deck.first_five.length === this.$store.getters.firstFiveLimit
-			}
+			},
+			toggleEffectCost (cardId) {
+				this.$store.commit('toggleEffectCost', cardId)
+			},
+			isEffectCost (cardId) {
+				return includes(this.$store.state.deck.effect_costs, cardId)
+			},
 		}
 	}
 </script>

@@ -967,6 +967,37 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	background: fadeout(@color-link, 60%);
 }
 
+.stats {
+	width: 100%;
+	margin-bottom: 20px;
+	
+	th, td {
+		padding-top: 3px;
+		padding-bottom: 3px;
+		text-align: left;
+		vertical-align: top;
+		border-bottom: 2px solid @color-gray;
+	}
+	
+	tr:last-child th, tr:last-child td {
+		border-bottom: none;
+	}
+
+	th {
+		color: @color-mid-gray;
+		width: 33%;
+	}
+
+	td {
+		padding-left: 5px;
+	}
+	
+	.costs {
+		position: relative;
+		top: -3px;
+	}
+}
+
 /* @group Main content */
 
 #page, #footer {
@@ -2217,7 +2248,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	padding: 0;
 }
 
-.deck-section ol.costs {
+.deck-section ol.costs, .stats ol.costs {
 	display: inline-block;
 	list-style-type: none;
 	padding: 0;
