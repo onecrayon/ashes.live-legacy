@@ -80,7 +80,8 @@
         },
         "effectMagicCost": {
 			"basic": 1
-		}
+		},
+		"effectRepeats": true
     },
     "beast-warrior": {
         "magicCost": {
@@ -297,7 +298,8 @@
         },
         "effectMagicCost": {
 			"basic": 1
-		}
+		},
+		"effectRepeats": true
     },
     "encore": {},
     "enlightenment": {
@@ -368,7 +370,8 @@
         },
         "effectMagicCost": {
 			"basic": 1
-		}
+		},
+		"effectRepeats": true
     },
     "frozen-crown": {
         "magicCost": {
@@ -417,6 +420,7 @@
         "effectMagicCost": {
 			"basic": 1
 		},
+		"effectRepeats": true,
 		"diceRecursion": 1
     },
     "harold-westraven": {
@@ -497,7 +501,8 @@
     "jessa-na-ni": {
         "effectMagicCost": {
 			"basic": 1
-		}
+		},
+		"effectRepeats": true
     },
     "join-the-hunt": {
         "magicCost": {
@@ -578,7 +583,8 @@
         },
         "effectMagicCost": {
 			"basic": 1
-		}
+		},
+		"effectRepeats": true
     },
     "lulu-firststone": {
         "effectMagicCost": {
@@ -606,7 +612,8 @@
     "mark-of-the-red-flower": {
         "effectMagicCost": {
 			"natural / sympathy": 1
-		}
+		},
+		"effectRepeats": true
     },
     "mass-heal": {},
     "massive-growth": {
@@ -714,7 +721,8 @@
         },
         "effectMagicCost": {
             "basic": 1
-        }
+        },
+        "effectRepeats": true
     },
     "power-through": {
         "magicCost": {
@@ -1211,7 +1219,8 @@
         },
         "effectMagicCost": {
 			"sympathy": 1
-		}
+		},
+		"effectRepeats": true
     },
     "to-shadows": {
         "effectMagicCost": {
@@ -1377,7 +1386,92 @@
 	    },
 	    "effectMagicCost": {
 	        "basic": 1
-	    }
+	    },
+	    "effectRepeats": true
 	},
-	"vengeance": {}
+	"vengeance": {},
+	"blood-puppet": {
+	    "effectMagicCost": {
+	        "basic": 1
+	    },
+	    "effectRepeats": true
+	},
+	"blue-jaguar": {
+	    "effectMagicCost": {
+			"basic": 1
+		},
+		"effectRepeats": true
+	},
+	"butterfly-monk": {},
+	"false-demon": {},
+	"gilder": {},
+	"iron-rhino": {},
+	"masked-wolf": {},
+	"mist-spirit": {},
+	"seaside-raven": {},
+	"silver-snake": {},
+	"sleeping-widow": {},
+	"three-eyed-owl": {},
+	"frostback-bear": {
+	    "effectMagicCost": {
+			"basic": 1
+		},
+		"effectRepeats": true
+	},
+	"ice-buff": {},
+	"ice-golem": {},
+	"dread-wraith": {},
+	"glow-finch": {},
+	"nightshade-swallow": {},
+	"orchid-dove": {
+	    "effectMagicCost": {
+			"basic": 1
+		},
+		"effectRepeats": true
+	},
+	"shadow-hound": {},
+	"shadow-spirit": {},
+	"emperor-lion": {},
+	"winged-lioness": {},
+	"salamander-monk": {},
+	"salamander-monk-spirit": {},
+	"squall-stallion": {},
+	"enhanced-strength": {},
+	"mirror-spirit": {},
+	"lucky-rabbit": {
+		"diceRecursion": 1
+	},
+	"turtle-guard": {},
+	"infatuated": {},
+	"light-bringer": {
+	    "effectMagicCost": {
+			"basic": 1
+		}
+	},
+	"steadfast-guardian": {
+	    "effectMagicCost": {
+			"basic": 1
+		}
+	},
+	"weeping-spirit": {},
+	"biter": {},
+	"brilliant-thorn": {},
+	"indiglow-creeper": {},
+	"luminous-seedling": {},
+	"panther-spirit": {},
+	"dark-transformation": {},
+	"hunters-mark": {},
+	"vampire-bat-swarm": {},
+	"admonisher": {},
+	"angels-embrace": {},
+	"spectral-assassin": {},
+	"ancestor-spirit": {},
+	"nightmare-mount": {},
+	"pale-steed-mount": {},
+	"spectral-charger-mount": {},
+	"archasaurus-mount": {},
+	"cerasaurus-mount": {},
+	"raptor-hatchling": {},
+	"shining-hydra": {},
+	"shining-hydra-head": {}
 }
