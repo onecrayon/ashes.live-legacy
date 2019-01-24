@@ -34,7 +34,7 @@ import sys
 
 
 cost_types = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy']
-magic_cost_re = re.compile(r'(\d+)\s+\[\[(' + r'|'.join(cost_types) + r')(?::\w+)?\]\]')
+magic_cost_re = re.compile(r'(\d+)\s+\[\[((?:' + r'|'.join(cost_types) + r')(?::\w+)?)\]\]')
 
 
 def parse_cost(cost, data_object, cost_key='magicCost'):
@@ -116,6 +116,6 @@ with open(file_path) as file:
         new_file.write(content)
 
 print(
-    'All done! Remember to edit JSON by hand to ensure effect costs '
-    'and diceRecursion keys are included.'
+    'All done! Remember to edit JSON by hand to ensure effect costs, '
+    'diceRecursion, and effectRepeats keys are included.'
 )

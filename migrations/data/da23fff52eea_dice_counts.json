@@ -1,22 +1,24 @@
 {
     "abundance": {
         "magicCost": {
-            "illusion": 1
+            "illusion:class": 1
         }
     },
+    "admonisher": {},
     "adrenaline-rush": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "amplify": {
         "magicCost": {
-            "charm": 1
+            "charm:class": 1
         },
         "effectMagicCost": {
             "basic": 1
         }
     },
+    "ancestor-spirit": {},
     "ancestral-army": {
         "magicCost": {
             "basic": 3
@@ -29,12 +31,13 @@
     },
     "angelic-rescue": {
         "magicCost": {
-            "illusion": 1
+            "illusion:power": 1
         },
         "effectMagicCost": {
-			"divine": 1
+			"divine:class": 1
 		}
     },
+    "angels-embrace": {},
     "anguish": {
         "magicCost": {
             "basic": 2
@@ -42,13 +45,14 @@
     },
     "aradel-summergaard": {
         "effectMagicCost": {
-            "natural": 1
+            "natural:class": 1
         }
     },
+    "archasaurus-mount": {},
     "astrea": {},
     "augury": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         },
         "effectMagicCost": {
             "basic": 1
@@ -62,20 +66,21 @@
     },
     "battle-seer": {
         "magicCost": {
-            "illusion": 1,
-            "sympathy": 1,
+            "illusion:power": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
     "beast-mage": {
         "magicCost": {
-            "sympathy": 2,
+            "sympathy:class": 2,
             "basic": 1
         }
     },
     "beast-tamer": {
         "magicCost": {
-            "charm": 2,
+            "charm:power": 1,
+            "charm:class": 1,
             "basic": 1
         },
         "effectMagicCost": {
@@ -85,12 +90,13 @@
     },
     "beast-warrior": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
+    "biter": {},
     "blackcloud-ninja": {
         "magicCost": {
-            "ceremonial": 1,
+            "ceremonial:class": 1,
             "basic": 2
         },
         "effectMagicCost": {
@@ -99,31 +105,43 @@
     },
     "blood-archer": {
         "magicCost": {
-            "ceremonial": 1,
-            "charm": 1,
+            "ceremonial:class": 1,
+            "charm:class": 1,
             "basic": 2
         }
     },
     "blood-chains": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
+    },
+    "blood-puppet": {
+        "effectMagicCost": {
+            "basic": 1
+        },
+		"effectRepeats": true
     },
     "blood-transfer": {
         "effectMagicCost": {
-            "ceremonial": 1,
-            "charm": 1
+            "ceremonial:class": 1,
+            "charm:class": 1
         }
+    },
+    "blue-jaguar": {
+        "effectMagicCost": {
+			"basic": 1
+		},
+		"effectRepeats": true
     },
     "body-inversion": {
         "magicCost": {
-            "illusion": 2
+            "illusion:class": 2
         },
 		"diceRecursion": 2
     },
     "bound-soul": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "brennen-blackcloud": {
@@ -131,29 +149,33 @@
             "basic": 1
         }
     },
+    "brilliant-thorn": {},
     "bring-forth": {
         "magicCost": {
-            "ceremonial": 2
+            "ceremonial:class": 2
         },
         "effectMagicCost": {
             "basic": 2
         }
     },
+    "butterfly-monk": {},
     "call-to-action": {
         "magicCost": {
-            "charm": 1
+            "charm:power": 1
         }
     },
     "call-upon-the-realms": {},
     "celestial-knight": {
         "magicCost": {
-            "divine": 3
+            "divine:power": 1,
+            "divine:class": 2
         }
     },
+    "cerasaurus-mount": {},
     "chained-creations": {
         "magicCost": {
-            "illusion": 1,
-            "divine": 1
+            "illusion:class": 1,
+            "divine:class": 1
         },
         "effectMagicCost": {
             "basic": 1
@@ -161,13 +183,13 @@
     },
     "change-psyche": {
         "magicCost": {
-            "charm": 1,
+            "charm:class": 1,
             "basic": 1
         }
     },
     "changing-winds": {
         "magicCost": {
-            "sympathy": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
@@ -178,51 +200,70 @@
     },
     "chant-of-revenge": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
+        }
+    },
+    "chant-of-sacrifice": {
+        "magicCost": {
+            "ceremonial:class": 1,
+            "divine:class": 1
         }
     },
     "chant-of-the-dead": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "chaos-gravity": {
         "magicCost": {
-            "divine / sympathy": 1,
+            "divine:class / sympathy:class": 1,
             "basic": 1
         }
     },
     "choke": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "coal-roarkwin": {},
+    "cognitive-dissonance": {
+        "magicCost": {
+            "charm:class": 1
+        }
+    },
+    "confusion-spores": {
+        "magicCost": {
+            "charm:class": 1
+        },
+        "effectMagicCost": {
+			"sympathy:class": 1
+		}
+    },
     "crescendo": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
     "crimson-bomber": {
         "magicCost": {
-            "ceremonial": 2
+            "ceremonial:class": 2
         }
     },
     "crystal-shield": {
         "magicCost": {
-            "natural": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
     "cut-the-strings": {
         "effectMagicCost": {
-            "ceremonial": 1,
+            "ceremonial:class": 1,
             "basic": 1
         }
     },
     "dark-presence": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         },
         "effectMagicCost": {
             "basic": 1
@@ -230,18 +271,19 @@
     },
     "dark-reaping": {
         "magicCost": {
-            "ceremonial": 2
+            "ceremonial:class": 2
         },
 		"diceRecursion": 4
     },
+    "dark-transformation": {},
     "deep-freeze": {
         "magicCost": {
-            "natural": 1
+            "natural:class": 1
         }
     },
     "devotion": {
         "magicCost": {
-            "divine": 1,
+            "divine:class": 1,
             "basic": 1
         },
         "effectMagicCost": {
@@ -264,10 +306,11 @@
             "basic": 1
         },
         "effectMagicCost": {
-            "ceremonial": 1,
-            "sympathy": 1
+            "ceremonial:class": 1,
+            "sympathy:class": 1
         }
     },
+    "dread-wraith": {},
     "earthquake": {
         "magicCost": {
             "basic": 2
@@ -283,9 +326,10 @@
             "basic": 7
         }
     },
+    "emperor-lion": {},
     "empower": {
         "magicCost": {
-            "natural": 2
+            "natural:class": 2
         },
         "effectMagicCost": {
 			"basic": 1
@@ -302,89 +346,112 @@
 		"effectRepeats": true
     },
     "encore": {},
+    "enhanced-strength": {},
     "enlightenment": {
         "magicCost": {
-            "divine": 1,
+            "divine:class": 1,
             "basic": 1
+        }
+    },
+    "essence-druid": {
+        "magicCost": {
+            "sympathy:class": 2,
+            "basic": 1
+        }
+    },
+    "exhortation": {
+        "magicCost": {
+            "charm:class": 1,
+            "sympathy:class": 1
         }
     },
     "expand-energy": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:power": 1
         },
 		"diceRecursion": 1
     },
     "explosive-growth": {
         "magicCost": {
-            "sympathy": 1,
-            "natural": 1
+            "sympathy:class": 1,
+            "natural:class": 1
         }
     },
     "fade-away": {
         "magicCost": {
-            "illusion": 1
+            "illusion:class": 1
         }
     },
+    "fallen": {},
+    "false-demon": {},
     "fear": {},
     "figures-in-the-fog": {
         "magicCost": {
-            "illusion": 2,
+            "illusion:class": 2,
             "basic": 1
         }
     },
     "final-cry": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:power": 1
         }
     },
+    "fiona-mercywind": {},
     "fire-archer": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "flash-archer": {
         "magicCost": {
-            "illusion": 2,
+            "illusion:class": 2,
             "basic": 2
         }
     },
     "flute-mage": {
         "magicCost": {
-            "sympathy": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
     "freezing-blast": {
         "magicCost": {
-            "natural": 2
+            "natural:class": 2
         }
     },
     "frost-bite": {
         "effectMagicCost": {
-            "natural / basic": 1
+            "natural:class": 1
         }
     },
     "frost-fang": {
         "magicCost": {
-            "natural": 1
+            "natural:power": 1
         },
         "effectMagicCost": {
 			"basic": 1
 		},
 		"effectRepeats": true
     },
+    "frostback-bear": {
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
     "frozen-crown": {
         "magicCost": {
-            "natural": 1,
+            "natural:class": 1,
             "basic": 2
         }
     },
     "gates-thrown-open": {
         "magicCost": {
-            "illusion": 2
+            "illusion:class": 2
         },
 		"diceRecursion": 4
     },
+    "gilder": {},
+    "glow-finch": {},
     "gobi-sunshield": {
         "magicCost": {
             "basic": 4
@@ -392,24 +459,31 @@
     },
     "golden-veil": {
         "magicCost": {
-            "natural": 1,
-            "charm": 1
+            "natural:class": 1,
+            "charm:class": 1
+        }
+    },
+    "grave-knight": {
+        "magicCost": {
+            "ceremonial:power": 1,
+            "divine:class": 1,
+            "basic": 1
         }
     },
     "gravity-training": {
         "effectMagicCost": {
-			"divine / sympathy": 1
+			"divine:class / sympathy:class": 1
 		}
     },
     "guilt-link": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
     "hammer-knight": {
         "magicCost": {
-            "ceremonial": 1,
-            "natural": 1,
+            "ceremonial:power": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
@@ -420,8 +494,8 @@
         "effectMagicCost": {
 			"basic": 1
 		},
-		"effectRepeats": true,
-		"diceRecursion": 1
+		"diceRecursion": 1,
+		"effectRepeats": true
     },
     "harold-westraven": {
         "effectMagicCost": {
@@ -433,70 +507,87 @@
 	},
     "heal": {
         "magicCost": {
-            "divine": 1
+            "divine:class": 1
         }
     },
     "hex-bane": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
     "hidden-power": {
         "magicCost": {
-            "illusion": 1
+            "illusion:class": 1
         },
 		"diceRecursion": 2
     },
     "hollow": {
         "magicCost": {
-            "sympathy / illusion": 1
+            "sympathy:class / illusion:class": 1
         },
         "effectMagicCost": {
-			"sympathy": 1,
-			"illusion": 1
+			"sympathy:power": 1,
+			"illusion:power": 1
 		}
     },
     "holy-knight": {
         "magicCost": {
-            "divine": 3,
+            "divine:power": 1,
+            "divine:class": 2,
             "basic": 1
         }
     },
     "holy-relics": {
         "magicCost": {
-            "divine": 2
+            "divine:class": 2
         }
     },
     "hunt-master": {
         "magicCost": {
-            "natural": 1,
-            "sympathy": 1,
+            "natural:power": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
+    "hunters-mark": {},
     "hypnotize": {
         "effectMagicCost": {
-            "charm": 2
+            "charm:class": 2
         }
     },
+    "ice-buff": {},
+    "ice-golem": {},
     "ice-trap": {
         "magicCost": {
-            "natural": 1
+            "natural:class": 1
         }
     },
     "illusionary-cycle": {
 		"diceRecursion": 1
 	},
+    "immortal-commander": {
+        "magicCost": {
+            "divine:class": 2
+        },
+        "effectMagicCost": {
+			"divine:power": 1
+		}
+    },
     "imperial-ninja": {
         "magicCost": {
-            "charm": 2
+            "charm:power": 1,
+            "charm:class": 1
         }
     },
+    "indiglow-creeper": {},
+    "infatuated": {},
+    "iron-rhino": {},
     "iron-worker": {
         "magicCost": {
             "basic": 2
         }
     },
+    "james-endersight": {},
     "jericho-kill": {},
     "jessa-na-ni": {
         "effectMagicCost": {
@@ -506,12 +597,12 @@
     },
     "join-the-hunt": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
     "jungle-warrior": {
         "magicCost": {
-            "sympathy": 1,
+            "sympathy:class": 1,
             "basic": 1
         },
         "effectMagicCost": {
@@ -520,42 +611,50 @@
     },
     "kneel": {
         "magicCost": {
-            "divine": 1,
-            "charm": 1
+            "divine:class": 1,
+            "charm:class": 1
         }
     },
     "koji-wolfcub": {},
     "law-of-assurance": {
         "magicCost": {
-            "divine": 1,
+            "divine:class": 1,
             "basic": 1
         },
 		"diceRecursion": 2
     },
     "law-of-banishment": {
         "magicCost": {
-            "divine": 1
+            "divine:class": 1
         }
     },
     "law-of-domination": {
         "magicCost": {
-            "divine": 1
+            "divine:class": 1
         }
     },
     "law-of-fear": {
         "magicCost": {
-            "divine": 1
+            "divine:class": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
+    "law-of-repentance": {
+        "magicCost": {
+            "divine:class": 1
         }
     },
     "law-of-sight": {
         "magicCost": {
-            "divine": 1,
+            "divine:class": 1,
             "basic": 1
         }
     },
     "leech-warrior": {
         "magicCost": {
-            "ceremonial": 2,
+            "ceremonial:class": 2,
             "basic": 1
         }
     },
@@ -569,16 +668,21 @@
             "basic": 2
         }
     },
+    "light-bringer": {
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
     "light-swordsman": {
         "magicCost": {
-            "sympathy": 1,
-            "divine": 1
+            "sympathy:class": 1,
+            "divine:class": 1
         }
     },
     "living-doll": {
         "magicCost": {
-            "ceremonial": 1,
-            "charm": 1,
+            "ceremonial:class": 1,
+            "charm:class": 1,
             "basic": 1
         },
         "effectMagicCost": {
@@ -586,11 +690,15 @@
 		},
 		"effectRepeats": true
     },
+    "lucky-rabbit": {
+		"diceRecursion": 1
+    },
     "lulu-firststone": {
         "effectMagicCost": {
             "basic": 1
         }
     },
+    "luminous-seedling": {},
     "maeoni-viper": {
         "effectMagicCost": {
 			"basic": 1
@@ -598,12 +706,13 @@
     },
     "magic-purity": {
 		"diceRecursion": 1
-	},
+    },
     "magic-syphon": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
+    "majestic-titan": {},
     "mark-of-the-goddess": {
         "magicCost": {
             "basic": 2
@@ -611,63 +720,87 @@
     },
     "mark-of-the-red-flower": {
         "effectMagicCost": {
-			"natural / sympathy": 1
+			"natural:class / sympathy:class": 1
 		},
 		"effectRepeats": true
     },
+    "masked-wolf": {},
     "mass-heal": {},
     "massive-growth": {
         "magicCost": {
-            "natural": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
     "master-vampire": {
         "magicCost": {
-            "ceremonial / sympathy": 1,
-            "ceremonial": 1,
-            "sympathy": 1
+            "ceremonial:power / sympathy:power": 1,
+            "ceremonial:class": 1,
+            "sympathy:class": 1
         }
     },
     "memory-theft": {
         "effectMagicCost": {
-            "charm": 1
+            "charm:class": 1
         }
     },
     "meteor": {
         "magicCost": {
-            "divine": 2
-        }
+            "divine:power": 2
+        },
+        "effectMagicCost": {
+			"basic": 1
+		},
+		"effectRepeats": true
+    },
+    "mind-fog-owl": {},
+    "mind-maze": {
+        "magicCost": {
+            "basic": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		}
     },
     "mind-probe": {
         "magicCost": {
-            "charm": 1
+            "charm:class": 1
         }
     },
+    "mirror-spirit": {},
+    "mist-spirit": {},
     "mist-typhoon": {
         "magicCost": {
-            "illusion": 1,
-            "natural": 1
+            "illusion:class": 1,
+            "natural:class": 1
         }
     },
     "molten-gold": {
         "magicCost": {
-            "natural": 2
+            "natural:power": 2
         }
     },
     "namine-hymntide": {
         "effectMagicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
     "natures-wrath": {
         "magicCost": {
-            "natural": 1
+            "natural:class": 1
         }
     },
+    "new-ideas": {
+        "magicCost": {
+            "sympathy:class": 1
+        }
+    },
+    "nightmare-mount": {},
+    "nightshade-swallow": {},
+    "nightsong-cricket": {},
     "noah-redmoon": {
         "effectMagicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "odette-diamondcrest": {},
@@ -678,28 +811,37 @@
     },
     "open-memories": {
         "magicCost": {
-            "charm": 1,
+            "charm:class": 1,
             "basic": 1
         }
+    },
+    "orchid-dove": {
+        "effectMagicCost": {
+			"basic": 1
+		},
+		"effectRepeats": true
     },
     "orrick-gilstream": {
         "effectMagicCost": {
             "basic": 2
-        }
+        },
+		"diceRecursion": 4
     },
     "out-of-the-mist": {
         "magicCost": {
-            "illusion": 1,
-            "natural": 1
+            "illusion:power": 1,
+            "natural:power": 1
         }
     },
     "pain-shaman": {
         "magicCost": {
-            "divine": 1,
-            "natural": 1,
+            "divine:power": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
+    "pale-steed-mount": {},
+    "panther-spirit": {},
     "particle-shield": {
         "magicCost": {
             "basic": 1
@@ -712,45 +854,51 @@
     },
     "poison": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "polarity-mage": {
         "magicCost": {
-            "divine / sympathy": 1
+            "divine:class / sympathy:class": 1
         },
         "effectMagicCost": {
             "basic": 1
         },
-        "effectRepeats": true
+		"effectRepeats": true
     },
     "power-through": {
         "magicCost": {
-            "divine": 1,
+            "divine:class": 1,
             "basic": 1
         }
     },
     "prepare": {},
     "protect": {
         "magicCost": {
-            "natural": 1,
-            "ceremonial": 1
+            "natural:class": 1,
+            "ceremonial:class": 1
         }
     },
     "psychic-vampire": {
         "magicCost": {
-            "ceremonial": 1
+            "ceremonial:power": 1
         }
     },
     "purge": {
         "effectMagicCost": {
-            "charm": 1,
+            "charm:class": 1,
 			"basic": 1
         }
     },
+    "rally-the-troops": {
+        "magicCost": {
+            "divine:class": 1
+        }
+    },
+    "raptor-hatchling": {},
     "raptor-herder": {
         "magicCost": {
-            "natural / sympathy": 1
+            "natural:class / sympathy:class": 1
         }
     },
     "rayward-knight": {
@@ -758,14 +906,25 @@
             "basic": 3
         }
     },
+    "reaping-angel": {
+        "magicCost": {
+            "ceremonial:class": 1,
+            "divine:class": 1
+        }
+    },
+    "reclaim-soul": {
+        "magicCost": {
+            "ceremonial:class": 2
+        }
+    },
     "redirect": {
         "magicCost": {
-            "charm": 1
+            "charm:class": 1
         }
     },
     "reflections-in-the-water": {
         "magicCost": {
-            "illusion": 1
+            "illusion:class": 1
         },
         "effectMagicCost": {
             "basic": 1
@@ -773,25 +932,25 @@
     },
     "refresh": {
         "magicCost": {
-            "charm": 1,
+            "charm:class": 1,
             "basic": 1
         }
     },
     "regress": {
         "magicCost": {
-            "ceremonial": 1,
+            "ceremonial:class": 1,
             "basic": 1
         }
     },
     "remorse": {
         "magicCost": {
-            "charm": 1,
+            "charm:class": 1,
             "basic": 1
         }
     },
     "resonance": {
         "magicCost": {
-            "sympathy": 2,
+            "sympathy:class": 2,
             "basic": 1
         },
 		"diceRecursion": 2
@@ -808,15 +967,21 @@
         },
 		"diceRecursion": 5
     },
+    "rising-horde": {
+        "magicCost": {
+            "ceremonial:class": 2
+        }
+    },
     "river-skald": {
         "magicCost": {
-            "sympathy": 2,
+            "sympathy:power": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
     "root-armor": {
         "magicCost": {
-            "natural": 1
+            "natural:class": 1
         },
         "effectMagicCost": {
             "basic": 1
@@ -824,7 +989,7 @@
     },
     "rose-fire-dancer": {
         "magicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
             "basic": 1
         }
     },
@@ -835,85 +1000,99 @@
     },
     "sacred-ground": {
         "magicCost": {
-            "divine": 1
+            "divine:power": 1
         }
     },
+    "salamander-monk": {},
+    "salamander-monk-spirit": {},
     "saria-guideman": {
         "effectMagicCost": {
-            "charm": 1
+            "charm:class": 1
         }
     },
     "seal": {
         "magicCost": {
-            "illusion": 1,
-            "charm": 1
+            "illusion:class": 1,
+            "charm:class": 1
         }
     },
+    "seaside-raven": {},
     "secret-door": {
         "magicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
             "basic": 1
+        }
+    },
+    "seeds-of-aggression": {
+        "magicCost": {
+            "charm:power / sympathy:power": 1
         }
     },
     "sembali-grimtongue": {},
     "shadow-counter": {
         "magicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
             "basic": 1
         }
     },
     "shadow-guard": {
         "magicCost": {
-            "illusion": 2
+            "illusion:class": 2
         }
     },
+    "shadow-hound": {},
+    "shadow-spirit": {},
     "shared-sorrow": {
         "magicCost": {
-            "sympathy": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
     "shatter-pulse": {
         "magicCost": {
-            "sympathy": 2,
+            "sympathy:class": 2,
             "basic": 1
         }
     },
     "shepherd-of-lost-souls": {
         "magicCost": {
-            "divine": 1
+            "divine:class": 1
         }
     },
     "shield-mage": {
         "magicCost": {
-            "divine": 1
+            "divine:power": 1
         }
     },
     "shifting-mist": {
         "magicCost": {
-            "illusion": 1
+            "illusion:class": 1
         }
     },
+    "shining-hydra": {},
+    "shining-hydra-head": {},
+    "silver-snake": {},
     "sleeping-bear": {
         "magicCost": {
-            "natural": 2
+            "natural:class": 2
         }
     },
+    "sleeping-widow": {},
     "sleight-of-hand": {
         "magicCost": {
-            "illusion": 1,
+            "illusion:power": 1,
             "basic": 1
         }
     },
     "small-sacrifice": {
         "effectMagicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "sonic-swordsman": {
         "magicCost": {
-            "divine": 1,
-            "sympathy": 1,
+            "divine:power": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
@@ -922,72 +1101,81 @@
             "basic": 3
         }
     },
+    "spectral-assassin": {},
+    "spectral-charger-mount": {},
     "spiked-armor": {
         "magicCost": {
-            "natural": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
+    "squall-stallion": {},
     "squire": {
         "magicCost": {
             "basic": 1
         }
     },
+    "steadfast-guardian": {
+        "effectMagicCost": {
+			"basic": 1
+		}
+    },
     "steady-gaze": {
         "magicCost": {
-            "illusion": 2
+            "illusion:class": 2
         }
     },
     "stormwind-sniper": {
         "magicCost": {
-            "illusion": 1,
-            "ceremonial": 1,
+            "illusion:class": 1,
+            "ceremonial:class": 1,
             "basic": 1
         }
     },
     "strange-copy": {
         "magicCost": {
-            "illusion": 2
+            "illusion:class": 2
         }
     },
     "strengthen": {
         "magicCost": {
-            "natural": 1,
-            "ceremonial": 1
+            "natural:class": 1,
+            "ceremonial:class": 1
         }
     },
     "string-mage": {
         "magicCost": {
-            "sympathy": 2
+            "sympathy:power": 1,
+            "sympathy:class": 1
         }
     },
     "summon-admonisher": {
         "effectMagicCost": {
-            "divine": 1
+            "divine:class": 1
         }
     },
     "summon-ancestor-spirit": {
         "magicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
             "basic": 1
         }
     },
     "summon-archasaurus-mount": {
         "magicCost": {
-            "divine": 1,
-            "natural": 1,
+            "divine:class": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
     "summon-biter": {
         "effectMagicCost": {
-            "natural": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
     "summon-blood-puppet": {
         "effectMagicCost": {
-            "ceremonial": 1
+            "ceremonial:class": 1
         }
     },
     "summon-blue-jaguar": {
@@ -997,7 +1185,7 @@
     },
     "summon-butterfly-monk": {
         "effectMagicCost": {
-            "natural": 1
+            "natural:power": 1
         }
     },
     "summon-cerasaurus-mount": {
@@ -1005,33 +1193,42 @@
             "basic": 1
         },
         "effectMagicCost": {
-            "natural": 1,
-            "divine": 1
+            "natural:class": 1,
+            "divine:class": 1
         }
     },
     "summon-dread-wraith": {
         "effectMagicCost": {
-            "ceremonial": 3
+            "ceremonial:class": 3
         }
     },
     "summon-emperor-lion": {
         "effectMagicCost": {
-            "divine": 2,
+            "divine:class": 2,
             "basic": 1
         }
     },
+    "summon-fallen": {
+        "magicCost": {
+            "ceremonial:class": 1
+        },
+        "effectMagicCost": {
+            "basic": 1
+        },
+		"effectRepeats": true
+    },
     "summon-false-demon": {
         "effectMagicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
             "basic": 1
         }
     },
     "summon-frostback-bear": {
         "magicCost": {
-            "natural": 1
+            "natural:power": 1
         },
         "effectMagicCost": {
-            "natural": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
@@ -1040,33 +1237,33 @@
             "basic": 1
         },
         "effectMagicCost": {
-            "illusion": 1,
-            "sympathy": 1
+            "illusion:class": 1,
+            "sympathy:class": 1
         }
     },
     "summon-gilder": {
         "magicCost": {
-            "charm": 1
+            "charm:class": 1
         },
         "effectMagicCost": {
-            "natural": 1
+            "natural:class": 1
         }
     },
     "summon-ice-golem": {
         "effectMagicCost": {
-            "natural": 2,
+            "natural:class": 2,
             "basic": 1
         }
     },
     "summon-indiglow-creeper": {
         "effectMagicCost": {
-            "natural": 1,
-            "sympathy": 1
+            "natural:class": 1,
+            "sympathy:class": 1
         }
     },
     "summon-iron-rhino": {
         "magicCost": {
-            "natural": 1
+            "natural:class": 1
         },
         "effectMagicCost": {
             "basic": 6
@@ -1074,7 +1271,7 @@
     },
     "summon-light-bringer": {
         "effectMagicCost": {
-            "divine": 1
+            "divine:class": 1
         }
     },
     "summon-lucky-rabbit": {
@@ -1083,37 +1280,56 @@
         },
 		"diceRecursion": 1
     },
+    "summon-majestic-titan": {
+        "effectMagicCost": {
+            "charm:power": 1,
+            "charm:class": 1,
+            "basic": 2
+        }
+    },
     "summon-masked-wolf": {
         "effectMagicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
+            "basic": 1
+        }
+    },
+    "summon-mind-fog-owl": {
+        "effectMagicCost": {
+            "charm:class": 1,
             "basic": 1
         }
     },
     "summon-mirror-spirit": {
         "effectMagicCost": {
-            "sympathy": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
     "summon-mist-spirit": {
         "effectMagicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
 			"basic": 1
         }
     },
     "summon-nightshade-swallow": {
         "effectMagicCost": {
-            "charm": 2
+            "charm:class": 2
+        }
+    },
+    "summon-nightsong-cricket": {
+        "effectMagicCost": {
+            "sympathy:class": 1,
+            "basic": 1
         }
     },
     "summon-orchid-dove": {
         "effectMagicCost": {
-            "charm / basic": 1
+            "charm:class": 1
         }
     },
     "summon-salamander-monk": {
         "effectMagicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
     "summon-seaside-raven": {
@@ -1123,56 +1339,56 @@
     },
     "summon-shadow-hound": {
         "effectMagicCost": {
-            "illusion": 3
+            "illusion:class": 3
         }
     },
     "summon-shadow-spirit": {
         "effectMagicCost": {
-            "illusion": 1
+            "illusion:power": 1
         }
     },
     "summon-shining-hydra": {
         "magicCost": {
-            "divine": 1,
-            "natural": 1,
+            "divine:class": 1,
+            "natural:class": 1,
             "basic": 1
         }
     },
     "summon-silver-snake": {
         "effectMagicCost": {
-            "charm": 1,
-            "natural": 1
+            "charm:power": 1,
+            "natural:power": 1
         }
     },
     "summon-sleeping-widows": {
         "magicCost": {
-            "ceremonial": 2
+            "ceremonial:class": 2
         }
     },
     "summon-spectral-assassin": {
         "magicCost": {
-            "illusion": 1,
+            "illusion:class": 1,
             "basic": 1
         }
     },
     "summon-squall-stallion": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:power": 1
         },
         "effectMagicCost": {
-            "sympathy": 1,
+            "sympathy:class": 1,
             "basic": 1
         }
     },
     "summon-steadfast-guardian": {
         "effectMagicCost": {
-			"divine": 1,
-			"charm": 1
+			"divine:class": 1,
+			"charm:class": 1
 		}
     },
     "summon-three-eyed-owl": {
         "effectMagicCost": {
-            "charm": 1
+            "charm:class": 1
         }
     },
     "summon-turtle-guard": {
@@ -1182,24 +1398,24 @@
     },
     "summon-vampire-bat-swarm": {
         "effectMagicCost": {
-            "ceremonial": 1,
-            "sympathy": 1
+            "ceremonial:class": 1,
+            "sympathy:class": 1
         }
     },
     "summon-weeping-spirit": {
         "effectMagicCost": {
-            "charm": 1
+            "charm:class": 1
         }
     },
     "summon-winged-lioness": {
         "effectMagicCost": {
-            "divine": 1,
+            "divine:class": 1,
             "basic": 1
         }
     },
     "sun-sister": {
         "magicCost": {
-            "divine": 1,
+            "divine:class": 1,
             "basic": 1
         }
     },
@@ -1210,7 +1426,7 @@
     },
     "sympathy-pain": {
         "magicCost": {
-            "charm": 2
+            "charm:class": 2
         }
     },
     "temple-elder": {
@@ -1218,38 +1434,41 @@
             "basic": 2
         },
         "effectMagicCost": {
-			"sympathy": 1
+			"sympathy:class": 1
 		},
 		"effectRepeats": true
     },
+    "three-eyed-owl": {},
     "to-shadows": {
         "effectMagicCost": {
-            "illusion": 1
+            "illusion:class": 1
         }
     },
     "transfer": {
         "magicCost": {
-            "charm": 1,
+            "charm:class": 1,
             "basic": 1
         }
     },
     "transmute-magic": {
         "magicCost": {
-            "sympathy": 1
+            "sympathy:class": 1
         }
     },
+    "turtle-guard": {},
     "undying-heart": {
         "magicCost": {
-            "charm": 1,
+            "charm:class": 1,
             "basic": 1
         },
         "effectMagicCost": {
             "basic": 2
         }
     },
+    "vampire-bat-swarm": {},
     "vanish": {
         "magicCost": {
-            "illusion": 2
+            "illusion:class": 2
         }
     },
     "veil-of-reversal": {
@@ -1257,221 +1476,18 @@
             "basic": 2
         }
     },
+    "vengeance": {},
     "victoria-glassfire": {
         "effectMagicCost": {
-            "illusion": 1
+            "illusion:power": 1
         },
 		"diceRecursion": 2
     },
+    "weeping-spirit": {},
+    "winged-lioness": {},
     "xander-heartsblood": {
         "effectMagicCost": {
-            "divine": 1
+            "divine:class": 1
         }
-    },
-	"cognitive-dissonance": {
-	    "magicCost": {
-	        "charm": 1
-	    }
-	},
-	"confusion-spores": {
-	    "magicCost": {
-	        "charm": 1
-	    },
-	    "effectMagicCost": {
-			"sympathy": 1
-		}
-	},
-	"essence-druid": {
-	    "magicCost": {
-	        "sympathy": 2,
-	        "basic": 1
-	    }
-	},
-	"exhortation": {
-	    "magicCost": {
-	        "charm": 1,
-	        "sympathy": 1
-	    }
-	},
-	"fiona-mercywind": {},
-	"majestic-titan": {},
-	"mind-fog-owl": {},
-	"mind-maze": {
-	    "magicCost": {
-	        "basic": 1
-	    }
-	},
-	"new-ideas": {
-	    "magicCost": {
-	        "sympathy": 1
-	    }
-	},
-	"nightsong-cricket": {},
-	"seeds-of-aggression": {
-	    "magicCost": {
-	        "charm / sympathy": 1
-	    }
-	},
-	"summon-majestic-titan": {
-	    "effectMagicCost": {
-	        "charm": 1,
-			"charm / sympathy": 1,
-	        "basic": 2
-	    }
-	},
-	"summon-mind-fog-owl": {
-	    "effectMagicCost": {
-	        "charm": 1,
-	        "basic": 1
-	    }
-	},
-	"summon-nightsong-cricket": {
-	    "effectMagicCost": {
-	        "sympathy": 1,
-	        "basic": 1
-	    }
-	},
-	"chant-of-sacrifice": {
-	    "magicCost": {
-	        "ceremonial": 1,
-	        "divine": 1
-	    }
-	},
-	"fallen": {},
-	"grave-knight": {
-	    "magicCost": {
-	        "ceremonial": 1,
-	        "divine": 1,
-	        "basic": 1
-	    }
-	},
-	"immortal-commander": {
-	    "magicCost": {
-	        "divine": 2
-	    },
-	    "effectMagicCost": {
-			"divine": 1
-		}
-	},
-	"james-endersight": {},
-	"law-of-repentance": {
-	    "magicCost": {
-	        "divine": 1
-	    }
-	},
-	"rally-the-troops": {
-	    "magicCost": {
-	        "divine": 1
-	    }
-	},
-	"reaping-angel": {
-	    "magicCost": {
-	        "ceremonial": 1,
-	        "divine": 1
-	    }
-	},
-	"reclaim-soul": {
-	    "magicCost": {
-	        "ceremonial": 2
-	    }
-	},
-	"rising-horde": {
-	    "magicCost": {
-	        "ceremonial": 2
-	    }
-	},
-	"summon-fallen": {
-	    "magicCost": {
-	        "ceremonial": 1
-	    },
-	    "effectMagicCost": {
-	        "basic": 1
-	    },
-	    "effectRepeats": true
-	},
-	"vengeance": {},
-	"blood-puppet": {
-	    "effectMagicCost": {
-	        "basic": 1
-	    },
-	    "effectRepeats": true
-	},
-	"blue-jaguar": {
-	    "effectMagicCost": {
-			"basic": 1
-		},
-		"effectRepeats": true
-	},
-	"butterfly-monk": {},
-	"false-demon": {},
-	"gilder": {},
-	"iron-rhino": {},
-	"masked-wolf": {},
-	"mist-spirit": {},
-	"seaside-raven": {},
-	"silver-snake": {},
-	"sleeping-widow": {},
-	"three-eyed-owl": {},
-	"frostback-bear": {
-	    "effectMagicCost": {
-			"basic": 1
-		},
-		"effectRepeats": true
-	},
-	"ice-buff": {},
-	"ice-golem": {},
-	"dread-wraith": {},
-	"glow-finch": {},
-	"nightshade-swallow": {},
-	"orchid-dove": {
-	    "effectMagicCost": {
-			"basic": 1
-		},
-		"effectRepeats": true
-	},
-	"shadow-hound": {},
-	"shadow-spirit": {},
-	"emperor-lion": {},
-	"winged-lioness": {},
-	"salamander-monk": {},
-	"salamander-monk-spirit": {},
-	"squall-stallion": {},
-	"enhanced-strength": {},
-	"mirror-spirit": {},
-	"lucky-rabbit": {
-		"diceRecursion": 1
-	},
-	"turtle-guard": {},
-	"infatuated": {},
-	"light-bringer": {
-	    "effectMagicCost": {
-			"basic": 1
-		}
-	},
-	"steadfast-guardian": {
-	    "effectMagicCost": {
-			"basic": 1
-		}
-	},
-	"weeping-spirit": {},
-	"biter": {},
-	"brilliant-thorn": {},
-	"indiglow-creeper": {},
-	"luminous-seedling": {},
-	"panther-spirit": {},
-	"dark-transformation": {},
-	"hunters-mark": {},
-	"vampire-bat-swarm": {},
-	"admonisher": {},
-	"angels-embrace": {},
-	"spectral-assassin": {},
-	"ancestor-spirit": {},
-	"nightmare-mount": {},
-	"pale-steed-mount": {},
-	"spectral-charger-mount": {},
-	"archasaurus-mount": {},
-	"cerasaurus-mount": {},
-	"raptor-hatchling": {},
-	"shining-hydra": {},
-	"shining-hydra-head": {}
+    }
 }
