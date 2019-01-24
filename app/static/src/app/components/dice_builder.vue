@@ -7,35 +7,13 @@
 				<tr>
 					<th>Magic Cost:</th>
 					<td>
-						<ol v-if="firstFiveMagicCost" class="costs">
-							<li v-for="cost of firstFiveMagicCost" class="cost">
-								<span v-if="isArray(cost)" class="parallel-costs">
-									<span v-for="splitCost of cost"
-										class="cost"
-										:class="{highlight: isPowerCost(splitCost)}">
-										<card-codes :content="splitCost"></card-codes>
-									</span>
-								</span>
-								<card-codes v-else :content="cost" :class="{highlight: isPowerCost(cost)}"></card-codes>
-							</li>
-						</ol>
-						<span v-else class="muted">--</span>
+						<cost-list :costs="firstFiveMagicCost" use-highlights></cost-list>
 					</td>
 				</tr>
 				<tr>
 					<th>Dice Required:</th>
 					<td>
-						<ol v-if="firstFiveDiceRequired" class="costs">
-							<li v-for="cost of firstFiveDiceRequired" class="cost">
-								<span v-if="isArray(cost)" class="parallel-costs">
-									<span v-for="splitCost of cost" class="cost">
-										<card-codes :content="splitCost"></card-codes>
-									</span>
-								</span>
-								<card-codes v-else :content="cost"></card-codes>
-							</li>
-						</ol>
-						<span v-else class="muted">--</span>
+						<cost-list :costs="firstFiveDiceRequired"></cost-list>
 					</td>
 				</tr>
 				<tr>
@@ -54,35 +32,13 @@
 				<tr>
 					<th>Play Cost:</th>
 					<td>
-						<ol v-if="deckMagicCost" class="costs">
-							<li v-for="cost of deckMagicCost" class="cost">
-								<span v-if="isArray(cost)" class="parallel-costs">
-									<span v-for="splitCost of cost"
-										class="cost"
-										:class="{highlight: isPowerCost(splitCost)}">
-										<card-codes :content="splitCost"></card-codes>
-									</span>
-								</span>
-								<card-codes v-else :content="cost" :class="{highlight: isPowerCost(cost)}"></card-codes>
-							</li>
-						</ol>
-						<span v-else class="muted">--</span>
+						<cost-list :costs="deckMagicCost" use-highlights></cost-list>
 					</td>
 				</tr>
 				<tr>
 					<th>Dice Required:</th>
 					<td>
-						<ol v-if="deckDiceRequired" class="costs">
-							<li v-for="cost of deckDiceRequired" class="cost">
-								<span v-if="isArray(cost)" class="parallel-costs">
-									<span v-for="splitCost of cost" class="cost">
-										<card-codes :content="splitCost"></card-codes>
-									</span>
-								</span>
-								<card-codes v-else :content="cost"></card-codes>
-							</li>
-						</ol>
-						<span v-else class="muted">--</span>
+						<cost-list :costs="deckDiceRequired"></cost-list>
 					</td>
 				</tr>
 				<tr>
@@ -92,9 +48,22 @@
 					</td>
 				</tr>
 			</tbody></table>
-			<!-- TODO: add stats for things like:
-			* Costs (and required dice) for base spellboard vs. maxed spellboard
-			
+			<h4>Spellboard</h4>
+			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
+				<tr>
+					<th>Base Cost:</th>
+					<td>
+						<cost-list :costs="spellboardEffectMinCost" use-highlights></cost-list>
+					</td>
+				</tr>
+				<tr>
+					<th>Max Cost:</th>
+					<td>
+						<cost-list :costs="spellboardEffectMaxCost" use-highlights></cost-list>
+					</td>
+				</tr>
+			</tbody></table>
+			<!--
 			Tool ideas:
 			* Example randomized draw tool (with magic/dice cost output?)
 			* Clear all effect cost and FF toggles
@@ -139,16 +108,7 @@
 							<card-link :card="phoenixborn"><em>{{ phoenixborn.text[0].name }}</em></card-link>
 						</div>
 						<div class="col">
-							[<ol class="costs">
-								<li v-for="cost of getCardCostOutput(phoenixborn, true)" class="cost">
-									<span v-if="isArray(cost)" class="parallel-costs">
-										<span v-for="splitCost of cost" class="cost">
-											<card-codes :content="splitCost"></card-codes>
-										</span>
-									</span>
-									<card-codes v-else :content="cost"></card-codes>
-								</li>
-							</ol>]
+							[<cost-list :costs="getCardCostOutput(phoenixborn, true)"></cost-list>] 
 							<span class="dice-count">({{ diceCount(phoenixborn) }})</span>
 						</div>
 					</div>
@@ -184,27 +144,9 @@
 							</span>
 						</div>
 						<div class="col">
-							<ol v-if="card.data.magicCost" class="costs">
-								<li v-for="cost of getCardCostOutput(card.data)" class="cost">
-									<span v-if="isArray(cost)" class="parallel-costs">
-										<span v-for="splitCost of cost" class="cost">
-											<card-codes :content="splitCost"></card-codes>
-										</span>
-									</span>
-									<card-codes v-else :content="cost"></card-codes>
-								</li>
-							</ol>
+							<cost-list v-if="card.data.magicCost" :costs="getCardCostOutput(card.data)"></cost-list>
 							<span v-if="card.data.effectMagicCost">
-								[<ol class="costs">
-									<li v-for="cost of getCardCostOutput(card.data, true)" class="cost">
-										<span v-if="isArray(cost)" class="parallel-costs">
-											<span v-for="splitCost of cost" class="cost">
-												<card-codes :content="splitCost"></card-codes>
-											</span>
-										</span>
-										<card-codes v-else :content="cost"></card-codes>
-									</li>
-								</ol>]
+								[<cost-list :costs="getCardCostOutput(card.data, true)"></cost-list>]
 							</span>
 							<span class="dice-count" title="Dice Cost">({{ diceCount(card.data) }}<span v-if="card.data.effectRepeats && isEffectCost(card.data.id)">+</span>)</span>
 						</div>
@@ -216,10 +158,10 @@
 </template>
 
 <script>
-	import {concat, filter, includes, isArray} from 'lodash'
+	import {concat, filter, includes} from 'lodash'
 	import {globals} from 'app/utils'
-	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
+	import CostList from 'app/components/cost_list.vue'
 	
 	function costToDiceType(cost) {
 		const splitCosts = cost.split(' / ')
@@ -334,7 +276,7 @@
 		props: ['viewOnly'],
 		components: {
 			'card-link': CardLink,
-			'card-codes': CardCodes
+			'cost-list': CostList
 		},
 		data () {
 			return {
@@ -421,15 +363,29 @@
 				}
 				return recursion
 			},
+			spellboardEffectMinCost () {
+				const cards = []
+				const usedIds = []
+				for (const card of this.$store.getters.allCards) {
+					if (card.type == 'Ready Spell' && !includes(usedIds, card.id)) {
+						cards.push(card)
+						usedIds.push(card.id)
+					}
+				}
+				let costs = {}
+				extractMagicCosts(costs, cards, true)
+				return getFormattedCosts(costs)
+			},
+			spellboardEffectMaxCost () {
+				const cards = filter(this.$store.getters.allCards, (card) => {
+					return card.type == 'Ready Spell'
+				})
+				let costs = {}
+				extractMagicCosts(costs, cards, true)
+				return getFormattedCosts(costs)
+			},
 		},
 		methods: {
-			isArray,
-			isPowerCost (formattedCost) {
-				const firstCost = formattedCost.replace(/^.+?\[\[([a-z]+(?::[a-z]+)?)\]\].*$/i, '$1')
-				const costType = firstCost.split(':')
-				if (costType.length !== 2) return false
-				return costType[1] === 'power'
-			},
 			getCardCostOutput (data, returnEffectCost) {
 				if ((!returnEffectCost && !data.magicCost) || (returnEffectCost && !data.effectMagicCost)) {
 					return []
