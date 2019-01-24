@@ -175,6 +175,18 @@ export default new Vuex.Store({
 			}
 			return totalCards
 		},
+		allCards (state) {
+			const ids = Object.keys(state.deck.cards)
+			if (!ids.length || !state.cardManager) return []
+			const cards = state.cardManager.idsToListing(ids)
+			let allCards = []
+			for (const card of cards) {
+				for (let i = 0; i < state.deck.cards[card.id]; i++) {
+					allCards.push(card)
+				}
+			}
+			return allCards
+		},
 		deckSections (state, getters) {
 			const ids = Object.keys(state.deck.cards)
 			if (!ids.length || !state.cardManager) return []
@@ -404,6 +416,10 @@ export default new Vuex.Store({
 			const adjustFirstFive = card ? tutorCardStubs.indexOf(card.stub) > -1 : false
 			if (state.deck.first_five.indexOf(cardId) > -1) {
 				state.deck.first_five.splice(state.deck.first_five.indexOf(cardId), 1)
+				// Effect costs are not allowed unless a card is in the First Five
+				if (state.deck.effect_costs.indexOf(cardId) > -1) {
+					state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(cardId), 1)
+				}
 				if (adjustFirstFive) {
 					state.first_five_limit = state.first_five_limit - 1
 				}

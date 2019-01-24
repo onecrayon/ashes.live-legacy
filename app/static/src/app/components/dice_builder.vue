@@ -7,8 +7,26 @@
 				<tr>
 					<th>Magic Cost:</th>
 					<td>
-						<ol class="costs" v-if="firstFiveMagicCost">
+						<ol v-if="firstFiveMagicCost" class="costs">
 							<li v-for="cost of firstFiveMagicCost" class="cost">
+								<span v-if="isArray(cost)" class="parallel-costs">
+									<span v-for="splitCost of cost"
+										class="cost"
+										:class="{highlight: isPowerCost(splitCost)}">
+										<card-codes :content="splitCost"></card-codes>
+									</span>
+								</span>
+								<card-codes v-else :content="cost" :class="{highlight: isPowerCost(cost)}"></card-codes>
+							</li>
+						</ol>
+						<span v-else class="muted">--</span>
+					</td>
+				</tr>
+				<tr>
+					<th>Dice Required:</th>
+					<td>
+						<ol v-if="firstFiveDiceRequired" class="costs">
+							<li v-for="cost of firstFiveDiceRequired" class="cost">
 								<span v-if="isArray(cost)" class="parallel-costs">
 									<span v-for="splitCost of cost" class="cost">
 										<card-codes :content="splitCost"></card-codes>
@@ -31,8 +49,50 @@
 					</td>
 				</tr>
 			</tbody></table>
+			<h4>All Cards</h4>
+			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
+				<tr>
+					<th>Play Cost:</th>
+					<td>
+						<ol v-if="deckMagicCost" class="costs">
+							<li v-for="cost of deckMagicCost" class="cost">
+								<span v-if="isArray(cost)" class="parallel-costs">
+									<span v-for="splitCost of cost"
+										class="cost"
+										:class="{highlight: isPowerCost(splitCost)}">
+										<card-codes :content="splitCost"></card-codes>
+									</span>
+								</span>
+								<card-codes v-else :content="cost" :class="{highlight: isPowerCost(cost)}"></card-codes>
+							</li>
+						</ol>
+						<span v-else class="muted">--</span>
+					</td>
+				</tr>
+				<tr>
+					<th>Dice Required:</th>
+					<td>
+						<ol v-if="deckDiceRequired" class="costs">
+							<li v-for="cost of deckDiceRequired" class="cost">
+								<span v-if="isArray(cost)" class="parallel-costs">
+									<span v-for="splitCost of cost" class="cost">
+										<card-codes :content="splitCost"></card-codes>
+									</span>
+								</span>
+								<card-codes v-else :content="cost"></card-codes>
+							</li>
+						</ol>
+						<span v-else class="muted">--</span>
+					</td>
+				</tr>
+				<tr>
+					<th>Recursion:</th>
+					<td>
+						{{ maxDiceRecursion }} <span class="muted">dice returned</span>
+					</td>
+				</tr>
+			</tbody></table>
 			<!-- TODO: add stats for things like:
-			* Recurring effect dice costs
 			* Average costs (magic and dice) for hands, taking into account the FF (and maybe recurring effect costs)
 			* Average per-round dice recursion?
 			
@@ -71,7 +131,7 @@
 						</div>
 						<div class="col">
 							[<ol class="costs">
-								<li v-for="cost of magicCosts(phoenixborn, true)" class="cost">
+								<li v-for="cost of diceRequired(phoenixborn, true)" class="cost">
 									<span v-if="isArray(cost)" class="parallel-costs">
 										<span v-for="splitCost of cost" class="cost">
 											<card-codes :content="splitCost"></card-codes>
@@ -102,7 +162,7 @@
 								><button @click="toggleEffectCost(card.data.id)"
 									class="btn btn-small" title="Pay Effect Cost"
 									:class="{active: isEffectCost(card.data.id)}"
-									:disabled="!hasEffectCost(card.data)"
+									:disabled="!isEffectCostActive(card.data)"
 									><i class="fa fa-plus-square-o"></i></button
 								>
 							</div>
@@ -116,7 +176,7 @@
 						</div>
 						<div class="col">
 							<ol v-if="card.data.magicCost" class="costs">
-								<li v-for="cost of magicCosts(card.data)" class="cost">
+								<li v-for="cost of diceRequired(card.data)" class="cost">
 									<span v-if="isArray(cost)" class="parallel-costs">
 										<span v-for="splitCost of cost" class="cost">
 											<card-codes :content="splitCost"></card-codes>
@@ -127,7 +187,7 @@
 							</ol>
 							<span v-if="card.data.effectMagicCost">
 								[<ol class="costs">
-									<li v-for="cost of magicCosts(card.data, true)" class="cost">
+									<li v-for="cost of diceRequired(card.data, true)" class="cost">
 										<span v-if="isArray(cost)" class="parallel-costs">
 											<span v-for="splitCost of cost" class="cost">
 												<card-codes :content="splitCost"></card-codes>
@@ -147,43 +207,63 @@
 </template>
 
 <script>
-	import {concat, includes, isArray} from 'lodash'
+	import {concat, filter, includes, isArray} from 'lodash'
 	import {globals} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
 	
+	function costToDiceType(cost) {
+		const splitCosts = cost.split(' / ')
+		if (splitCosts.length > 1) {
+			let types = []
+			for (const splitCost of splitCosts) {
+				types.push(splitCost.split(':')[0])
+			}
+			return types.join(' / ')
+		}
+		return splitCosts[0].split(':')[0]
+	}
+	
+	function costToDiceFace(cost) {
+		if (cost === 'basic') {
+			return null
+		}
+		const data = cost.split(':')
+		// Default to power face
+		if (data.length !== 2) {
+			return 'power'
+		}
+		return data[1]
+	}
+	
 	function sortDiceTypes(a, b) {
 		const aIsBasic = a === 'basic'
 		const bIsBasic = b === 'basic'
-		if (aIsBasic && !bIsBasic) {
-			return 1
-		}
-		if (!aIsBasic && bIsBasic) {
-			return -1
-		}
-		if (aIsBasic && bIsBasic) {
-			return 0
-		}
+		if (!aIsBasic && bIsBasic) return -1
+		if (aIsBasic && bIsBasic) return 0
+		if (aIsBasic && !bIsBasic) return 1
 		const aIsSplit = includes(a, '/')
 		const bIsSplit = includes(b, '/')
-		if (aIsSplit && !bIsSplit) {
-			return 1
-		}
-		if (!aIsSplit && bIsSplit) {
-			return -1
-		}
+		if (!aIsSplit && bIsSplit) return -1
 		if (aIsSplit && bIsSplit) {
 			const aSplit = a.split(' / ')
 			const bSplit = b.split(' / ')
-			if (aSplit[0] === bSplit[0]) {
+			if (costToDiceType(aSplit[0]) === costToDiceType(bSplit[0])) {
 				return sortDiceTypes(aSplit[1], bSplit[1])
 			}
 			return sortDiceTypes(aSplit[0], bSplit[0])
 		}
-		const aPos = globals.diceData.indexOf(a)
-		const bPos = globals.diceData.indexOf(b)
+		if (aIsSplit && !bIsSplit) return 1
+		const aPos = globals.diceData.indexOf(costToDiceType(a))
+		const bPos = globals.diceData.indexOf(costToDiceType(b))
 		if (aPos === bPos) {
-			return 0
+			const aFace = costToDiceFace(a)
+			const bFace = costToDiceFace(b)
+			if (aFace === 'power' && bFace !== 'power' || (aFace === 'class' && !bFace)) {
+				return -1
+			}
+			if (aFace === bFace) return 0
+			else return 1
 		}
 		return aPos < bPos ? -1 : 1
 	}
@@ -192,6 +272,53 @@
 		let keys = Object.keys(costObject)
 		keys.sort(sortDiceTypes)
 		return keys
+	}
+	
+	function extractDiceRequired(costs, costObject) {
+		if (!costObject) {
+			return
+		}
+		for (const key of Object.keys(costObject)) {
+			const diceType = costToDiceType(key)
+			costs[diceType] = costs[diceType] ? costs[diceType] + costObject[key] : costObject[key]
+		}
+	}
+	
+	function extractMagicCosts(costs, cards, returnEffectCost) {
+		for (const card of cards) {
+			const costObject = !returnEffectCost ? card.magicCost : card.effectMagicCost
+			if (!costObject) continue
+			for (const key of Object.keys(costObject)) {
+				costs[key] = costs[key] ? costs[key] + costObject[key] : costObject[key]
+			}
+		}
+	}
+	
+	function getFormattedCosts(costs) {
+		let formattedCosts = []
+		const keys = getSortedCostKeys(costs)
+		for (const key of keys) {
+			const dice = key.split(' / ')
+			let finalCosts = []
+			let firstIteration = true
+			for (const cost of dice) {
+				if (firstIteration) {
+					finalCosts.push([costs[key], ' [[', cost, ']]'].join(''))
+					firstIteration = false
+				} else {
+					finalCosts.push(['[[', cost, ']]'].join(''))
+				}
+			}
+			if (finalCosts.length > 1) {
+				formattedCosts.push(finalCosts)
+			} else {
+				formattedCosts.push(finalCosts[0])
+			}
+		}
+		if (!formattedCosts.length) {
+			return null
+		}
+		return formattedCosts
 	}
 
 	export default {
@@ -222,44 +349,26 @@
 					this.$store.getters.effectCostOnlyCards || []
 				)
 				let costs = {}
-				function extractCosts(costObject) {
-					if (!costObject) {
-						return
-					}
-					for (const key of Object.keys(costObject)) {
-						costs[key] = costs[key] ? costs[key] + costObject[key] : costObject[key]
-					}
-				}
+				extractMagicCosts(costs, cards)
+				const effectCards = filter(cards, (card) => {
+					return this.isEffectCost(card.id)
+				})
+				extractMagicCosts(costs, effectCards, true)
+				return getFormattedCosts(costs)
+			},
+			firstFiveDiceRequired () {
+				const cards = concat(
+					this.$store.getters.firstFive || [],
+					this.$store.getters.effectCostOnlyCards || []
+				)
+				let costs = {}
 				for (const card of cards) {
-					extractCosts(card.magicCost)
+					extractDiceRequired(costs, card.magicCost)
 					if (this.isEffectCost(card.id)) {
-						extractCosts(card.effectMagicCost)
+						extractDiceRequired(costs, card.effectMagicCost)
 					}
 				}
-				let formattedCosts = []
-				const keys = getSortedCostKeys(costs)
-				for (const key of keys) {
-					const dice = key.split(' / ')
-					let finalCosts = []
-					let firstIteration = true
-					for (const cost of dice) {
-						if (firstIteration) {
-							finalCosts.push([costs[key], ' [[', cost, ']]'].join(''))
-							firstIteration = false
-						} else {
-							finalCosts.push(['[[', cost, ']]'].join(''))
-						}
-					}
-					if (finalCosts.length > 1) {
-						formattedCosts.push(finalCosts)
-					} else {
-						formattedCosts.push(finalCosts[0])
-					}
-				}
-				if (!formattedCosts.length) {
-					return null
-				}
-				return formattedCosts
+				return getFormattedCosts(costs)
 			},
 			firstFiveDiceCount () {
 				const cards = concat(
@@ -276,35 +385,45 @@
 				}
 				return cost + (repeatingEffect ? '+' : 0)
 			},
+			deckMagicCost () {
+				const cards = this.$store.getters.allCards
+				let costs = {}
+				extractMagicCosts(costs, cards)
+				return getFormattedCosts(costs)
+			},
+			deckDiceRequired () {
+				const cards = this.$store.getters.allCards
+				let costs = {}
+				for (const card of cards) {
+					extractDiceRequired(costs, card.magicCost)
+				}
+				return getFormattedCosts(costs)
+			},
+			maxDiceRecursion () {
+				const cards = this.$store.getters.allCards
+				let recursion = 0
+				for (const card of cards) {
+					recursion += card.diceRecursion || 0
+				}
+				return recursion
+			},
 		},
 		methods: {
 			isArray,
-			magicCosts (data, returnEffectCost) {
+			isPowerCost (formattedCost) {
+				const firstCost = formattedCost.replace(/^.+?\[\[([a-z]+(?::[a-z]+)?)\]\].*$/i, '$1')
+				const costType = firstCost.split(':')
+				if (costType.length !== 2) return false
+				return costType[1] === 'power'
+			},
+			diceRequired (data, returnEffectCost) {
 				if ((!returnEffectCost && !data.magicCost) || (returnEffectCost && !data.effectMagicCost)) {
 					return []
 				}
 				const costObject = !returnEffectCost ? data.magicCost : data.effectMagicCost
-				let costs = []
-				const keys = getSortedCostKeys(costObject)
-				for (const key of keys) {
-					const dice = key.split(' / ')
-					let finalCosts = []
-					let firstIteration = true
-					for (const cost of dice) {
-						if (firstIteration) {
-							finalCosts.push([costObject[key], ' [[', cost, ']]'].join(''))
-							firstIteration = false
-						} else {
-							finalCosts.push(['[[', cost, ']]'].join(''))
-						}
-					}
-					if (finalCosts.length > 1) {
-						costs.push(finalCosts)
-					} else {
-						costs.push(finalCosts[0])
-					}
-				}
-				return costs
+				let costs = {}
+				extractDiceRequired(costs, costObject)
+				return getFormattedCosts(costs)
 			},
 			diceCount (data) {
 				let total = 0
@@ -321,8 +440,11 @@
 				const recursion = data.diceRecursion || 0
 				return total - recursion
 			},
-			hasEffectCost (data) {
-				return !!data.effectMagicCost
+			isEffectCostActive (data) {
+				return !!data.effectMagicCost && (
+					this.isInFirstFive(data.id) ||
+					includes(['Conjuration', 'Conjured Alteration Spell', 'Phoenixborn'], data.type)
+				)
 			},
 			toggleFirstFive (cardId) {
 				this.$store.commit('toggleFirstFive', cardId)
