@@ -92,12 +92,12 @@
 			<ul>
 				<li v-for="card of section.contents" :key="card.data.id">
 					<div class="responsive-cols no-wrap">
-						<div class="col" v-if="section.title !== 'Conjuration Deck'">
+						<div class="col">
 							<div class="btn-group">
 								<button @click="toggleFirstFive(card.data.id)"
 									class="btn btn-small"
 									:class="{active: isInFirstFive(card.data.id)}"
-									:disabled="isFirstFiveFull(card.data.id)"
+									:disabled="section.title === 'Conjuration Deck' || isFirstFiveFull(card.data.id)"
 									title="First Five"><i class="fa fa-hand-paper-o"></i></button
 								><button @click="toggleEffectCost(card.data.id)"
 									class="btn btn-small" title="Pay Effect Cost"
@@ -137,7 +137,7 @@
 									</li>
 								</ol>]
 							</span>
-							<span class="dice-count" title="Dice Cost">({{ diceCount(card.data) }})</span>
+							<span class="dice-count" title="Dice Cost">({{ diceCount(card.data) }}<span v-if="card.data.effectRepeats && isEffectCost(card.data.id)">+</span>)</span>
 						</div>
 					</div>
 				</li>
@@ -147,7 +147,7 @@
 </template>
 
 <script>
-	import {includes, isArray} from 'lodash'
+	import {concat, includes, isArray} from 'lodash'
 	import {globals} from 'app/utils'
 	import CardCodes from 'app/components/card_codes.vue'
 	import CardLink from 'app/components/card_link.vue'
@@ -207,12 +207,6 @@
 			totalCards () {
 				return this.$store.getters.totalCards
 			},
-			firstFive () {
-				return this.$store.getters.firstFive
-			},
-			effectCostCards () {
-				return this.$store.getters.effectCostCards
-			},
 			phoenixborn () {
 				return this.$store.getters.phoenixborn
 			},
@@ -223,7 +217,10 @@
 				return this.$store.getters.firstFiveLimit
 			},
 			firstFiveMagicCost () {
-				const cards = this.$store.getters.firstFive || []
+				const cards = concat(
+					this.$store.getters.firstFive || [],
+					this.$store.getters.effectCostOnlyCards || []
+				)
 				let costs = {}
 				function extractCosts(costObject) {
 					if (!costObject) {
@@ -238,9 +235,6 @@
 					if (this.isEffectCost(card.id)) {
 						extractCosts(card.effectMagicCost)
 					}
-				}
-				if (includes(this.$store.state.deck.effect_costs, this.phoenixborn.id)) {
-					extractCosts(this.phoenixborn.effectMagicCost)
 				}
 				let formattedCosts = []
 				const keys = getSortedCostKeys(costs)
@@ -268,15 +262,19 @@
 				return formattedCosts
 			},
 			firstFiveDiceCount () {
-				const cards = this.$store.getters.firstFive || []
+				const cards = concat(
+					this.$store.getters.firstFive || [],
+					this.$store.getters.effectCostOnlyCards || []
+				)
 				let cost = 0
+				let repeatingEffect = false
 				for (const card of cards) {
 					cost = cost + this.diceCount(card)
+					if (card.effectRepeats) {
+						repeatingEffect = true
+					}
 				}
-				if (includes(this.$store.state.deck.effect_costs, this.phoenixborn.id)) {
-					cost = cost + this.diceCount(this.phoenixborn)
-				}
-				return cost
+				return cost + (repeatingEffect ? '+' : 0)
 			},
 		},
 		methods: {
@@ -315,7 +313,7 @@
 						total += value
 					}
 				}
-				if (data.effectMagicCost && (this.isEffectCost(data.id) || (!data.magicCost && data.diceRecursion !== 0))) {
+				if (data.effectMagicCost && (this.isEffectCost(data.id) || (!data.magicCost && data.diceRecursion))) {
 					for (const value of Object.values(data.effectMagicCost)) {
 						total += value
 					}

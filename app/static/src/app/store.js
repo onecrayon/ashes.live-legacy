@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import qwest from 'qwest'
 import Nanobar from 'app/nanobar'
 import CardManager from './card_manager'
-import {isInteger, merge, reduce} from 'lodash'
+import {concat, isInteger, merge, reduce} from 'lodash'
 import {globals} from './utils'
 
 /* eslint-disable no-new */
@@ -304,11 +304,18 @@ export default new Vuex.Store({
 			}
 			return state.first_five_limit
 		},
-		effectCostCards (state) {
+		effectCostOnlyCards (state) {
 			if (!state.deck.effect_costs.length || !state.cardManager) {
 				return null
 			}
-			return state.cardManager.idsToListing(state.deck.effect_costs)
+			const cardIds = new Set(concat(state.deck.first_five, state.deck.effect_costs))
+			for (const id of state.deck.first_five) {
+				cardIds.delete(id)
+			}
+			if (!cardIds.size) {
+				return null
+			}
+			return state.cardManager.idsToListing(Array.from(cardIds))
 		},
 	},
 	mutations: {
