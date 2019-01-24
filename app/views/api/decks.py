@@ -5,7 +5,7 @@ from app import db
 from app.exceptions import ApiError
 from app.models.ashes_500 import Ashes500Revision, Ashes500Value
 from app.models.card import Card, DiceFlags
-from app.models.deck import Deck, DeckCard, DeckDie
+from app.models.deck import Deck, DeckCard, DeckDie, DeckSelectedCard
 from app.models.stream import Streamable
 from app.jinja_globals import deck_title as compose_deck_title
 from app.utils.stream import new_entity, refresh_entity, update_subscription
@@ -39,7 +39,8 @@ def save(deck_id=None, is_snapshot=False):
     if deck_id:
         deck = Deck.query.options(
             db.joinedload('cards'),
-            db.joinedload('dice')
+            db.joinedload('dice'),
+            db.joinedload('selected_cards')
         ).get(deck_id)
         if (not deck or not current_user.is_authenticated or
                 deck.user_id != current_user.id):
@@ -157,6 +158,23 @@ def save(deck_id=None, is_snapshot=False):
                 'snapshot\'s title &amp; description</a>.'
             ).format(url_for('decks.edit', deck_id=previous.id))
         })
+    # And finally the selected cards (first five and paid effects; used for stats)
+    first_five = frozenset(data.get('first_five', []))
+    paid_effects = frozenset(data.get('effect_costs', []))
+    selected_cards = []
+    for card_id in paid_effects:
+        if card_id not in first_five:
+            selected_cards.append(DeckSelectedCard(
+                card_id=card_id,
+                is_paid_effect=True
+            ))
+    for card_id in first_five:
+        selected_cards.append(DeckSelectedCard(
+            card_id=card_id,
+            is_first_five=True,
+            is_paid_effect=card_id in paid_effects
+        ))
+    deck.selected_cards = selected_cards
     
     # If this is an Ashes500 deck, calculate the deck's score
     if deck.ashes_500_revision_id:

@@ -121,6 +121,16 @@ def upgrade():
             dice_flags=0,
             id=card['id']
         )
+    # Add support for first five tracking
+    op.create_table('deck_selected_card',
+        sa.Column('deck_id', sa.Integer(), nullable=False),
+        sa.Column('card_id', sa.Integer(), nullable=False),
+        sa.Column('is_first_five', sa.Boolean(), nullable=False),
+        sa.Column('is_paid_effect', sa.Boolean(), nullable=False),
+        sa.ForeignKeyConstraint(['card_id'], ['card.id'], ),
+        sa.ForeignKeyConstraint(['deck_id'], ['deck.id'], ),
+        sa.PrimaryKeyConstraint('deck_id', 'card_id')
+    )
 
 
 def downgrade():
@@ -140,3 +150,4 @@ def downgrade():
             json=json.dumps(card_json, separators=(',', ':'), sort_keys=True),
             id=card['id']
         )
+    op.drop_table('deck_selected_card')

@@ -31,7 +31,7 @@ class Deck(db.Model):
     user = db.relationship(User)
     phoenixborn = db.relationship(Card)
     source = db.relationship('Deck', uselist=False, remote_side=[id])
-    # `cards` and `dice` are defined via backref in the models below
+    # `cards`, `dice`, and `selected_cards` are defined via backref in the models below
 
     def published_snapshot(self, full=False):
         """Returns the Deck object or None for the most recent published snapshot"""
@@ -89,4 +89,16 @@ class DeckDie(db.Model):
     deck = db.relationship(
         Deck,
         backref=db.backref('dice', cascade='all, delete-orphan')
+    )
+
+
+class DeckSelectedCard(db.Model):
+    deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, primary_key=True)
+    card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=False, primary_key=True)
+    is_first_five = db.Column(db.Boolean, nullable=False, default=False)
+    is_paid_effect = db.Column(db.Boolean, nullable=False, default=False)
+
+    deck = db.relationship(
+        Deck,
+        backref=db.backref('selected_cards', cascade='all, delete-orphan')
     )

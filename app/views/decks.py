@@ -270,7 +270,8 @@ def build(deck_id=None):
     deck = None if not deck_id else Deck.query.options(
         db.joinedload('cards'),
         db.joinedload('dice'),
-        db.joinedload('phoenixborn')
+        db.joinedload('phoenixborn'),
+        db.joinedload('selected_cards')
     ).get(deck_id)
     if deck_id and not deck:
         abort(404)
@@ -303,6 +304,8 @@ def build(deck_id=None):
             },
             'dice': {DiceFlags(x.die_flag).name: x.count for x in deck.dice},
             'cards': {x.card_id: x.count for x in deck.cards},
+            'first_five': [x.card_id for x in deck.selected_cards if x.is_first_five],
+            'effect_costs': [x.card_id for x in deck.selected_cards if x.is_paid_effect],
             'ashes_500_score': deck.ashes_500_score,
             'ashes_500_revision_id': deck.ashes_500_revision_id
         })
@@ -324,7 +327,8 @@ def clone(deck_id):
     # Then we can finally grab our full deck and copy it
     deck = Deck.query.options(
         db.joinedload('cards'),
-        db.joinedload('dice')
+        db.joinedload('dice'),
+        db.joinedload('selected_cards')
     ).filter(
         Deck.is_snapshot.is_(True),
         Deck.id == deck_id
@@ -352,6 +356,12 @@ def clone(deck_id):
         card.deck_id = None
         cards.append(card)
     deck.cards = cards
+    selected_cards = []
+    for card in deck.selected_cards:
+        make_transient(card)
+        card.deck_id = None
+        selected_cards.append(card)
+    deck.selected_cards = selected_cards
     db.session.add(deck)
     db.session.commit()
     return redirect(url_for('decks.build', deck_id=deck.id), code=303)
