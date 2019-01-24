@@ -2,31 +2,6 @@
 	<div>
 		<div id="dice-tools">
 			<h3>Stats</h3>
-			<h4>First Five</h4>
-			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
-				<tr>
-					<th>Magic Cost:</th>
-					<td>
-						<cost-list :costs="firstFiveMagicCost" use-highlights></cost-list>
-					</td>
-				</tr>
-				<tr>
-					<th>Dice Required:</th>
-					<td>
-						<cost-list :costs="firstFiveDiceRequired"></cost-list>
-					</td>
-				</tr>
-				<tr>
-					<th>Dice Cost:</th>
-					<td>{{ firstFiveDiceCount }}</td>
-				</tr>
-				<tr>
-					<th>Cards:</th>
-					<td>
-						<span :class="{error: firstFiveTotalCards > firstFiveLimit}">{{ firstFiveTotalCards }}</span> <span class="muted">of {{ firstFiveLimit }} possible</span>
-					</td>
-				</tr>
-			</tbody></table>
 			<h4>All Cards</h4>
 			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
 				<tr>
@@ -60,6 +35,31 @@
 					<th>Max Cost:</th>
 					<td>
 						<cost-list :costs="spellboardEffectMaxCost" use-highlights></cost-list>
+					</td>
+				</tr>
+			</tbody></table>
+			<h4>First Five</h4>
+			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
+				<tr>
+					<th>Magic Cost:</th>
+					<td>
+						<cost-list :costs="firstFiveMagicCost" use-highlights></cost-list>
+					</td>
+				</tr>
+				<tr>
+					<th>Dice Required:</th>
+					<td>
+						<cost-list :costs="firstFiveDiceRequired"></cost-list>
+					</td>
+				</tr>
+				<tr>
+					<th>Dice Cost:</th>
+					<td>{{ firstFiveDiceCount }}</td>
+				</tr>
+				<tr>
+					<th>Cards:</th>
+					<td>
+						<span :class="{error: firstFiveTotalCards > firstFiveLimit}">{{ firstFiveTotalCards }}</span> <span class="muted">of {{ firstFiveLimit }} possible</span>
 					</td>
 				</tr>
 			</tbody></table>
