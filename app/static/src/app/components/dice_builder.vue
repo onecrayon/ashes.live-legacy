@@ -93,8 +93,7 @@
 				</tr>
 			</tbody></table>
 			<!-- TODO: add stats for things like:
-			* Average costs (magic and dice) for hands, taking into account the FF (and maybe recurring effect costs)
-			* Average per-round dice recursion?
+			* Costs (and required dice) for base spellboard vs. maxed spellboard
 			
 			Tool ideas:
 			* Example randomized draw tool (with magic/dice cost output?)
@@ -108,6 +107,16 @@
 				<span class="card-count">
 					(<span :class="{error: totalCards > 30}">{{ totalCards }}</span> / 30)
 				</span>
+			</div>
+			<div class="col">
+				<div class="btn-group compressed">
+					<button class="btn btn-small" :class="{active: activeCost == 'magic'}"
+						@click="activeCost = 'magic'" title="Magic Cost">Magic</button
+					><button class="btn btn-small" :class="{active: activeCost == 'dice'}"
+						@click="activeCost = 'dice'" title="Dice Required"
+						>Dice</button
+					>
+				</div>
 			</div>
 		</h3>
 		<div v-if="phoenixborn.effectMagicCost" class="deck-section">
@@ -131,7 +140,7 @@
 						</div>
 						<div class="col">
 							[<ol class="costs">
-								<li v-for="cost of diceRequired(phoenixborn, true)" class="cost">
+								<li v-for="cost of getCardCostOutput(phoenixborn, true)" class="cost">
 									<span v-if="isArray(cost)" class="parallel-costs">
 										<span v-for="splitCost of cost" class="cost">
 											<card-codes :content="splitCost"></card-codes>
@@ -176,7 +185,7 @@
 						</div>
 						<div class="col">
 							<ol v-if="card.data.magicCost" class="costs">
-								<li v-for="cost of diceRequired(card.data)" class="cost">
+								<li v-for="cost of getCardCostOutput(card.data)" class="cost">
 									<span v-if="isArray(cost)" class="parallel-costs">
 										<span v-for="splitCost of cost" class="cost">
 											<card-codes :content="splitCost"></card-codes>
@@ -187,7 +196,7 @@
 							</ol>
 							<span v-if="card.data.effectMagicCost">
 								[<ol class="costs">
-									<li v-for="cost of diceRequired(card.data, true)" class="cost">
+									<li v-for="cost of getCardCostOutput(card.data, true)" class="cost">
 										<span v-if="isArray(cost)" class="parallel-costs">
 											<span v-for="splitCost of cost" class="cost">
 												<card-codes :content="splitCost"></card-codes>
@@ -327,6 +336,11 @@
 			'card-link': CardLink,
 			'card-codes': CardCodes
 		},
+		data () {
+			return {
+				'activeCost': 'magic'
+			}
+		},
 		computed: {
 			deckSections () {
 				return this.$store.getters.deckSections
@@ -416,13 +430,17 @@
 				if (costType.length !== 2) return false
 				return costType[1] === 'power'
 			},
-			diceRequired (data, returnEffectCost) {
+			getCardCostOutput (data, returnEffectCost) {
 				if ((!returnEffectCost && !data.magicCost) || (returnEffectCost && !data.effectMagicCost)) {
 					return []
 				}
-				const costObject = !returnEffectCost ? data.magicCost : data.effectMagicCost
 				let costs = {}
-				extractDiceRequired(costs, costObject)
+				if (this.activeCost == 'magic') {
+					extractMagicCosts(costs, [data], returnEffectCost)
+				} else {
+					const costObject = !returnEffectCost ? data.magicCost : data.effectMagicCost
+					extractDiceRequired(costs, costObject)
+				}
 				return getFormattedCosts(costs)
 			},
 			diceCount (data) {
