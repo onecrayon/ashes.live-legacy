@@ -7,8 +7,10 @@
 				<tr>
 					<th>Faces/Round:</th>
 					<td>
-						<div v-for="stats of averageDiceRolls" v-if="averageDiceRolls">
-							<card-codes :content="stats"></card-codes>
+						<div v-if="averageDiceRolls">
+							<div v-for="stats of averageDiceRolls">
+								<card-codes :content="stats"></card-codes>
+							</div>
 						</div>
 						<span v-else class="muted">--</span>
 					</td>
@@ -420,6 +422,7 @@
 						round(numDice / 2, 2) + ' [[' + dieType + ':class]]'
 					)
 				}
+				if (!costs.length) return null
 				return costs
 			},
 			powerProbability () {
