@@ -2,6 +2,26 @@
 	<div>
 		<div id="dice-tools">
 			<h3>Stats</h3>
+			<h4>Dice</h4>
+			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
+				<tr>
+					<th>Faces/Round:</th>
+					<td>
+						<div v-for="stats of averageDiceRolls" v-if="averageDiceRolls">
+							<card-codes :content="stats"></card-codes>
+						</div>
+						<span v-else class="muted">--</span>
+					</td>
+				</tr>
+				<tr>
+					<th>% For One:</th>
+					<td>
+						<card-codes v-if="powerProbability" :content="powerProbability"></card-codes>
+						<span v-else class="muted">--</span>
+					</td>
+				</tr>
+			</tbody></table>
+
 			<h4>All Cards</h4>
 			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
 				<tr>
@@ -23,6 +43,7 @@
 					</td>
 				</tr>
 			</tbody></table>
+
 			<h4>Spellboard</h4>
 			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
 				<tr>
@@ -38,6 +59,7 @@
 					</td>
 				</tr>
 			</tbody></table>
+
 			<h4>First Five</h4>
 			<table class="stats" cellpadding="0" cellspacing="0"><tbody>
 				<tr>
@@ -158,10 +180,11 @@
 </template>
 
 <script>
-	import {concat, filter, includes} from 'lodash'
+	import {concat, filter, includes, round} from 'lodash'
 	import {globals} from 'app/utils'
 	import CardLink from 'app/components/card_link.vue'
 	import CostList from 'app/components/cost_list.vue'
+	import CardCodes from 'app/components/card_codes.vue'
 	
 	function costToDiceType(cost) {
 		const splitCosts = cost.split(' / ')
@@ -276,7 +299,8 @@
 		props: ['viewOnly'],
 		components: {
 			'card-link': CardLink,
-			'cost-list': CostList
+			'cost-list': CostList,
+			'card-codes': CardCodes
 		},
 		data () {
 			return {
@@ -383,6 +407,32 @@
 				let costs = {}
 				extractMagicCosts(costs, cards, true)
 				return getFormattedCosts(costs)
+			},
+			averageDiceRolls () {
+				const costs = []
+				for (const dieType of getSortedCostKeys(this.$store.state.deck.dice)) {
+					const numDice = this.$store.state.deck.dice[dieType]
+					if (!numDice) continue
+					costs.push(
+						// 1/6 chance of a power face per die
+						round(numDice / 6, 2) + ' [[' + dieType + ':power]] - ' +
+						// 3/6 chance of a class face per die
+						round(numDice / 2, 2) + ' [[' + dieType + ':class]]'
+					)
+				}
+				return costs
+			},
+			powerProbability () {
+				const costs = []
+				for (const dieType of getSortedCostKeys(this.$store.state.deck.dice)) {
+					const numDice = this.$store.state.deck.dice[dieType]
+					if (!numDice) continue
+					// 1/6 chance of a power face per die
+					costs.push(
+						round((1 - Math.pow(5/6, numDice)) * 100) + '% [[' + dieType + ':power]]'
+					)
+				}
+				return costs.join(' - ')
 			},
 		},
 		methods: {
