@@ -202,7 +202,7 @@ Golden Veil
 Reaction Spell - Discard
 1 [[natural:class]] - 1 [[charm:class]]
 
-You may play this spell when an opponent uses a spell, ability, or dice power that would target a unit you control. Cancel the effects ot that spell, ability, or dice power.
+You may play this spell when an opponent uses a spell, ability, or dice power that would target a unit you control. Cancel the effects of that spell, ability, or dice power.
 
 =====
 
