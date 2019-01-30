@@ -300,7 +300,13 @@ def get_stream(page=None, show='all'):
             Deck.source_id == snapshot_comp.source_id,
             snapshot_comp.is_snapshot.is_(True),
             snapshot_comp.is_public.is_(True),
-            Deck.created < snapshot_comp.created
+            db.or_(
+                Deck.created < snapshot_comp.created,
+                db.and_(
+                    Deck.created == snapshot_comp.created,
+                    Deck.id < snapshot_comp.id
+                )
+            )
         )).filter(
             source_comp.entity_id.in_(list(deck_entity_ids)),
             snapshot_comp.id.is_(None),
