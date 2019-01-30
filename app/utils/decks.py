@@ -73,7 +73,13 @@ def get_decks_query(filters=None, options=None, most_recent_public=False):
             Deck.source_id == deck_comp.source_id,
             deck_comp.is_snapshot.is_(True),
             deck_comp.is_public.is_(True),
-            Deck.created < deck_comp.created
+            db.or_(
+                Deck.created < deck_comp.created,
+                db.and_(
+                    Deck.created == deck_comp.created,
+                    Deck.id < deck_comp.id
+                )
+            )
         )).filter(
             deck_comp.id.is_(None),
             Deck.is_snapshot.is_(True),
