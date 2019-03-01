@@ -108,7 +108,7 @@ def view(deck_id, page=1, show_saved=False):
     }
     for die in deck.dice:
         releases.add(dice_to_release[DiceFlags(die.die_flag).name])
-    release_results = db.session.query(Deck.id, Deck.title).filter(
+    release_results = db.session.query(Deck.source_id, Deck.title).filter(
         Deck.title.in_(
             [current_app.config['RELEASE_NAMES'][release] for release in releases if release > 0]
         ),
@@ -122,7 +122,7 @@ def view(deck_id, page=1, show_saved=False):
     release_data = []
     for release in release_results:
         release_data.append({
-            'id': release.id,
+            'id': release.source_id,
             'title': release.title
         })
         releases.remove(release_title_to_number[release.title])
