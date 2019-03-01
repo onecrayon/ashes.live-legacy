@@ -71,7 +71,10 @@ def detail(stub, page=1):
     dice.remove('basic')
     # Grab preconstructed deck, if available
     preconstructed = db.session.query(Deck.source_id, Deck.title).filter(
-        Deck.phoenixborn_id == card.id,
+        db.or_(
+            Deck.phoenixborn_id == card.id,
+            Deck.title == current_app.config['RELEASE_NAMES'][card.release]
+        ),
         Deck.is_snapshot.is_(True),
         Deck.is_public.is_(True),
         Deck.is_preconstructed.is_(True)
