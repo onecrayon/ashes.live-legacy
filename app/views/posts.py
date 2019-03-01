@@ -324,9 +324,10 @@ def delete(post_id):
     delete_form = DeletePostForm()
     if delete_form.delete_post.data:
         post.is_deleted = True
-        db.session.query(Stream).filter(
-            Stream.entity_id == post.entity_id
-        ).delete(synchronize_session=False)
+        db.session.query(Stream).filter(db.or_(
+            Stream.entity_id == post.entity_id,
+            Stream.source_entity_id == post.entity_id
+        )).delete(synchronize_session=False)
         db.session.commit()
         flash('Post deleted!', 'success')
         return redirect(url_for('home.index'), code=303)
