@@ -141,7 +141,11 @@ Created with https://ashes.live</textarea>
 			<td>
 				<ul class="comma-separated">
 					{% for release in releases %}
-					<li>{{ release }}</li>
+					<li>
+						{% if release.id %}<a href="{{ url_for('decks.view', deck_id=release.id) }}">
+							{{ release.title }}
+						</a>{% else %}{{ release.title }}{% endif %}
+					</li>
 					{% endfor %}
 				</ul>
 			</td>

@@ -108,9 +108,38 @@ def view(deck_id, page=1, show_saved=False):
     }
     for die in deck.dice:
         releases.add(dice_to_release[DiceFlags(die.die_flag).name])
+    release_results = db.session.query(Deck.id, Deck.title).filter(
+        Deck.title.in_(
+            [current_app.config['RELEASE_NAMES'][release] for release in releases if release > 0]
+        ),
+        Deck.is_preconstructed.is_(True),
+        Deck.is_public.is_(True),
+        Deck.is_snapshot.is_(True)
+    ).order_by(Deck.created.asc()).all()
+    release_title_to_number = {
+        title: number for number, title in current_app.config['RELEASE_NAMES'].items()
+    }
+    release_data = []
+    for release in release_results:
+        release_data.append({
+            'id': release.id,
+            'title': release.title
+        })
+        releases.remove(release_title_to_number[release.title])
     releases = list(releases)
     releases.sort()
-    release_names = [current_app.config['RELEASE_NAMES'][release] for release in releases]
+    for release in releases:
+        if release == 0:
+            release_data.insert(0, {
+                'id': None,
+                'title': current_app.config['RELEASE_NAMES'][release]
+            })
+        else:
+            release_data.append({
+                'id': None,
+                'title': current_app.config['RELEASE_NAMES'][release]
+            })
+        
     # Check for outdated Ashes 500
     if deck.ashes_500_revision_id:
         latest_ashes_500 = latest_ashes_500_revision()
@@ -128,7 +157,7 @@ def view(deck_id, page=1, show_saved=False):
         deck=deck,
         phoenixborn_stats=json.loads(deck.phoenixborn.json),
         sections=sections,
-        releases=release_names,
+        releases=release_data,
         has_history=deck.has_snapshots,
         is_base_deck=show_saved,
         is_outdated=(deck.ashes_500_revision_id and deck.ashes_500_revision_id != latest_ashes_500),
