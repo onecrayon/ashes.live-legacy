@@ -2,7 +2,7 @@
 
 <div id="comments">
 	<hr>
-	<h2 class="phg-sympathy-class">Comments</h2>
+	<h2 class="phg-sympathy-class">{{ 'Comments' | paged_title(pagination_options.page) }}</h2>
 
 	{% if comments %}
 	<ul class="comments">
