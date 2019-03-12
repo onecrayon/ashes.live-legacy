@@ -235,7 +235,8 @@ export default new Vuex.Store({
 				})
 				sortedSections.push({
 					'title': 'Conjuration Deck',
-					'contents': conjurations
+					'contents': conjurations,
+					'isConjurations': true
 				})
 			}
 			return sortedSections

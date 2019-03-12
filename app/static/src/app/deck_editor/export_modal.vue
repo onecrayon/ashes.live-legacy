@@ -117,7 +117,7 @@
 							pushCards(section.contents)
 							text.push('\n')
 						} else {
-							if (section.title !== 'Conjuration Deck') {
+							if (!section.isConjurations) {
 								cardsOnly = cardsOnly.concat(section.contents)
 							} else {
 								conjurations = section.contents

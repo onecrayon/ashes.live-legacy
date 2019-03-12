@@ -140,7 +140,7 @@
 			</ul>
 		</div>
 		<div v-for="section of deckSections" :key="section.title" class="deck-section">
-			<hr v-if="section.title == 'Conjuration Deck'">
+			<hr v-if="section.isConjurations">
 			<h4>{{ section.title }}<span v-if="section.count" class="card-count"> ({{ section.count }})</span></h4>
 			<ul>
 				<li v-for="card of section.contents" :key="card.data.id">
@@ -150,7 +150,7 @@
 								<button @click="toggleFirstFive(card.data.id)"
 									class="btn btn-small"
 									:class="{active: isInFirstFive(card.data.id)}"
-									:disabled="section.title === 'Conjuration Deck' || isFirstFiveFull(card.data.id)"
+									:disabled="section.isConjurations || isFirstFiveFull(card.data.id)"
 									title="First Five"><i class="fa fa-hand-paper-o"></i></button
 								><button @click="toggleEffectCost(card.data.id)"
 									class="btn btn-small" title="Pay Effect Cost"
@@ -162,7 +162,7 @@
 						</div>
 						<div class="col-flex">
 							{{ card.count }}&times; <card-link :card="card.data"></card-link>
-							<span v-if="card.data.phoenixborn && section.title !== 'Conjuration Deck'"
+							<span v-if="card.data.phoenixborn && !section.isConjurations"
 									class="phoenixborn" :title="card.data.phoenixborn">
 								({{ card.data.phoenixborn.split(' ')[0] }})
 							</span>
