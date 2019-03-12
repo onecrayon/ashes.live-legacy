@@ -33,7 +33,7 @@ function typeToFontAwesome (cardType) {
 		return 'fa-clone'
 	} else if (cardType === 'Ready Spell') {
 		return 'fa-share-square'
-	} else if (cardType == 'Conjuration' || cardType == 'Conjured Alteration Spell') {
+	} else if (cardType === 'Conjuration' || cardType === 'Conjured Alteration Spell') {
 		return 'fa-recycle'
 	} else if (cardType === 'Phoenixborn') {
 		return 'fa-shield'

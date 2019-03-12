@@ -8,7 +8,7 @@
 					<th>Faces/Round:</th>
 					<td>
 						<div v-if="averageDiceRolls">
-							<div v-for="stats of averageDiceRolls">
+							<div v-for="stats of averageDiceRolls" :key="stats">
 								<card-codes :content="stats"></card-codes>
 							</div>
 						</div>

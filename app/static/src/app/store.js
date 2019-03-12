@@ -64,10 +64,10 @@ if (globals.deck) {
 	}
 }
 const enableAshes500 = !!(
-	globals.enableAshes500
-	|| (globals.deck && globals.deck.ashes_500_revision_id)
-	|| window.location.search.indexOf('mode=ashes-500') > -1
-	|| false
+	globals.enableAshes500 ||
+	(globals.deck && globals.deck.ashes_500_revision_id) ||
+	window.location.search.indexOf('mode=ashes-500') > -1 ||
+	false
 )
 
 const storageOptionsKey = 'deckbuilder.options'
@@ -294,9 +294,9 @@ export default new Vuex.Store({
 			const cards = state.cardManager.idsToListing(ids)
 			for (let card of cards) {
 				if (!card.ashes_500_combos) continue
-				for (let combo_id of card.ashes_500_combos) {
-					if (ids.indexOf(combo_id) > -1) {
-						comboIds.push(combo_id)
+				for (let comboId of card.ashes_500_combos) {
+					if (ids.indexOf(comboId) > -1) {
+						comboIds.push(comboId)
 						comboIds.push(card.id)
 					}
 				}
@@ -473,7 +473,7 @@ export default new Vuex.Store({
 			}
 			// Disallow filtering by conjuration types when we have a non-basic dice type selected
 			if (state.options.dice && state.options.dice.length > 0 &&
-					state.options.dice.indexOf('basic') == -1 && state.options.types &&
+					state.options.dice.indexOf('basic') === -1 && state.options.types &&
 					state.options.types.indexOf('conjurations') > -1) {
 				state.options.types.splice(state.options.types.indexOf('conjurations'), 1)
 			}
