@@ -8,6 +8,17 @@ const actOnText = globals.actOnText
 const assetPath = globals.assetPath
 const notify = globals.notify
 
+// Matches tutor stubs to their search requirements:
+// `true` => all cards are valid targets
+// `3` => cards with magic play cost equal to this
+// 'Ally' => cards of type 'Ally'
+const tutorCards = {
+	'open-memories': true,
+	'augury': 3,
+	'shared-sorrow': true,
+	'james-endersight': 'Ally'
+}
+
 function initCardTooltips (el) {
 	const els = (el && [el]) || Array.from(this.$el.querySelectorAll('.card'))
 	if (els && els.length) {
@@ -64,5 +75,6 @@ export {
 	assetPath,
 	typeToFontAwesome,
 	getFromObject,
-	notify
+	notify,
+	tutorCards
 }

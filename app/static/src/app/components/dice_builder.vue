@@ -80,12 +80,6 @@
 					<th>Dice Cost:</th>
 					<td>{{ firstFiveDiceCount }}</td>
 				</tr>
-				<tr>
-					<th>Cards:</th>
-					<td>
-						<span :class="{error: firstFiveTotalCards > firstFiveLimit}">{{ firstFiveTotalCards }}</span> <span class="muted">of {{ firstFiveLimit }} possible</span>
-					</td>
-				</tr>
 			</tbody></table>
 			<!--
 			Tool ideas:
@@ -112,7 +106,7 @@
 				</div>
 			</div>
 		</h3>
-		<div v-if="phoenixborn.effectMagicCost" class="deck-section">
+		<div v-if="phoenixborn.effectMagicCost || isTutor(phoenixborn.stub)" class="deck-section">
 			<ul>
 				<li>
 					<div class="responsive-cols no-wrap">
@@ -132,10 +126,15 @@
 							<card-link :card="phoenixborn"><em>{{ phoenixborn.text[0].name }}</em></card-link>
 						</div>
 						<div class="col">
-							[<cost-list :costs="getCardCostOutput(phoenixborn, true)"></cost-list>] 
+							<span v-if="phoenixborn.effectMagicCost">
+								[<cost-list :costs="getCardCostOutput(phoenixborn, true)"></cost-list>] 
+							</span>
 							<span class="dice-count">({{ diceCount(phoenixborn) }})</span>
 						</div>
 					</div>
+					<tutor-select v-if="isEffectCost(phoenixborn.id) && isTutor(phoenixborn.stub)"
+						:card="phoenixborn">
+					</tutor-select>
 				</li>
 			</ul>
 		</div>
@@ -175,6 +174,9 @@
 							<span class="dice-count" title="Dice Cost">({{ diceCount(card.data) }}<span v-if="card.data.effectRepeats && isEffectCost(card.data.id)">+</span>)</span>
 						</div>
 					</div>
+					<tutor-select v-if="isInFirstFive(card.data.id) && isTutor(card.data.stub)"
+						:card="card.data">
+					</tutor-select>
 				</li>
 			</ul>
 		</div>
@@ -182,127 +184,23 @@
 </template>
 
 <script>
-	import {concat, filter, includes, round} from 'lodash'
-	import {globals} from 'app/utils'
+	import {assign, concat, filter, includes, round} from 'lodash'
+	import {tutorCards} from 'app/utils'
+	import {
+		extractDiceRequired, extractMagicCosts, getFormattedCosts, getPlayCost, getSortedCostKeys
+	} from 'app/utils/costs'
 	import CardLink from 'app/components/card_link.vue'
 	import CostList from 'app/components/cost_list.vue'
 	import CardCodes from 'app/components/card_codes.vue'
-	
-	function costToDiceType(cost) {
-		const splitCosts = cost.split(' / ')
-		if (splitCosts.length > 1) {
-			let types = []
-			for (const splitCost of splitCosts) {
-				types.push(splitCost.split(':')[0])
-			}
-			return types.join(' / ')
-		}
-		return splitCosts[0].split(':')[0]
-	}
-	
-	function costToDiceFace(cost) {
-		if (cost === 'basic') {
-			return null
-		}
-		const data = cost.split(':')
-		// Default to power face
-		if (data.length !== 2) {
-			return 'power'
-		}
-		return data[1]
-	}
-	
-	function sortDiceTypes(a, b) {
-		const aIsBasic = a === 'basic'
-		const bIsBasic = b === 'basic'
-		if (!aIsBasic && bIsBasic) return -1
-		if (aIsBasic && bIsBasic) return 0
-		if (aIsBasic && !bIsBasic) return 1
-		const aIsSplit = includes(a, '/')
-		const bIsSplit = includes(b, '/')
-		if (!aIsSplit && bIsSplit) return -1
-		if (aIsSplit && bIsSplit) {
-			const aSplit = a.split(' / ')
-			const bSplit = b.split(' / ')
-			if (costToDiceType(aSplit[0]) === costToDiceType(bSplit[0])) {
-				return sortDiceTypes(aSplit[1], bSplit[1])
-			}
-			return sortDiceTypes(aSplit[0], bSplit[0])
-		}
-		if (aIsSplit && !bIsSplit) return 1
-		const aPos = globals.diceData.indexOf(costToDiceType(a))
-		const bPos = globals.diceData.indexOf(costToDiceType(b))
-		if (aPos === bPos) {
-			const aFace = costToDiceFace(a)
-			const bFace = costToDiceFace(b)
-			if (aFace === 'power' && bFace !== 'power' || (aFace === 'class' && !bFace)) {
-				return -1
-			}
-			if (aFace === bFace) return 0
-			else return 1
-		}
-		return aPos < bPos ? -1 : 1
-	}
-	
-	function getSortedCostKeys(costObject) {
-		let keys = Object.keys(costObject)
-		keys.sort(sortDiceTypes)
-		return keys
-	}
-	
-	function extractDiceRequired(costs, costObject) {
-		if (!costObject) {
-			return
-		}
-		for (const key of Object.keys(costObject)) {
-			const diceType = costToDiceType(key)
-			costs[diceType] = costs[diceType] ? costs[diceType] + costObject[key] : costObject[key]
-		}
-	}
-	
-	function extractMagicCosts(costs, cards, returnEffectCost) {
-		for (const card of cards) {
-			const costObject = !returnEffectCost ? card.magicCost : card.effectMagicCost
-			if (!costObject) continue
-			for (const key of Object.keys(costObject)) {
-				costs[key] = costs[key] ? costs[key] + costObject[key] : costObject[key]
-			}
-		}
-	}
-	
-	function getFormattedCosts(costs) {
-		let formattedCosts = []
-		const keys = getSortedCostKeys(costs)
-		for (const key of keys) {
-			const dice = key.split(' / ')
-			let finalCosts = []
-			let firstIteration = true
-			for (const cost of dice) {
-				if (firstIteration) {
-					finalCosts.push([costs[key], ' [[', cost, ']]'].join(''))
-					firstIteration = false
-				} else {
-					finalCosts.push(['[[', cost, ']]'].join(''))
-				}
-			}
-			if (finalCosts.length > 1) {
-				formattedCosts.push(finalCosts)
-			} else {
-				formattedCosts.push(finalCosts[0])
-			}
-		}
-		if (!formattedCosts.length) {
-			return null
-		}
-		return formattedCosts
-	}
+	import TutorSelect from 'app/components/tutor_select.vue'
 
 	export default {
 		props: ['viewOnly'],
 		components: {
 			'card-link': CardLink,
 			'cost-list': CostList,
-			'card-codes': CardCodes
+			'card-codes': CardCodes,
+			'tutor-select': TutorSelect
 		},
 		data () {
 			return {
@@ -318,12 +216,6 @@
 			},
 			phoenixborn () {
 				return this.$store.getters.phoenixborn
-			},
-			firstFiveTotalCards () {
-				return this.$store.state.deck.first_five.length
-			},
-			firstFiveLimit () {
-				return this.$store.getters.firstFiveLimit
 			},
 			firstFiveMagicCost () {
 				const cards = concat(
@@ -454,15 +346,9 @@
 			},
 			diceCount (data) {
 				let total = 0
-				if (data.magicCost) {
-					for (const value of Object.values(data.magicCost)) {
-						total += value
-					}
-				}
-				if (data.effectMagicCost && (this.isEffectCost(data.id) || (!data.magicCost && data.diceRecursion))) {
-					for (const value of Object.values(data.effectMagicCost)) {
-						total += value
-					}
+				total += getPlayCost(data.magicCost)
+				if (this.isEffectCost(data.id) || (!data.magicCost && data.diceRecursion)) {
+					total += getPlayCost(data.effectMagicCost)
 				}
 				const recursion = data.diceRecursion || 0
 				return total - recursion
@@ -484,7 +370,7 @@
 				if (this.isInFirstFive(cardId)) {
 					return false
 				}
-				return this.$store.state.deck.first_five.length === this.$store.getters.firstFiveLimit
+				return this.$store.state.deck.first_five.length >= 5
 			},
 			toggleEffectCost (cardId) {
 				this.$store.commit('toggleEffectCost', cardId)
@@ -492,6 +378,12 @@
 			isEffectCost (cardId) {
 				return includes(this.$store.state.deck.effect_costs, cardId)
 			},
+			isTutor (cardStub) {
+				return !!tutorCards[cardStub]
+			},
+			isSelectedByTutor (cardId) {
+				return includes(this.$store.getters.tutorTargets, cardId)
+			}
 		}
 	}
 </script>

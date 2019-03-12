@@ -10,8 +10,6 @@ import {globals} from './utils'
 
 Vue.use(Vuex)
 
-const tutorCardStubs = ['open-memories', 'augury', 'shared-sorrow', 'james-endersight']
-
 function disableReleaseDice (state) {
 	if (!state.options.releases || state.options.releases.indexOf('expansions') === -1) {
 		if (state.options.dice && state.options.dice.indexOf('divine') > -1) {
@@ -115,7 +113,6 @@ export default new Vuex.Store({
 		cardManager: null,
 		ashes_500_revision: null,
 		isDisabled: false,
-		first_five_limit: 5,
 		deck: merge({
 			id: null,
 			title: '',
@@ -128,8 +125,9 @@ export default new Vuex.Store({
 			cards: {},
 			first_five: [],
 			effect_costs: [],
+			tutor_map: {},
 			ashes_500_score: null,
-            ashes_500_revision_id: null
+			ashes_500_revision_id: null
 		}, globals.deck || {}),
 		listing: [],
 		options: merge({
@@ -310,13 +308,6 @@ export default new Vuex.Store({
 			}
 			return state.cardManager.idsToListing(state.deck.first_five)
 		},
-		firstFiveLimit (state) {
-			const phoenixborn = !state.cardManager ? null : state.cardManager.cardById(state.deck.phoenixborn)
-			if (phoenixborn && tutorCardStubs.indexOf(phoenixborn.stub) > -1) {
-				return state.first_five_limit + 1
-			}
-			return state.first_five_limit
-		},
 		effectCostOnlyCards (state) {
 			if (!state.deck.effect_costs.length || !state.cardManager) {
 				return null
@@ -330,6 +321,12 @@ export default new Vuex.Store({
 			}
 			return state.cardManager.idsToListing(Array.from(cardIds))
 		},
+		tutorTargets (state) {
+			return Object.values(state.deck.tutor_map)
+		},
+		tutorSelections (state) {
+			return state.deck.tutor_map
+		}
 	},
 	mutations: {
 		// We disable controls that could cause an AJAX call while an AJAX call is pending
@@ -375,6 +372,10 @@ export default new Vuex.Store({
 			if (!phoenixborn && previousPhoenixborn && state.deck.effect_costs.indexOf(previousPhoenixborn) > -1) {
 				state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(previousPhoenixborn), 1)
 			}
+			// Remove the Phoenixborn ability from the tutor map, if it's there
+			if (!phoenixborn && previousPhoenixborn && state.deck.tutor_mapp[previousPhoenixborn]) {
+				Vue.delete(state.deck.tutor_map, previousPhoenixborn)
+			}
 		},
 		setDieCount (state, payload) {
 			state.deck.dice[payload.die] = payload.count
@@ -394,15 +395,34 @@ export default new Vuex.Store({
 				Vue.set(state.deck.cards, payload.id, payload.qty)
 			} else if (state.deck.cards[payload.id] && payload.qty === 0) {
 				Vue.delete(state.deck.cards, payload.id)
-				// Clear card from first five and effect costs, if necessary
+				// Clear card from first five, effect costs, and tutor map if necessary
 				if (state.deck.first_five.indexOf(payload.id) > -1) {
 					state.deck.first_five.splice(state.deck.first_five.indexOf(payload.id), 1)
 				}
 				if (state.deck.effect_costs.indexOf(payload.id) > -1) {
 					state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(payload.id), 1)
 				}
+				if (state.deck.tutor_map[payload.id]) {
+					Vue.delete(state.deck.tutor_map, payload.id)
+				}
 			} else {
 				state.deck.cards[payload.id] = payload.qty
+				// Ensure we cannot tutor for more copies of a card than are in the deck
+				let inUse = reduce(Object.values(state.deck.tutor_map), (total, current) => {
+					if (current === payload.id) return total + 1
+					return total
+				}, 0) + (state.deck.first_five.indexOf(payload.id) > -1 ? 1 : 0)
+				if (payload.qty < inUse) {
+					// We don't have a way to remove things in order (object keys aren't ordered)
+					// So to keep things simple, drop all tutored copies of the card if qty drops
+					for (const tutorId of Object.keys(state.deck.tutor_map)) {
+						if (state.deck.tutor_map[tutorId] === payload.id) {
+							Vue.delete(state.deck.tutor_map, tutorId)
+						}
+					}
+					const card = state.cardManager.cardById(payload.id)
+					globals.notify('Quantity too low; ' + card.name + ' removed from search effects in the Costs tab.', 'warning')
+				}
 			}
 		},
 		setDeck500Revision (state, revision) {
@@ -412,23 +432,14 @@ export default new Vuex.Store({
 			state.deck.ashes_500_score = score
 		},
 		toggleFirstFive (state, cardId) {
-			const card = state.cardManager ? state.cardManager.cardById(cardId) : null
-			// Tutors: Augury, Open Memories, Shared Sorrow, James Endersight
-			const adjustFirstFive = card ? tutorCardStubs.indexOf(card.stub) > -1 : false
 			if (state.deck.first_five.indexOf(cardId) > -1) {
 				state.deck.first_five.splice(state.deck.first_five.indexOf(cardId), 1)
 				// Effect costs are not allowed unless a card is in the First Five
 				if (state.deck.effect_costs.indexOf(cardId) > -1) {
 					state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(cardId), 1)
 				}
-				if (adjustFirstFive) {
-					state.first_five_limit = state.first_five_limit - 1
-				}
 			} else {
 				state.deck.first_five.push(cardId)
-				if (adjustFirstFive) {
-					state.first_five_limit = state.first_five_limit + 1
-				}
 			}
 		},
 		toggleEffectCost (state, cardId) {
@@ -436,6 +447,13 @@ export default new Vuex.Store({
 				state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(cardId), 1)
 			} else {
 				state.deck.effect_costs.push(cardId)
+			}
+		},
+		setTutorTarget (state, payload) {
+			if (!payload.targetId && state.deck.tutor_map[payload.tutorId]) {
+				Vue.delete(state.deck.tutor_map, payload.tutorId)
+			} else {
+				Vue.set(state.deck.tutor_map, payload.tutorId, payload.targetId)
 			}
 		},
 		// Filter methods
