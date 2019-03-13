@@ -25,6 +25,11 @@
 					<ashes-500-costs v-if="isAshes500Enabled" :card="card" class="block-level"></ashes-500-costs>
 				</td>
 				<td class="stats-col">
+					<span v-if="card.conjurations" :class="{'spacer': hasStatline(card)}">
+						<card-link v-for="conjuration of conjurationChain(card.conjurations)" :key="conjuration.id" :card="conjuration">
+							<i class="fa" :class="typeToFontAwesome('summon')"></i>
+						</card-link>
+					</span>
 					<span v-if="hasStatline(card)" class="muted">
 						<span v-if="card.attack !== undefined || card.battlefield !== undefined"
 							class="attack">{{ card.battlefield || card.attack }}</span>
@@ -35,9 +40,6 @@
 							class="recover">{{ card.spellboard || card.recover }}</span>
 						<span v-else>&ndash;</span>
 					</span>
-					<card-link v-else-if="card.conjurations" v-for="conjuration of conjurationChain(card.conjurations)" :key="conjuration.id" :card="conjuration">
-						<i class="fa" :class="typeToFontAwesome('summon')"></i>
-					</card-link>
 				</td>
 				<td class="costs-col">
 					<ol v-if="card.cost" class="costs">
