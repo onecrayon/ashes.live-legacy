@@ -33,6 +33,7 @@ def downgrade():
     op.drop_constraint('deck_selected_card_ibfk_1', 'deck_selected_card', type_='foreignkey')
     op.drop_constraint('deck_selected_card_ibfk_2', 'deck_selected_card', type_='foreignkey')
     op.drop_constraint('PRIMARY', 'deck_selected_card', type_='primary')
+    op.execute('DELETE FROM deck_selected_card WHERE tutor_card_id != 0')
     op.drop_column('deck_selected_card', 'tutor_card_id')
     op.create_primary_key(None, 'deck_selected_card', ['deck_id', 'card_id'])
     op.create_foreign_key('deck_selected_card_ibfk_1', 'deck_selected_card', 'card', ['card_id'], ['id'])
