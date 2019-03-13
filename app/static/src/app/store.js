@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import qwest from 'qwest'
 import Nanobar from 'app/nanobar'
 import CardManager from './card_manager'
-import {concat, isInteger, merge, reduce} from 'lodash'
+import {concat, isEmpty, isInteger, merge, reduce} from 'lodash'
 import {globals} from './utils'
 
 /* eslint-disable no-new */
@@ -326,6 +326,12 @@ export default new Vuex.Store({
 		},
 		tutorSelections (state) {
 			return state.deck.tutor_map
+		},
+		tutoredCards (state) {
+			if (isEmpty(state.deck.tutor_map) || !state.cardManager) {
+				return null
+			}
+			return state.cardManager.idsToListing(Object.values(state.deck.tutor_map))
 		}
 	},
 	mutations: {

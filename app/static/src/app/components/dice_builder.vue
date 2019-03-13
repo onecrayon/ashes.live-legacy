@@ -228,6 +228,14 @@
 					return this.isEffectCost(card.id)
 				})
 				extractMagicCosts(costs, effectCards, true)
+				const tutoredCards = this.$store.getters.tutoredCards || []
+				let tutoredCosts = {}
+				extractMagicCosts(tutoredCosts, tutoredCards)
+				extractMagicCosts(tutoredCosts, tutoredCards, true)
+				for (const key of Object.keys(tutoredCosts)) {
+					const originalCost = costs[key] || 0
+					costs[key] = originalCost + '-' + (originalCost + tutoredCosts[key])
+				}
 				return getFormattedCosts(costs)
 			},
 			firstFiveDiceRequired () {
@@ -242,6 +250,16 @@
 						extractDiceRequired(costs, card.effectMagicCost)
 					}
 				}
+				const tutoredCards = this.$store.getters.tutoredCards || []
+				let tutoredCosts = {}
+				for (const card of tutoredCards) {
+					extractDiceRequired(tutoredCosts, card.magicCost)
+					extractDiceRequired(tutoredCosts, card.effectMagicCost)
+				}
+				for (const key of Object.keys(tutoredCosts)) {
+					const originalCost = costs[key] || 0
+					costs[key] = originalCost + '-' + (originalCost + tutoredCosts[key])
+				}
 				return getFormattedCosts(costs)
 			},
 			firstFiveDiceCount () {
@@ -252,12 +270,20 @@
 				let cost = 0
 				let repeatingEffect = false
 				for (const card of cards) {
-					cost = cost + this.diceCount(card)
+					cost += this.diceCount(card)
 					if (card.effectRepeats) {
 						repeatingEffect = true
 					}
 				}
-				return cost + (repeatingEffect ? '+' : 0)
+				const tutoredCards = this.$store.getters.tutoredCards || []
+				let tutoredCost = 0
+				for (const card of tutoredCards) {
+					tutoredCost += this.diceCount(card)
+					if (card.effectRepeats) {
+						repeatingEffect = true
+					}
+				}
+				return cost + (tutoredCost ? '-' + (cost + tutoredCost) : '') + (repeatingEffect ? '+' : '')
 			},
 			deckMagicCost () {
 				const cards = this.$store.getters.allCards
