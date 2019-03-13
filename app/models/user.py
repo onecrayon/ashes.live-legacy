@@ -24,6 +24,7 @@ class User(db.Model, UserMixin):
     newsletter_opt_in = db.Column(db.Boolean, nullable=False, default=False)
     exclude_subscriptions = db.Column(db.Boolean, nullable=False, default=False)
     email_subscriptions = db.Column(db.Boolean, nullable=False, default=False, index=True)
+    colorize_icons = db.Column(db.Boolean, nullable=False, default=False)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
