@@ -27,6 +27,11 @@
 			{{ form.exclude_subscriptions }} {{ form.exclude_subscriptions.label }}
 			<p class="help-text">If you use the <i class="fa fa-arrow-circle-o-right" title="Next Unread Subscription"></i> button, excluding subscribed comments will make the homepage much more useful.</p>
 		</div>
+		<h2>Site Settings</h2>
+		<div class="form-field full-width">
+			{{ form.colorize_icons }} {{ form.colorize_icons.label }}
+			<p class="help-text">Colored cost icons are easier to distinguish at a glance, but more visually intrusive.</p>
+		</div>
 		<input class="btn btn-primary" type="submit" value="Save settings">
 	</form>
 {% endblock %}

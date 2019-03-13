@@ -45,7 +45,7 @@
 	<meta property="og:site_name" content="Ashes.live">
 	{% block meta %}{% endblock %}
 </head>
-<body class="{% block page_class %}static{% endblock %}">
+<body class="{% if current_user.is_authenticated and current_user.colorize_icons %}colorize {% endif %}{% block page_class %}static{% endblock %}">
 	<a href="{{ url_for('home.feedback') }}" class="help-badge" target="_blank">
 		<i class="fa fa-envelope"></i> <span class="full-display-only">Help / feedback</span>
 	</a>

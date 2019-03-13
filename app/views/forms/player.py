@@ -83,6 +83,7 @@ class EditForm(FlaskForm):
     newsletter_opt_in = newsletterField
     exclude_subscriptions = BooleanField('Exclude subscribed comments from homepage')
     email_subscriptions = BooleanField('Email subscription notifications')
+    colorize_icons = BooleanField('Use colored cost icons')
 
 
 class PasswordForm(FlaskForm):
