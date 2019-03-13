@@ -50,6 +50,15 @@ def process_deck(deck):
     for section, cards in section_map.items():
         if not cards:
             continue
+        # Ensure there are no duplicate conjurations
+        if section == 'Conjuration Deck':
+            conjuration_ids = set()
+            unique_cards = []
+            for card in cards:
+                if card['id'] not in conjuration_ids:
+                    conjuration_ids.add(card['id'])
+                    unique_cards.append(card)
+            cards = unique_cards
         sections.append({
             'heading': section,
             'count': sum(x['count'] for x in cards),
