@@ -95,6 +95,7 @@ class DeckDie(db.Model):
 class DeckSelectedCard(db.Model):
     deck_id = db.Column(db.Integer, db.ForeignKey(Deck.id), nullable=False, primary_key=True)
     card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=False, primary_key=True)
+    tutor_card_id = db.Column(db.Integer, nullable=False, default=0, primary_key=True)
     is_first_five = db.Column(db.Boolean, nullable=False, default=False)
     is_paid_effect = db.Column(db.Boolean, nullable=False, default=False)
 
