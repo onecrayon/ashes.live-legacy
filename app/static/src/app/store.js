@@ -373,7 +373,7 @@ export default new Vuex.Store({
 				state.deck.effect_costs.splice(state.deck.effect_costs.indexOf(previousPhoenixborn), 1)
 			}
 			// Remove the Phoenixborn ability from the tutor map, if it's there
-			if (!phoenixborn && previousPhoenixborn && state.deck.tutor_mapp[previousPhoenixborn]) {
+			if (!phoenixborn && previousPhoenixborn && state.deck.tutor_map[previousPhoenixborn]) {
 				Vue.delete(state.deck.tutor_map, previousPhoenixborn)
 			}
 		},
