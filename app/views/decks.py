@@ -322,6 +322,16 @@ def build(deck_id=None):
     if deck:
         if not current_user.is_authenticated or deck.user_id != current_user.id:
             abort(404)
+        first_five = []
+        effect_costs = []
+        tutor_map = {}
+        for selected_card in deck.selected_cards:
+            if selected_card.is_first_five:
+                first_five.append(selected_card.card_id)
+            if selected_card.is_paid_effect:
+                effect_costs.append(selected_card.card_id)
+            if selected_card.tutor_card_id:
+                tutor_map[selected_card.tutor_card_id] = selected_card.card_id
         deck_json = json.dumps({
             'id': deck.id,
             'title': deck.title,
@@ -333,8 +343,9 @@ def build(deck_id=None):
             },
             'dice': {DiceFlags(x.die_flag).name: x.count for x in deck.dice},
             'cards': {x.card_id: x.count for x in deck.cards},
-            'first_five': [x.card_id for x in deck.selected_cards if x.is_first_five],
-            'effect_costs': [x.card_id for x in deck.selected_cards if x.is_paid_effect],
+            'first_five': first_five,
+            'effect_costs': effect_costs,
+            'tutor_map': tutor_map,
             'ashes_500_score': deck.ashes_500_score,
             'ashes_500_revision_id': deck.ashes_500_revision_id
         })

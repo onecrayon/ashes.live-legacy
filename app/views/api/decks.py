@@ -158,9 +158,10 @@ def save(deck_id=None, is_snapshot=False):
                 'snapshot\'s title &amp; description</a>.'
             ).format(url_for('decks.edit', deck_id=previous.id))
         })
-    # And finally the selected cards (first five and paid effects; used for stats)
+    # And finally the selected cards (first five, paid effects, and tutored cards; used for stats)
     first_five = frozenset(data.get('first_five', []))
     paid_effects = frozenset(data.get('effect_costs', []))
+    tutor_map = data.get('tutor_map', {})
     selected_cards = []
     for card_id in paid_effects:
         if card_id not in first_five:
@@ -173,6 +174,11 @@ def save(deck_id=None, is_snapshot=False):
             card_id=card_id,
             is_first_five=True,
             is_paid_effect=card_id in paid_effects
+        ))
+    for tutor_id, card_id in tutor_map.items():
+        selected_cards.append(DeckSelectedCard(
+            card_id=card_id,
+            tutor_card_id=tutor_id
         ))
     deck.selected_cards = selected_cards
     
