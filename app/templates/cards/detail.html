@@ -145,11 +145,14 @@
 		<ul>
 			{% if conjurations %}
 			<li>
-				{% if root_card.id == card.id %}
-				<em>{{ root_card.name }}</em>
-				{% else %}
-				<a href="{{ url_for('cards.detail', stub=root_card.stub) }}" class="card">{{ root_card.name }}</a>
-				{% endif %}
+				{% for root_card in root_cards %}
+					{% if root_card.id == card.id -%}
+					<em>{{ root_card.name }}</em>
+					{%- else -%}
+					<a href="{{ url_for('cards.detail', stub=root_card.stub) }}" class="card">{{ root_card.name }}</a>
+					{%- endif -%}
+					{%- if not loop.last %}, {% endif %}
+				{% endfor %}
 				<ul>
 					{% for conjuration in conjurations %}
 					<li>

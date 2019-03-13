@@ -58,6 +58,15 @@ def detail(stub, page=1):
         else:
             non_phoenixborn_ids.append(root_card.id)
         conjurations = conjurations + gather_conjurations(root_card)
+    # Remove duplicate conjurations, if any
+    conjuration_ids = set()
+    unique_conjurations = []
+    for conjuration in conjurations:
+        if conjuration.id not in conjuration_ids:
+            conjuration_ids.add(conjuration.id)
+            unique_conjurations.append(conjuration)
+    conjurations = unique_conjurations
+
     # Gather stats
     phoenixborn_counts = db.session.query(
         db.func.count(Deck.id).label('decks'),
@@ -119,7 +128,7 @@ def detail(stub, page=1):
     return render_template(
         'cards/detail.html',
         card=json.loads(card.json),
-        root_card=root_card,
+        root_cards=root_cards,
         conjurations=conjurations,
         dice=dice,
         release=current_app.config['RELEASE_NAMES'][card.release],
