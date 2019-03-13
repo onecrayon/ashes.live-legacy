@@ -15,6 +15,13 @@ class DiceFlags(Enum):
     sympathy = 32
 
 
+conjurations_table = db.Table('card_conjuration',
+    db.Column('card_id', db.Integer, db.ForeignKey('card.id'), nullable=False, primary_key=True),
+    db.Column('conjuration_id', db.Integer, db.ForeignKey('card.id'), nullable=False,
+              primary_key=True)
+)
+
+
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     entity_id = db.Column(db.Integer, nullable=False, index=True, unique=True)
@@ -32,9 +39,14 @@ class Card(db.Model):
     copies = db.Column(db.SmallInteger, nullable=True, default=None)
     json = db.Column(db.Text)
     text = db.Column(db.Text)
-    summon_id = db.Column(db.Integer, db.ForeignKey('card.id'), nullable=True)
     
-    conjurations = db.relationship('Card')
+    conjurations = db.relationship(
+        'Card',
+        secondary=conjurations_table,
+        primaryjoin=(id==conjurations_table.c.card_id),
+        secondaryjoin=(id==conjurations_table.c.conjuration_id),
+        backref='summons'
+    )
 
     @staticmethod
     def dice_to_flags(dice_list):

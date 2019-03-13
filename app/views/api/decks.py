@@ -158,29 +158,6 @@ def save(deck_id=None, is_snapshot=False):
                 'snapshot\'s title &amp; description</a>.'
             ).format(url_for('decks.edit', deck_id=previous.id))
         })
-    # And finally the selected cards (first five, paid effects, and tutored cards; used for stats)
-    first_five = frozenset(data.get('first_five', []))
-    paid_effects = frozenset(data.get('effect_costs', []))
-    tutor_map = data.get('tutor_map', {})
-    selected_cards = []
-    for card_id in paid_effects:
-        if card_id not in first_five:
-            selected_cards.append(DeckSelectedCard(
-                card_id=card_id,
-                is_paid_effect=True
-            ))
-    for card_id in first_five:
-        selected_cards.append(DeckSelectedCard(
-            card_id=card_id,
-            is_first_five=True,
-            is_paid_effect=card_id in paid_effects
-        ))
-    for tutor_id, card_id in tutor_map.items():
-        selected_cards.append(DeckSelectedCard(
-            card_id=card_id,
-            tutor_card_id=tutor_id
-        ))
-    deck.selected_cards = selected_cards
     
     # If this is an Ashes500 deck, calculate the deck's score
     if deck.ashes_500_revision_id:
@@ -219,10 +196,38 @@ def save(deck_id=None, is_snapshot=False):
         deck.ashes_500_score = None
 
     # Finally save everything up!
+    deck.selected_cards = []
     db.session.add(deck)
     if deck.is_public and deck.is_snapshot and source_entity_id:
         refresh_entity(deck.entity_id, 'deck', source_entity_id)
         update_subscription(source_entity_id, deck.entity_id)
+    db.session.commit()
+    # And finally set selected cards (first five, paid effects, and tutored cards; used for stats)
+    # This happens after clearing them out because SQLAlchemy cannot handle the three way composite
+    # index (tries to insert duplicates instead of updating intelligently based on tutor_card_id)
+    first_five = frozenset(data.get('first_five', []))
+    paid_effects = frozenset(data.get('effect_costs', []))
+    tutor_map = data.get('tutor_map', {})
+    selected_cards = []
+    for card_id in paid_effects:
+        if card_id not in first_five:
+            selected_cards.append(DeckSelectedCard(
+                card_id=card_id,
+                is_paid_effect=True
+            ))
+    for card_id in first_five:
+        selected_cards.append(DeckSelectedCard(
+            card_id=card_id,
+            is_first_five=True,
+            is_paid_effect=card_id in paid_effects
+        ))
+    for tutor_id, card_id in tutor_map.items():
+        current_app.logger.debug('tutor_id: {}, card_id: {}'.format(tutor_id, card_id))
+        selected_cards.append(DeckSelectedCard(
+            card_id=card_id,
+            tutor_card_id=tutor_id
+        ))
+    deck.selected_cards = selected_cards
     db.session.commit()
 
     return jsonify({'success': '{} successfully saved!'.format(
