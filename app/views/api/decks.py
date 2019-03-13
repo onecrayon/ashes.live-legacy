@@ -222,7 +222,6 @@ def save(deck_id=None, is_snapshot=False):
             is_paid_effect=card_id in paid_effects
         ))
     for tutor_id, card_id in tutor_map.items():
-        current_app.logger.debug('tutor_id: {}, card_id: {}'.format(tutor_id, card_id))
         selected_cards.append(DeckSelectedCard(
             card_id=card_id,
             tutor_card_id=tutor_id
