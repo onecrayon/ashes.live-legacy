@@ -39,12 +39,10 @@
 
 		{{ dice_list(deck.dice, classes="col") }}
 	</div>
-	{% if not current_user.is_authenticated or deck.user_id != current_user.id -%}
 	<ul class="meta">
 		<li>{{ usertag(deck.user) }}</li
 		><li>{{ deck.modified | format_date }}</li>
 	</ul>
-	{% endif -%}
 	<hr>
 	<div class="card-listing">
 		<h3>
