@@ -2,13 +2,13 @@
 	<div class="btn-group">
 		<button @click="toggleReleases('core')"
 			class="btn btn-small" :class="{active: hasReleases('core')}" :disabled="isDisabled"
-			>Core</button
+			title="Include core set cards">Core</button
 		><button @click="toggleReleases('expansions')"
 			class="btn btn-small" :class="{active: hasReleases('expansions')}" :disabled="isDisabled"
-			title="Expansions">Exp.</button
+			title="Include expansion cards">Exp.</button
 		><button @click="toggleReleases('promos')"
 			class="btn btn-small" :class="{active: hasReleases('promos')}" :disabled="isDisabled"
-			title="Promos">Pro.</button
+			title="Include promo cards">Pro.</button
 		>
 	</div>
 </template>

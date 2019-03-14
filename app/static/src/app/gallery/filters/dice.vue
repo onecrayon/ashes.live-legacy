@@ -2,12 +2,12 @@
 	<div class="btn-group">
 		<button @click="toggleDiceLogic"
 			class="btn btn-all" :class="{active: isDiceLogicActive }"
-			:disabled="isDisabled">{{ diceLogicText }}:</button
+			:disabled="isDisabled" :title="diceLogicTooltip">{{ diceLogicText }}:</button
 		><button @click="toggleDie('basic')"
 			class="btn phg-basic-magic" :class="{active: isDieActive('basic') }"
-			:disabled="isBasicDisabled || isDisabled" title="Basic"></button
+			:disabled="isBasicDisabled || isDisabled" title="Basic Magic"></button
 		><button v-for="dieType of diceList" :key="dieType"
-			@click="toggleDie(dieType)" :title="capitalize(dieType)"
+			@click="toggleDie(dieType)" :title="capitalize(dieType) + ' Magic'"
 			class="btn" :class="[isDieActive(dieType) ? 'active' : '', 'phg-' + dieType + '-power']"
 			:disabled="!isShowingRelease(dieType) || isDisabled"></button>
 	</div>
@@ -26,7 +26,13 @@
 				return globals.diceData
 			},
 			diceLogicText () {
-				return this.$store.state.options.diceLogic === 'or' ? 'Any' : 'All'
+				return this.isDiceLogicActive ? 'All' : 'Any'
+			},
+			diceLogicTooltip () {
+				if (this.isDiceLogicActive) {
+					return 'Showing cards that require ALL selected magic types'
+				}
+				return 'Showing cards that require ANY selected magic type'
 			},
 			isDiceLogicActive () {
 				return this.$store.state.options.diceLogic === 'and'
