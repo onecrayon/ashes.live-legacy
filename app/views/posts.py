@@ -26,6 +26,12 @@ from app.wrappers import admin_required
 mod = Blueprint('posts', __name__, url_prefix='/posts')
 
 
+MAX_POST_DATE_COMP = db.func.greatest(
+    db.func.ifnull(db.func.max(Comment.created), 0),
+    Post.created
+).desc()
+
+
 def verify_post(post_id, is_admin=False):
     post = Post.query.get_or_404(post_id)
     if (is_admin and not current_user.is_admin) or (not current_user.is_admin and (
@@ -83,7 +89,7 @@ def index():
         ).filter(
             Post.is_deleted.is_(False),
             Post.section_id == section.id
-        ).group_by(Post.entity_id).order_by(db.func.max(Comment.created).desc()).limit(
+        ).group_by(Post.entity_id).order_by(MAX_POST_DATE_COMP).limit(
             per_page if not section.is_restricted else 1
         ).all()
         meta_map[section.id] = [{
@@ -157,9 +163,7 @@ def section(stub, page=None):
     if not page:
         page = 1
     per_page = current_app.config['DEFAULT_PAGED_RESULTS']
-    post_results = query.order_by(
-        db.func.max(Comment.created).desc()
-    ).limit(per_page).offset(
+    post_results = query.order_by(MAX_POST_DATE_COMP).limit(per_page).offset(
         (page - 1) * per_page
     ).all()
     posts = [dict({
