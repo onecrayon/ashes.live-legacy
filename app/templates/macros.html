@@ -107,7 +107,7 @@
 {%- endmacro %}
 
 {% macro subscribe_button(url, comment_last_seen) -%}
-	<a href="{{ url }}" class="btn btn-block btn-success">
+	<a href="{{ url }}" class="btn btn-block btn-success" rel="nofollow">
 		{% if comment_last_seen %}
 		<i class="fa fa-bookmark-o"></i> Unsubscribe
 		{% else %}
