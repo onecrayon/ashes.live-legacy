@@ -30,7 +30,7 @@ def async_email(app, recipients, sender, subject, html_body, text_body):
         api_key = current_app.config['SENDGRID_API_KEY']
         response = None
         if api_key:
-            api = SendGridAPIClient(apikey=api_key)
+            api = SendGridAPIClient(api_key=api_key)
             # sender might be a tuple of (name, email)
             from_email = (
                 sendgrid_helpers.Email(sender) if isinstance(sender, str)
@@ -40,12 +40,10 @@ def async_email(app, recipients, sender, subject, html_body, text_body):
             to_email = sendgrid_helpers.Email(first_recipient)
             html_content = sendgrid_helpers.Content('text/html', html_body)
             text_content = sendgrid_helpers.Content('text/plain', text_body)
-            # The Mail helper will not actually save anything unless every single attribute is
-            # specified
             email = sendgrid_helpers.Mail(
-                subject=subject, from_email=from_email, to_email=to_email, content=text_content
+                subject=subject, from_email=from_email, to_emails=to_email,
+                plain_text_content=text_content, html_content=html_content
             )
-            email.add_content(html_content)
             if recipients != first_recipient:
                 for recipient in recipients[1:]:
                     personalization = sendgrid_helpers.Personalization()
