@@ -87,7 +87,7 @@ Ashes.live is written in Python using the [Flask](http://flask.pocoo.org/docs/) 
 * `/_assets`: card data files and related scripts (these are used to generate the data that populates the site, but are not directly accessed by the site logic)
 * `/app`: Flask application folder. You will be working with these files if you modify or add any Python logic.
 * `/app/static/src`: VueJS app (and global scripts). Any modifications to the deck builder/card browser must be made here, and then compiled with `npm run build` (compiled Javascript lives in `/app/static/js`).
-* `/app/static/css.esdynamo`: LESS stylesheet folder. Any modifications to the styles must be compiled with `npm run build` (compiled CSS lives in `/app/static/css`).
+* `/app/static/less`: LESS stylesheet folder. Any modifications to the styles must be compiled with `npm run build` (compiled CSS lives in `/app/static/css`).
 * `/migrations`: Alembic migration logic. Card JSON is stored in `/migrations/data` and migration version files are in `/migrations/versions`
 
 ### Vuex

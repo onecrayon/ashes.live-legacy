@@ -1,6 +1,0 @@
-{
-  "dynamo" : {
-    "build" : "tagged",
-    "version" : "3.0b1"
-  }
-}
