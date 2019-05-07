@@ -37,7 +37,7 @@ def async_email(app, recipients, sender, subject, html_body, text_body):
                 else sendgrid_helpers.Email(email=sender[1], name=sender[0])
             )
             first_recipient = recipients if isinstance(recipients, str) else recipients[0]
-            to_email = sendgrid_helpers.Email(first_recipient)
+            to_email = sendgrid_helpers.To(first_recipient)
             html_content = sendgrid_helpers.Content('text/html', html_body)
             text_content = sendgrid_helpers.Content('text/plain', text_body)
             email = sendgrid_helpers.Mail(
