@@ -1,4 +1,5 @@
-{% from "macros.html" import subscribe_button %}
+{% from "macros.html" import usertag, subscribe_button %}
+{% from "decks/macros.html" import dice_list %}
 {% extends "base.html" %}
 {% block title %}Card: {{ card.name | paged_title(pagination_options.page) }}{% endblock %}
 {% block meta %}
@@ -172,6 +173,33 @@
 			</li>
 			{% endif %}
 		</ul>
+	</div>
+	{% endif %}
+
+	{% if related_decks %}
+	<hr>
+	<div class="related-decks">
+		<h2>Recent decks</h2>
+
+		<ul class="deck-list deck-list-compact">
+		{% for deck in related_decks %}
+			<li class="deck {{ deck.phoenixborn.stub }}">
+				<h3>
+					{% if deck.ashes_500_revision_id %}<i class="fa fa-tachometer deck-type-icon" title="Ashes 500"></i>{% endif %}
+					<a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">{{ deck | deck_title }}</a>
+				</h3>
+				<p class="meta"><a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
+					{{ deck.phoenixborn.name }}
+				</a></p>
+				<ul class="meta col-flex">
+					<li>{{ usertag(deck.user) }}</li
+					><li>{{ deck.modified | format_date }}</li>
+				</ul>
+				{{ dice_list(deck.dice, classes="col") }}
+			</li>
+		{% endfor %}
+		</ul>
+		<p class="text-right"><a href="{{ url_for('decks.index', card=card.stub) }}">View all <i class="fa fa-hand-o-right"></i></a></p>
 	</div>
 	{% endif %}
 {% endblock %}

@@ -4,7 +4,7 @@ from operator import itemgetter
 from flask import current_app
 
 from app import db
-from app.models.deck import Deck
+from app.models.deck import Deck, DeckCard
 from app.utils import get_pagination
 
 
@@ -97,7 +97,8 @@ def get_decks_query(filters=None, options=None, most_recent_public=False):
     return query
 
 
-def get_decks(page, filters=None, order_by='modified', most_recent_public=False):
+def get_decks(page=None, filters=None, order_by='modified', most_recent_public=False,
+              filter_by_card=False):
     """Returns a list of decks, their card mapping, and pagination info"""
     if not page:
         page = 1
@@ -108,6 +109,8 @@ def get_decks(page, filters=None, order_by='modified', most_recent_public=False)
         db.joinedload('dice'),
         db.joinedload('user')
     ], most_recent_public=most_recent_public)
+    if filter_by_card:
+        query = query.outerjoin(DeckCard, DeckCard.deck_id == Deck.id)
     decks = query.order_by(getattr(Deck, order_by).desc()).limit(per_page).offset(
         (page - 1) * per_page
     ).all()

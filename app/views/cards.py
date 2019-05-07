@@ -9,26 +9,12 @@ from app import db
 from app.exceptions import Redirect
 from app.models.card import Card
 from app.models.deck import Deck, DeckCard
+from app.utils.cards import gather_conjurations, gather_root_summons
 from app.utils.comments import process_comments
+from app.utils.decks import get_decks_query
 from app.utils.stream import toggle_subscription
 
 mod = Blueprint('cards', __name__, url_prefix='/cards')
-
-
-def gather_conjurations(card):
-    conjurations = card.conjurations if card.conjurations else []
-    for conjuration in conjurations:
-        conjurations = conjurations + gather_conjurations(conjuration)
-    return conjurations
-
-
-def gather_root_summons(card):
-    if not card.summons:
-        return [card]
-    root_summons = []
-    for summon in card.summons:
-        root_summons = root_summons + gather_root_summons(summon)
-    return root_summons
 
 
 @mod.route('/')
@@ -49,6 +35,7 @@ def detail(stub, page=1):
         abort(404)
     # Gather up all related conjurations
     root_cards = gather_root_summons(card)
+    root_card_ids = [x.id for x in root_cards]
     conjurations = []
     phoenixborn_ids = []
     non_phoenixborn_ids = []
@@ -72,7 +59,7 @@ def detail(stub, page=1):
         db.func.count(Deck.id).label('decks'),
         db.func.count(db.func.distinct(Deck.user_id)).label('users')
     ).filter(
-        Deck.phoenixborn_id == root_card.id,
+        Deck.phoenixborn_id.in_(root_card_ids),
         Deck.is_snapshot.is_(False)
     ).first() if phoenixborn_ids else None
     card_counts = db.session.query(
@@ -81,7 +68,7 @@ def detail(stub, page=1):
     ).join(
         Deck, Deck.id == DeckCard.deck_id
     ).filter(
-        DeckCard.card_id == root_card.id,
+        DeckCard.card_id.in_(root_card_ids),
         Deck.is_snapshot.is_(False)
     ).first() if non_phoenixborn_ids else None
     counts = {
@@ -118,6 +105,20 @@ def detail(stub, page=1):
             Card.phoenixborn == card.name,
             Card.card_type.notin_(('Conjuration', 'Conjured Alteration Spell'))
         ).first()
+    # Grab recent decks that use this card
+    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
+    related_decks = get_decks_query(filters=[
+        DeckCard.card_id.in_(root_card_ids)
+    ], options=[
+        db.joinedload('phoenixborn'),
+        db.contains_eager('cards'),
+        db.joinedload('dice'),
+        db.joinedload('user')
+    ], most_recent_public=True).join(
+        DeckCard, DeckCard.deck_id == Deck.id
+    ).order_by(
+        getattr(Deck, 'created').desc()
+    ).limit(per_page).offset(0).all()
     # Gather comments
     try:
         comments, pagination, last_seen_entity_id, comment_form = process_comments(
@@ -139,6 +140,7 @@ def detail(stub, page=1):
             'title': preconstructed.title
         } if preconstructed else None,
         phoenixborn_card=phoenixborn_card,
+        related_decks=related_decks,
         # Standard comment properties
         comment_version=card.version,
         comments=comments,

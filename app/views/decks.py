@@ -11,6 +11,7 @@ from app.exceptions import Redirect
 from app.models.card import Card, DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
 from app.utils.ashes_500 import latest_ashes_500_revision
+from app.utils.cards import gather_root_summons
 from app.utils.comments import process_comments
 from app.utils.decks import get_decks, get_decks_query, process_deck
 from app.utils.stream import new_entity, toggle_subscription
@@ -25,7 +26,8 @@ def get_deck_filters():
     ).order_by(Card.name.asc()).all()
     filters = {
         's': request.args.get('s'),
-        'phoenixborn': request.args.get('phoenixborn')
+        'phoenixborn': request.args.get('phoenixborn'),
+        'card': request.args.get('card')
     }
     active_filters = []
     if filters['s']:
@@ -38,16 +40,25 @@ def get_deck_filters():
             active_filters.append(Deck.phoenixborn_id == phoenixborn_id)
         else:
             flash('Unable to find Phoenixborn; showing all decks.', 'error')
-    return filters, active_filters, phoenixborn
+    filter_card = None
+    if filters['card']:
+        root_ids = []
+        filter_card = Card.query.options(
+            db.joinedload('summons')
+        ).filter(Card.stub == filters['card']).first()
+        root_ids = [x.id for x in gather_root_summons(filter_card)]
+        active_filters.append(DeckCard.card_id.in_(root_ids))
+    return filters, active_filters, phoenixborn, filter_card
 
 
 @mod.route('/')
 @mod.route('/<int:page>/')
 def index(page=None):
     """View list of all public decks"""
-    filters, active_filters, phoenixborn = get_deck_filters()
+    filters, active_filters, phoenixborn, filter_card = get_deck_filters()
     decks, card_map, page, pagination = get_decks(
         page, order_by='created', most_recent_public=True,
+        filter_by_card=True if filter_card else False,
         filters=(active_filters or None)
     )
     precon_decks = get_decks_query(filters=[
@@ -63,6 +74,7 @@ def index(page=None):
         pages=pagination,
         precon_decks=precon_decks,
         filters={k: v for k, v in filters.items() if v},
+        filter_card=filter_card,
         phoenixborn=phoenixborn,
         latest_ashes_500=latest_ashes_500_revision(),
     )
@@ -274,17 +286,21 @@ def history(deck_id, page=None):
 @login_required
 def mine(page=None):
     """View logged-in player's decks"""
-    filters, active_filters, phoenixborn = get_deck_filters()
+    filters, active_filters, phoenixborn, filter_card = get_deck_filters()
     active_filters = [
         Deck.user_id == current_user.id,
         Deck.is_snapshot.is_(False)
     ] + active_filters
-    decks, card_map, page, pagination = get_decks(page, filters=active_filters)
+    decks, card_map, page, pagination = get_decks(
+        page, filters=active_filters,
+        filter_by_card=True if filter_card else False
+    )
     return render_template(
         'decks/mine.html',
         decks=decks,
         card_map=card_map,
         filters={k: v for k, v in filters.items() if v},
+        filter_card=filter_card,
         phoenixborn=phoenixborn,
         latest_ashes_500=latest_ashes_500_revision(),
         page=page,
