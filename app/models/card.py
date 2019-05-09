@@ -13,6 +13,7 @@ class DiceFlags(Enum):
     natural = 8
     divine = 16
     sympathy = 32
+    time = 64
 
 
 conjurations_table = db.Table('card_conjuration',

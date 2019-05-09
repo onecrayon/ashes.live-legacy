@@ -19,6 +19,7 @@ function disableReleaseDice (state) {
 			state.options.dice.splice(state.options.dice.indexOf('sympathy'), 1)
 		}
 	}
+	// TODO: add disabling logic for time dice when user-made content isn't loaded
 }
 
 function gatherConjurations (card, conjurationList, currentStubs) {
@@ -470,6 +471,7 @@ export default new Vuex.Store({
 			state.options.diceLogic = 'or'
 			let activeDice = ['basic']
 			const showingExpansions = state.options.releases.indexOf('expansions') > -1
+			// TODO: add filtration for time dice based on user-made content
 			for (let dieType of Object.keys(state.deck.dice)) {
 				if (state.deck.dice[dieType] &&
 						(dieType !== 'divine' || showingExpansions) &&
