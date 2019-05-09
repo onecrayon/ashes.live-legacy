@@ -21,7 +21,7 @@ depends_on = None
 
 
 def upgrade():
-     # Populate initial Ashes 500 data
+    # Populate initial Ashes 500 data
     my_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(my_dir, '../data/cd65126c65de_ashes_500_june_2018.json'), 'r') as f:
         data = json.load(f)
