@@ -260,7 +260,7 @@ export default new Vuex.Store({
 		untitledText (state, getters) {
 			return 'Untitled ' + ((getters.phoenixborn && getters.phoenixborn.name) || 'deck')
 		},
-		ashes500Score (state) {
+		ashes500Score (state, getters) {
 			let ids = Object.keys(state.deck.cards).map(str => parseInt(str))
 			if (state.deck.phoenixborn) {
 				ids.push(state.deck.phoenixborn)
@@ -274,12 +274,24 @@ export default new Vuex.Store({
 				for (let cost of card.ashes_500_costs) {
 					// Skip combo entries for where the combo card isn't in the deck
 					if (cost.combo_card_id && ids.indexOf(cost.combo_card_id) === -1) continue
-					score += cost.qty_1
-					if (qty >= 2 && cost.qty_2) {
-						score += cost.qty_2
-					}
-					if (qty === 3 && cost.qty_3) {
-						score += cost.qty_3
+					// Check for card type combo
+					if (cost.combo_card_type) {
+						const cards = getters.allCards
+						let typeCount = 0
+						for (const card of cards) {
+							if (card.type === cost.combo_card_type) {
+								typeCount += 1
+							}
+						}
+						score += cost.qty_1 * typeCount
+					} else {
+						score += cost.qty_1
+						if (qty >= 2 && cost.qty_2) {
+							score += cost.qty_2
+						}
+						if (qty === 3 && cost.qty_3) {
+							score += cost.qty_3
+						}
 					}
 				}
 			}

@@ -16,12 +16,16 @@ def get_ashes_500_maps(revision_id, ids=None):
     ashes_500_map = defaultdict(list)
     ashes_500_combo_map = defaultdict(list)
     for values in ashes_500_values:
-        ashes_500_map[values.card_id].append({
+        card_data = {
             'combo_card_id': values.combo_card_id,
             'qty_1': values.qty_1,
             'qty_2': values.qty_2,
             'qty_3': values.qty_3
-        })
+        }
+        # This is a special case, so only include it on the relevant card
+        if values.combo_card_type:
+            card_data['combo_card_type'] = values.combo_card_type
+        ashes_500_map[values.card_id].append(card_data)
         if values.combo_card_id:
             ashes_500_combo_map[values.combo_card_id].append(values.card_id)
     return ashes_500_map, ashes_500_combo_map

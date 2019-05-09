@@ -184,6 +184,17 @@ def save(deck_id=None, is_snapshot=False):
                     card_cost += cost.qty_2
                 if count == 3 and cost.qty_3:
                     card_cost += cost.qty_3
+            elif cost.combo_card_type:
+                total_type_count = 0
+                ids_of_type = db.session.query(Card.id).filter(
+                    Card.card_type == cost.combo_card_type,
+                    Card.id.in_(card_counts.keys())
+                ).all()
+                if ids_of_type:
+                    total_type_count = 0
+                    for typed_card in ids_of_type:
+                        total_type_count += card_counts[typed_card.id]
+                    card_cost += cost.qty_1 * total_type_count
             elif not cost.combo_card_id:
                 card_cost += cost.qty_1
                 if count >= 2 and cost.qty_2:

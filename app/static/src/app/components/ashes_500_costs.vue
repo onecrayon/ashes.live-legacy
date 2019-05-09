@@ -7,7 +7,7 @@
 		><span v-if="costQty3 !== null">
 			\ <span :class="{active: cardQty >= 3}">{{ costQty3 }}</span
 		></span>
-		<span v-if="comboTooltip" class="tooltip" :class="{active: hasActiveCombo}" :title="comboTooltip">
+		<span v-if="comboTooltip" class="tooltip" :class="{'always-active': hasActiveCombo}" :title="comboTooltip">
 			<i class="fa fa-exclamation-circle"></i>
 		</span>
 	</span>
@@ -37,7 +37,16 @@
 			},
 			hasActiveCombo () {
 				const combo_ids = this.$store.getters.activeComboIds
-				return includes(combo_ids, this.cardData.id)
+				if (includes(combo_ids, this.cardData.id)) return true
+				// Need to check for combo-ing with a particular card type
+				const costs = this.cardData.ashes_500_costs
+				if (!costs || costs.length <= 1) return false
+				for (const cost of costs) {
+					if (cost.combo_card_type) {
+						return !!this.cardCountByType(cost.combo_card_type)
+					}
+				}
+				return false
 			},
 			cardIds () {
 				return Object.keys(this.$store.state.deck.cards).map(str => parseInt(str))
@@ -49,6 +58,9 @@
 				}
 				let statements = []
 				for (let cost of costs) {
+					if (cost.combo_card_type) {
+						statements.push('+' + cost.qty_1 + ' for each ' + cost.combo_card_type + ' card')
+					}
 					if (!cost.combo_card_id) continue
 					let comboCard = this.$store.state.cardManager.cardById(cost.combo_card_id)
 					if (cost.qty_2 === null) {
@@ -78,7 +90,11 @@
 					if (!cost.qty_1 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {
 						continue
 					}
-					total += cost.qty_1
+					if (cost.combo_card_type) {
+						total += (cost.qty_1 * this.cardCountByType(cost.combo_card_type))
+					} else {
+						total += cost.qty_1
+					}
 				}
 				return total
 			},
@@ -86,7 +102,7 @@
 				if (!this.cardData.ashes_500_costs || this.cardData.type == 'Phoenixborn') return null
 				let total = 0
 				for (let cost of this.cardData.ashes_500_costs) {
-					if (!cost.qty_2 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {
+					if (!cost.qty_2 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id)) || cost.combo_card_type) {
 						continue
 					}
 					total += cost.qty_2
@@ -97,12 +113,24 @@
 				if (!this.cardData.ashes_500_costs || this.cardData.type == 'Phoenixborn') return null
 				let total = 0
 				for (let cost of this.cardData.ashes_500_costs) {
-					if (!cost.qty_3 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id))) {
+					if (!cost.qty_3 || (cost.combo_card_id && !includes(this.cardIds, cost.combo_card_id)) || cost.combo_card_type) {
 						continue
 					}
 					total += cost.qty_3
 				}
 				return total
+			}
+		},
+		methods: {
+			cardCountByType (type) {
+				const cards = this.$store.getters.allCards
+				let count = 0
+				for (const card of cards) {
+					if (card.type === type) {
+						count += 1
+					}
+				}
+				return count
 			}
 		}
 	}
