@@ -300,6 +300,7 @@ export default new Vuex.Store({
 		},
 		activeComboIds (state) {
 			const ids = Object.keys(state.deck.cards).map(str => parseInt(str))
+			state.deck.phoenixborn && ids.push(state.deck.phoenixborn)
 			let comboIds = []
 			if (!ids.length || !state.cardManager) return comboIds
 			const cards = state.cardManager.idsToListing(ids)
