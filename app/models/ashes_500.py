@@ -17,6 +17,7 @@ class Ashes500Value(db.Model):
     revision_id = db.Column(db.Integer, db.ForeignKey(Ashes500Revision.id), nullable=False,
                             index=True)
     combo_card_id = db.Column(db.Integer, db.ForeignKey(Card.id), nullable=True, default=None)
+    combo_card_type = db.Column(db.String(25), nullable=True, default=None)
     qty_1 = db.Column(db.SmallInteger, nullable=False)
     qty_2 = db.Column(db.SmallInteger, nullable=True)
     qty_3 = db.Column(db.SmallInteger, nullable=True)
