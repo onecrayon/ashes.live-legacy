@@ -24,7 +24,7 @@ RELEASE_NAMES = {
     12: 'The Spirits of Memoria',
     13: 'The Ghost Guardian',
     14: 'The King of Titans',
-    15: 'The Protector of Agraia',
+    15: 'The Protector of Argaia',
     16: 'The Grave King',
     101: 'Dimona Odinstar (promo)',
     102: 'Lulu Firststone (promo)',
