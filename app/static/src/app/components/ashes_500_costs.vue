@@ -49,7 +49,9 @@
 				return false
 			},
 			cardIds () {
-				return Object.keys(this.$store.state.deck.cards).map(str => parseInt(str))
+				const cardIds = Object.keys(this.$store.state.deck.cards).map(str => parseInt(str))
+				cardIds.push(this.$store.state.deck.phoenixborn)
+				return cardIds
 			},
 			comboTooltip () {
 				const costs = this.cardData.ashes_500_costs
