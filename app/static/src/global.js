@@ -20,7 +20,7 @@ globals.playerUrl = function (badge) {
 }
 globals.diceData = [
 	'ceremonial', 'charm', 'illusion', 'natural',
-	'divine', 'sympathy', 'time'
+	'divine', 'sympathy'
 ]
 globals.releaseData = {
 	'core': [0],
