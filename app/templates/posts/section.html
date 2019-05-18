@@ -36,8 +36,16 @@
 				<div class="col-flex col-flush">
 					<h2 class="post-header"><i class="fa fa-thumb-tack muted"></i> <a href="{{ url_for('posts.view', post_id=post.id) }}">{{ post.title }}</a></h2>
 					<div class="post-meta responsive-cols no-wrap">
-						<p class="col-flex">Posted by {{ usertag(post.user) }} in {{ sectiontag(post.section) }}</p>
-						<p class="timestamp col">{{ post.created | format_date }}</p>
+						<p class="col-flex">Posted by {{ usertag(post.user) }} on {{ post.created | format_date }}</p>
+						{% if post.latest_comment_date %}
+						<p class="timestamp col">
+							<a href="{{ url_for('posts.view', post_id=post.id, page=post.max_comment_page, _anchor='comment-{}'.format(post.latest_comment_id)) }}"
+								title="Jump to last comment">
+								{{ post.latest_comment_date | format_date }}
+								<i class="fa fa-share" aria-hidden="true"></i>
+							</a>
+						</p>
+						{% endif %}
 					</div>
 					<div class="post-body">
 						{{ post.pin_teaser | parse_text }}
@@ -58,30 +66,15 @@
 				<span class="col comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</span>
 			</a></h2>
 			<div class="post-meta responsive-cols no-wrap">
-				<p class="col-flex">Posted by {{ usertag(post.user) }} in {{ sectiontag(post.section) }}</p>
-				<p class="timestamp col">{{ post.created | format_date }}</p>
-			</div>
-			<div class="post-body">
-				{{ post.text | parse_text }}
-			</div>
-			<div class="post-footer responsive-cols">
-				<ul class="divider-separated col">
-					{% if current_user.is_authenticated and (post.user_id == current_user.id or current_user.is_admin) %}
-						{% if post.user_id == current_user.id %}
-							{% if post.is_moderated %}
-							<li><a href="{{ url_for('posts.notes', post_id=post.id) }}" class="moderator-action"><i class="fa fa-lock"></i> Comment locked by moderator</a></li>
-							{% else %}
-							<li><a href="{{ url_for('posts.edit', post_id=post.id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-							<li><a href="{{ url_for('posts.delete', post_id=post.id) }}"><i class="fa fa-trash"></i> Delete</a></li>
-							{% endif %}
-						{% endif %}
-						{% if current_user.is_admin and post.user_id != current_user.id %}
-						<li><a href="{{ url_for('posts.moderate', post_id=post.id) }}" class="moderator-action"><i class="fa fa-wrench"></i> Moderate</a></li>
-						{% endif %}
-					{% endif %}
-				</ul>
-				{% if post.created != post.modified %}
-				<p class="col-flex timestamp text-right">Last edited {{ post.modified | format_date }}</p>
+				<p class="col-flex">Posted by {{ usertag(post.user) }} on {{ post.created | format_date }}</p>
+				{% if post.latest_comment_date %}
+				<p class="timestamp col">
+					<a href="{{ url_for('posts.view', post_id=post.id, page=post.max_comment_page, _anchor='comment-{}'.format(post.latest_comment_id)) }}"
+						title="Jump to last comment">
+						{{ post.latest_comment_date | format_date }}
+						<i class="fa fa-share" aria-hidden="true"></i>
+					</a>
+				</p>
 				{% endif %}
 			</div>
 		</li>

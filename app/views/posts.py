@@ -1,5 +1,6 @@
 """Post viewing, editing, and moderation"""
 import re
+import math
 
 from flask import abort, Blueprint, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
@@ -70,7 +71,9 @@ def index():
             Post,
             Subscription if user_id else db.bindparam('subscription', None).label('Subscription'),
             db.func.count(Comment.id).label('comment_count'),
-            db.func.max(Comment.entity_id).label('max_entity_id')
+            db.func.max(Comment.entity_id).label('max_entity_id'),
+            db.func.max(Comment.created).label('latest_comment_date'),
+            db.func.max(Comment.id).label('latest_comment_id')
         ).options(
             db.joinedload(Post.user)
         )
@@ -92,6 +95,7 @@ def index():
         ).group_by(Post.entity_id).order_by(MAX_POST_DATE_COMP).limit(
             per_page if not section.is_restricted else 1
         ).all()
+        comment_per_page = current_app.config['DEFAULT_PAGED_RESULTS']
         meta_map[section.id] = [{
             'id': x.Post.id,
             'title': x.Post.title,
@@ -105,7 +109,10 @@ def index():
                 if x.Subscription and x.Subscription.last_seen_entity_id
                 else False
             ),
-            'comment_count': x.comment_count
+            'comment_count': x.comment_count,
+            'latest_comment_date': x.latest_comment_date,
+            'latest_comment_id': x.latest_comment_id,
+            'max_comment_page': math.ceil(x.comment_count / comment_per_page)
         } for x in posts]
     return render_template(
         'posts/index.html',
@@ -126,7 +133,9 @@ def section(stub, page=None):
         Post,
         Subscription if user_id else db.bindparam('subscription', None).label('Subscription'),
         db.func.count(Comment.id).label('comment_count'),
-        db.func.max(Comment.entity_id).label('max_entity_id')
+        db.func.max(Comment.entity_id).label('max_entity_id'),
+        db.func.max(Comment.created).label('latest_comment_date'),
+        db.func.max(Comment.id).label('latest_comment_id')
     ).options(
         db.joinedload(Post.user),
         db.joinedload(Post.section)
@@ -162,7 +171,8 @@ def section(stub, page=None):
     query = query.group_by(Post.entity_id)
     if not page:
         page = 1
-    per_page = current_app.config['DEFAULT_PAGED_RESULTS']
+    per_page = current_app.config['COLLAPSED_PAGED_RESULTS']
+    comment_per_page = current_app.config['DEFAULT_PAGED_RESULTS']
     post_results = query.order_by(MAX_POST_DATE_COMP).limit(per_page).offset(
         (page - 1) * per_page
     ).all()
@@ -172,7 +182,10 @@ def section(stub, page=None):
             if x.Subscription and x.Subscription.last_seen_entity_id
             else False
         ),
-        'comment_count': x.comment_count
+        'comment_count': x.comment_count,
+        'latest_comment_date': x.latest_comment_date,
+        'latest_comment_id': x.latest_comment_id,
+        'max_comment_page': math.ceil(x.comment_count / comment_per_page)
     }, **post_to_entity_map(x.Post)) for x in post_results]
     pagination = get_pagination(query.count(), page, per_page)
     pinned = get_pinned_posts(section_id=section.id) if page == 1 and not search else None

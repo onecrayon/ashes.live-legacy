@@ -3,7 +3,7 @@ SESSION_USE_SIGNER = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 # Number of results to show in paginated responses
 DEFAULT_PAGED_RESULTS = 10
-STREAM_PAGED_RESULTS = 20
+COLLAPSED_PAGED_RESULTS = 20
 # Timezone to output datetimes in
 LOCAL_TZ = 'America/Los_Angeles'
 

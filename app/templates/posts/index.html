@@ -18,8 +18,17 @@
 				<span class="col-flex">{{ post.title }}</span>
 				<span class="col comment-count"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</span>
 			</a></h4>
-			<div class="post-meta">
-				<p>Posted by {{ usertag(post.user) }} on {{ post.created | format_date }}</p>
+			<div class="post-meta responsive-cols no-wrap">
+				<p class="col-flex">Posted by {{ usertag(post.user) }} on {{ post.created | format_date }}</p>
+				{% if post.latest_comment_date %}
+				<p class="timestamp col">
+					<a href="{{ url_for('posts.view', post_id=post.id, page=post.max_comment_page, _anchor='comment-{}'.format(post.latest_comment_id)) }}"
+						title="Jump to last comment">
+						{{ post.latest_comment_date | format_date }}
+						<i class="fa fa-share" aria-hidden="true"></i>
+					</a>
+				</p>
+				{% endif %}
 			</div>
 			{# <div class="post-footer responsive-cols">
 				<ul class="divider-separated col">

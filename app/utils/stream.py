@@ -241,7 +241,7 @@ def get_stream(page=None, show='all'):
     """Returns a stream of site entities and pagination information"""
     if not page:
         page = 1
-    per_page = current_app.config['STREAM_PAGED_RESULTS']
+    per_page = current_app.config['COLLAPSED_PAGED_RESULTS']
     user_id = current_user.id if current_user.is_authenticated else None
     stream_query = db.session.query(
         Stream,
