@@ -150,11 +150,17 @@
 
 	<p>The site is under continuous development, so please <a href="{{ url_for('home.feedback') }}"><i class="fa fa-envelope"></i> contact me</a> if you run into problems or have any suggestions or requests! It is also <a href="https://github.com/onecrayon/ashes.live">open source</a>, if you want to contribute directly.</p>
 
-	<p><strong>Have a rules question?</strong> <a href="{{ url_for('static', filename='files/ashes-rules-reference.pdf') | cdn_url }}">Download the Ashes Rules Reference</a> (PDF)!</p>
-
 	{% if not current_user.is_authenticated %}
 	<p><a href="{{ url_for('player.new') }}">Create an account</a> to build and share your own decks or join the discussion about everything Ashes!</p>
 	{% endif %}
+
+	<h2>Useful Documents</h2>
+
+	<ul>
+		<li><a href="{{ url_for('static', filename='files/ashes-core-rules.pdf') | cdn_url }}">Official Core Rules</a> (PDF)</li>
+		<li><a href="{{ url_for('static', filename='files/ashes-official-faq.pdf') | cdn_url }}">Official FAQ v3.0</a> (PDF)</li>
+		<li><a href="{{ url_for('static', filename='files/ashes-rules-reference.pdf') | cdn_url }}">Ashes Rules Reference</a> (PDF)</li>
+	</ul>
 
 	<h2>Features</h2>
 
