@@ -112,8 +112,10 @@ def parse_card_codes(text):
     # Normalize linebreaks to Unix; for some reason I was getting CRLF from the database
     text = re.sub(r'\r\n|\r', r'\n', text)
     # Parse arbitrary links; e.g. [[My deck ashes.live/decks/123]] or https://ashes.live/decks/123
+    # and images; e.g. [[*https://imgur.com/image.png]] or [[*Rin's Fury]]
     def parse_url(match):
-        text_url = match.group(2) if match.group(2) else match.group(3)
+        is_image = match.group(1)
+        text_url = match.group(3) if match.group(3) else match.group(4)
         internal_link = re.match(r'(https?://)?ashes\.live', text_url, flags=re.I) is not None
         def parse_url_prefix(match):
             if internal_link:
@@ -123,31 +125,44 @@ def parse_card_codes(text):
             else:
                 return match.group(0)
         parsed_url = re.sub(r'^(https?://)?(.+)$', parse_url_prefix, text_url)
-        text = match.group(1).strip() if match.group(1) else None
-        return ''.join([
+        text = match.group(2).strip() if match.group(2) else ''
+        if is_image:
+            return Markup(''.join([
+                '<a class="inline-image" href="', text_url, '"',
+                ' rel="nofollow external"' if not internal_link else '', ' target="_blank">',
+                '<img src="', text_url, '" alt=""></a>'
+            ]))
+        return Markup(''.join([
              '<a href="', parsed_url, '"', ' rel="nofollow"' if not internal_link else '', '>',
             text if text else text_url, '</a>'
-        ])
+        ]))
     text = re.sub(
-        r'\[\[([^\]]*?)((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?)\]\]|(https?://[^\s/$.?#]+\.[^\s*]+?(?=[.?)][^a-z]|!|\s|$))',
+        r'\[\[(\*?)([^\]]*?)((?:https?://|\b)[^\s/$.?#]+\.[^\s*]+?)\]\]|(?<!\[\[\*)(https?://[^\s/$.?#]+\.[^\s*]+?(?=[.?)][^a-z]|!|\s|$))',
         parse_url, text, flags=re.I
     )
     # Parse player links; e.g. [[Username#1234]] or [[#1234]]
     def parse_badges(match):
         text = match.group(1).strip() if match.group(1) else None
         badge = match.group(2)
-        return ''.join([
+        return Markup(''.join([
             '<a class="username" href="',
             badge_link(url_for('player.view', badge=badge.replace('&amp;', '&'))), '">',
-			text if text else '', '<span class="badge">#', badge, '</span></a>'
-        ])
-    text = re.sub(r'\[\[([^\]]*?)#([0-9](?:[a-z0-9*&+=-]|&amp;)+[a-z0-9*!])\]\]', parse_badges, text, flags=re.I)
+            text if text else '', '<span class="badge">#', badge, '</span></a>'
+        ]))
+    text = re.sub(
+        r'\[\[([^\]]*?)#([0-9](?:[a-z0-9*&+=-]|&amp;)+[a-z0-9*!])\]\]',
+        parse_badges,
+        text,
+        flags=re.I
+    )
+    # Parse card codes
     def parse_match(match):
-        if match.group(3):
+        if match.group(4):
             return Markup(' <span class="divider"><span class="alt-text">-</span></span> ')
-        primary = match.group(1)
+        is_image = match.group(1)
+        primary = match.group(2)
         lower_primary = primary.lower().replace('&#39;', '')
-        secondary = match.group(2).lower() if match.group(2) else None
+        secondary = match.group(3).lower() if match.group(3) else None
         if lower_primary in ['discard', 'exhaust']:
             return Markup(''.join(
                 ['<span class="phg-', lower_primary, '" title="', primary,
@@ -168,7 +183,15 @@ def parse_card_codes(text):
                 ['<i>', lower_primary, ' ', secondary, '</i>']
             ))
         else:
-            stub = re.sub(r' ', '-', lower_primary)
+            stub = re.sub(r' +', '-', lower_primary)
+            if is_image:
+                return Markup(''.join([
+                    '<a class="inline-image" href="', url_for('cards.detail', stub=stub),
+                    '" target="_blank"><img src="', cdn_url(url_for(
+                        'static', filename='images/cards/{}.jpg'.format(stub)
+                    )),
+                    '" alt="', primary, '"></a>'
+                ]))
             return Markup(''.join([
                 '<a href="', url_for('cards.detail', stub=stub), '" class="card" target="_blank">',
                 primary, '</a>'
@@ -178,8 +201,12 @@ def parse_card_codes(text):
             primary + (' ' + secondary if secondary else ''), '"><span class="alt-text">',
             match.group(0), '</span></span>'
         ]))
-    # Parse card codes
-    text = re.sub(r'\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )', parse_match, text, flags=re.I)
+    text = re.sub(
+        r'\[\[(\*?)((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )',
+        parse_match,
+        text,
+        flags=re.I
+    )
     # Parse blockquotes
     def parse_blockquotes(match):
         return Markup(''.join([
@@ -258,6 +285,12 @@ def parse_text(eval_ctx, text, format_paragraphs=True):
     result = re.sub(r'(</ul>(?:</blockquote>)?)</p>', r'\1', result)
     result = result.replace('<p><blockquote>', '<blockquote><p>')
     result = result.replace('</blockquote></p>', '</p></blockquote>')
+    # Automatically center lone images
+    result = re.sub(
+        r'<p>(<a class="inline-image".*?</a>(?=</p>|<br>))',
+        r'<p style="text-align:center;">\1',
+        result
+    )
     if eval_ctx.autoescape:
         result = Markup(result)
     return result

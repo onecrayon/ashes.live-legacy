@@ -73,8 +73,10 @@
 					return result
 				}, [
 					'[[Hammer Knight]]',
+					'[[*Hammer Knight]]',
 					'[[Skaak#1st!]]',
 					'[[Link Text ashes.live]]',
+					'[[*https://placekitten.com/30/30]]',
 					'[[main]]',
 					'[[side]]',
 					'[[exhaust]]',

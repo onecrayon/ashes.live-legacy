@@ -7,12 +7,12 @@ import {escape} from 'lodash'
  */
 export default function parseText (input) {
 	input = escape(input)
-	// Parse links
+	// Parse links and images
 	input = input.replace(
-		/\[\[([^\]]*?)((?:https?:\/\/|\b)[^\s\/$.?#]+\.[^\s*]+?)\]\]|(https?:\/\/[^\s\/$.?#]+\.[^\s*]+?(?=[.?)][^a-z]|!|\s|$))/ig,
-		(_, text, url, standalone) => {
+		/\[\[(\*?)([^\]]*?)((?:https?:\/\/|\b)[^\s\/$.?#]+\.[^\s*]+?)\]\]|(https?:\/\/[^\s\/$.?#]+\.[^\s*]+?(?=[.?)][^a-z]|!|\s|$))/ig,
+		(_, isImage, text, url, standalone) => {
 			let internalLink = false
-			const textUrl = url ? url : standalone
+			const textUrl = url || standalone
 			const parsedUrl = textUrl.replace(/^(https?:\/\/)?(.+)$/i, (_, prefix, url) => {
 				if (/^ashes\.live(?:\/.*)?$/i.test(url)) {
 					internalLink = true
@@ -24,9 +24,15 @@ export default function parseText (input) {
 				}
 			})
 			text = text ? text.trim() : null
+			if (isImage) {
+				return [
+					'<a class="inline-image" href="', textUrl, '"', !internalLink ? ' rel="nofollow external"' : '',
+					' target="_blank">', '<img src="', textUrl, '" alt=""></a>'
+				].join('')
+			}
 			return [
 				'<a href="', parsedUrl, '"', !internalLink ? ' rel="nofollow"' : '', '>',
-				text ? text : textUrl, '</a>'
+				text || textUrl, '</a>'
 			].join('')
 		}
 	)
@@ -35,11 +41,11 @@ export default function parseText (input) {
 		text = text ? text.trim() : null
 		return [
 			'<a class="username" href="', globals.playerUrl(badge), '">',
-			text ? text : '', '<span class="badge">#', badge, '</span></a>'
+			text || '', '<span class="badge">#', badge, '</span></a>'
 		].join('')
 	})
 	// Parse card codes
-	input = input.replace(/\[\[((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )/ig, (input, primary, secondary, dash) => {
+	input = input.replace(/\[\[(\*?)((?:[a-z -]|&#39;)+)(?::([a-z]+))?\]\]|( - )/ig, (input, isImage, primary, secondary, dash) => {
 		if (dash) {
 			return ' <span class="divider"><span class="alt-text">-</span></span> '
 		}
@@ -66,7 +72,13 @@ export default function parseText (input) {
 		} else if (secondary) {
 			return ['<i>', lowerPrimary, ' ', secondary, '</i>'].join('')
 		} else {
-			var data = {stub: lowerPrimary.replace(/ /g, '-')}
+			var data = {stub: lowerPrimary.replace(/ +/g, '-')}
+			if (isImage) {
+				return [
+					'<a class="inline-image" href="', globals.cardUrl(data), '" target="_blank"><img src="',
+					globals.cardImageUrl(data), '" alt="', primary, '"></a>'
+				].join('')
+			}
 			return ['<a href="', globals.cardUrl(data), '" class="card" target="_blank">', primary, '</a>'].join('')
 		}
 		return [

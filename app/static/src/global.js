@@ -15,6 +15,9 @@ const globals = window.globals || {}
 globals.cardUrl = function (data) {
 	return '/cards/' + data.stub + '/'
 }
+globals.cardImageUrl = function (data) {
+	return '/images/cards/' + data.stub + '.jpg'
+}
 globals.playerUrl = function (badge) {
 	return '/player/' + badge + '/'
 }
