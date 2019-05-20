@@ -65,5 +65,7 @@
 .phg-divine-class:before { content: '\e810'; } /* '' */
 .phg-time-power:before { content: '\e811'; } /* '' */
 .phg-time-class:before { content: '\e812'; } /* '' */
+.phg-time-power-alt:before { content: '\e813'; } /* '' */
+.phg-basic-magic-alt:before { content: '\e814'; } /* '' */
 .phg-sympathy-class:before { content: '\e81e'; } /* '' */
 .phg-sympathy-power:before { content: '\e81f'; } /* '' */
