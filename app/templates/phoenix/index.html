@@ -13,7 +13,7 @@
 	<h3>New content</h3>
 
 	<ul>
-		<li><strong>Time dice:</strong> Plaid Hat teased a seventh and final dice type on their deluxe expansions, but the game was canceled before Time dice were released. We are developing and play-testing a custom implementation of Time dice.</li>
+		<li><strong>Time dice:</strong> Plaid Hat teased a seventh and final dice type on their deluxe expansions, but the game was canceled before Time dice were released. We are developing and play-testing a custom implementation of Time dice, along with a <a href="{{ url_for('phoenix.dice') }}">physical variant for purchase</a>.</li>
 		<li><strong>Time expansions:</strong> There are currently two expansions being designed and play-tested using the new Time dice (a mono-Time deck, and a Time/Charm deck).</li>
 		<li><strong>Raven Rules:</strong> The official FAQ includes several counter-intuitive rulings, and sadly failed to define a small number of low-level game mechanics. Project Phoenix is play-testing a revised, more comprehensive ruleset (while maintaining compatibility with the core rulebook).</li>
 	</ul>
@@ -25,7 +25,7 @@
 		<li><strong>Card rebalancing:</strong> Although less far along than the above projects, some fans have expressed interest in creating errata for existing cards with an eye to improving game balance.</li>
 	</ul>
 
-	<p>Project Phoenix is still in its infancy, so we do not have a specific timeline we can share; however, we plan to start spoiling the new Time cards and dice soon!</p>
+	<p>Project Phoenix is still in its infancy, so we do not have a specific timeline we can share; however, we have started spoiling the new cards (check out the <a href="{{ url_for('posts.section', stub='phoenix') }}">Project Phoenix forum</a> for the latest spoilers!), and if there is enough interest physical Turtle Dice will be available in about 4-6 months.</p>
 
 	<p>We hope to keep Ashes fresh for its dedicated fans for a long time to come.</p>
 
@@ -65,6 +65,8 @@
 	<h2 class="phg-time-class">Get involved</h2>
 
 	<p>Development for Time dice and cards is currently being handled via the <a href="http://www.strangecopy.com/index.php/ashes-chat/">AshesChat Slack channel</a> and <a href="{{ url_for('posts.section', stub='phoenix') }}">here on Ashes.live</a>. If you're interested in helping design or test cards, please come say hi!</p>
+
+	<p>You can check out our <a href="{{ url_for('phoenix.dice') }}">physical Turtle Dice project here</a>. We are currently gauging interest to ensure that we can justify a bulk order.</p>
 
 	<p><a href="{{ url_for('static', filename='files/ashes-raven-rules.pdf') | cdn_url }}">Raven Rules are available here</a> (PDF); please try them out and let us know what worked and what didn't!</p>
 
