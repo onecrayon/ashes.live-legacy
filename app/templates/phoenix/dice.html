@@ -7,9 +7,13 @@
 {% endblock %}
 
 {% block content %}
-	<p class="callout">Are you interested in purchasing physical dice to use with Project Phoenix Time magic cards?</p>
+	<p class="callout">Turtle dice are a go!</p>
 
-	<p>{{ usertag({'username': 'Skaak', 'badge': '1st!'}) }} here! I'd like to introduce Turtle Dice: physical dice compatible with Ashes Time magic, but using custom icons (actual dice will have slightly different color and icon size/placement; you'll see pictures before committing to an actual purchase):</p>
+	<p>{{ usertag({'username': 'Skaak', 'badge': '1st!'}) }} here! There is enough interest in Turtle Dice to justify a bulk order, so they will be available in 2-3 months. If you are finding this page for the first time, please enter your information below to be notified when Turtle Dice are available! I will over-order a bit to ensure there will be some copies for folks who didn't hear about them earlier.</p>
+
+	<h2>What are Turtle Dice?</h2>
+
+	<p>Turtle Dice are physical dice compatible with Ashes Time magic, but using custom icons (actual dice will have slightly different color and icon size/placement; you'll see pictures before committing to an actual purchase):</p>
 
 	<ul class="dice extra-large" style="max-width: 492px;">
 		<li class="die time"><span class="phg-time-power-alt"></span></li>
@@ -20,7 +24,7 @@
 		<li class="die time"><span class="phg-basic-magic-alt"></span></li>
 	</ul>
 
-	<h2>Interested? Enter your info below to hear if/when they're available!</h2>
+	<h2>Interested? Enter your info below to hear when they're available!</h2>
 
 	<form method="POST" action="{{ url_for('phoenix.dice') }}">
 		{{ form.hidden_tag() }}
@@ -45,28 +49,20 @@
 			</tr>
 			<tr>
 				<th>Cost:</th>
-				<td><strong>${% if total_interest < 350 %}12{% else %}10{% endif %} USD per set</strong> (plus shipping)</td>
+				<td><strong>$12 USD per set</strong> (plus shipping)</td>
 			</tr>
 			<tr>
 				<th>Type:</th>
 				<td>
-					{% if total_interest < 350 %}
 					Laser engraved
-					{% else %}
-					Molded
-					{% endif %}
 				</td>
 			</tr>
 		</tbody>
 	</table>
 
-	{% if total_interest < 350 %}
-	<p><em>At <strong>350 sets</strong> the cost will drop to <strong>$10 USD per set</strong> (plus shipping), and dice will be cast in a mold rather than laser engraved.</em></p>
-	{% endif %}
-
-	<p>If you are interested in purchasing one or more sets of Turtle Dice, please fill out this form! <strong>This is not an obligation to buy anything, and I will only ever email you once</strong> (if/when I have the physical dice available for purchase). I need to gauge interest so I know how many dice to order.</p>
+	<p>If you are interested in purchasing one or more sets of Turtle Dice, please fill out this form! <strong>This is not an obligation to buy anything, and I will only ever email you once</strong> (once I have the physical dice available for purchase).</p>
 
 	<p><strong>Not interested in custom icons?</strong> Please let me know that, as well! I can't do a bulk order with the official icons because I don't have any legal right to them, but if I find an option that would allow people to produce dice themselves I will let you know (be warned this is likely to cost 4-6 times as much as Turtle Dice).</p>
 
-	<p>If there is enough interest to justify a bulk order, the dice will be available <strong>Q4 2019</strong>.</p>
+	<p>The dice will be available <strong>Q4 2019</strong>.</p>
 {% endblock %}
