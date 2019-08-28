@@ -9,7 +9,6 @@ class Release(db.Model):
     name = db.Column(db.String(60), nullable=False, unique=True)
     is_phg = db.Column(db.Boolean, nullable=False, default=False)
     is_promo = db.Column(db.Boolean, nullable=False, default=False)
-    is_fan = db.Column(db.Boolean, nullable=False, default=False)
     # These fields are specifically for Project Phoenix
     designer_name = db.Column(db.String(100), nullable=True)
     designer_url = db.Column(db.String(255), nullable=True)

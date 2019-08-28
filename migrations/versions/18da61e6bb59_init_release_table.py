@@ -5,6 +5,8 @@ Revises: 83611d9fa9e0
 Create Date: 2019-08-24 16:30:49.378760
 
 """
+import json
+
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
@@ -23,7 +25,6 @@ def upgrade():
         sa.Column('name', sa.String(length=60), nullable=False),
         sa.Column('is_phg', sa.Boolean(), nullable=False, server_default='0'),
         sa.Column('is_promo', sa.Boolean(), nullable=False, server_default='0'),
-        sa.Column('is_fan', sa.Boolean(), nullable=False, server_default='0'),
         sa.Column('designer_name', sa.String(length=100), nullable=True),
         sa.Column('designer_url', sa.String(length=255), nullable=True),
         sa.PrimaryKeyConstraint('id'),
@@ -56,6 +57,29 @@ def upgrade():
     connection.execute('UPDATE card SET `release` = `release` + 1 WHERE `release` < 100')
     # Resetting 101 down to index 18
     connection.execute('UPDATE card SET `release` = `release` - 83 WHERE `release` > 100')
+    # Update card JSON to include the release information
+    release_dicts = connection.execute('SELECT * FROM releases')
+    release_mapping = {x.id: x for x in release_dicts}
+    cards = connection.execute(
+        'SELECT id, json, `release` FROM card'
+    ).fetchall()
+    for card in cards:
+        json_data = json.loads(card['json'])
+        release_data = release_mapping.get(card['release'])
+        if not release_data:
+            continue
+        json_data['release'] = {
+            'id': release_data['id'],
+            'name': release_data['name'],
+            'is_phg': True if release_data['is_phg'] else False,
+            'is_promo': True if release_data['is_promo'] else False
+        }
+        connection.execute(
+            sa.text('UPDATE card SET json = :json WHERE id = :id'),
+            id=card['id'],
+            json=json.dumps(json_data, separators=(',', ':'), sort_keys=True)
+        )
+    # Create the user_release relationship table
     op.create_table('user_release',
         sa.Column('user_id', sa.Integer(), nullable=False),
         sa.Column('release_id', sa.Integer(), nullable=False),
@@ -99,10 +123,49 @@ def downgrade():
     op.drop_constraint('card_release_ibfk_1', 'card', type_='foreignkey')
     op.drop_index(op.f('ix_card_release_id'), table_name='card')
     op.drop_column('deck', 'preconstructed_release')
-     # Renumber release IDs in the card table
+    # Renumber release IDs in the card table
     connection = op.get_bind()
     connection.execute('UPDATE card SET release_id = release_id + 83 WHERE release_id > 17')
     connection.execute('UPDATE card SET release_id = release_id - 1 WHERE release_id < 18')
+    # Revert the card JSON release data
+    # Update card JSON to include the release information
+    release_dicts = connection.execute('SELECT * FROM releases')
+    release_mapping = {
+        'Core Set': 0,
+        'The Frostdale Giants': 1,
+        'The Children of Blackcloud': 2,
+        'The Roaring Rose': 3,
+        'The Duchess of Deception': 4,
+        'The Laws of Lions': 5,
+        'The Song of Soaksend': 6,
+        'The Masters of Gravity': 7,
+        'The Path of Assassins': 8,
+        'The Goddess of Ishra': 9,
+        'The Boy Among Wolves': 10,
+        'The Demons of Darmas': 11,
+        'The Spirits of Memoria': 12,
+        'The Ghost Guardian': 13,
+        'The King of Titans': 14,
+        'The Protector of Argaia': 15,
+        'The Grave King': 16,
+        'Dimona Odinstar (promo)': 101,
+        'Lulu Firststone (promo)': 102,
+        'Orrick Gilstream (promo)': 103,
+    }
+    cards = connection.execute(
+        'SELECT id, json FROM card'
+    ).fetchall()
+    for card in cards:
+        json_data = json.loads(card['json'])
+        release_id = release_mapping.get(json_data.get('release', {}).get('name', ''))
+        if release_id is None:
+            continue
+        json_data['release'] = release_id
+        connection.execute(
+            sa.text('UPDATE card SET json = :json WHERE id = :id'),
+            id=card['id'],
+            json=json.dumps(json_data, separators=(',', ':'), sort_keys=True)
+        )
     op.alter_column('card', 'release_id', new_column_name='release',
                     existing_type=sa.Integer(), existing_server_default='0', existing_nullable=False)
     op.create_index('ix_card_release', 'card', ['release'], unique=False)
