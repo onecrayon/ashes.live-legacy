@@ -68,7 +68,7 @@ def search():
     releases = data.get('releases')
     if releases:
         query = query.filter(
-            Card.release.in_(releases)
+            Card.release_id.in_(releases)
         )
     dice = data.get('dice')
     diceLogic = data.get('diceLogic', 'or')

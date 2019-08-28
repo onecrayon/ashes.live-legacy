@@ -9,6 +9,7 @@ from app import db
 from app.exceptions import Redirect
 from app.models.card import Card
 from app.models.deck import Deck, DeckCard
+from app.models.release import Release
 from app.utils.cards import gather_conjurations, gather_root_summons
 from app.utils.comments import process_comments
 from app.utils.decks import get_decks_query
@@ -29,7 +30,8 @@ def detail(stub, page=1):
     """Card details"""
     card = Card.query.options(
         db.joinedload('conjurations'),
-        db.joinedload('summons')
+        db.joinedload('summons'),
+        db.joinedload('release')
     ).filter(Card.stub == stub).first()
     if not card:
         abort(404)
@@ -87,7 +89,7 @@ def detail(stub, page=1):
     preconstructed = db.session.query(Deck.source_id, Deck.title).filter(
         db.or_(
             Deck.phoenixborn_id == card.id,
-            Deck.title == current_app.config['RELEASE_NAMES'][card.release]
+            Deck.preconstructed_release == card.release_id
         ),
         Deck.is_snapshot.is_(True),
         Deck.is_public.is_(True),
@@ -132,7 +134,7 @@ def detail(stub, page=1):
         root_cards=root_cards,
         conjurations=conjurations,
         dice=dice,
-        release=current_app.config['RELEASE_NAMES'][card.release],
+        release=card.release.name,
         decks_count=counts['decks'],
         users_count=counts['users'],
         preconstructed={

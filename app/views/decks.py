@@ -104,11 +104,11 @@ def view(deck_id, page=1, show_saved=False):
             abort(404)
     sections = process_deck(deck)
     # Gather the releases required by this deck
-    releases = set()
+    release_ids = set()
     for section in sections:
         for card in section['cards']:
-            releases.add(card['release'])
-    releases.add(deck.phoenixborn.release)
+            release_ids.add(card['release']['id'])
+    release_ids.add(deck.phoenixborn.release_id)
     # Even if cards don't require a particular set, check for dice
     dice_to_release = {
         'ceremonial': 0,
@@ -119,38 +119,28 @@ def view(deck_id, page=1, show_saved=False):
         'sympathy': 6
     }
     for die in deck.dice:
-        releases.add(dice_to_release[DiceFlags(die.die_flag).name])
-    release_results = db.session.query(Deck.source_id, Deck.title).filter(
-        Deck.title.in_(
-            [current_app.config['RELEASE_NAMES'][release] for release in releases if release > 0]
-        ),
-        Deck.is_preconstructed.is_(True),
-        Deck.is_public.is_(True),
-        Deck.is_snapshot.is_(True)
+        release_ids.add(dice_to_release[DiceFlags(die.die_flag).name])
+    release_results = db.session.query(
+        Deck.source_id, Deck.title, Deck.preconstructed_release
+    ).filter(
+        Deck.preconstructed_release.in_(list(release_ids))
     ).order_by(Deck.created.asc()).all()
-    release_title_to_number = {
-        title: number for number, title in current_app.config['RELEASE_NAMES'].items()
-    }
     release_data = []
     for release in release_results:
         release_data.append({
-            'id': release.source_id,
+            'preconstructed_id': release.source_id,
             'title': release.title
         })
-        releases.remove(release_title_to_number[release.title])
-    releases = list(releases)
-    releases.sort()
-    for release in releases:
-        if release == 0:
-            release_data.insert(0, {
-                'id': None,
-                'title': current_app.config['RELEASE_NAMES'][release]
-            })
-        else:
-            release_data.append({
-                'id': None,
-                'title': current_app.config['RELEASE_NAMES'][release]
-            })
+        release_ids.remove(release.preconstructed_release)
+    # Check to see if the core set remains; if there's leftover releases we're currently
+    # just ignoring them because ¯\_(ツ)_/¯
+    release_ids = list(release_ids)
+    release_ids.sort()
+    if release_ids and release_ids[0] == 0:
+        release_data.insert(0, {
+            'preconstructed_id': None,
+            'title': 'Core Set'
+        })
         
     # Check for outdated Ashes 500
     if deck.ashes_500_revision_id:
@@ -355,7 +345,7 @@ def build(deck_id=None):
             'phoenixborn': deck.phoenixborn_id,
             '_phoenixborn_data': {
                 'name': deck.phoenixborn.name,
-                'release': deck.phoenixborn.release
+                'release': deck.phoenixborn.release_id
             },
             'dice': {DiceFlags(x.die_flag).name: x.count for x in deck.dice},
             'cards': {x.card_id: x.count for x in deck.cards},
