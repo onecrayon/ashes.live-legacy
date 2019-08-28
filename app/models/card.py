@@ -4,6 +4,8 @@ from sqlalchemy_fulltext import FullText
 
 from app import db
 
+from app.models.release import Release
+
 
 class DiceFlags(Enum):
     basic = 0
@@ -28,7 +30,7 @@ class Card(db.Model):
     name = db.Column(db.String(25), nullable=False, index=True, unique=True)
     stub = db.Column(db.String(25), nullable=False, index=True, unique=True)
     phoenixborn = db.Column(db.String(25), nullable=True, index=True)
-    release = db.Column(db.Integer, nullable=False, index=True, default=0)
+    release_id = db.Column(db.Integer, db.ForeignKey(Release.id), nullable=False, index=True, default=0)
     # This gets incremented when a card's text is updated due to errata
     version = db.Column(db.Integer, nullable=False, default=1)
     card_type = db.Column(db.String(25), nullable=False, index=True)
@@ -39,7 +41,10 @@ class Card(db.Model):
     copies = db.Column(db.SmallInteger, nullable=True, default=None)
     json = db.Column(db.Text)
     text = db.Column(db.Text)
-    
+    # These fields are specifically for Project Phoenix-designed cards
+    artist_name = db.Column(db.String(100), nullable=True)
+    artist_url = db.Column(db.String(255), nullable=True)
+
     conjurations = db.relationship(
         'Card',
         secondary=conjurations_table,
@@ -47,6 +52,7 @@ class Card(db.Model):
         secondaryjoin=(id==conjurations_table.c.conjuration_id),
         backref='summons'
     )
+    release = db.relationship(Release)
 
     @staticmethod
     def dice_to_flags(dice_list):

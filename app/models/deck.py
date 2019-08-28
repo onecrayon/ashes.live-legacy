@@ -7,6 +7,7 @@ from app import db
 from app.models.ashes_500 import Ashes500Revision
 from app.models.card import Card
 from app.models.user import User
+from app.models.release import Release
 
 
 class Deck(db.Model):
@@ -17,6 +18,8 @@ class Deck(db.Model):
     is_public = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_snapshot = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_preconstructed = db.Column(db.Boolean, nullable=False, default=False, index=True)
+    # This is not a ForeignKey because it's usually null
+    preconstructed_release = db.Column(db.Integer, index=True)
     created = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, index=True)
     ashes_500_score = db.Column(db.Integer, nullable=True, default=None)
