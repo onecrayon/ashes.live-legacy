@@ -5,6 +5,7 @@ from flask import current_app
 
 from app import db
 from app.models.deck import Deck, DeckCard
+from app.models.release import Release
 from app.utils import get_pagination
 
 
