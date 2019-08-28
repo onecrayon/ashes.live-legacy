@@ -15,7 +15,7 @@
 				</div>
 				<div class="responsive-cols listing-controls">
 					<sort-filter class="col"></sort-filter>
-					<release-filter class="col"></release-filter>
+					<release-filter v-if="!isCardGallery" class="col"></release-filter>
 				</div>
 			</div>	
 			<ul class="listing">

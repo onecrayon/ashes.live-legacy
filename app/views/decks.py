@@ -355,7 +355,14 @@ def build(deck_id=None):
             'ashes_500_score': deck.ashes_500_score,
             'ashes_500_revision_id': deck.ashes_500_revision_id
         })
-    return render_template('decks/build.html', deck_json=deck_json)
+    user_release_ids_json = None
+    if current_user.collection:
+        user_release_ids_json = json.dumps([x.release_id for x in current_user.collection])
+    return render_template(
+        'decks/build.html',
+        deck_json=deck_json,
+        user_release_ids_json=user_release_ids_json
+    )
 
 
 @mod.route('/clone/<int:deck_id>/')

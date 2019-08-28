@@ -55,12 +55,8 @@
 				return includes(this.$store.state.options.dice || [], die)
 			},
 			isShowingRelease (dieType) {
-				let releasesKey = null
-				if (dieType === 'divine' || dieType === 'sympathy') {
-					releasesKey = 'expansions'
-				}
-				if (!releasesKey) return true
-				return includes(this.$store.state.options.releases, releasesKey)
+				// TODO: update this to handle Time dice
+				return true
 			}
 		}
 	}

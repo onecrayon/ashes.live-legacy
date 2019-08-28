@@ -46,14 +46,6 @@ function attributeSort (a, b, primarySort, primaryOrder, secondarySort, secondar
 	return b[primarySort] < a[primarySort] ? primaryOrder : -primaryOrder
 }
 
-function releasesToIds (releases) {
-	let ids = []
-	for (let releasesKey of releases) {
-		ids = ids.concat(globals.releaseData[releasesKey])
-	}
-	return ids
-}
-
 /**
  * Offers interface for sorting, filtering, and selecting
  * card JSON.
@@ -85,7 +77,7 @@ export default class {
 	cardListing (callback, {
 		search = null,
 		types = null,
-		releases = ['core'],
+		releases = 'all', // or 'phg' or 'mine'
 		dice = null,
 		diceLogic = 'or',
 		phoenixborn = null,
@@ -95,13 +87,12 @@ export default class {
 		secondarySort = null,
 		secondaryOrder = 1
 	} = {}) {
-		const releaseIds = releasesToIds(releases)
 		const nano = new Nanobar({ autoRun: true })
 		if (search) {
 			qwest.post('/api/cards/search', {
 				search: search,
 				types: types,
-				releases: releaseIds,
+				releases: releases,
 				dice: dice,
 				diceLogic: diceLogic,
 				phoenixborn: phoenixborn,
@@ -140,7 +131,10 @@ export default class {
 					!includes(['Conjuration', 'Conjured Alteration Spell'], card.type))) {
 				return false
 			}
-			if (releaseIds && releaseIds.length && !releaseIds.includes(card.release)) {
+			if (releases === 'phg' && !card.release.is_phg) {
+				return false
+			}
+			if (releases === 'mine' && globals.userCollection && !globals.userCollection.includes(card.release.id)) {
 				return false
 			}
 			if (dice && dice.length) {

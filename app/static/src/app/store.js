@@ -3,24 +3,12 @@ import Vuex from 'vuex'
 import qwest from 'qwest'
 import Nanobar from 'app/nanobar'
 import CardManager from './card_manager'
-import {concat, isEmpty, isInteger, merge, reduce} from 'lodash'
+import {concat, isEmpty, isArray, merge, reduce} from 'lodash'
 import {globals} from './utils'
 
 /* eslint-disable no-new */
 
 Vue.use(Vuex)
-
-function disableReleaseDice (state) {
-	if (!state.options.releases || state.options.releases.indexOf('expansions') === -1) {
-		if (state.options.dice && state.options.dice.indexOf('divine') > -1) {
-			state.options.dice.splice(state.options.dice.indexOf('divine'), 1)
-		}
-		if (state.options.dice && state.options.dice.indexOf('sympathy') > -1) {
-			state.options.dice.splice(state.options.dice.indexOf('sympathy'), 1)
-		}
-	}
-	// TODO: add disabling logic for time dice when user-made content isn't loaded
-}
 
 function gatherConjurations (card, conjurationList, currentStubs) {
 	if (card && card.conjurations) {
@@ -52,16 +40,12 @@ const cardTypeOrder = [
 	'Ready Spell', 'Ally', 'Alteration Spell', 'Action Spell', 'Reaction Spell'
 ]
 
-let defaultReleases = ['core', 'expansions']
+let defaultReleases = 'all'
 let deckPhoenixborn = null
 if (globals.deck) {
 	deckPhoenixborn = globals.deck._phoenixborn_data
-	if (deckPhoenixborn.release > 100) {
-		defaultReleases = ['core', 'expansions', 'promos']
-	} else if (deckPhoenixborn.release > 0) {
-		defaultReleases = ['core', 'expansions']
-	}
 }
+
 const enableAshes500 = !!(
 	globals.enableAshes500 ||
 	(globals.deck && globals.deck.ashes_500_revision_id) ||
@@ -89,21 +73,11 @@ function storeGetAll () {
 	return options
 }
 
-// Upgrade our stored releases (if any); we used to store the numeric IDs, but this destroys the
-// ability to see new expansions when they are added to the site
+// Upgrade our stored releases (if any); we used to store an array, but now we just view 'all',
+// 'phg', or 'mine' (and default to 'all')
 const oldReleases = storeGet('releases')
-if (oldReleases && isInteger(oldReleases[0])) {
-	let releases = []
-	if (oldReleases.indexOf(0) > -1) {
-		releases.push('core')
-	}
-	if (oldReleases.indexOf(1) > -1) {
-		releases.push('expansions')
-	}
-	if (oldReleases.indexOf(101) > -1) {
-		releases.push('promos')
-	}
-	storeSet('releases', releases)
+if (oldReleases && isArray(oldReleases)) {
+	storeSet('releases', 'all')
 }
 
 // This will be set asyncronously after defining the store
@@ -483,14 +457,9 @@ export default new Vuex.Store({
 		diceToFilters (state) {
 			state.options.diceLogic = 'or'
 			let activeDice = ['basic']
-			const showingExpansions = state.options.releases.indexOf('expansions') > -1
-			// TODO: add filtration for time dice based on user-made content
+			// TODO: add filtration for time dice based on releases setting (exclude if viewing PHG)
 			for (let dieType of Object.keys(state.deck.dice)) {
-				if (state.deck.dice[dieType] &&
-						(dieType !== 'divine' || showingExpansions) &&
-						(dieType !== 'sympathy' || showingExpansions)) {
-					activeDice.push(dieType)
-				}
+				activeDice.push(dieType)
 			}
 			state.options.dice = activeDice
 		},
@@ -530,39 +499,13 @@ export default new Vuex.Store({
 			state.options.types = types
 		},
 		toggleReleases (state, releasesKey) {
-			if (state.options.releases === null) {
-				state.options.releases = [releasesKey]
-			} else if (state.options.releases.indexOf(releasesKey) > -1) {
-				state.options.releases.splice(state.options.releases.indexOf(releasesKey), 1)
-				disableReleaseDice(state)
-				// Disallow a completely empty list by defaulting to showing the core set
-				if (!state.options.releases.length) {
-					state.options.releases = ['core']
-				}
-			} else {
-				state.options.releases.push(releasesKey)
-			}
+			state.options.releases = state.options.releases === releasesKey ? 'all' : releasesKey
 			storeSet('releases', state.options.releases)
 		},
 		resetFilters (state) {
 			state.options.search = null
 			state.options.types = null
 			state.options.dice = null
-			// If only "promo" cards are being shown, it's possible that
-			// clearing filters will not show anything if the selected
-			// phoenixborn is not a promo
-			let onlyPromos = true
-			for (let release of state.options.releases) {
-				if (release !== 'promos') {
-					onlyPromos = false
-				}
-			}
-			if (onlyPromos) {
-				const phoenixborn = state.cardManager.cardById(state.deck.phoenixborn)
-				if (phoenixborn.release < 100) {
-					state.options.releases = ['core']
-				}
-			}
 		},
 		setincludeAllCards (state, includeAllCards) {
 			state.options.includeAllCards = includeAllCards

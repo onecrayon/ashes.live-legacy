@@ -1,14 +1,11 @@
 <template>
 	<div class="btn-group">
-		<button @click="toggleReleases('core')"
-			class="btn btn-small" :class="{active: hasReleases('core')}" :disabled="isDisabled"
-			title="Include core set cards">Core</button
-		><button @click="toggleReleases('expansions')"
-			class="btn btn-small" :class="{active: hasReleases('expansions')}" :disabled="isDisabled"
-			title="Include expansion cards">Exp.</button
-		><button @click="toggleReleases('promos')"
-			class="btn btn-small" :class="{active: hasReleases('promos')}" :disabled="isDisabled"
-			title="Include promo cards">Pro.</button
+		<button @click="toggleReleases('phg')"
+			class="btn btn-small" :class="{active: hasReleases('phg')}" :disabled="isDisabled"
+			title="Only show Plaid Hat cards">PHG</button
+		><button @click="toggleReleases('mine')"
+			class="btn btn-small" :class="{active: hasReleases('mine')}" :disabled="isDisabled"
+			title="Only show my cards">Mine</button
 		>
 	</div>
 </template>

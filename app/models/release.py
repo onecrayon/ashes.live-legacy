@@ -18,3 +18,8 @@ class UserRelease(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False, primary_key=True,
                         index=True)
     release_id = db.Column(db.Integer, db.ForeignKey(Release.id), nullable=False, primary_key=True)
+
+    user = db.relationship(
+        User,
+        backref=db.backref('collection', cascade='all, delete-orphan')
+    )

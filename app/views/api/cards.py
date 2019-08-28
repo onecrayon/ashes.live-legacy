@@ -1,6 +1,7 @@
 import json
 
 from flask import Blueprint, jsonify, request
+from flask_login import current_user
 from sqlalchemy_fulltext import FullTextSearch
 import sqlalchemy_fulltext.modes as FullTextMode
 
@@ -66,9 +67,16 @@ def search():
             Card.card_type.notin_(['Phoenixborn', 'Conjuration', 'Conjured Alteration Spell'])
         )
     releases = data.get('releases')
-    if releases:
+    if releases == 'phg':
+        query = query.join(
+            Release, Release.id == Card.release_id
+        ).filter(
+            Release.is_phg.is_(True)
+        )
+    elif releases == 'mine' and current_user.is_authenticated and current_user.collection:
+        my_release_ids = [x.release_id for x in current_user.collection]
         query = query.filter(
-            Card.release_id.in_(releases)
+            Card.release_id.in_(my_release_ids)
         )
     dice = data.get('dice')
     diceLogic = data.get('diceLogic', 'or')

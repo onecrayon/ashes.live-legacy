@@ -140,13 +140,15 @@ Created with https://ashes.live</textarea>
 			<th>Requires:</th>
 			<td>
 				<ul class="comma-separated">
-					{% for release in releases %}
+					{% for release in releases -%}
 					<li>
-						{% if release.preconstructed_id %}<a href="{{ url_for('decks.view', deck_id=release.preconstructed_id) }}">
+						{%- if release.preconstructed_id -%}
+						<a href="{{ url_for('decks.view', deck_id=release.preconstructed_id) }}">{{ release.title }}</a>
+						{%- else -%}
 							{{ release.title }}
-						</a>{% else %}{{ release.title }}{% endif %}
+						{%- endif -%}
 					</li>
-					{% endfor %}
+					{%- endfor %}
 				</ul>
 			</td>
 		</tr>

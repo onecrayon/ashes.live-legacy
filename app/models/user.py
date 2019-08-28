@@ -28,6 +28,8 @@ class User(db.Model, UserMixin):
     created = db.Column(db.DateTime, default=datetime.utcnow)
     modified = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    # `collection` defined via backref in app.models.release.UserRelease
+
     def __init__(self, email, password, badge=None, username=None, description=None,
                  newsletter_opt_in=False):
         self.email = email

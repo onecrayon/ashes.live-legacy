@@ -33,7 +33,7 @@
 					><i class="fa" :class="typeToFontAwesome('Conjuration')"></i> <span class="full-display-only">Conjuration</span></button
 				>
 			</div>
-			<release-filter class="col"></release-filter>
+			<release-filter v-if="!isCardGallery" class="col"></release-filter>
 		</div>
 		<div class="responsive-cols listing-controls">
 			<sort-filter class="col"></sort-filter>

@@ -22,5 +22,10 @@
 		globals.deck = {{ deck_json | safe }}
 	</script>
 	{% endif %}
+	{% if user_release_ids_json %}
+	<script type="text/javascript">
+		globals.userCollection = {{ user_release_ids_json | safe }}
+	</script>
+	{% endif %}
 	<script src="{{ url_for('static', filename='js/app.js') | production_url }}" type="text/javascript"></script>
 {% endblock %}
