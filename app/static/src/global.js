@@ -23,7 +23,7 @@ globals.playerUrl = function (badge) {
 }
 globals.diceData = [
 	'ceremonial', 'charm', 'illusion', 'natural',
-	'divine', 'sympathy'
+	'divine', 'sympathy', 'time'
 ]
 
 //* Setup standard text parsing
