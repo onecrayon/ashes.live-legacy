@@ -18,6 +18,6 @@ alembic==1.0.10
 bcrypt==3.1.6
 Flask-Script==2.0.6
 Jinja2==2.10.1
-Werkzeug==0.15.2
+Werkzeug==0.15.3
 # TEMP: downgrade itsdangerous until Flask-Session fixes its import
 itsdangerous>=0.24,<1.0.0
