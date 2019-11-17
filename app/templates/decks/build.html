@@ -17,15 +17,14 @@
 {% endblock %}
 
 {% block app %}
-	{% if deck_json %}
 	<script type="text/javascript">
-		globals.deck = {{ deck_json | safe }}
+		globals.releaseList = {{ release_list_json | safe }}
+		{% if deck_json %}
+			globals.deck = {{ deck_json | safe }}
+		{% endif %}
+		{% if user_release_ids_json %}
+			globals.userCollection = {{ user_release_ids_json | safe }}
+		{% endif %}
 	</script>
-	{% endif %}
-	{% if user_release_ids_json %}
-	<script type="text/javascript">
-		globals.userCollection = {{ user_release_ids_json | safe }}
-	</script>
-	{% endif %}
 	<script src="{{ url_for('static', filename='js/app.js') | production_url }}" type="text/javascript"></script>
 {% endblock %}

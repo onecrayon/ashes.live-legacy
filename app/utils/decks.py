@@ -5,19 +5,13 @@ from flask import current_app
 
 from app import db
 from app.models.deck import Deck, DeckCard
-from app.models.release import Release
 from app.utils import get_pagination
-
-
-def get_release_mapping():
-    releases = Release.query.all()
-    return {x.id: x for x in releases}
+from app.utils.releases import get_release_mapping
 
 
 def process_cards(section_map, deck_cards, release_mapping=None):
     """Maps a deck's cards into sections"""
-    if not release_mapping:
-        release_mapping = get_release_mapping()
+    release_mapping = get_release_mapping(release_mapping)
     for deck_card in deck_cards:
         card = deck_card.card if hasattr(deck_card, 'card') else deck_card
         card_id = card.card_id if hasattr(card, 'card_id') else card.id
@@ -55,8 +49,7 @@ def process_deck(deck, release_mapping=None):
         ('Reaction Spells', []),
         ('Conjuration Deck', [])
     ])
-    if not release_mapping:
-        release_mapping = get_release_mapping()
+    release_mapping = get_release_mapping(release_mapping)
     process_cards(section_map, deck.cards, release_mapping=release_mapping)
     if deck.phoenixborn.conjurations:
         process_cards(section_map, deck.phoenixborn.conjurations, release_mapping=release_mapping)

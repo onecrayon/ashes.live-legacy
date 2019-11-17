@@ -14,6 +14,7 @@ from app.utils.ashes_500 import latest_ashes_500_revision
 from app.utils.cards import gather_root_summons
 from app.utils.comments import process_comments
 from app.utils.decks import get_decks, get_decks_query, process_deck
+from app.utils.releases import get_release_list
 from app.utils.stream import new_entity, toggle_subscription
 from app.views.forms.deck import SnapshotForm
 
@@ -361,7 +362,8 @@ def build(deck_id=None):
     return render_template(
         'decks/build.html',
         deck_json=deck_json,
-        user_release_ids_json=user_release_ids_json
+        user_release_ids_json=user_release_ids_json,
+        release_list_json=json.dumps(get_release_list())
     )
 
 
