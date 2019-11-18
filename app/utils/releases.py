@@ -14,4 +14,9 @@ def get_release_mapping(release_mapping: Optional[Dict[int, Release]] = None) ->
 def get_release_list() -> List[Tuple[int, str]]:
     """Returns a list of tuples like (id, name) for all releases"""
     releases = Release.query.all()
-    return [(x.id, x.name) for x in releases]
+    return [{
+        'id': x.id,
+        'name': x.name,
+        'is_phg': x.is_phg,
+        'is_promo': x.is_promo,
+    } for x in releases]

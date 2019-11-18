@@ -2468,6 +2468,35 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	}
 }
 
+.releases-form {
+	list-style-type: none;
+	padding: 0;
+
+	li {
+		margin: 0 0 3px;
+	}
+
+	.core-release {
+		color: @color-dark-gray;
+	}
+
+	.retail-release + .promo-release {
+		border-top: 3px solid @color-inexhaustible-dark;
+	}
+
+	.promo-release {
+		background-color: @color-inexhaustible;
+	}
+
+	.fan-release {
+		background-color: @color-between-realms;
+	}
+
+	.promo-release + .fan-release {
+		border-top: 3px solid @color-between-realms-dark;
+	}
+}
+
 /* @end */
 
 /* @group Comments */
