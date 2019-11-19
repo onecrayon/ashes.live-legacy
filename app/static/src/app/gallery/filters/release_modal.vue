@@ -3,10 +3,10 @@
 		<h2>Configure your collection</h2>
 
 		<div class="btn-group">
-			<button class="btn btn-small" @click="selectRetail">Retail</button
-			><button class="btn btn-small" @click="selectPromos">Promos</button
-			><button class="btn btn-small" @click="selectFanMade">PnP</button
-			><button class="btn btn-small btn-danger" @click="selectNone">Clear</button>
+			<button class="btn btn-small" @click="selectRetail" :disabled="isDisabled">Retail</button
+			><button class="btn btn-small" @click="selectPromos" :disabled="isDisabled">Promos</button
+			><button class="btn btn-small" @click="selectFanMade" :disabled="isDisabled">PnP</button
+			><button class="btn btn-small btn-danger" @click="selectNone" :disabled="isDisabled">Clear</button>
 		</div>
 
 		<ul class="releases-form">
@@ -19,7 +19,7 @@
 				}">
 				<label>
 					<input type="checkbox" :checked="includes(selectedReleases, release.id)"
-						:disabled="isCore(release)"
+						:disabled="isCore(release) || isDisabled"
 						@change="setRelease(release.id, $event)">
 					{{ release.name }}
 				</label>
@@ -27,8 +27,8 @@
 		</ul>
 
 		<div class="modal-controls" slot="footer">
-			<button class="btn" @click="close">Cancel</button>
-			<button class="btn btn-success" @click="save">Save</button>
+			<button class="btn" @click="close" :disabled="isDisabled">Cancel</button>
+			<button class="btn btn-success" @click="save" :disabled="isDisabled">Save</button>
 		</div>
 	</modal>
 </template>
@@ -46,15 +46,28 @@
 		},
 		props: ['show'],
 		data: () => ({
-			selectedReleases: globals.userCollection && globals.userCollection.slice(0) || [1]
+			selectedReleases: [1]
 		}),
+		created () {
+			this.setDefaultCollection()
+		},
 		computed: {
 			releaseList () {
 				return globals.releaseList
+			},
+			isDisabled () {
+				return this.$store.state.isDisabled
 			}
 		},
 		methods: {
 			includes,
+			setDefaultCollection () {
+				if (this.$store.state.options.userCollection && this.$store.state.options.userCollection.length) {
+					this.selectedReleases = this.$store.state.options.userCollection.slice(0)
+				} else {
+					this.selectedReleases = [1]
+				}
+			},
 			isCore (release) {
 				return release.id === 1
 			},
@@ -65,9 +78,15 @@
 				} else {
 					this.selectedReleases.push(id)
 				}
+				// Ensure the core set is always included
+				if (!includes(this.selectedReleases, 1)) {
+					this.selectedReleases.push(1)
+				}
 			},
 			selectRetail () {
 				const releaseSet = new Set(this.selectedReleases)
+				// Ensure the core set is always selected
+				releaseSet.add(1)
 				const phgReleases = globals.releaseList.filter(release => release.is_phg && !release.is_promo)
 				for (const release of phgReleases) {
 					releaseSet.add(release.id)
@@ -76,6 +95,8 @@
 			},
 			selectPromos () {
 				const releaseSet = new Set(this.selectedReleases)
+				// Ensure the core set is always selected
+				releaseSet.add(1)
 				const promos = globals.releaseList.filter(release => release.is_promo)
 				for (const release of promos) {
 					releaseSet.add(release.id)
@@ -84,6 +105,8 @@
 			},
 			selectFanMade () {
 				const releaseSet = new Set(this.selectedReleases)
+				// Ensure the core set is always selected
+				releaseSet.add(1)
 				const fanMade = globals.releaseList.filter(release => !release.is_phg)
 				for (const release of fanMade) {
 					releaseSet.add(release.id)
@@ -91,23 +114,29 @@
 				this.selectedReleases = Array.from(releaseSet)
 			},
 			selectNone () {
-				this.selectedReleases = [1]
+				this.selectedReleases = []
 			},
 			close () {
 				this.$emit('close')
-				this.selectedReleases = globals.userCollection && globals.userCollection.slice(0) || [1]
+				this.setDefaultCollection()
+				this.selectedReleases = this.$store.state.options.userCollection && this.$store.state.options.userCollection.slice(0) || [1]
 			},
 			save () {
-				console.log('saved!')
-				this.close()
-				return
-				// TODO
 				const nano = new Nanobar({ autoRun: true })
-				qwest.post('/api/releases', this.selectedReleases).then(() => {
-					// TODO: configure global personal release list and refresh listing
-
+				this.$store.commit('setAppDisabled', true)
+				qwest.post(
+					'/api/cards/collection',
+					this.selectedReleases,
+					{dataType: 'json'}
+				).then((xhr, response) => {
+					// Configure global personal release list and refresh listing
+					this.$store.commit('setUserCollection', response)
 					// Ensure that "mine" is selected, and refresh the listing
-					this.$store.commit('toggleReleases', 'mine')
+					if (response && response.length > 0) {
+						this.$store.commit('setReleases', 'mine')
+					} else {
+						this.$store.commit('setReleases', 'phg')
+					}
 					this.$store.dispatch('filterCards')
 				}).catch((error, xhr, response) => {
 					if (response.error) {
@@ -115,8 +144,9 @@
 					} else {
 						notify('Server error: ' + error, 'error')
 					}
-					this.close()
 				}).complete(() => {
+					this.$store.commit('setAppDisabled', false)
+					this.close()
 					nano.go(100)
 				})
 			}

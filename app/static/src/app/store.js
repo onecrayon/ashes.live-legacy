@@ -42,8 +42,12 @@ const cardTypeOrder = [
 
 let defaultReleases = 'all'
 let deckPhoenixborn = null
+let userCollection = null
 if (globals.deck) {
 	deckPhoenixborn = globals.deck._phoenixborn_data
+}
+if (globals.userCollection) {
+	userCollection = globals.userCollection.slice(0)
 }
 
 const enableAshes500 = !!(
@@ -121,6 +125,7 @@ export default new Vuex.Store({
 			secondaryOrder: 1,
 			includeAllCards: false,
 			enableAshes500: enableAshes500,
+			userCollection: userCollection,
 			// These options affect the deck listing display
 			showDetails: true
 		}, storeGetAll(), !globals.galleryOnly && (!globals.deck || !globals.deck.phoenixborn) ? {
@@ -501,6 +506,14 @@ export default new Vuex.Store({
 		toggleReleases (state, releasesKey) {
 			state.options.releases = state.options.releases === releasesKey ? 'all' : releasesKey
 			storeSet('releases', state.options.releases)
+		},
+		setReleases (state, releasesKey) {
+			if (state.options.releases === releasesKey) return
+			state.options.releases = releasesKey
+			storeSet('releases', releasesKey)
+		},
+		setUserCollection (state, releaseIds) {
+			state.options.userCollection = releaseIds
 		},
 		resetFilters (state) {
 			state.options.search = null

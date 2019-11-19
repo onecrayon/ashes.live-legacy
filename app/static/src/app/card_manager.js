@@ -85,7 +85,8 @@ export default class {
 		primarySort = 'name',
 		primaryOrder = 1,
 		secondarySort = null,
-		secondaryOrder = 1
+		secondaryOrder = 1,
+		userCollection = []
 	} = {}) {
 		const nano = new Nanobar({ autoRun: true })
 		if (search) {
@@ -134,7 +135,7 @@ export default class {
 			if (releases === 'phg' && !card.release.is_phg) {
 				return false
 			}
-			if (releases === 'mine' && globals.userCollection && !globals.userCollection.includes(card.release.id)) {
+			if (releases === 'mine' && userCollection && userCollection.length && !userCollection.includes(card.release.id)) {
 				return false
 			}
 			if (dice && dice.length) {

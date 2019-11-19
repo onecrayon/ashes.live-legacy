@@ -5,7 +5,7 @@
 				class="btn btn-small" :class="{active: hasReleases('phg')}" :disabled="isDisabled"
 				title="Only show Plaid Hat cards">PHG</button
 			><button @click="toggleReleases('mine')"
-				class="btn btn-small" :class="{active: hasReleases('mine')}" :disabled="isDisabled"
+				class="btn btn-small" :class="{active: hasReleases('mine')}" :disabled="isDisabled || noCollection"
 				title="Only show my cards">Mine</button
 			><button @click="showReleaseModal = true"
 				class="btn btn-small" :disabled="isDisabled"
@@ -18,7 +18,6 @@
 
 <script>
 	import {includes} from 'lodash'
-	import {globals} from 'app/utils'
 	import ReleaseModal from './release_modal.vue'
 
 	export default {
@@ -31,6 +30,9 @@
 		computed: {
 			isDisabled () {
 				return this.$store.state.isDisabled
+			},
+			noCollection () {
+				return !this.$store.state.options.userCollection || this.$store.state.options.userCollection.length === 0
 			}
 		},
 		methods: {
