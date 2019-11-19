@@ -28,6 +28,8 @@ def upgrade():
     * Create text files
     * Generate JSON from text files
     * Spot fix dice/altDice where appropriate (commonly messed up)
+    * Generate dice counts using JSON
+    * Update JSON by hand from generated dice counts file
     * Update release mapping with the JSON release number mapped to the new release dicts
     """
     # Insert our new releases

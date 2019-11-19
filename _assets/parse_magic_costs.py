@@ -33,7 +33,7 @@ import os.path
 import sys
 
 
-cost_types = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy']
+cost_types = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy', 'time']
 magic_cost_re = re.compile(r'(\d+)\s+\[\[((?:' + r'|'.join(cost_types) + r')(?::\w+)?)\]\]')
 
 
@@ -83,34 +83,35 @@ with open(file_path) as file:
     content = file.read()
     data = json.loads(content)
     new_data = {}
-    for card, value in data.items():
-        new_data[card] = {
+    for card in data:
+        stub = card['stub']
+        new_data[stub] = {
             'magicCost': {},
             'effectMagicCost': {},
-            'text': value.get('text')
+            'text': card.get('text')
         }
         # Parse out the card costs
-        for cost in value.get('cost', []):
-            parse_cost(cost, new_data[card])
+        for cost in card.get('cost', []):
+            parse_cost(cost, new_data[stub])
         # No need to continue if we don't have any effect text
-        if not new_data[card]['text']:
-            cleanup_data(new_data[card], delete_text=True)
+        if not new_data[stub]['text']:
+            cleanup_data(new_data[stub], delete_text=True)
             continue
         # Check to see if there are any inline costs (we'll handle these by hand)
         card_text = []
-        for effect in new_data[card]['text']:
+        for effect in new_data[stub]['text']:
             if effect.get('name', None) == 'Respark':
-                parse_cost(effect['text'], new_data[card], cost_key='effectMagicCost')
+                parse_cost(effect['text'], new_data[stub], cost_key='effectMagicCost')
             else:
                 card_text.append(effect['text'].replace('[[', '').replace(']]', ''))
             for cost in effect.get('cost', []):
-                parse_cost(cost, new_data[card], cost_key='effectMagicCost')
+                parse_cost(cost, new_data[stub], cost_key='effectMagicCost')
         card_text = ' '.join(card_text)
         if any(x in card_text for x in cost_types):
-            cleanup_data(new_data[card], skip_effect_cost=True)
+            cleanup_data(new_data[stub], skip_effect_cost=True)
             continue
         # If nothing in the effect text, remove it
-        cleanup_data(new_data[card], delete_text=True)
+        cleanup_data(new_data[stub], delete_text=True)
     content = json.dumps(new_data, indent=4)
     with open('./dice_counts.json', mode='w') as new_file:
         new_file.write(content)

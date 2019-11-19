@@ -90,7 +90,7 @@ var fs = require('fs'),
 			})
 		}
 	},
-	possibleDice = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy'],
+	possibleDice = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy', 'time'],
 	parseCostToWeight = function (costCount, costText) {
 		if (!costCount && !costText) {
 			return 0

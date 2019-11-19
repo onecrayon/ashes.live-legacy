@@ -1,1 +1,807 @@
-[{"name":"Bloodstained Dagger","stub":"bloodstained-dagger","release":21,"type":"Alteration Spell","placement":"Unit","cost":["[[main]]","1 [[time:class]]"],"weight":0,"attack":"+1","text":[{"betweenRealms":true,"name":"Conceal 1","text":"When a player declares blockers, you may remove 1 card in your discard pile from the game to play this spell from your discard pile without paying its main action cost."},{"text":"This unit now has the following ability:"},{"name":"Throw 1","text":"During your turn, you may place 1 exhaustion token on this unit to deal 1 damage to a target unit."}],"dice":["time"]},{"name":"Chimera Smasher","stub":"chimera-smasher","release":21,"type":"Alteration Spell","placement":"Unit","cost":[["1 [[time:class]]","[[main]]"],"[[side]]","1 [[time:power]]"],"weight":0,"attack":"+2","text":[{"text":"This unit now has the following abilities:"},{"name":"Aftershock 1","text":"When this unit deals damage by attacking or countering, you may place 1 wound token on a target unit."},{"name":"Battle Impairment","text":"When this unit is in battle, it deals its damage after other units without Battle Impairment deal their damage. If this unit also has Battle Advantage, it loses that ability and this one."}],"dice":["time"]},{"name":"Deteriorating Armor","stub":"deteriorating-armor","release":21,"type":"Alteration Spell","placement":"Unit","cost":["[[main]]","[[side]]","1 [[time:class]]"],"weight":0,"life":"+X","text":[{"inexhaustible":true,"name":"Countdown 2","text":"This card comes into play with 2 status tokens. At the end of the round, remove 1 status token from this card. If you cannot, dsicard this card instead."},{"inexhaustible":true,"text":"X = Number of status tokens on this card."},{"text":"This unit now has the following ability:"},{"inexhaustible":true,"name":"Armored 1","text":"When this unit would receive damage, prevent 1 damage."}],"dice":["time"]},{"name":"Hastened Response","stub":"hastened-response","release":21,"type":"Ready Spell","placement":"Spellboard","cost":["[[main]]","1 [[time:class]]"],"weight":0,"text":[{"text":"After an opponent declares attackers, you may place 1 exhaustion token on this card to choose a unit you control. That unit gains the following ability for the remainder of this turn:"},{"name":"Unit Guard","text":"This unit may guard a unit that is being attacked."}],"dice":["time"]},{"name":"Missing Page","stub":"missing-page","release":21,"type":"Reaction Spell","placement":"Discard","cost":["1 [[time:class]]"],"weight":0,"text":[{"text":"You may play this spell when a conjuration is destroyed."},{"text":"Place 1 exhaustion token on a target ready spell with a printed effect that can place a unit of the same name onto a battlefield."}],"dice":["time"]},{"name":"Paradox Clone","stub":"paradox-clone","release":21,"type":"Reaction Spell","placement":"Discard","cost":["1 [[time:power]]"],"weight":0,"text":[{"text":"You may play this spell when a conjuration with no abilities enters the battlefield under your control."},{"text":"Place an additional conjuration of the same name from your conjuration pile onto the battlefield and attach a [[Broken Timeline]] conjured alteration spell to that unit."}],"conjurations":["Broken Timeline"],"dice":["time"]},{"name":"Relic Broker","stub":"relic-broker","release":21,"type":"Ally","placement":"Battlefield","cost":["[[main]]","1 [[time:power]]","1 [[time:class]]","1 [[basic]]"],"weight":0,"attack":0,"life":1,"recover":0,"text":[{"name":"Tools Across Time","text":"When this unit comes into play, search your draw pile and discard pile for up to 1 alteration spell from each pile and attach them to this unit. All alterations attached this way must have a Magic Play Cost of 3 or less, and be named differently. Shuffle your draw pile afterward."}],"dice":["time"]},{"name":"Summon Flying Monkey","stub":"summon-flying-monkey","release":21,"type":"Ready Spell","placement":"Spellboard","cost":["[[main]]"],"weight":5,"text":[{"cost":["[[main]]","[[exhaust]]","1 [[time:class]]","1 [[basic]]"],"text":"Place a [[Flying Monkey]] conjuration onto your battlefield. Choose a target alteration spell or unit with 1 or more alteration spells attached to it. You may add or remove 1 status token to/from that target."},{"name":"Focus 1","text":"You may move an alteration spell attached to a unit you control onto that [[Flying Monkey]]."}],"dice":["time"],"conjurations":["Flying Monkey"]},{"name":"Summon Loyal Hound","stub":"summon-loyal-hound","release":21,"type":"Ready Spell","placement":"Spellboard","cost":["[[main]]"],"weight":5,"text":[{"cost":["[[main]]","[[exhaust]]","3 [[basic]]"],"text":"Place a [[Loyal Hound]] conjuration onto your battlefield."}],"conjurations":["Loyal Hound"]},{"name":"Trusted Boomerang","stub":"trusted-boomerang","release":21,"phoenixborn":"Jill Traversack","type":"Action Spell","placement":"Discard","cost":[["1 [[time:class]]","[[main]]"],"[[side]]"],"weight":9,"text":[{"text":"Deal 1 damage to a target unit an opponent controls. Continue repeating this effect until it doesn't result in the destruction of a unit. Then, if any units received damage from this effect, draw 1 card."},{"betweenRealms":true,"name":"Callback","text":"When your turn begins, if this card is in your discard pile and your Phoenixborn is unexhausted, you may spend 1 [[basic]] and place 1 exhaustion token on your Phoenixborn to return this card from your discard pile to your hand."}],"altDice":["time"]},{"name":"Broken Timeline","stub":"broken-timeline","release":21,"type":"Conjured Alteration Spell","placement":"Unit","copies":3,"text":[{"inexhaustible":true,"text":"This spell cannot be moved or leave play unless the attached unit leaves play."},{"text":"This unit gains the following ability:"},{"inexhaustible":true,"name":"Temporary Existence","text":"When this unit would leave play for any reason, remove it from the game instead."}]},{"name":"Loyal Hound","stub":"loyal-hound","release":21,"type":"Conjuration","placement":"Battlefield","attack":0,"life":4,"recover":0,"copies":3,"text":[{"name":"Fetch","text":"When this unit deals damage to an opponent's Phoenixborn, remove up to 1 target card in that player's discard pile from the game. If you do, you may shuffle a card from your discard pile into your draw pile."},{"inexhaustible":true,"name":"Rage 2","text":"Add 2 to this unit's attack value for each wound token on this unit."}]},{"name":"Flying Monkey","stub":"flying-monkey","release":21,"type":"Conjuration","placement":"Battlefield","attack":3,"life":1,"recover":0,"copies":4,"text":[]},{"name":"Jill Traversack","stub":"jill-traversack","release":21,"type":"Phoenixborn","battlefield":5,"life":17,"spellboard":4,"text":[{"name":"Treasures of the Ages","text":"When an alteration that doesn't share a name with any other card you control enters play attached to a unit or Phoenixborn you control, you may reroll a die in your exhausted pool and place it in your active pool. This ability can only trigger once per turn."}]},{"name":"Flicker","stub":"flicker","release":22,"type":"Alteration Spell","placement":"Unit","cost":["[[side]]","1 [[time:class]]"],"weight":0,"text":[{"name":"Disenchant","cost":["[[side]]","1 [[discard]]"],"text":"Discard this card."},{"name":"Respark","text":"1 [[charm:class]]"}],"dice":["time"],"altDice":["charm"]},{"name":"Future Visions","stub":"future-visions","release":22,"type":"Ready Spell","placement":"Spellboard","cost":["[[main]]","1 [[time:class]]"],"weight":0,"text":[{"inexhaustible":true,"text":"After the prepare phase, each player draws 1 card."},{"cost":["[[main]] or [[side]]","[[exhaust]]"],"text":"Look at the top card of each player's draw pile. Then, choose one of the following effects:"},{"text":"- Each player draws 1 card."},{"text":"- Discard 1 card off the top of each player's draw pile."},{"name":"Focus 2","text":"Each opponent with no cards in their draw pile must discard 1 card of their choice from their hand."}],"dice":["time"]},{"name":"Law Of Courtesy","stub":"law-of-courtesy","release":22,"type":"Ready Spell","placement":"Spellboard","cost":["[[main]]",["1 [[divine:class]]","1 [[charm:class]]"]],"weight":106,"text":[{"text":"When this spell comes into play, you may remove 1 exhaustion token from a target unit with an attack value of 2 or less."},{"text":"Players must spend 1 [[basic]] to take an Attack a Phoenixborn main action or Attack a Unit main action."},{"inexhaustible":true,"name":"Bound","text":"This card cannot be discarded from your spellboard when you Meditate."},{"inexhaustible":true,"name":"Fleeting","text":"Discard this card at the end of the round."}],"altDice":["divine","charm"]},{"name":"Royal Vizier","stub":"royal-vizier","release":22,"type":"Ally","placement":"Battlefield","cost":["[[main]]",["1 [[time:power]]","1 [[charm:power]]"],"1 [[charm:class]]"],"weight":208,"attack":1,"life":3,"recover":1,"text":[{"name":"Ambush 1","text":"When this unit comes into play, you may deal 1 damage to a target unit or Phoenixborn."},{"inexhaustible":true,"name":"Diplomacy","text":"When this unit deals damage to an opponent's Phoenixborn, you may choose not to place wound tokens on that Phoenixborn. If you do, look at the top 2 cards of that player's draw pile. Remove 1 of those cards from the game, and place the other card on either the top or bottom of its owner's draw pile."}],"dice":["charm"],"altDice":["time"]},{"name":"Summon Clockwork Frog","stub":"summon-clockwork-frog","release":22,"type":"Ready Spell","placement":"Spellboard","cost":["[[main]]"],"weight":5,"text":[{"cost":["[[main]]","[[exhaust]]","1 [[time:class]]"],"text":"Place a [[Clockwork Frog]] conjuration onto your battlefield."}],"conjurations":["Clockwork Frog"],"dice":["time"]},{"name":"Summon Exotic Gorilla","stub":"summon-exotic-gorilla","release":22,"type":"Ready Spell","placement":"Spellboard","cost":["[[main]]","1 [[time:power]]"],"weight":0,"text":[{"cost":["[[main]]","[[exhaust]]","1 [[time:class]]","1 [[basic]]"],"text":"Place an [[Exotic Gorilla]] conjuration onto your battlefield."},{"name":"Focus 1","text":"You may discard an unexhausted ready spell you control. If you do, draw 1 card, then discard 1 card off the top of a target player's draw pile."}],"conjurations":["Exotic Gorilla"],"dice":["time"]},{"name":"Sycophant","stub":"sycophant","release":22,"type":"Ally","placement":"Battlefield","cost":["[[main]]","1 [[charm:class]]","1 [[basic]]"],"weight":206,"attack":1,"life":2,"recover":0,"text":[{"inexhaustible":true,"name":"Last Blessing 2","text":"When this unit is destroyed, remove 2 wound tokens from a target unit or Phoenixborn."},{"inexhaustible":true,"name":"Last Request 1","text":"When this unit is destroyed, discard 1 card off the top of a target player's draw pile."},{"betweenRealms":true,"name":"Exile","text":"When this unit is placed in its owner's discard pile, remove it from the game."}],"dice":["charm"]},{"name":"Time Stop","stub":"time-stop","release":22,"type":"Action Spell","placement":"Discard","cost":["[[side]]","1 [[time:class]]"],"weight":0,"text":[{"text":"Choose a target unit you own. That unit gains the following abilies for the rest of the turn:"},{"name":"Bypass","text":"This unit cannot be blocked or guarded."},{"inexhaustible":true,"name":"Reality Fracture","text":"At the end of the turn, remove this unit from the game."}],"dice":["time"]},{"name":"Unwavering Loyalty","stub":"unwavering-loyalty","release":22,"type":"Alteration Spell","placement":"Unit","cost":["[[side]]","1 [[charm:class]]"],"weight":105,"text":[{"inexhaustible":true,"text":"When this spell is removed from play, discard the attached unit."},{"inexhaustible":true,"text":"This unit does not count towards your battlefield limit and gains the following ability:"},{"name":"Decoy","text":"When a unit you control would become the target of a spell, ability, or dice power, and this unit could have been chosen as that target, you may place 1 exhaustion token on this unit to change the chosen target to be this unit instead."}],"dice":["charm"]},{"name":"Forever In The Moment","stub":"forever-in-the-moment","release":22,"phoenixborn":"Tolliver I","type":"Action Spell","placement":"Discard","cost":["[[main]]","1 [[basic]]"],"weight":105,"text":[{"text":"Take 2 additional main actions ([[main]]) this turn. You cannot take an Attack a Phoenixborn or Attack a Unit main action this turn."}]},{"name":"Clockwork Frog","stub":"clockwork-frog","release":22,"type":"Conjuration","placement":"Battlefield","attack":0,"life":1,"recover":0,"copies":3,"text":[{"name":"Spiked Skin 2","text":"When this unit is dealt damage by one or more attacking or countering units, deal 2 damage to each unit that is attacking or countering this unit."},{"name":"Armored 1","text":"When this unit would receive damage, prevent 1 damage."}]},{"name":"Exotic Gorilla","stub":"exotic-gorilla","release":22,"type":"Conjuration","placement":"Battlefield","attack":3,"life":4,"recover":0,"copies":2,"text":[{"name":"Gigantic 2","text":"This unit cannot be blocked or guarded against by units with a life value of 2 or less."},{"inexhaustible":true,"name":"Massive 2","text":"This unit occupies 1 additional slot on your battlefield. (This unit cannot be placed or moved onto your battlefield unless you have 1 additional slot.)"}]},{"name":"Tolliver I","stub":"tolliver-i","release":22,"type":"Phoenixborn","battlefield":8,"life":18,"spellboard":3,"text":[{"name":"Renewal","cost":["[[side]]","[[exhaust]]"],"text":"You may take 1 additional main action ([[main]]) this turn, but only to take a pass action."}]}]
+[
+	{
+		"name": "Bloodstained Dagger",
+		"stub": "bloodstained-dagger",
+		"release": 21,
+		"type": "Alteration Spell",
+		"placement": "Unit",
+		"cost": [
+			"[[main]]",
+			"1 [[time:class]]"
+		],
+		"weight": 106,
+		"attack": "+1",
+		"text": [
+			{
+				"betweenRealms": true,
+				"name": "Conceal 1",
+				"text": "When a player declares blockers, you may remove 1 card in your discard pile from the game to play this spell from your discard pile without paying its main action cost."
+			},
+			{
+				"text": "This unit now has the following ability:"
+			},
+			{
+				"name": "Throw 1",
+				"text": "During your turn, you may place 1 exhaustion token on this unit to deal 1 damage to a target unit."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Chimera Smasher",
+		"stub": "chimera-smasher",
+		"release": 21,
+		"type": "Alteration Spell",
+		"placement": "Unit",
+		"cost": [
+			[
+				"1 [[time:class]]",
+				"[[main]]"
+			],
+			"[[side]]",
+			"1 [[time:power]]"
+		],
+		"weight": 111,
+		"attack": "+2",
+		"text": [
+			{
+				"text": "This unit now has the following abilities:"
+			},
+			{
+				"name": "Aftershock 1",
+				"text": "When this unit deals damage by attacking or countering, you may place 1 wound token on a target unit."
+			},
+			{
+				"name": "Battle Impairment",
+				"text": "When this unit is in battle, it deals its damage after other units without Battle Impairment deal their damage. If this unit also has Battle Advantage, it loses that ability and this one."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:power": 1
+        }
+	},
+	{
+		"name": "Deteriorating Armor",
+		"stub": "deteriorating-armor",
+		"release": 21,
+		"type": "Alteration Spell",
+		"placement": "Unit",
+		"cost": [
+			"[[main]]",
+			"[[side]]",
+			"1 [[time:class]]"
+		],
+		"weight": 110,
+		"life": "+X",
+		"text": [
+			{
+				"inexhaustible": true,
+				"name": "Countdown 2",
+				"text": "This card comes into play with 2 status tokens. At the end of the round, remove 1 status token from this card. If you cannot, dsicard this card instead."
+			},
+			{
+				"inexhaustible": true,
+				"text": "X = Number of status tokens on this card."
+			},
+			{
+				"text": "This unit now has the following ability:"
+			},
+			{
+				"inexhaustible": true,
+				"name": "Armored 1",
+				"text": "When this unit would receive damage, prevent 1 damage."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Hastened Response",
+		"stub": "hastened-response",
+		"release": 21,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			"1 [[time:class]]"
+		],
+		"weight": 106,
+		"text": [
+			{
+				"text": "After an opponent declares attackers, you may place 1 exhaustion token on this card to choose a unit you control. That unit gains the following ability for the remainder of this turn:"
+			},
+			{
+				"name": "Unit Guard",
+				"text": "This unit may guard a unit that is being attacked."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Missing Page",
+		"stub": "missing-page",
+		"release": 21,
+		"type": "Reaction Spell",
+		"placement": "Discard",
+		"cost": [
+			"1 [[time:class]]"
+		],
+		"weight": 101,
+		"text": [
+			{
+				"text": "You may play this spell when a conjuration is destroyed."
+			},
+			{
+				"text": "Place 1 exhaustion token on a target ready spell with a printed effect that can place a unit of the same name onto a battlefield."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Paradox Clone",
+		"stub": "paradox-clone",
+		"release": 21,
+		"type": "Reaction Spell",
+		"placement": "Discard",
+		"cost": [
+			"1 [[time:power]]"
+		],
+		"weight": 102,
+		"text": [
+			{
+				"text": "You may play this spell when a conjuration with no abilities enters the battlefield under your control."
+			},
+			{
+				"text": "Place an additional conjuration of the same name from your conjuration pile onto the battlefield and attach a [[Broken Timeline]] conjured alteration spell to that unit."
+			}
+		],
+		"conjurations": [
+			"Broken Timeline"
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:power": 1
+        }
+	},
+	{
+		"name": "Relic Broker",
+		"stub": "relic-broker",
+		"release": 21,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[time:power]]",
+			"1 [[time:class]]",
+			"1 [[basic]]"
+		],
+		"weight": 308,
+		"attack": 0,
+		"life": 1,
+		"recover": 0,
+		"text": [
+			{
+				"name": "Tools Across Time",
+				"text": "When this unit comes into play, search your draw pile and discard pile for up to 1 alteration spell from each pile and attach them to this unit. All alterations attached this way must have a Magic Play Cost of 3 or less, and be named differently. Shuffle your draw pile afterward."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:power": 1,
+            "time:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Summon Flying Monkey",
+		"stub": "summon-flying-monkey",
+		"release": 21,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]"
+		],
+		"weight": 5,
+		"text": [
+			{
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]",
+					"1 [[time:class]]",
+					"1 [[basic]]"
+				],
+				"text": "Place a [[Flying Monkey]] conjuration onto your battlefield. Choose a target alteration spell or unit with 1 or more alteration spells attached to it. You may add or remove 1 status token to/from that target."
+			},
+			{
+				"name": "Focus 1",
+				"text": "You may move an alteration spell attached to a unit you control onto that [[Flying Monkey]]."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"conjurations": [
+			"Flying Monkey"
+		],
+		"effectMagicCost": {
+            "time:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Summon Loyal Hound",
+		"stub": "summon-loyal-hound",
+		"release": 21,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]"
+		],
+		"weight": 5,
+		"text": [
+			{
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]",
+					"3 [[basic]]"
+				],
+				"text": "Place a [[Loyal Hound]] conjuration onto your battlefield."
+			}
+		],
+		"conjurations": [
+			"Loyal Hound"
+		],
+		"effectMagicCost": {
+            "basic": 3
+        }
+	},
+	{
+		"name": "Trusted Boomerang",
+		"stub": "trusted-boomerang",
+		"release": 21,
+		"phoenixborn": "Jill Traversack",
+		"type": "Action Spell",
+		"placement": "Discard",
+		"cost": [
+			[
+				"1 [[time:class]]",
+				"[[main]]"
+			],
+			"[[side]]"
+		],
+		"weight": 9,
+		"text": [
+			{
+				"text": "Deal 1 damage to a target unit an opponent controls. Continue repeating this effect until it doesn't result in the destruction of a unit. Then, if any units received damage from this effect, draw 1 card."
+			},
+			{
+				"betweenRealms": true,
+				"name": "Callback",
+				"text": "When your turn begins, if this card is in your discard pile and your Phoenixborn is unexhausted, you may spend 1 [[basic]] and place 1 exhaustion token on your Phoenixborn to return this card from your discard pile to your hand."
+			}
+		],
+		"altDice": [
+			"time"
+		],
+		"effectMagicCost": {
+			"basic": 1
+		}
+	},
+	{
+		"name": "Broken Timeline",
+		"stub": "broken-timeline",
+		"release": 21,
+		"type": "Conjured Alteration Spell",
+		"placement": "Unit",
+		"copies": 3,
+		"text": [
+			{
+				"inexhaustible": true,
+				"text": "This spell cannot be moved or leave play unless the attached unit leaves play."
+			},
+			{
+				"text": "This unit gains the following ability:"
+			},
+			{
+				"inexhaustible": true,
+				"name": "Temporary Existence",
+				"text": "When this unit would leave play for any reason, remove it from the game instead."
+			}
+		]
+	},
+	{
+		"name": "Loyal Hound",
+		"stub": "loyal-hound",
+		"release": 21,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 0,
+		"life": 4,
+		"recover": 0,
+		"copies": 3,
+		"text": [
+			{
+				"name": "Fetch",
+				"text": "When this unit deals damage to an opponent's Phoenixborn, remove up to 1 target card in that player's discard pile from the game. If you do, you may shuffle a card from your discard pile into your draw pile."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Rage 2",
+				"text": "Add 2 to this unit's attack value for each wound token on this unit."
+			}
+		]
+	},
+	{
+		"name": "Flying Monkey",
+		"stub": "flying-monkey",
+		"release": 21,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 3,
+		"life": 1,
+		"recover": 0,
+		"copies": 4,
+		"text": []
+	},
+	{
+		"name": "Jill Traversack",
+		"stub": "jill-traversack",
+		"release": 21,
+		"type": "Phoenixborn",
+		"battlefield": 5,
+		"life": 17,
+		"spellboard": 4,
+		"text": [
+			{
+				"name": "Treasures of the Ages",
+				"text": "When an alteration that doesn't share a name with any other card you control enters play attached to a unit or Phoenixborn you control, you may reroll a die in your exhausted pool and place it in your active pool. This ability can only trigger once per turn."
+			}
+		]
+	},
+	{
+		"name": "Flicker",
+		"stub": "flicker",
+		"release": 22,
+		"type": "Alteration Spell",
+		"placement": "Unit",
+		"cost": [
+			"[[side]]",
+			"1 [[time:class]]"
+		],
+		"weight": 105,
+		"text": [
+			{
+				"name": "Disenchant",
+				"cost": [
+					"[[side]]",
+					"1 [[discard]]"
+				],
+				"text": "Discard this card."
+			},
+			{
+				"name": "Respark",
+				"text": "1 [[charm:class]]"
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"altDice": [
+			"charm"
+		],
+		"magicCost": {
+            "time:class": 1
+        },
+        "effectMagicCost": {
+            "charm:class": 1
+        }
+	},
+	{
+		"name": "Future Visions",
+		"stub": "future-visions",
+		"release": 22,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			"1 [[time:class]]"
+		],
+		"weight": 106,
+		"text": [
+			{
+				"inexhaustible": true,
+				"text": "After the prepare phase, each player draws 1 card."
+			},
+			{
+				"cost": [
+					"[[main]] or [[side]]",
+					"[[exhaust]]"
+				],
+				"text": "Look at the top card of each player's draw pile. Then, choose one of the following effects:"
+			},
+			{
+				"text": "- Each player draws 1 card."
+			},
+			{
+				"text": "- Discard 1 card off the top of each player's draw pile."
+			},
+			{
+				"name": "Focus 2",
+				"text": "Each opponent with no cards in their draw pile must discard 1 card of their choice from their hand."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Law Of Courtesy",
+		"stub": "law-of-courtesy",
+		"release": 22,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			[
+				"1 [[divine:class]]",
+				"1 [[charm:class]]"
+			]
+		],
+		"weight": 106,
+		"text": [
+			{
+				"text": "When this spell comes into play, you may remove 1 exhaustion token from a target unit with an attack value of 2 or less."
+			},
+			{
+				"text": "Players must spend 1 [[basic]] to take an Attack a Phoenixborn main action or Attack a Unit main action."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Bound",
+				"text": "This card cannot be discarded from your spellboard when you Meditate."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Fleeting",
+				"text": "Discard this card at the end of the round."
+			}
+		],
+		"altDice": [
+			"divine",
+			"charm"
+		],
+		"magicCost": {
+            "divine:class / charm:class": 1
+        },
+        "effectMagicCost": {
+			"basic": 1
+		},
+		"effectRepeats": true
+	},
+	{
+		"name": "Royal Vizier",
+		"stub": "royal-vizier",
+		"release": 22,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			[
+				"1 [[time:power]]",
+				"1 [[charm:power]]"
+			],
+			"1 [[charm:class]]"
+		],
+		"weight": 208,
+		"attack": 1,
+		"life": 3,
+		"recover": 1,
+		"text": [
+			{
+				"name": "Ambush 1",
+				"text": "When this unit comes into play, you may deal 1 damage to a target unit or Phoenixborn."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Diplomacy",
+				"text": "When this unit deals damage to an opponent's Phoenixborn, you may choose not to place wound tokens on that Phoenixborn. If you do, look at the top 2 cards of that player's draw pile. Remove 1 of those cards from the game, and place the other card on either the top or bottom of its owner's draw pile."
+			}
+		],
+		"dice": [
+			"charm"
+		],
+		"altDice": [
+			"time"
+		],
+		"magicCost": {
+            "time:power / charm:power": 1,
+            "charm:class": 1
+        }
+	},
+	{
+		"name": "Summon Clockwork Frog",
+		"stub": "summon-clockwork-frog",
+		"release": 22,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]"
+		],
+		"weight": 5,
+		"text": [
+			{
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]",
+					"1 [[time:class]]"
+				],
+				"text": "Place a [[Clockwork Frog]] conjuration onto your battlefield."
+			}
+		],
+		"conjurations": [
+			"Clockwork Frog"
+		],
+		"dice": [
+			"time"
+		],
+		"effectMagicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Summon Exotic Gorilla",
+		"stub": "summon-exotic-gorilla",
+		"release": 22,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			"1 [[time:power]]"
+		],
+		"weight": 107,
+		"text": [
+			{
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]",
+					"1 [[time:class]]",
+					"1 [[basic]]"
+				],
+				"text": "Place an [[Exotic Gorilla]] conjuration onto your battlefield."
+			},
+			{
+				"name": "Focus 1",
+				"text": "You may discard an unexhausted ready spell you control. If you do, draw 1 card, then discard 1 card off the top of a target player's draw pile."
+			}
+		],
+		"conjurations": [
+			"Exotic Gorilla"
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:power": 1
+        },
+        "effectMagicCost": {
+            "time:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Sycophant",
+		"stub": "sycophant",
+		"release": 22,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[charm:class]]",
+			"1 [[basic]]"
+		],
+		"weight": 206,
+		"attack": 1,
+		"life": 2,
+		"recover": 0,
+		"text": [
+			{
+				"inexhaustible": true,
+				"name": "Last Blessing 2",
+				"text": "When this unit is destroyed, remove 2 wound tokens from a target unit or Phoenixborn."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Last Request 1",
+				"text": "When this unit is destroyed, discard 1 card off the top of a target player's draw pile."
+			},
+			{
+				"betweenRealms": true,
+				"name": "Exile",
+				"text": "When this unit is placed in its owner's discard pile, remove it from the game."
+			}
+		],
+		"dice": [
+			"charm"
+		],
+		"magicCost": {
+            "charm:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Time Stop",
+		"stub": "time-stop",
+		"release": 22,
+		"type": "Action Spell",
+		"placement": "Discard",
+		"cost": [
+			"[[side]]",
+			"1 [[time:class]]"
+		],
+		"weight": 105,
+		"text": [
+			{
+				"text": "Choose a target unit you own. That unit gains the following abilies for the rest of the turn:"
+			},
+			{
+				"name": "Bypass",
+				"text": "This unit cannot be blocked or guarded."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Reality Fracture",
+				"text": "At the end of the turn, remove this unit from the game."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Unwavering Loyalty",
+		"stub": "unwavering-loyalty",
+		"release": 22,
+		"type": "Alteration Spell",
+		"placement": "Unit",
+		"cost": [
+			"[[side]]",
+			"1 [[charm:class]]"
+		],
+		"weight": 105,
+		"text": [
+			{
+				"inexhaustible": true,
+				"text": "When this spell is removed from play, discard the attached unit."
+			},
+			{
+				"inexhaustible": true,
+				"text": "This unit does not count towards your battlefield limit and gains the following ability:"
+			},
+			{
+				"name": "Decoy",
+				"text": "When a unit you control would become the target of a spell, ability, or dice power, and this unit could have been chosen as that target, you may place 1 exhaustion token on this unit to change the chosen target to be this unit instead."
+			}
+		],
+		"dice": [
+			"charm"
+		],
+		"magicCost": {
+            "charm:class": 1
+        }
+	},
+	{
+		"name": "Forever In The Moment",
+		"stub": "forever-in-the-moment",
+		"release": 22,
+		"phoenixborn": "Tolliver I",
+		"type": "Action Spell",
+		"placement": "Discard",
+		"cost": [
+			"[[main]]",
+			"1 [[basic]]"
+		],
+		"weight": 105,
+		"text": [
+			{
+				"text": "Take 2 additional main actions ([[main]]) this turn. You cannot take an Attack a Phoenixborn or Attack a Unit main action this turn."
+			}
+		],
+		"magicCost": {
+            "basic": 1
+        }
+	},
+	{
+		"name": "Clockwork Frog",
+		"stub": "clockwork-frog",
+		"release": 22,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 0,
+		"life": 1,
+		"recover": 0,
+		"copies": 3,
+		"text": [
+			{
+				"name": "Spiked Skin 2",
+				"text": "When this unit is dealt damage by one or more attacking or countering units, deal 2 damage to each unit that is attacking or countering this unit."
+			},
+			{
+				"name": "Armored 1",
+				"text": "When this unit would receive damage, prevent 1 damage."
+			}
+		]
+	},
+	{
+		"name": "Exotic Gorilla",
+		"stub": "exotic-gorilla",
+		"release": 22,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 3,
+		"life": 4,
+		"recover": 0,
+		"copies": 2,
+		"text": [
+			{
+				"name": "Gigantic 2",
+				"text": "This unit cannot be blocked or guarded against by units with a life value of 2 or less."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Massive 2",
+				"text": "This unit occupies 1 additional slot on your battlefield. (This unit cannot be placed or moved onto your battlefield unless you have 1 additional slot.)"
+			}
+		]
+	},
+	{
+		"name": "Tolliver I",
+		"stub": "tolliver-i",
+		"release": 22,
+		"type": "Phoenixborn",
+		"battlefield": 8,
+		"life": 18,
+		"spellboard": 3,
+		"text": [
+			{
+				"name": "Renewal",
+				"cost": [
+					"[[side]]",
+					"[[exhaust]]"
+				],
+				"text": "You may take 1 additional main action ([[main]]) this turn, but only to take a pass action."
+			}
+		]
+	}
+]
