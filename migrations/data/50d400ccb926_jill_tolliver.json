@@ -382,7 +382,8 @@
 				"name": "Treasures of the Ages",
 				"text": "When an alteration that doesn't share a name with any other card you control enters play attached to a unit or Phoenixborn you control, you may reroll a die in your exhausted pool and place it in your active pool. This ability can only trigger once per turn."
 			}
-		]
+		],
+		"diceRecursion": 1
 	},
 	{
 		"name": "Flicker",
