@@ -116,9 +116,9 @@ def view(deck_id, page=1, show_saved=False):
         'charm': 0,
         'illusion': 0,
         'natural': 0,
-        'divine': 5,
-        'sympathy': 6,
-        'time': 7,
+        'divine': 6,
+        'sympathy': 7,
+        'time': 0,
     }
     for die in deck.dice:
         release_ids.add(dice_to_release[DiceFlags(die.die_flag).name])
