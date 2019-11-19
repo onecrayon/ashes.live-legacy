@@ -1,0 +1,140 @@
+Bloodstained Dagger
+Alteration Spell - Unit
+[[main]] - 1 [[time:class]]
+Attack +1
+
+~ Conceal 1: When a player declares blockers, you may remove 1 card in your discard pile from the game to play this spell from your discard pile without paying its main action cost.
+
+This unit now has the following ability:
+
+Throw 1: During your turn, you may place 1 exhaustion token on this unit to deal 1 damage to a target unit.
+
+=====
+
+Chimera Smasher
+Alteration Spell - Unit
+1 [[time:class]] / [[main]] - [[side]] - 1 [[time:power]]
+Attack +2
+
+This unit now has the following abilities:
+
+Aftershock 1: When this unit deals damage by attacking or countering, you may place 1 wound token on a target unit.
+
+Battle Impairment: When this unit is in battle, it deals its damage after other units without Battle Impairment deal their damage. If this unit also has Battle Advantage, it loses that ability and this one.
+
+=====
+
+Deteriorating Armor
+Alteration Spell - Unit
+[[main]] - [[side]] - 1 [[time:class]]
+Life +X
+
+* Countdown 2: This card comes into play with 2 status tokens. At the end of the round, remove 1 status token from this card. If you cannot, dsicard this card instead.
+
+* X = Number of status tokens on this card.
+
+This unit now has the following ability:
+
+* Armored 1: When this unit would receive damage, prevent 1 damage.
+
+=====
+
+Hastened Response
+Ready Spell - Spellboard
+[[main]] - 1 [[time:class]]
+
+After an opponent declares attackers, you may place 1 exhaustion token on this card to choose a unit you control. That unit gains the following ability for the remainder of this turn:
+
+Unit Guard: This unit may guard a unit that is being attacked.
+
+=====
+
+Missing Page
+Reaction Spell - Discard
+1 [[time:class]]
+
+You may play this spell when a conjuration is destroyed.
+
+Place 1 exhaustion token on a target ready spell with a printed effect that can place a unit of the same name onto a battlefield.
+
+=====
+
+Paradox Clone
+Reaction Spell - Discard
+1 [[time:power]]
+
+You may play this spell when a conjuration with no abilities enters the battlefield under your control.
+
+Place an additional conjuration of the same name from your conjuration pile onto the battlefield and attach a [[Broken Timeline]] conjured alteration spell to that unit.
+
+=====
+
+Relic Broker
+Ally - Battlefield
+[[main]] - 1 [[time:power]] - 1 [[time:class]] - 1 [[basic]]
+Attack 0 - Life 1 - Recover 0
+
+Tools Across Time: When this unit comes into play, search your draw pile and discard pile for up to 1 alteration spell from each pile and attach them to this unit. All alterations attached this way must have a Magic Play Cost of 3 or less, and be named differently. Shuffle your draw pile afterward.
+
+=====
+
+Summon Flying Monkey
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[time:class]] - 1 [[basic]]: Place a [[Flying Monkey]] conjuration onto your battlefield. Choose a target alteration spell or unit with 1 or more alteration spells attached to it. You may add or remove 1 status token to/from that target.
+
+Focus 1: You may move an alteration spell attached to a unit you control onto that [[Flying Monkey]].
+
+=====
+
+Summon Loyal Hound
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 3 [[basic]]: Place a [[Loyal Hound]] conjuration onto your battlefield.
+
+=====
+
+Trusted Boomerang (Jill Traversack)
+Action Spell - Discard
+1 [[time:class]] / [[main]] - [[side]]
+
+Deal 1 damage to a target unit an opponent controls. Continue repeating this effect until it doesn't result in the destruction of a unit. Then, if any units received damage from this effect, draw 1 card.
+
+~ Callback: When your turn begins, if this card is in your discard pile and your Phoenixborn is unexhausted, you may spend 1 [[basic]] and place 1 exhaustion token on your Phoenixborn to return this card from your discard pile to your hand.
+
+=====
+
+Broken Timeline
+Conjured Alteration Spell - Unit
+Copies 3
+
+* This spell cannot be moved or leave play unless the attached unit leaves play.
+
+This unit gains the following ability:
+
+* Temporary Existence: When this unit would leave play for any reason, remove it from the game instead.
+
+=====
+
+Loyal Hound
+Conjuration - Battlefield
+Attack 0 - Life 4 - Recover 0 - Copies 3
+
+Fetch: When this unit deals damage to an opponent's Phoenixborn, remove up to 1 target card in that player's discard pile from the game. If you do, you may shuffle a card from your discard pile into your draw pile.
+
+* Rage 2: Add 2 to this unit's attack value for each wound token on this unit.
+
+=====
+
+Flying Monkey
+Conjuration - Battlefield
+Attack 3 - Life 1 - Recover 0 - Copies 4
+
+=====
+
+Jill Traversack
+Battlefield 5 - Life 17 - Spellboard 4
+
+Treasures of the Ages: When an alteration that doesn't share a name with any other card you control enters play attached to a unit or Phoenixborn you control, you may reroll a die in your exhausted pool and place it in your active pool. This ability can only trigger once per turn.

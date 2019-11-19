@@ -1,0 +1,138 @@
+Flicker
+Alteration Spell - Unit
+[[side]] - 1 [[time:class]]
+
+Disenchant: [[side]] - 1 [[discard]]: Discard this card.
+
+Respark: 1 [[charm:class]]
+
+=====
+
+Future Visions
+Ready Spell - Spellboard
+[[main]] - 1 [[time:class]]
+
+* After the prepare phase, each player draws 1 card.
+
+[[main]] or [[side]] - [[exhaust]]: Look at the top card of each player's draw pile. Then, choose one of the following effects:
+
+- Each player draws 1 card.
+
+- Discard 1 card off the top of each player's draw pile.
+
+Focus 2: Each opponent with no cards in their draw pile must discard 1 card of their choice from their hand.
+
+=====
+
+Law Of Courtesy
+Ready Spell - Spellboard
+[[main]] - 1 [[divine:class]] / 1 [[charm:class]]
+
+When this spell comes into play, you may remove 1 exhaustion token from a target unit with an attack value of 2 or less.
+
+Players must spend 1 [[basic]] to take an Attack a Phoenixborn main action or Attack a Unit main action.
+
+* Bound: This card cannot be discarded from your spellboard when you Meditate.
+
+* Fleeting: Discard this card at the end of the round.
+
+=====
+
+Royal Vizier
+Ally - Battlefield
+[[main]] - 1 [[time:power]] / 1 [[charm:power]] - 1 [[charm:class]]
+Attack 1 - Life 3 - Recover 1
+
+Ambush 1: When this unit comes into play, you may deal 1 damage to a target unit or Phoenixborn.
+
+* Diplomacy: When this unit deals damage to an opponent's Phoenixborn, you may choose not to place wound tokens on that Phoenixborn. If you do, look at the top 2 cards of that player's draw pile. Remove 1 of those cards from the game, and place the other card on either the top or bottom of its owner's draw pile.
+
+=====
+
+Summon Clockwork Frog
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[time:class]]: Place a [[Clockwork Frog]] conjuration onto your battlefield.
+
+=====
+
+Summon Exotic Gorilla
+Ready Spell - Spellboard
+[[main]] - 1 [[time:power]]
+
+[[main]] - [[exhaust]] - 1 [[time:class]] - 1 [[basic]]: Place an [[Exotic Gorilla]] conjuration onto your battlefield.
+
+Focus 1: You may discard an unexhausted ready spell you control. If you do, draw 1 card, then discard 1 card off the top of a target player's draw pile.
+
+=====
+
+Sycophant
+Ally - Battlefield
+[[main]] - 1 [[charm:class]] - 1 [[basic]]
+Attack 1 - Life 2 - Recover 0
+
+* Last Blessing 2: When this unit is destroyed, remove 2 wound tokens from a target unit or Phoenixborn.
+
+* Last Request 1: When this unit is destroyed, discard 1 card off the top of a target player's draw pile.
+
+~ Exile: When this unit is placed in its owner's discard pile, remove it from the game.
+
+=====
+
+Time Stop
+Action Spell - Discard
+[[side]] - 1 [[time:class]]
+
+Choose a target unit you own. That unit gains the following abilies for the rest of the turn:
+
+Bypass: This unit cannot be blocked or guarded.
+
+* Reality Fracture: At the end of the turn, remove this unit from the game.
+
+=====
+
+Unwavering Loyalty
+Alteration Spell - Unit
+[[side]] - 1 [[charm:class]]
+
+* When this spell is removed from play, discard the attached unit.
+
+* This unit does not count towards your battlefield limit and gains the following ability:
+
+Decoy: When a unit you control would become the target of a spell, ability, or dice power, and this unit could have been chosen as that target, you may place 1 exhaustion token on this unit to change the chosen target to be this unit instead.
+
+=====
+
+Forever In The Moment (Tolliver I)
+Action Spell - Discard
+[[main]] - 1 [[basic]]
+
+Take 2 additional main actions ([[main]]) this turn. You cannot take an Attack a Phoenixborn or Attack a Unit main action this turn.
+
+=====
+
+Clockwork Frog
+Conjuration - Battlefield
+Attack 0 - Life 1 - Recover 0 - Copies 3
+
+Spiked Skin 2: When this unit is dealt damage by one or more attacking or countering units, deal 2 damage to each unit that is attacking or countering this unit.
+
+Armored 1: When this unit would receive damage, prevent 1 damage.
+
+=====
+
+Exotic Gorilla
+Conjuration - Battlefield
+Attack 3 - Life 4 - Recover 0 - Copies 2
+
+Gigantic 2: This unit cannot be blocked or guarded against by units with a life value of 2 or less.
+
+* Massive 2: This unit occupies 1 additional slot on your battlefield. (This unit cannot be placed or moved onto your battlefield unless you have 1 additional slot.)
+
+=====
+
+Tolliver I
+Battlefield 8 - Life 18 - Spellboard 3
+
+Renewal: [[side]] - [[exhaust]]: You may take 1 additional main action ([[main]]) this turn, but only to take a pass action.
