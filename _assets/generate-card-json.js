@@ -93,7 +93,7 @@ var fs = require('fs'),
 	possibleDice = ['basic', 'ceremonial', 'charm', 'illusion', 'natural', 'divine', 'sympathy'],
 	parseCostToWeight = function (costCount, costText) {
 		if (!costCount && !costText) {
-			return null
+			return 0
 		}
 		var costNumber = costCount ? parseInt(costCount) : null,
 			costTypeArray = costText.split(':'),
