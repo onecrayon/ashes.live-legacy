@@ -3,7 +3,7 @@
   "version": "1.10.16",
   "scripts": {
     "venv": ". venv/bin/activate",
-    "upgrade": ". venv/bin/activate && pip3 install -r requirements.txt && npm upgrade",
+    "upgrade": ". venv/bin/activate && pip3 install -r requirements.txt && npm install",
     "build": "webpack --mode=development && ./node_modules/less/bin/lessc app/static/less/styles.less app/static/css/styles.css",
     "build-production": "export ENVIRONMENT='production' && export NODE_ENV='production' && webpack --mode=production && ./node_modules/less/bin/lessc app/static/less/styles.less app/static/css/styles.min.css --clean-css && . venv/bin/activate && ./cli.py cdnize_style_urls",
     "start": "export FLASK_ENV=development && . venv/bin/activate && ./cli.py runserver -r",
