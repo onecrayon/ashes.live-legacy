@@ -1,13 +1,14 @@
 import json
 
 from flask import Blueprint, jsonify, request
-from flask_login import current_user
+from flask_login import current_user, login_required
 from sqlalchemy_fulltext import FullTextSearch
 import sqlalchemy_fulltext.modes as FullTextMode
 
 from app import db
 from app.models.ashes_500 import Ashes500Revision
 from app.models.card import Card, NameTextSearch
+from app.models.release import Release, UserRelease
 from app.utils.ashes_500 import get_ashes_500_maps
 
 mod = Blueprint('api_cards', __name__, url_prefix='/api/cards')
@@ -102,3 +103,24 @@ def search():
             FullTextSearch(terms, NameTextSearch, FullTextMode.BOOLEAN)
         )
     return jsonify(query.all())
+
+
+@mod.route('/collection', methods=['POST'])
+@login_required
+def collection():
+    data = request.get_json()
+    # If we have releases, populate them
+    releases = db.session.query(Release.id).filter(
+        Release.id.in_(data or [])
+    )
+    if not data or not releases:
+        current_user.collection.clear()
+        db.session.commit()
+        return jsonify([])
+    
+    # Populate the collection with the newly posted releases
+    current_user.collection = [
+        UserRelease(release_id=x.id) for x in releases
+    ]
+    db.session.commit()
+    return jsonify([x.release_id for x in current_user.collection])
