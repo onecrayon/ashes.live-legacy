@@ -401,6 +401,7 @@ def clone(deck_id):
     deck.created = None
     deck.modified = None
     deck.is_preconstructed = False
+    deck.preconstructed_release = None
     dice = []
     for die in deck.dice:
         make_transient(die)
