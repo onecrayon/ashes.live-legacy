@@ -25,6 +25,8 @@ Keys used by magic cost logic:
   this card returns from the exhausted pool as part of its effects. Defaults
   to 1 for things like Empower or Battle Mage where the number is actually
   optional or variable depending on usage.
+* `effectRepeats`: a root-level boolean that represents if the effectMagicCost
+  can be spent repeatedly (i.e. doesn't exhaust the card)
 """
 
 import json

@@ -1,0 +1,813 @@
+[
+	{
+		"name": "Bone Sea Privateer",
+		"stub": "bone-sea-privateer",
+		"release": 23,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[natural:class]]",
+			"1 [[basic]]"
+		],
+		"weight": 206,
+		"attack": 1,
+		"life": 2,
+		"recover": 0,
+		"text": [
+			{
+				"name": "Fathom Trawl",
+				"text": "When this unit comes into play, you may return an alteration spell from your discard to your hand."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Inheritance 1",
+				"text": "When this unit is destroyed, you may place 1 status token on a target unit."
+			}
+		],
+		"dice": [
+			"natural"
+		],
+		"magicCost": {
+            "natural:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Flash Back",
+		"stub": "flash-back",
+		"release": 23,
+		"type": "Action Spell",
+		"placement": "Discard",
+		"cost": [
+			"[[main]]",
+			"1 [[time:class]]"
+		],
+		"weight": 106,
+		"text": [
+			{
+				"text": "Remove up to 3 wound tokens and 1 exhaustion token from among Phoenixborn your opponents control. Then remove an equivalent number of tokens (by type) from your Phoenixborn."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Loot The Future",
+		"stub": "loot-the-future",
+		"release": 23,
+		"type": "Action Spell",
+		"placement": "Discard",
+		"cost": [
+			"[[main]]",
+			[
+				"1 [[time:class]]",
+				"[[side]]"
+			]
+		],
+		"weight": 9,
+		"text": [
+			{
+				"text": "As an additional cost to cast this spell, remove up to four status tokens from among units you control."
+			},
+			{
+				"text": "Remove 1 + X wound tokens from among units you control, where X is the number of of status tokens you removed to cast this spell."
+			}
+		],
+		"altDice": [
+			"time"
+		]
+	},
+	{
+		"name": "Pearl Conch Venom",
+		"stub": "pearl-conch-venom",
+		"release": 23,
+		"type": "Alteration Spell",
+		"placement": "Unit",
+		"cost": [
+			"[[main]]",
+			"1 [[natural:power]]"
+		],
+		"weight": 107,
+		"text": [
+			{
+				"text": "This unit now has the following abilities:"
+			},
+			{
+				"name": "Battle Advantage",
+				"text": "When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage."
+			},
+			{
+				"name": "Deathstrike",
+				"text": "When this unit deals 1 or more damage to a unit it is attacking or countering, destroy that unit."
+			}
+		],
+		"dice": [
+			"natural"
+		],
+		"magicCost": {
+            "natural:power": 1
+        }
+	},
+	{
+		"name": "Shipside Assassin",
+		"stub": "shipside-assassin",
+		"release": 23,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[time:power]]",
+			"1 [[natural:class]]",
+			"1 [[basic]]"
+		],
+		"weight": 308,
+		"attack": 4,
+		"life": 3,
+		"recover": 1,
+		"text": [
+			{
+				"inexhaustible": true,
+				"name": "Biding Time",
+				"text": "While this unit has 1 or more exhaustion tokens on it, it cannot be affected by opponents' spells, abilities, or dice powers, and cannot be chosen as the target of an attack action."
+			}
+		],
+		"dice": [
+			"time",
+			"natural"
+		],
+		"magicCost": {
+            "time:power": 1,
+            "natural:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Shriveling",
+		"stub": "shriveling",
+		"release": 23,
+		"type": "Alteration Spell",
+		"placement": "Phoenixborn",
+		"cost": [
+			"[[main]]",
+			"1 [[time:class]]"
+		],
+		"weight": 106,
+		"text": [
+			{
+				"text": "When one or more exhaustion tokens are removed from this Phoenixborn, place 1 wound token on this Phoenixborn."
+			},
+			{
+				"inexhaustible": true,
+				"text": "At the end of the round, move 1 die from your active pool to your exhausted pool."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Summon Deepwater Hammerhead",
+		"stub": "summon-deepwater-hammerhead",
+		"release": 23,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			"3 [[time:class]]",
+			"2 [[basic]]"
+		],
+		"weight": 508,
+		"text": [
+			{
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]"
+				],
+				"text": "Place a [[Deepwater Hammerhead]] conjuration onto the battlefield."
+			}
+		],
+		"conjurations": [
+			"Deepwater Hammerhead"
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 3,
+            "basic": 2
+        }
+	},
+	{
+		"name": "Summon Riptide Siren",
+		"stub": "summon-riptide-siren",
+		"release": 23,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			"1 [[time:class]]"
+		],
+		"weight": 106,
+		"text": [
+			{
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]"
+				],
+				"text": "Discard the top 2 cards of your draw pile. If you do, place a [[Riptide Siren]] conjuration onto your battlefield."
+			},
+			{
+				"name": "Focus 1",
+				"text": "Discard 1 fewer card from the top of your draw pile."
+			},
+			{
+				"name": "Focus 2",
+				"text": "You may place 1 status token on a Riptide Siren you control."
+			}
+		],
+		"conjurations": [
+			"Riptide Siren"
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Whirlpool",
+		"stub": "whirlpool",
+		"release": 23,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]"
+		],
+		"weight": 5,
+		"text": [
+			{
+				"text": "When a unit would deal damage by attacking or countering, you may spend 1 [[natural:class]] and place 1 exhaustion token on this card to reduce a target unit's attack value by 1 until the end of the turn."
+			},
+			{
+				"name": "Focus 1",
+				"text": "You may reduce that unit's attack value by an additional 1."
+			},
+			{
+				"name": "Focus 2",
+				"text": "Then, you may reduce that unit's attack value by an additional 1."
+			}
+		],
+		"dice": [
+			"natural"
+		],
+		"effectMagicCost": {
+            "natural:class": 1
+        }
+	},
+	{
+		"name": "The Perfect Storm",
+		"stub": "the-perfect-storm",
+		"release": 23,
+		"phoenixborn": "Devlin Longbow",
+		"type": "Action Spell",
+		"placement": "Discard",
+		"cost": [
+			"[[main]]",
+			"2 [[basic]]"
+		],
+		"weight": 205,
+		"text": [
+			{
+				"text": "Deal 2 damage to each unit without any status tokens on them."
+			}
+		],
+		"magicCost": {
+            "basic": 2
+        }
+	},
+	{
+		"name": "Devlin Longbow",
+		"stub": "devlin-longbow",
+		"release": 23,
+		"type": "Phoenixborn",
+		"battlefield": 6,
+		"life": 19,
+		"spellboard": 3,
+		"text": [
+			{
+				"name": "Trial by Fire",
+				"cost": [
+					"[[side]]",
+					"[[exhaust]]",
+					"1 [[basic]]"
+				],
+				"text": "Choose a target unexhausted unit you control and a target unexhausted unit an opponent controls. Those units deal damage to each other equal to their attack value. If only one of those units remains in play afterward, place 1 status token on it."
+			}
+		],
+		"effectMagicCost": {
+            "basic": 1
+        }
+	},
+	{
+		"name": "Deepwater Hammerhead",
+		"stub": "deepwater-hammerhead",
+		"release": 23,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 3,
+		"life": 4,
+		"recover": 1,
+		"copies": 2,
+		"text": [
+			{
+				"inexhaustible": true,
+				"name": "Consume",
+				"text": "Whenever an opponent's unit is destroyed as a result of a spell, attack, counter, ability, or dice power you control, place 1 status token on this unit. If the destroyed unit was an ally, remove it from the game."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Blood in the Water",
+				"text": "Whenever a conjuration would leave play, you may remove 3 status tokens from this card. If you do, until the end of the turn whenever a conjuration would be removed from the game, discard it instead."
+			}
+		]
+	},
+	{
+		"name": "Riptide Siren",
+		"stub": "riptide-siren",
+		"release": 23,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 2,
+		"life": 2,
+		"recover": 0,
+		"copies": 4,
+		"text": [
+			{
+				"name": "Entrancing Melody",
+				"cost": [
+					"[[main]]"
+				],
+				"text": "Remove 1 status token from this unit. If you do, choose a card in a target discard pile. Either shuffle that card into its owner's draw pile, or remove it from the game."
+			}
+		]
+	},
+	{
+		"name": "Alchemist",
+		"stub": "alchemist",
+		"release": 24,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[time:power]] : 1 [[basic]]"
+		],
+		"weight": 5,
+		"attack": 1,
+		"life": 3,
+		"recover": 1,
+		"text": [
+			{
+				"name": "Create Elixir",
+				"cost": [
+					"[[side]]"
+				],
+				"text": "Place a die from your active pool onto this card on a class side."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Consume Elixir",
+				"text": "You may exhaust dice on this card as if they were in your active pool when paying costs of cards in your hand or the activation costs of ready spells."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:power": 1
+        }
+	},
+	{
+		"name": "Cheat Death",
+		"stub": "cheat-death",
+		"release": 24,
+		"type": "Reaction Spell",
+		"placement": "Discard",
+		"cost": [
+			"1 [[time:class]]"
+		],
+		"weight": 101,
+		"text": [
+			{
+				"text": "You may play this spell when a unit would be destroyed or removed from the game."
+			},
+			{
+				"text": "Prevent that destruction or removal. If the unit is an ally you control, place it in your hand. Otherwise, discard that unit and draw 1 card."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Dark Procurement",
+		"stub": "dark-procurement",
+		"release": 24,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			"1 [[ceremonial:class]]"
+		],
+		"weight": 106,
+		"text": [
+			{
+				"text": "When this spell comes into play, re-roll up to 1 die in your exhausted pool and place it into your active pool."
+			},
+			{
+				"text": "When an ally would be placed in a player's discard pile from the battlefield, you may place 1 exhaustion token on this spell. If you do, place that ally under your Phoenixborn face down instead of placing it in its owner's discard pile."
+			}
+		],
+		"dice": [
+			"ceremonial"
+		],
+		"magicCost": {
+            "ceremonial:class": 1
+        },
+        "diceRecursion": 1
+	},
+	{
+		"name": "Nihilist",
+		"stub": "nihilist",
+		"release": 24,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[time:class]]"
+		],
+		"weight": 106,
+		"attack": 0,
+		"life": 2,
+		"recover": 0,
+		"text": [
+			{
+				"name": "One with Nothing",
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]"
+				],
+				"text": "Place 1 wound token on a target unit and 1 wound token on a target Phoenixborn. Then, destroy this unit."
+			},
+			{
+				"betweenRealms": true,
+				"name": "Entombed",
+				"text": "This unit cannot be placed in your hand from a discard pile through abilities or dice powers."
+			}
+		],
+		"dice": [
+			"time"
+		],
+		"magicCost": {
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Plague Doctor",
+		"stub": "plague-doctor",
+		"release": 24,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[ceremonial:power]]",
+			"1 [[time:class]]",
+			"1 [[basic]]"
+		],
+		"weight": 308,
+		"attack": 1,
+		"life": 4,
+		"recover": 2,
+		"text": [
+			{
+				"name": "Deathstrike",
+				"text": "When this unit deals 1 or more damage to a unit it is attacking or countering, destroy that unit."
+			},
+			{
+				"name": "Alert",
+				"text": "Do not place an exhaustion token on this unit as a result of it countering."
+			}
+		],
+		"dice": [
+			"ceremonial",
+			"time"
+		],
+		"magicCost": {
+            "ceremonial:power": 1,
+            "time:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Reaper's Rescue",
+		"stub": "reapers-rescue",
+		"release": 24,
+		"type": "Reaction Spell",
+		"placement": "Discard",
+		"cost": [
+			"1 [[ceremonial:class]]"
+		],
+		"weight": 101,
+		"text": [
+			{
+				"text": "You may play this spell when an opponent's spell, ability, or dice power targets a unit you control or would become attached to it. If you do, draw 1 card, then select 1 die in your exhausted pool, re-roll it, and place it in your active pool."
+			},
+			{
+				"text": "Destroy the targeted unit and cancel all remaining effects of that spell, ability, or dice power."
+			}
+		],
+		"dice": [
+			"ceremonial"
+		],
+		"magicCost": {
+            "ceremonial:class": 1
+        },
+        "diceRecursion": 1
+	},
+	{
+		"name": "Soul Augur",
+		"stub": "soul-augur",
+		"release": 24,
+		"type": "Ally",
+		"placement": "Battlefield",
+		"cost": [
+			"[[main]]",
+			"1 [[ceremonial:class]]",
+			"1 [[time:class]]"
+		],
+		"weight": 207,
+		"attack": 2,
+		"life": 2,
+		"recover": 0,
+		"text": [
+			{
+				"name": "Fateful Arrival",
+				"text": "When this unit leaves play, search your draw pile for an ally card with a name other than Soul Augur, reveal it, and place it in your hand. Shuffle your draw pile."
+			}
+		],
+		"dice": [
+			"ceremonial",
+			"time"
+		],
+		"magicCost": {
+            "ceremonial:class": 1,
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Summon Necromantic Abomination",
+		"stub": "summon-necromantic-abomination",
+		"release": 24,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]"
+		],
+		"weight": 5,
+		"text": [
+			{
+				"cost": [
+					"[[main]]",
+					"[[exhaust]]",
+					"1 [[ceremonial:class]]",
+					"1 [[time:class]]"
+				],
+				"text": "Reveal any number of ally cards from your hand and face down under your Phoenixborn. Place a [[Necromantic Abomination]] conjuration onto the battlefield, and place all revealed ally cards face down underneath that unit."
+			},
+			{
+				"name": "Focus 1",
+				"text": "You may place 1 additional ally from your discard pile face down underneath that [[Necromantic Abomination]]."
+			},
+			{
+				"name": "Focus 2",
+				"text": "Move any number of face down ally cards from under a [[Necromantic Abomination]] you control to another [[Necromantic Abomination]] you control."
+			}
+		],
+		"conjurations": [
+			"Necromantic Abomination"
+		],
+		"dice": [
+			"ceremonial",
+			"time"
+		],
+		"effectMagicCost": {
+            "ceremonial:class": 1,
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Summon Reaper Mount",
+		"stub": "summon-reaper-mount",
+		"release": 24,
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]",
+			"1 [[basic]]"
+		],
+		"weight": 105,
+		"text": [
+			{
+				"cost": [
+					"[[side]]",
+					"[[exhaust]]",
+					"1 [[ceremonial:class]]",
+					"1 [[time:class]]"
+				],
+				"text": "Remove an unexhausted ally you control from play. If you do, place a [[Reaper Mount]] conjuration onto your battlefield and place that ally face down under that unit."
+			}
+		],
+		"conjurations": [
+			"Reaper Mount"
+		],
+		"dice": [
+			"ceremonial",
+			"time"
+		],
+		"magicCost": {
+            "basic": 1
+        },
+        "effectMagicCost": {
+            "ceremonial:class": 1,
+            "time:class": 1
+        }
+	},
+	{
+		"name": "Extend Animation",
+		"stub": "extend-animation",
+		"release": 24,
+		"phoenixborn": "Plutarch Eastgate",
+		"type": "Ready Spell",
+		"placement": "Spellboard",
+		"cost": [
+			"[[main]]"
+		],
+		"weight": 5,
+		"text": [
+			{
+				"text": "When a unit with no inexhaustible abilities would be destroyed, you may spend 1 [[ceremonial:class]], 1 [[basic]], and place 1 exhaustion token on this card. If you do, remove all tokens, attached cards, and dice from that unit. Then, instead of destroying it, place it on your battlefield with an [[Unnatural]] conjured alteration spell attached to it."
+			},
+			{
+				"name": "Focus 2",
+				"text": "You may choose not to attach an [[Unnatural]] conjured alteration spell to that unit."
+			}
+		],
+		"conjurations": [
+			"Unnatural"
+		],
+		"dice": [
+			"ceremonial"
+		],
+		"effectMagicCost": {
+            "ceremonial:class": 1,
+            "basic": 1
+        }
+	},
+	{
+		"name": "Imbued Vigor",
+		"stub": "imbued-vigor",
+		"release": 24,
+		"phoenixborn": "Plutarch Eastgate",
+		"type": "Conjured Alteration Spell",
+		"placement": "Unit",
+		"attack": "+1",
+		"copies": 1,
+		"text": [
+			{
+				"inexhaustible": true,
+				"text": "Discard this alteration at the beginning of your turn."
+			},
+			{
+				"text": "This unit now has the following ability:"
+			},
+			{
+				"inexhaustible": true,
+				"name": "Dauntless",
+				"text": "If this unit recevies damage in battle, remove 1 exhaustion token from this unit at the end of that battle."
+			}
+		]
+	},
+	{
+		"name": "Unnatural",
+		"stub": "unnatural",
+		"release": 24,
+		"phoenixborn": "Plutarch Eastgate",
+		"type": "Conjured Alteration Spell",
+		"placement": "Unit",
+		"recover": "-3",
+		"copies": 5,
+		"text": [
+			{
+				"inexhaustible": true,
+				"text": "This unit is considered to have no abilities."
+			},
+			{
+				"inexhaustible": true,
+				"text": "If this alteration would become unattached from this unit, discard this card and destroy the attached unit instead."
+			}
+		]
+	},
+	{
+		"name": "Necromantic Abomination",
+		"stub": "necromantic-abomination",
+		"release": 24,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 1,
+		"life": 1,
+		"recover": 0,
+		"copies": 2,
+		"text": [
+			{
+				"name": "Terrifying 1",
+				"text": "This unit cannot be blocked or guarded against by units with an attack value of 1 or less."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Extra Limbs",
+				"text": "For each face down card under this unit, add 1 to this unit's attack and life values."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Slough",
+				"text": "When this unit would receive damage, you may discard a face down card underneath this unit to prevent that damage."
+			}
+		]
+	},
+	{
+		"name": "Plutarch Eastgate",
+		"stub": "plutarch-eastgate",
+		"release": 24,
+		"type": "Phoenixborn",
+		"battlefield": 5,
+		"life": 19,
+		"spellboard": 4,
+		"text": [
+			{
+				"name": "Gather Specimens",
+				"text": "At the end of the prepare phase, you may place 1 ally from any discard pile face down under this card."
+			},
+			{
+				"name": "Extract Essence",
+				"cost": [
+					"[[side]]"
+				],
+				"text": "Discard 1 face down card from this card. If that card is an ally, attach an [[Imbued Vigor]] conjured alteration spell to a target unit."
+			}
+		],
+		"conjurations": [
+			"Imbued Vigor"
+		]
+	},
+	{
+		"name": "Reaper Mount",
+		"stub": "reaper-mount",
+		"release": 24,
+		"type": "Conjuration",
+		"placement": "Battlefield",
+		"attack": 3,
+		"life": 3,
+		"recover": 0,
+		"copies": 2,
+		"text": [
+			{
+				"name": "Stalk",
+				"text": "This unit cannot be guarded against."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Unsummon",
+				"cost": [
+					"[[main]]"
+				],
+				"text": "Discard this unit."
+			},
+			{
+				"inexhaustible": true,
+				"name": "Dismount Rider",
+				"text": "After this unit leaves play, choose a face down ally that was under this unit and dismount that ally."
+			}
+		]
+	}
+]

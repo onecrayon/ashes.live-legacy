@@ -28,8 +28,8 @@ conjurations_table = db.Table('card_conjuration',
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     entity_id = db.Column(db.Integer, nullable=False, index=True, unique=True)
-    name = db.Column(db.String(25), nullable=False, index=True, unique=True)
-    stub = db.Column(db.String(25), nullable=False, index=True, unique=True)
+    name = db.Column(db.String(30), nullable=False, index=True, unique=True)
+    stub = db.Column(db.String(30), nullable=False, index=True, unique=True)
     phoenixborn = db.Column(db.String(25), nullable=True, index=True)
     release_id = db.Column(db.Integer, db.ForeignKey(Release.id), nullable=False, index=True, default=0)
     # This gets incremented when a card's text is updated due to errata

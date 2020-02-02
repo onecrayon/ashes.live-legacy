@@ -1,0 +1,154 @@
+Alchemist
+Ally - Battlefield
+[[main]] - 1 [[time:power]] : 1 [[basic]]
+Attack 1 - Life 3 - Recover 1
+
+Create Elixir: [[side]]: Place a die from your active pool onto this card on a class side.
+
+* Consume Elixir: You may exhaust dice on this card as if they were in your active pool when paying costs of cards in your hand or the activation costs of ready spells.
+
+=====
+
+Cheat Death
+Reaction Spell - Discard
+1 [[time:class]]
+
+You may play this spell when a unit would be destroyed or removed from the game.
+
+Prevent that destruction or removal. If the unit is an ally you control, place it in your hand. Otherwise, discard that unit and draw 1 card.
+
+=====
+
+Dark Procurement
+Ready Spell - Spellboard
+[[main]] - 1 [[ceremonial:class]]
+
+When this spell comes into play, re-roll up to 1 die in your exhausted pool and place it into your active pool.
+
+When an ally would be placed in a player's discard pile from the battlefield, you may place 1 exhaustion token on this spell. If you do, place that ally under your Phoenixborn face down instead of placing it in its owner's discard pile.
+
+=====
+
+Nihilist
+Ally - Battlefield
+[[main]] - 1 [[time:class]]
+Attack 0 - Life 2 - Recover 0
+
+One with Nothing: [[main]] - [[exhaust]]: Place 1 wound token on a target unit and 1 wound token on a target Phoenixborn. Then, destroy this unit.
+
+~ Entombed: This unit cannot be placed in your hand from a discard pile through abilities or dice powers.
+
+=====
+
+Plague Doctor
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:power]] - 1 [[time:class]] - 1 [[basic]]
+Attack 1 - Life 4 - Recover 2
+
+Deathstrike: When this unit deals 1 or more damage to a unit it is attacking or countering, destroy that unit.
+
+Alert: Do not place an exhaustion token on this unit as a result of it countering.
+
+=====
+
+Reaper's Rescue
+Reaction Spell - Discard
+1 [[ceremonial:class]]
+
+You may play this spell when an opponent's spell, ability, or dice power targets a unit you control or would become attached to it. If you do, draw 1 card, then select 1 die in your exhausted pool, re-roll it, and place it in your active pool.
+
+Destroy the targeted unit and cancel all remaining effects of that spell, ability, or dice power.
+
+=====
+
+Soul Augur
+Ally - Battlefield
+[[main]] - 1 [[ceremonial:class]] - 1 [[time:class]]
+Attack 2 - Life 2 - Recover 0
+
+Fateful Arrival: When this unit leaves play, search your draw pile for an ally card with a name other than Soul Augur, reveal it, and place it in your hand. Shuffle your draw pile.
+
+=====
+
+Summon Necromantic Abomination
+Ready Spell - Spellboard
+[[main]]
+
+[[main]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[time:class]]: Reveal any number of ally cards from your hand and face down under your Phoenixborn. Place a [[Necromantic Abomination]] conjuration onto the battlefield, and place all revealed ally cards face down underneath that unit.
+
+Focus 1: You may place 1 additional ally from your discard pile face down underneath that [[Necromantic Abomination]].
+
+Focus 2: Move any number of face down ally cards from under a [[Necromantic Abomination]] you control to another [[Necromantic Abomination]] you control.
+
+=====
+
+Summon Reaper Mount
+Ready Spell - Spellboard
+[[main]] - 1 [[basic]]
+
+[[side]] - [[exhaust]] - 1 [[ceremonial:class]] - 1 [[time:class]]: Remove an unexhausted ally you control from play. If you do, place a [[Reaper Mount]] conjuration onto your battlefield and place that ally face down under that unit.
+
+=====
+
+Extend Animation (Plutarch Eastgate)
+Ready Spell - Spellboard
+[[main]]
+
+When a unit with no inexhaustible abilities would be destroyed, you may spend 1 [[ceremonial:class]], 1 [[basic]], and place 1 exhaustion token on this card. If you do, remove all tokens, attached cards, and dice from that unit. Then, instead of destroying it, place it on your battlefield with an [[Unnatural]] conjured alteration spell attached to it.
+
+Focus 2: You may choose not to attach an [[Unnatural]] conjured alteration spell to that unit.
+
+=====
+
+Imbued Vigor (Plutarch Eastgate)
+Conjured Alteration Spell - Unit
+Attack +1 - Copies 1
+
+* Discard this alteration at the beginning of your turn.
+
+This unit now has the following ability:
+
+* Dauntless: If this unit recevies damage in battle, remove 1 exhaustion token from this unit at the end of that battle.
+
+=====
+
+Unnatural (Plutarch Eastgate)
+Conjured Alteration Spell - Unit
+Recover -3 - Copies 5
+
+* This unit is considered to have no abilities.
+
+* If this alteration would become unattached from this unit, discard this card and destroy the attached unit instead.
+
+=====
+
+Necromantic Abomination
+Conjuration - Battlefield
+Attack 1 - Life 1 - Recover 0 - Copies 2
+
+Terrifying 1: This unit cannot be blocked or guarded against by units with an attack value of 1 or less.
+
+* Extra Limbs: For each face down card under this unit, add 1 to this unit's attack and life values.
+
+* Slough: When this unit would receive damage, you may discard a face down card underneath this unit to prevent that damage.
+
+=====
+
+Plutarch Eastgate
+Battlefield 5 - Life 19 - Spellboard 4
+
+Gather Specimens: At the end of the prepare phase, you may place 1 ally from any discard pile face down under this card.
+
+Extract Essence: [[side]]: Discard 1 face down card from this card. If that card is an ally, attach an [[Imbued Vigor]] conjured alteration spell to a target unit.
+
+=====
+
+Reaper Mount
+Conjuration - Battlefield
+Attack 3 - Life 3 - Recover 0 - Copies 2
+
+Stalk: This unit cannot be guarded against.
+
+* Unsummon: [[main]]: Discard this unit.
+
+* Dismount Rider: After this unit leaves play, choose a face down ally that was under this unit and dismount that ally.

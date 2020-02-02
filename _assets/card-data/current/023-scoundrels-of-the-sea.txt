@@ -1,0 +1,122 @@
+Bone Sea Privateer
+Ally - Battlefield
+[[main]] - 1 [[natural:class]] - 1 [[basic]]
+Attack 1 - Life 2 - Recover 0
+
+Fathom Trawl: When this unit comes into play, you may return an alteration spell from your discard to your hand.
+
+* Inheritance 1: When this unit is destroyed, you may place 1 status token on a target unit.
+
+=====
+
+Flash Back
+Action Spell - Discard
+[[main]] - 1 [[time:class]]
+
+Remove up to 3 wound tokens and 1 exhaustion token from among Phoenixborn your opponents control. Then remove an equivalent number of tokens (by type) from your Phoenixborn.
+
+=====
+
+Loot The Future
+Action Spell - Discard
+[[main]] - 1 [[time:class]] / [[side]]
+
+As an additional cost to cast this spell, remove up to four status tokens from among units you control.
+
+Remove 1 + X wound tokens from among units you control, where X is the number of of status tokens you removed to cast this spell.
+
+=====
+
+Pearl Conch Venom
+Alteration Spell - Unit
+[[main]] - 1 [[natural:power]]
+
+This unit now has the following abilities:
+
+Battle Advantage: When this unit is in battle, it deals its damage before other units without Battle Advantage deal their damage.
+
+Deathstrike: When this unit deals 1 or more damage to a unit it is attacking or countering, destroy that unit.
+
+=====
+
+Shipside Assassin
+Ally - Battlefield
+[[main]] - 1 [[time:power]] - 1 [[natural:class]] - 1 [[basic]]
+Attack 4 - Life 3 - Recover 1
+
+* Biding Time: While this unit has 1 or more exhaustion tokens on it, it cannot be affected by opponents' spells, abilities, or dice powers, and cannot be chosen as the target of an attack action.
+
+=====
+
+Shriveling
+Alteration Spell - Phoenixborn
+[[main]] - 1 [[time:class]]
+
+When one or more exhaustion tokens are removed from this Phoenixborn, place 1 wound token on this Phoenixborn.
+
+* At the end of the round, move 1 die from your active pool to your exhausted pool.
+
+=====
+
+Summon Deepwater Hammerhead
+Ready Spell - Spellboard
+[[main]] - 3 [[time:class]] - 2 [[basic]]
+
+[[main]] - [[exhaust]]: Place a [[Deepwater Hammerhead]] conjuration onto the battlefield.
+
+=====
+
+Summon Riptide Siren
+Ready Spell - Spellboard
+[[main]] - 1 [[time:class]]
+
+[[main]] - [[exhaust]]: Discard the top 2 cards of your draw pile. If you do, place a [[Riptide Siren]] conjuration onto your battlefield.
+
+Focus 1: Discard 1 fewer card from the top of your draw pile.
+
+Focus 2: You may place 1 status token on a Riptide Siren you control.
+
+=====
+
+Whirlpool
+Ready Spell - Spellboard
+[[main]]
+
+When a unit would deal damage by attacking or countering, you may spend 1 [[natural:class]] and place 1 exhaustion token on this card to reduce a target unit's attack value by 1 until the end of the turn.
+
+Focus 1: You may reduce that unit's attack value by an additional 1.
+
+Focus 2: Then, you may reduce that unit's attack value by an additional 1.
+
+=====
+
+The Perfect Storm (Devlin Longbow)
+Action Spell - Discard
+[[main]] - 2 [[basic]]
+
+Deal 2 damage to each unit without any status tokens on them.
+
+=====
+
+Devlin Longbow
+Battlefield 6 - Life 19 - Spellboard 3
+
+Trial by Fire: [[side]] - [[exhaust]] - 1 [[basic]]: Choose a target unexhausted unit you control and a target unexhausted unit an opponent controls. Those units deal damage to each other equal to their attack value. If only one of those units remains in play afterward, place 1 status token on it.
+
+=====
+
+Deepwater Hammerhead
+Conjuration - Battlefield
+Attack 3 - Life 4 - Recover 1 - Copies 2
+
+* Consume: Whenever an opponent's unit is destroyed as a result of a spell, attack, counter, ability, or dice power you control, place 1 status token on this unit. If the destroyed unit was an ally, remove it from the game.
+
+* Blood in the Water: Whenever a conjuration would leave play, you may remove 3 status tokens from this card. If you do, until the end of the turn whenever a conjuration would be removed from the game, discard it instead.
+
+=====
+
+Riptide Siren
+Conjuration - Battlefield
+Attack 2 - Life 2 - Recover 0 - Copies 4
+
+Entrancing Melody: [[main]]: Remove 1 status token from this unit. If you do, choose a card in a target discard pile. Either shuffle that card into its owner's draw pile, or remove it from the game.
