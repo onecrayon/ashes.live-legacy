@@ -128,7 +128,7 @@ Attack 3 - Life 4 - Recover 0 - Copies 2
 
 Gigantic 2: This unit cannot be blocked or guarded against by units with a life value of 2 or less.
 
-* Massive 2: This unit occupies 1 additional slot on your battlefield. (This unit cannot be placed or moved onto your battlefield unless you have 1 additional slot.)
+* Massive 1: This unit occupies 1 additional slot on your battlefield. (This unit cannot be placed or moved onto your battlefield unless you have 1 additional slot.)
 
 =====
 
