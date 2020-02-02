@@ -10,21 +10,23 @@
 
 	<h2 class="phg-time-class">Current projects</h2>
 
-	<p class="callout"><strong>The first two expansions are available for print and play!</strong></p>
+	<p class="callout"><strong>The first four expansions are available for print and play!</strong></p>
 
 	<ul>
-		<li><a href="{{ url_for('static', filename='files/pnp/jill-the_treasures_of_the_ages.zip') | cdn_url }}">Jill Traversack: The Treasures of the Ages</a></li>
-		<li><a href="{{ url_for('static', filename='files/pnp/tolliver-the_young_ruler.zip') | cdn_url }}">Tolliver I: The Young Ruler</a></li>
+		<li><a href="{{ url_for('static', filename='files/pnp/jill-the_treasures_of_the_ages.zip') | cdn_url }}">Jill Traversack: The Treasures of the Ages</a> (all in one)</li>
+		<li><a href="{{ url_for('static', filename='files/pnp/tolliver-the_young_ruler.zip') | cdn_url }}">Tolliver I: The Young Ruler</a> (all in one)</li>
+		<li><a href="{{ url_for('static', filename='files/pnp/devlin-the_scoundrels_of_the_sea.zip') | cdn_url }}">Devlin Longbow: The Scoundrels of the Sea</a> (for home printing: <a href="{{ url_for('static', filename='files/pnp/devlin-the_scoundrels_of_the_sea-sheets.zip') | cdn_url }}">PDF sheets</a> and <a href="{{ url_for('static', filename='files/pnp/devlin-the_scoundrels_of_the_sea-sheets-jpg.zip') | cdn_url }}">JPG sheets</a>)</li>
+		<li><a href="{{ url_for('static', filename='files/pnp/plutarch-the_mad_doctor.zip') | cdn_url }}">Plutarch Eastgate: The Mad Doctor</a> (for home printing: <a href="{{ url_for('static', filename='files/pnp/plutarch-the_mad_doctor-sheets.zip') | cdn_url }}">PDF sheets</a> and <a href="{{ url_for('static', filename='files/pnp/plutarch-the_mad_doctor-sheets-jpg.zip') | cdn_url }}">JPG sheets</a>)</li>
 		<li><a href="{{ url_for('static', filename='files/pnp/time-dice-reference.png') | cdn_url }}">Time dice reference</a></li>
 	</ul>
 
-	<p>Available in the ZIP files above are high quality versions of the cards at 300 DPI (suitable for printing using either 63x88mm or 2.5x3.5" cards), along with print sheets if you would like to print your own. You can alternately <a href="{{ url_for('static', filename='files/pnp/mpc-expansions-1-2.zip') | cdn_url }}">download card images</a> that are specifically sized for usage on <a href="https://www.makeplayingcards.com/" rel="external">MakePlayingCards.com</a> (if printing through MPC, use their 63x88mm poker cards)</p>
+	<p>Available in the ZIP files above are high quality versions of the cards at 300 DPI (suitable for printing using either 63x88mm or 2.5x3.5" cards), along with print sheets if you would like to print your own. For the first two expansions, you can alternately <a href="{{ url_for('static', filename='files/pnp/mpc-expansions-1-2.zip') | cdn_url }}">download card images</a> that are specifically sized for usage on <a href="https://www.makeplayingcards.com/" rel="external">MakePlayingCards.com</a> (if printing through MPC, use their 63x88mm poker cards).</p>
 
 	<h3>New content</h3>
 
 	<ul>
-		<li><strong>Time expansions:</strong> There are currently two expansions released and two more being designed and play-tested using the new Time dice.</li>
-		<li><strong>Time dice:</strong> Plaid Hat teased a seventh and final dice type on their deluxe expansions, but the game was canceled before Time dice were released. We are developing and play-testing a custom implementation of Time dice, along with a <a href="{{ url_for('phoenix.dice') }}">physical variant for purchase</a> (will be available Q4 2019).</li>
+		<li><strong>Time expansions:</strong> There are currently four expansions released and three more being designed and play-tested using the new Time dice.</li>
+		<li><strong>Time dice:</strong> Plaid Hat teased a seventh and final dice type on their deluxe expansions, but the game was canceled before Time dice were released. We are developing and play-testing a custom implementation of Time dice, along with a <a href="{{ url_for('phoenix.dice') }}">physical variant for purchase</a>.</li>
 		<li><strong>Raven Rules:</strong> The official FAQ includes several counter-intuitive rulings, and sadly failed to define a small number of low-level game mechanics. Raven Rules is a revised, more comprehensive ruleset (which maintains compatibility with the core rulebook).</li>
 	</ul>
 
@@ -34,8 +36,6 @@
 		<li><strong>Ashes 500:</strong> <a href="{{ url_for('ashes_500.index') }}">Ashes 500</a> values have been posted for all cards released to date!</li>
 		<li><strong>Card rebalancing:</strong> Although less far along than the above projects, some fans have expressed interest in creating errata for existing cards with an eye to improving game balance.</li>
 	</ul>
-
-	<p>Project Phoenix is still in its infancy, so we do not have a specific timeline we can share; however, we have started spoiling the new cards (check out the <a href="{{ url_for('posts.section', stub='phoenix') }}">Project Phoenix forum</a> for the latest spoilers!).</p>
 
 	<p>We hope to keep Ashes fresh for its dedicated fans for a long time to come.</p>
 
@@ -76,9 +76,7 @@
 
 	<p>Development for Time dice and cards is currently being handled via the <a href="http://www.strangecopy.com/index.php/ashes-chat/">AshesChat Slack channel</a> and <a href="{{ url_for('posts.section', stub='phoenix') }}">here on Ashes.live</a>. If you're interested in helping design or test cards, please come say hi!</p>
 
-	<p><strong>The first two expansions are out!</strong> Download and PnP <a href="{{ url_for('static', filename='files/pnp/jill-the_treasures_of_the_ages.zip') | cdn_url }}">Jill Traversack</a> and <a href="{{ url_for('static', filename='files/pnp/tolliver-the_young_ruler.zip') | cdn_url }}">Tolliver I</a>.</p>
-
-	<p>You can check out our <a href="{{ url_for('phoenix.dice') }}">physical Turtle Dice project here</a>. Dice will be available for purchase Q4 of 2019.</p>
+	<p>You can check out our <a href="{{ url_for('phoenix.dice') }}">physical Turtle Dice project here</a>. Dice are available for purchase now via email.</p>
 
 	<p><a href="{{ url_for('static', filename='files/ashes-raven-rules.pdf') | cdn_url }}">Raven Rules are available here</a> (PDF); please try them out and let us know what worked and what didn't!</p>
 

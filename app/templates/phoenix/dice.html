@@ -9,7 +9,7 @@
 {% block content %}
 	<p class="callout">Turtle dice are a go!</p>
 
-	<p>{{ usertag({'username': 'Skaak', 'badge': '1st!'}) }} here! There is enough interest in Turtle Dice to justify a bulk order, so they will be available in Q4 2019. If you are finding this page for the first time, please enter your information below to be notified when Turtle Dice are available! I will over-order a bit to ensure there will be some copies for folks who didn't hear about them earlier.</p>
+	<p>{{ usertag({'username': 'Skaak', 'badge': '1st!'}) }} here! I have the dice in hand, but it's taking me a while to get any semblance of online purchasing up and running (life happened). If you are interested in getting them a little earlier than others, please <a href="{{ url_for('home.feedback') }}">contact me!</a> I am happy to fulfill dice orders by hand.</p>
 
 	<h2>What are Turtle Dice?</h2>
 
@@ -24,45 +24,9 @@
 		<li class="die time"><span class="phg-basic-magic-alt"></span></li>
 	</ul>
 
-	<h2>Interested? Enter your info below to hear when they're available!</h2>
-
-	<form method="POST" action="{{ url_for('phoenix.dice') }}">
-		{{ form.hidden_tag() }}
-		{{ with_errors(form.email) }}
-		<p class="help-text">I will only email you when the physical dice are available; you are not signing up for a mailing list.</p>
-		{{ with_errors(form.desired_sets) }}
-		<div class="form-field full-width">
-			{{ form.only_official_icons }} {{ form.only_official_icons.label }}
-		</div>
-		<input class="btn btn-primary" type="submit" value="Send">
-	</form>
-
 	<p>If you have any questions or comments about Turtle Dice (or anything else), don't hesitate to <a href="{{ url_for('home.feedback') }}">contact me</a>!</p>
 {% endblock %}
 
 {% block sidebar %}
-	<table class="meta" cellpadding="0" cellspacing="0">
-		<tbody>
-			<tr>
-				<th>Interest:</th>
-				<td><strong>{{ total_interest}} sets</strong></td>
-			</tr>
-			<tr>
-				<th>Cost:</th>
-				<td><strong>$12 USD per set</strong> (plus shipping)</td>
-			</tr>
-			<tr>
-				<th>Type:</th>
-				<td>
-					Laser engraved
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<p>If you are interested in purchasing one or more sets of Turtle Dice, please fill out this form! <strong>This is not an obligation to buy anything, and I will only ever email you once</strong> (once I have the physical dice available for purchase).</p>
-
-	<p><strong>Not interested in custom icons?</strong> Please let me know that, as well! I can't do a bulk order with the official icons because I don't have any legal right to them, but if I find an option that would allow people to produce dice themselves I will let you know (be warned this is likely to cost 4-6 times as much as Turtle Dice).</p>
-
-	<p>The dice will be available <strong>Q4 2019</strong>.</p>
+	<p>Dice will be available for purchase on this page hopefully soon, but if you can't wait please <a href="{{ url_for('home.feedback') }}">contact me</a> with your shipping address and desired number of sets and I will send you a quote including shipping!</p>
 {% endblock %}
