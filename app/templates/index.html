@@ -156,14 +156,53 @@
 
 	<h2>Useful Documents</h2>
 
+	<p class="no-margin"><strong>Plaid Hat</strong></p>
+
 	<ul>
-		<li><a href="{{ url_for('static', filename='files/ashes-core-rules.pdf') | cdn_url }}">Official Core Rules</a> (PDF)</li>
-		<li><a href="{{ url_for('static', filename='files/ashes-official-faq.pdf') | cdn_url }}">Official FAQ v3.0</a> (PDF)</li>
-		<li><a href="{{ url_for('static', filename='files/ashes-rules-reference.pdf') | cdn_url }}">Ashes Rules Reference</a> (PDF)</li>
-		<li><a href="{{ url_for('static', filename='files/ashes-raven-rules.pdf') | cdn_url }}">Raven Rules</a> (PDF)</li>
+		<li>
+			<a href="{{ url_for('static', filename='files/ashes-core-rules.pdf') | cdn_url }}">Official Core Rules</a>
+			<span class="slightly-muted">(PDF)</span>
+		</li>
+		<li>
+			<a href="{{ url_for('static', filename='files/ashes-official-faq.pdf') | cdn_url }}">Official FAQ v3.0</a>
+			<span class="slightly-muted">(PDF)</span>
+		</li>
+		<li>
+			<a href="{{ url_for('static', filename='files/ashes-rules-reference.pdf') | cdn_url }}">Ashes Rules Reference</a>
+			<span class="slightly-muted">(PDF; all official rules, one document)</span>
+		</li>
 	</ul>
 
-	<h2>Features</h2>
+	<p class="no-margin"><strong>Project Phoenix</strong></p>
 
-	{% include "fragments/upcoming_list.html" %}
+	<ul>
+		<li>
+			<a href="{{ url_for('static', filename='files/ashes-raven-rules.pdf') | cdn_url }}">Raven Rules</a>
+			<span class="slightly-muted">(PDF; replaces PHG FAQ)</span>
+		</li>
+	</ul>
+
+	<h2>Community Resources</h2>
+
+	<ul>
+		<li>
+			<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1717839303" target="_blank" rel="external">TableTop Simulator: Ashes Custom Workshop</a>
+			<span class="slightly-muted">(TTS mod; includes PHG + Project Phoenix content)</span>
+		</li>
+		<li>
+			<a href="https://join.slack.com/t/ashesrules/shared_invite/zt-ceb2kl2r-l_NDAEkFVG0x1jMkgVOOVQ" target="_blank" rel="external">Join Slack</a>
+			<span class="slightly-muted">(TTS matchmaking + general discussion)</span>
+		</li>
+		<li>
+			<a href="https://soundcloud.com/user-489430998/sets/the-reaction-ashes-podcast" target="_blank" rel="external">The Reaction Podcast</a>
+			<span class="slightly-muted">(ongoing fan podcast)</span>
+		</li>
+	</ul>
+
+	<p class="no-margin"><strong>More options...</strong></p>
+
+	<ul>
+		<li><a href="https://discord.gg/kDUkQM5" target="_blank" rel="external">Join Discord</a> <span class="slightly-muted">(mirrors Slack + voice chat)</span></li>
+		<li><a href="https://archive.org/details/themainactionpodcast" target="_blank" rel="external">The Main Action Podcast</a> <span class="slightly-muted">(archived; popular podcast from game's early history)</span></li>
+	</ul>
 {% endblock %}
