@@ -4,6 +4,7 @@ Flask-Bcrypt==0.7.1
 Flask-Mail==0.9.1
 Flask-Session==0.3.1
 Flask-WTF==0.14.2
+email-validator==1.1.1
 premailer==3.6.1
 PyMySQL==0.9.3
 sendgrid==6.1.0
