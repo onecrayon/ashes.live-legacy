@@ -517,7 +517,7 @@ export default new Vuex.Store({
 		},
 		resetFilters (state) {
 			state.options.search = null
-			if (state.options.types && state.options.types.length && state.options.types[0] !== 'Phoenixborn') {
+			if (globals.galleryOnly || (state.options.types && state.options.types.length && state.options.types[0] !== 'Phoenixborn')) {
 				state.options.types = null
 			}
 			state.options.dice = null
