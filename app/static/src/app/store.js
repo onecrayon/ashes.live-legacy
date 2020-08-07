@@ -517,7 +517,9 @@ export default new Vuex.Store({
 		},
 		resetFilters (state) {
 			state.options.search = null
-			state.options.types = null
+			if (state.options.types && state.options.types.length && state.options.types[0] !== 'Phoenixborn') {
+				state.options.types = null
+			}
 			state.options.dice = null
 		},
 		setincludeAllCards (state, includeAllCards) {
