@@ -34,6 +34,16 @@
 				>
 			</div>
 			<release-filter v-if="!isCardGallery" class="col"></release-filter>
+			<div v-else>
+				<div class="btn-group">
+					<button @click="toggleReleases('phg')"
+					class="btn btn-small" :class="{active: hasReleases('phg')}" :disabled="isDisabled"
+					title="Only show Plaid Hat cards">PHG</button
+					><button @click="toggleReleases('all')"
+					class="btn btn-small" :class="{active: hasReleases('all')}" :disabled="isDisabled || noCollection"
+					title="Show all cards">All</button>
+				</div>
+			</div>
 		</div>
 		<div class="responsive-cols listing-controls">
 			<sort-filter class="col"></sort-filter>
@@ -97,6 +107,19 @@
 			},
 			isListType (listType) {
 				return this.$store.state.options.listType === listType
+			},
+			toggleReleases (releasesKey) {
+				this.$store.commit('toggleReleases', releasesKey)
+				this.$store.dispatch('filterCards')
+			},
+			hasReleases (releasesKey) {
+				if (releasesKey === null || this.$store.state.options.releases === null) {
+					return releasesKey === null && this.$store.state.options.releases === null
+				}
+				if (!includes(this.$store.state.options.releases, releasesKey)) {
+					return false
+				}
+				return true
 			}
 		}
 	}
