@@ -38,9 +38,9 @@
 		{% for deck in precon_decks %}
 		{% if not loop.last and (loop.index > 6 and loop.index % 2) %}</ul><hr><ul>{% endif %}
 		<li>
-			<span class="phoenixborn" title="{{ deck.phoenixborn.name }}">{{ deck.phoenixborn.name | first_name }}</span>: 
+			<span class="phoenixborn" title="{{ deck.phoenixborn.name }}">{{ deck.phoenixborn.name | first_name }}</span>:
 			<a href="{{ url_for('decks.view', deck_id=deck.source_id) }}">
-				{{ deck.title }}
+				{{ deck.title }}{% if deck.phoenixborn.release.is_phg is sameas false %}<span class="super">†</span>{% elif deck.phoenixborn.release.is_retiring %}<span class="super">*</span>{% endif %}
 			</a>
 		</li>
 		{% endfor %}

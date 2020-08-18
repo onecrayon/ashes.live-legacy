@@ -1,5 +1,5 @@
 <template>
-	<a :href="href" class="card" :class="{'not-owned': isNotOwned}" :target="target"><slot>{{ card.name }}</slot></a>
+	<a :href="href" class="card" :class="{'not-owned': isNotOwned, 'fan-made': !card.release.is_phg, 'is-retiring': card.release.is_retiring}" :target="target"><slot>{{ card.name }}</slot></a>
 </template>
 
 <script>

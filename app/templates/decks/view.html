@@ -33,9 +33,7 @@
 	<div class="deck-view {{ deck.phoenixborn.stub }}">
 		<h2 class="responsive-cols no-wrap">
 			<span class="col-flex">
-				<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
-					{{ deck.phoenixborn.name }}
-				</a>
+				<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card{% if deck.phoenixborn.release.is_retiring %} is-retiring{% endif %}{% if deck.phoenixborn.release.is_phg is sameas false %} fan-made{% endif %}" target="_blank">{{ deck.phoenixborn.name }}</a>
 			</span>
 			{% if deck.ashes_500_revision_id %}
 			<span class="ashes-500-score col{% if deck.ashes_500_score > 500 %} error{% elif is_outdated %} warning{% endif %}">
@@ -75,9 +73,9 @@
 				<ul>
 				{% for card in section.cards %}
 					<li>
-						{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
-							{{ card.name }}
-						</a>{% if card.phoenixborn %} <span class="phoenixborn" title="{{ card.phoenixborn }}">({{ card.phoenixborn | first_name }})</span>{% endif %}
+						{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card{% if card.release.is_retiring %} is-retiring{% endif %}{% if card.release.is_phg is sameas false %} fan-made{% endif %}" target="_blank"
+							>{{ card.name }}</a
+						>{% if card.phoenixborn %} <span class="phoenixborn" title="{{ card.phoenixborn }}">({{ card.phoenixborn | first_name }})</span>{% endif %}
 					</li>
 				{% endfor %}
 				</ul>
@@ -93,7 +91,7 @@
 		{{ deck.description | parse_text }}
 	</div>
 	{% endif %}
-	
+
 	{% include 'comments.html' %}
 
 	<div id="deck-text-export" class="inline-modal">
@@ -143,7 +141,7 @@ Created with https://ashes.live</textarea>
 					{% for release in releases -%}
 					<li>
 						{%- if release.preconstructed_id -%}
-						<a href="{{ url_for('decks.view', deck_id=release.preconstructed_id) }}">{{ release.title }}</a>
+						<a href="{{ url_for('decks.view', deck_id=release.preconstructed_id) }}">{{ release.title }}{% if release.is_phg is sameas false %}<span class="super">†</span>{% elif release.is_retiring %}<span class="super">*</span>{% endif %}</a>
 						{%- else -%}
 							{{ release.title }}
 						{%- endif -%}

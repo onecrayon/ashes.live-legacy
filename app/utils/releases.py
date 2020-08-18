@@ -19,4 +19,5 @@ def get_release_list() -> List[Tuple[int, str]]:
         'name': x.name,
         'is_phg': x.is_phg,
         'is_promo': x.is_promo,
+        'is_retiring': x.is_retiring,
     } for x in releases]

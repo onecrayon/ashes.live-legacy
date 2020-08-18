@@ -26,7 +26,7 @@
 			{% if deck.is_public %}<i class="fa fa-eye deck-type-icon" title="Public snapshot"></i>{% else %}<i class="fa fa-eye-slash deck-type-icon" title="Private snapshot"></i>{% endif %}
 			{% endif %}
 			{% if deck.ashes_500_revision_id %}<i class="fa fa-tachometer deck-type-icon" title="Ashes 500"></i>{% endif %}
-			{% if current_user.is_authenticated and deck.user_id == current_user.id and not deck.is_snapshot %} 
+			{% if current_user.is_authenticated and deck.user_id == current_user.id and not deck.is_snapshot %}
 			<a href="{{ url_for('decks.build', deck_id=deck.id) }}">{{ deck | deck_title }}</a>
 			{% elif link_id %}
 			<a href="{{ url_for('decks.view', deck_id=link_id) }}">{{ deck | deck_title }}</a>
@@ -46,7 +46,7 @@
 	<hr>
 	<div class="card-listing">
 		<h3>
-			<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card" target="_blank">
+			<a href="{{ url_for('cards.detail', stub=deck.phoenixborn.stub) }}" class="card{% if deck.phoenixborn.release.is_retiring %} is-retiring{% endif %}{% if deck.phoenixborn.release.is_phg is sameas false %} fan-made{% endif %}" target="_blank">
 				{{ deck.phoenixborn.name }}
 			</a>
 			{% if current_user.is_authenticated and deck.user_id == current_user.id and not deck.is_snapshot %}
@@ -67,7 +67,7 @@
 			<ul>
 			{% for card in section.cards %}
 				<li>
-					{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card" target="_blank">
+					{{ card.count }}&times; <a href="{{ url_for('cards.detail', stub=card.stub) }}" class="card{% if card.release.is_retiring %} is-retiring{% endif %}{% if card.release.is_phg is sameas false %} fan-made{% endif %}" target="_blank">
 						{{ card.name }}
 					</a>
 				</li>
@@ -83,7 +83,7 @@
 	<form action="./" method="GET" class="auto-submit no-margin">
 		{% if filter_card %}
 		<ul class="alerts">
-			<li class="warning">Showing only decks that include: <a href="{{ url_for('cards.detail', stub=filter_card.stub) }}" class="card">{{ filter_card.name }}</a></li>
+			<li class="warning">Showing only decks that include: <a href="{{ url_for('cards.detail', stub=filter_card.stub) }}" class="card{% if card.release.is_retiring %} is-retiring{% endif %}{% if card.release.is_phg is sameas false %} fan-made{% endif %}">{{ filter_card.name }}</a></li>
 		</ul>
 		{% endif %}
 		<div class="responsive-cols">
@@ -97,7 +97,7 @@
 				<select name="phoenixborn">
 					<option value="">Filter by Phoenixborn...</option>
 					{% for card in phoenixborn %}
-					<option value="{{ card.stub }}"{% if filters.phoenixborn == card.stub %} selected{% endif %}>{{ card.name }}</option>
+					<option value="{{ card.stub }}"{% if filters.phoenixborn == card.stub %} selected{% endif %}>{{ card.name }}{% if card.is_phg is sameas false %}†{% elif card.is_retiring %}*{% endif %}</option>
 					{% endfor %}
 				</select>
 			</div>

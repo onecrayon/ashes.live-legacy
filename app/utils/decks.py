@@ -33,7 +33,9 @@ def process_cards(section_map, deck_cards, release_mapping=None):
             'phoenixborn': card.phoenixborn,
             'release': {
                 'id': release.id,
-                'name': release.name
+                'name': release.name,
+                'is_phg': release.is_phg,
+                'is_retiring': release.is_retiring,
             }
         })
         if card.conjurations:

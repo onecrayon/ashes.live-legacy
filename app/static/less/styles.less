@@ -45,7 +45,7 @@ p, ul, ol {
 h1 {
 	.font-size(24);
 	margin-bottom: 30px;
-	
+
 	&[class^="phg-"]:before, &[class*=" phg-"]:before {
 		.font-size(36);
 		vertical-align: middle;
@@ -123,6 +123,22 @@ a.card {
 
 	&.not-owned {
 		color: @color-warning;
+	}
+
+	&.is-retiring:after, &.fan-made:after {
+		.font-size(11);
+		color: @color-mid-gray;
+		position: relative;
+		top: -5px;
+		margin-left: 3px;
+	}
+
+	&.is-retiring:after {
+		content: '*';
+	}
+
+	&.fan-made:after {
+		content: '†';
 	}
 }
 
@@ -253,6 +269,14 @@ a.section {
 	font-weight: bold;
 }
 
+.super {
+	.font-size(12);
+	color: @color-mid-gray;
+	position: relative;
+	top: -5px;
+	margin-left: 3px;
+}
+
 .costs {
 	.divided-list(~'.cost');
 
@@ -366,7 +390,7 @@ a.section {
 		top: -3px;
 		right: -3px;
 	}
-	
+
 	.success .btn-close {
 		color: @color-success;
 	}
@@ -413,12 +437,12 @@ a.section {
 	&.full-width {
 		max-width: none;
 	}
-	
+
 	label, .label {
 		display: block;
 		margin: 0 0 5px;
 	}
-	
+
 	input[type="checkbox"] + label, input[type="radio"] + label {
 		display: inline;
 	}
@@ -426,7 +450,7 @@ a.section {
 	textarea {
 		height: 16rem;
 	}
-	
+
 	input[type="text"], input[type="password"], input[type="number"],
 	textarea {
 		.font-size(18);
@@ -437,7 +461,7 @@ a.section {
 		margin: 0;
 		padding: 5px;
 		width: 100%;
-		
+
 		&[readonly], &[disabled] {
 			.placeholder-color(@color-gray);
 			color: @color-mid-gray;
@@ -490,11 +514,11 @@ label + .form-field > .textarea-helpers {
 	&:hover, &:active {
 		text-decoration: none;
 	}
-	
+
 	&:focus {
 		outline: none;
 	}
-	
+
 	&.btn-primary {
 		.alert(@color-link);
 	}
@@ -510,7 +534,7 @@ label + .form-field > .textarea-helpers {
 	&.btn-danger {
 		.alert(@color-error);
 	}
-	
+
 	&.btn-small {
 		.font-size(14);
 		font-weight: normal;
@@ -534,11 +558,11 @@ label + .form-field > .textarea-helpers {
 		box-sizing: border-box;
 		height: 100%;
 	}
-	
+
 	&[readonly], &[disabled] {
 		opacity: .4;
 	}
-	
+
 	&.active {
 		background: @color-dark-gray;
 		color: @color-white;
@@ -566,14 +590,14 @@ label + .form-field > .textarea-helpers {
 	&.right-align {
 		.mixin-justify-content(flex-end);
 	}
-	
+
 	.form-field {
 		height: 100%;
 		margin: 0;
-		
+
 		&:first-child {
 			.mixin-flex(1 1 auto);
-			
+
 			input[type="text"], input[type="password"], input[type="number"] {
 				border-radius: 5px 0 0 5px;
 				border-right-width: 0;
@@ -581,11 +605,11 @@ label + .form-field > .textarea-helpers {
 			}
 		}
 	}
-	
+
 	.btn {
 		height: 100%;
 		padding: 5px 10px;
-		
+
 		&:last-child {
 			.mixin-flex(0 0 auto);
 			border-radius: 0 5px 5px 0;
@@ -595,21 +619,21 @@ label + .form-field > .textarea-helpers {
 
 .btn-group {
 	margin: 0 0 20px;
-	
+
 	.btn {
 		padding: 5px 10px;
 		vertical-align: top;
 	}
-	
+
 	&.compressed .btn {
 		padding: 0 5px;
 	}
-	
+
 	.btn[class^="phg-"], .btn[class*=" phg-"] {
 		.font-size(24);
 		padding: 2px 10px 1px;
 	}
-	
+
 	.btn:first-child {
 		border-radius: 5px 0 0 5px;
 		border-right-width: 1px;
@@ -619,13 +643,13 @@ label + .form-field > .textarea-helpers {
 		border-radius: 5px;
 		border-right-width: 2px;
 	}
-	
+
 	.btn + .btn {
 		border-radius: 0;
 		border-left-width: 1px;
 		border-right-width: 1px;
 	}
-	
+
 	.btn + .btn:last-child {
 		border-radius: 0 5px 5px 0;
 		border-right-width: 2px;
@@ -652,7 +676,7 @@ h4.help-text {
 
 table.help-text {
 	margin-bottom: 20px;
-	
+
 	td:first-of-type {
 		text-align: right;
 		border-right: 1px solid @color-gray;
@@ -987,7 +1011,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 .modal-enter-to {
 	opacity: 1;
 }
-  
+
 .modal-enter, .modal-leave-to {
 	opacity: 0;
 
@@ -1028,7 +1052,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 .stats {
 	width: 100%;
 	margin-bottom: 10px;
-	
+
 	th, td {
 		padding-top: 3px;
 		padding-bottom: 3px;
@@ -1036,7 +1060,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		vertical-align: top;
 		border-bottom: 2px solid @color-gray;
 	}
-	
+
 	tr:last-child th, tr:last-child td {
 		border-bottom: none;
 	}
@@ -1049,13 +1073,13 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	td {
 		padding-left: 5px;
 	}
-	
+
 	.costs {
 		position: relative;
 		top: -3px;
 		margin-bottom: -3px;
 	}
-	
+
 	.highlight {
 		font-weight: bold;
 	}
@@ -1095,6 +1119,20 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	.font-size(12);
 	padding-top: 50px;
 	text-align: center;
+
+	.copyright {
+		margin-bottom: 15px;
+	}
+
+	.footnote {
+		color: @color-border-gray;
+		margin-bottom: 0;
+
+		.super {
+			color: @color-border-gray;
+			position: static;
+		}
+	}
 }
 
 /* @end */
@@ -1113,13 +1151,13 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		padding: 0;
 		list-style-type: none;
 	}
-	
+
 	a {
 		.font-size(18);
 		color: @color-black;
 		text-decoration: none;
 	}
-	
+
 	a:hover, a:active {
 		color: @color-link;
 
@@ -1127,12 +1165,12 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			color: @color-black;
 		}
 	}
-	
+
 	.navbar-wrapper {
 		background: @color-inexhaustible;
 		padding: 0 0 4px;
 		position: relative;
-		
+
 		&:after {
 			content: '';
 			position: absolute;
@@ -1144,41 +1182,41 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			border-bottom: 3px solid @color-gray;
 		}
 	}
-	
+
 	.primary-nav {
 		.max-width();
 		padding: 10px 20px;
-		
+
 		a:before {
 			.font-size(29);
 			margin-right: 10px;
 			vertical-align: bottom;
 		}
 	}
-	
+
 	.secondary-nav {
 		.max-width();
 		padding: 10px 20px;
-		
+
 		.nav-items div {
 			margin-right: 20px;
 		}
-		
+
 		.last-nav-item {
 			margin-right: 0px;
 		}
 	}
-	
+
 	.leading-link {
 		.mixin-order(1);
 		.mixin-flex(1 0 0);
 		padding-right: 20px;
 	}
-	
+
 	.home-link {
 		.mixin-order(2);
 		.mixin-flex(0 0 auto);
-		
+
 		a {
 			background: url('../images/ashes-live-small.png') left top no-repeat;
 			display: inline-block;
@@ -1188,7 +1226,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			overflow: hidden;
 		}
 	}
-	
+
 	.trailing-link {
 		.mixin-order(3);
 		.mixin-flex(1 0 0);
@@ -1204,12 +1242,12 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 .homepage #header {
 	.primary-nav {
 		padding-top: 27px;
-		
+
 		a {
 			display: inline-block;
 			padding-top: 6px;
 		}
-		
+
 		a:before {
 			display: block;
 			width: 100%;
@@ -1218,33 +1256,33 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			text-align: center;
 		}
 	}
-	
+
 	.secondary-nav {
 		padding-top: 20px;
 	}
-	
+
 	.leading-link {
 		padding-right: 50px;
 		text-align: right;
 	}
-	
+
 	.home-link {
 		margin-bottom: -40px;
 		position: relative;
 		z-index: 10;
-		
+
 		a {
 			background-image: url('../images/ashes-live.png');
 			width: 366px;
 			padding-top: 107px;
 		}
 	}
-	
+
 	.trailing-link {
 		padding-left: 50px;
 		text-align: left;
 	}
-	
+
 	.fa {
 		margin-right: 5px;
 	}
@@ -1256,13 +1294,13 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 .badge-field {
 	margin-bottom: 20px;
-	
+
 	ul {
 		list-style-type: none;
 		padding: 0;
 		margin: 0;
 	}
-	
+
 	li {
 		display: inline-block;
 		box-sizing: border-box;
@@ -1270,13 +1308,13 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		margin: 0 0 10px;
 		min-width: 30%;
 	}
-	
+
 	label {
 		.alert(@color-mid-gray);
 		border-radius: 5px;
 		padding: 0 3px;
 	}
-	
+
 	input:checked + label {
 		.alert(@color-link);
 	}
@@ -1427,7 +1465,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		&.unread {
 			border-color: @color-inexhaustible-dark;
 		}
-		
+
 		h2 {
 			margin-bottom: 0px;
 		}
@@ -1435,11 +1473,11 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		p {
 			margin-bottom: 5px;
 		}
-		
+
 		.phoenixborn {
 			margin-bottom: 10px;
 		}
-		
+
 		.dice .die {
 			margin-bottom: 0;
 		}
@@ -1488,7 +1526,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 .unread {
 	border-color: @color-inexhaustible-dark;
-	
+
 	&.deck {
 		border-width: 3px;
 	}
@@ -1549,7 +1587,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
-		
+
 		li {
 			.medium-card;
 			float: left;
@@ -1575,7 +1613,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			width: 206px;
 			height: 287px;
 		}
-		
+
 		img {
 			cursor: pointer;
 			position: absolute;
@@ -1600,7 +1638,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 .deck-header {
 	margin-bottom: 10px;
-	
+
 	.input-group {
 		margin-bottom: 0;
 	}
@@ -1740,7 +1778,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	li {
 		margin-bottom: 3px;
 	}
-	
+
 	.btn-group {
 		display: inline-block;
 		margin-bottom: 0;
@@ -1829,18 +1867,18 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			padding: 2px 2px 1px;
 			text-align: center;
 			width: 24px;
-	
+
 			&.active {
 				background: rgba(0, 0, 0, .6);
 				color: @color-white;
 			}
 		}
-	
+
 		.btn-qty:first-child {
 			border-radius: 0;
 			width: 23px;
 		}
-	
+
 		.btn-qty + .btn-qty:last-child {
 			border-radius: 0;
 			border-right: none;
@@ -1851,7 +1889,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 		.mixin-display-flex;
 		border: 1px solid @color-border-gray;
 		margin: 0 0 5px;
-	
+
 		& > .costs {
 			.line-height(22);
 			.mixin-flex(0 0 auto);
@@ -1861,7 +1899,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			text-align: right;
 			max-height: 109px;
 			overflow: hidden;
-			
+
 			[class^="phg-"], [class*=" phg-"] {
 				display: inline-block;
 				min-width: 20px;
@@ -1894,7 +1932,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 					bottom: 0px;
 					margin-left: -3px;
 				}
-		
+
 				&:last-of-type {
 					padding: 0;
 
@@ -2125,10 +2163,10 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	.recover {
 		color: @color-recover;
 	}
-	
+
 	.stats-col .card {
 		margin-right: 3px;
-		
+
 		&:last-of-type {
 			margin-right: 0;
 		}
@@ -2143,7 +2181,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	td {
 		padding-top: 8px;
 	}
-	
+
 	.costs-col {
 		padding-top: 4px;
 	}
@@ -2273,6 +2311,11 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 			.font-size(12);
 			.line-height(15);
 		}
+
+		.is-retiring:after, .fan-made:after {
+			top: -2px;
+			margin-left: 0px;
+		}
 	}
 
 	.view-link {
@@ -2289,7 +2332,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 
 	&.public {
 		border-color: @color-inexhaustible-dark;
-		
+
 		h2 {
 			font-weight: bold;
 		}
@@ -2391,7 +2434,7 @@ li + .between-realms:before, .between-realms:first-of-type:before {
 	.mixin-anonymous-slice(xander-heartsblood, large, male);
 	.mixin-anonymous-slice(fiona-mercywind, large);
 	.mixin-anonymous-slice(james-endersight, large, male);
-	
+
 	.statline {
 		.font-size(14);
 		font-weight: bold;

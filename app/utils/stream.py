@@ -36,7 +36,11 @@ def deck_to_entity_map(deck):
         'title': deck.title,
         'phoenixborn': {
             'name': deck.phoenixborn.name,
-            'stub': deck.phoenixborn.stub
+            'stub': deck.phoenixborn.stub,
+            'release': {
+                'is_phg': deck.phoenixborn.release.is_phg,
+                'is_retiring': deck.phoenixborn.release.is_retiring,
+            }
         },
         'dice': deck.dice,
         'ashes_500_score': deck.ashes_500_score if deck.ashes_500_revision_id else None,
@@ -291,7 +295,7 @@ def get_stream(page=None, show='all'):
         snapshot_comp = db.aliased(Deck)
         source_comp = db.aliased(Deck)
         decks = db.session.query(Deck).options(
-            db.joinedload('phoenixborn'),
+            db.joinedload('phoenixborn').joinedload('release'),
             db.joinedload('dice'),
             db.joinedload('user')
         ).join(

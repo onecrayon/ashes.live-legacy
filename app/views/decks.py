@@ -10,6 +10,7 @@ from app import db
 from app.exceptions import Redirect
 from app.models.card import Card, DiceFlags
 from app.models.deck import Deck, DeckCard, DeckDie
+from app.models.release import Release
 from app.utils.ashes_500 import latest_ashes_500_revision
 from app.utils.cards import gather_root_summons
 from app.utils.comments import process_comments
@@ -22,7 +23,9 @@ mod = Blueprint('decks', __name__, url_prefix='/decks')
 
 
 def get_deck_filters():
-    phoenixborn = db.session.query(Card.name, Card.stub, Card.id).filter(
+    phoenixborn = db.session.query(
+        Card.name, Card.stub, Card.id, Release.is_phg, Release.is_retiring
+    ).join(Card.release).filter(
         Card.card_type == 'Phoenixborn'
     ).order_by(Card.name.asc()).all()
     filters = {
@@ -65,7 +68,7 @@ def index(page=None):
     precon_decks = get_decks_query(filters=[
         Deck.is_preconstructed.is_(True)
     ], options=[
-        db.joinedload('phoenixborn')
+        db.joinedload('phoenixborn').joinedload('release')
     ], most_recent_public=True).order_by(Deck.created.asc()).all()
     return render_template(
         'decks/index.html',
@@ -85,7 +88,7 @@ def index(page=None):
 @mod.route('/view/<int:deck_id>/<int:page>/', methods=['GET', 'POST'])
 def view(deck_id, page=1, show_saved=False):
     """View a snapshot.
-    
+
     If deck_id points to a deck, shows first public snapshot.
     """
     deck = Deck.query.options(
@@ -123,15 +126,17 @@ def view(deck_id, page=1, show_saved=False):
     for die in deck.dice:
         release_ids.add(dice_to_release[DiceFlags(die.die_flag).name])
     release_results = db.session.query(
-        Deck.source_id, Deck.title, Deck.preconstructed_release
-    ).filter(
+        Deck.source_id, Deck.title, Deck.preconstructed_release, Release.is_phg, Release.is_retiring
+    ).outerjoin(Release, Deck.preconstructed_release == Release.id).filter(
         Deck.preconstructed_release.in_(list(release_ids))
     ).order_by(Deck.created.asc()).all()
     release_data = []
     for release in release_results:
         release_data.append({
             'preconstructed_id': release.source_id,
-            'title': release.title
+            'title': release.title,
+            'is_phg': release.is_phg,
+            'is_retiring': release.is_retiring,
         })
         release_ids.remove(release.preconstructed_release)
     # Check to see if the core set remains; if there's leftover releases we're currently
@@ -141,9 +146,11 @@ def view(deck_id, page=1, show_saved=False):
     if release_ids and release_ids[0] == 0:
         release_data.insert(0, {
             'preconstructed_id': None,
-            'title': 'Core Set'
+            'title': 'Core Set',
+            'is_phg': True,
+            'is_retiring': False,
         })
-        
+
     # Check for outdated Ashes 500
     if deck.ashes_500_revision_id:
         latest_ashes_500 = latest_ashes_500_revision()

@@ -117,7 +117,7 @@ def collection():
         current_user.collection.clear()
         db.session.commit()
         return jsonify([])
-    
+
     # Populate the collection with the newly posted releases
     current_user.collection = [
         UserRelease(release_id=x.id) for x in releases

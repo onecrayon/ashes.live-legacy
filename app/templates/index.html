@@ -58,7 +58,7 @@
 				</span>
 				{% endif %}
 			</h2>
-			<p class="phoenixborn"><a href="{{ url_for('cards.detail', stub=entity.phoenixborn.stub) }}" class="card">{{ entity.phoenixborn.name }}</a></p>
+			<p class="phoenixborn"><a href="{{ url_for('cards.detail', stub=entity.phoenixborn.stub) }}" class="card{% if entity.phoenixborn.release.is_retiring %} is-retiring{% endif %}{% if entity.phoenixborn.release.is_phg is sameas false %} fan-made{% endif %}">{{ entity.phoenixborn.name }}</a></p>
 			{{ dice_list(entity.dice) }}
 			{% elif entity.entity_type == 'comment' %}
 			<div class="comment-header responsive-cols no-wrap">
